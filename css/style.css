@@ -1552,22 +1552,21 @@ padding: 30px 30px;
 @media (max-width: 768px){
   .hero-editorial{
   position: relative;
-  min-height: 65svh;          /* 🔑 controla el hero */
+  min-height: 75svh;          /* 🔑 controla el hero */
   background-image: url("../assets/hero-mobile.jpg");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center 70%;
+  background-position: center 75%;
   background-color: #fff;
   display: flex;
 }
 
-  .hero-copy{
+ .hero-copy{
   position: relative;
   z-index: 2;
   margin-top: auto;
-  padding: 16px 16px 28px;
+  padding: 32px 20px 36px;
 }
-
 
 .hero-editorial::after{
     background: linear-gradient(
@@ -1580,6 +1579,8 @@ padding: 30px 30px;
 
   .hero-title{
     font-size: 22px;
+    text-align: left;
+    max-width: 18ch;  
   }
 
 .hero-cta{
