@@ -1573,7 +1573,10 @@ padding: 30px 30px;
   position: relative;
   z-index: 2;
   margin-top: auto;
+  align-self: flex-start;   /* evita centrados por flex */
   padding: 32px 20px 36px;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 .hero-editorial::after{
@@ -1587,7 +1590,7 @@ padding: 30px 30px;
 
   .hero-title{
     font-size: 22px;
-    text-align: 0;
+    text-align: left;
     max-width: 18ch;  
   }
 
