@@ -790,8 +790,8 @@ position: relative;
   font-weight: 800;
   letter-spacing: 0.01em;
 
-  background: #fff;
-  color: #111;
+  background: var(--blue);
+  color: #fff;
   text-decoration: none;
 
   border-radius: 999px;
@@ -799,7 +799,9 @@ position: relative;
 
   transition: transform .2s ease, box-shadow .2s ease;
 }
-
+.cta-pill::after{
+  color: #fff;
+}
 @media (hover: hover){
   .cta-pill:hover{
     transform: translateY(-2px);
@@ -1450,8 +1452,8 @@ padding: 30px 30px;
   padding: 18px 36px;
   border-radius: 999px;
 
-  background: #fff;
-  color: #111;
+  background: var(--blue);
+  color: #fff;
 
   font-size: 18px;
   font-weight: 800;
@@ -1467,7 +1469,7 @@ padding: 30px 30px;
 }
 
 .cta-main .cta-dot{
-  color: var(--yellow);
+  color: #fff;
 }
 
 .cta-helper{
