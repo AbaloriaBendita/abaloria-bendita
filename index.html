@@ -320,9 +320,13 @@
     name="encargo"
     method="POST"
     action="/gracias.html"
-    netlify
+    data-netlify="true"
+    data-netlify-honeypot="bot-field"
   >
     <input type="hidden" name="form-name" value="encargo">
+    <p style="display:none;">
+      <label>Don’t fill this out: <input name="bot-field"></label>
+    </p>
 
 <fieldset class="form-block">
   <legend>Tu pieza</legend><p class="form-intro">
