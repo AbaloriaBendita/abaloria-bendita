@@ -1560,7 +1560,7 @@ padding: 30px 30px;
 @media (max-width: 768px){
   .hero-editorial{
   position: relative;
-  min-height: 75svh;          /* 🔑 controla el hero */
+  min-height: 80svh;          /* 🔑 controla el hero */
   background-image: url("../assets/hero-mobile.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -1605,11 +1605,15 @@ padding: 30px 30px;
     font-size: 15px;
     font-weight: 800;
 
-    background: rgba(255,255,255,0.85);
+    background: var(--blue);
+    color: #fff;
     border-radius: 999px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 22px rgba(111,168,214,0.35);
   }
-
+  .hero-cta::after{
+    color: #fff; /* la flecha también blanca */
+  }
+}
 
 /* =========================
    THANK YOU PAGE – CTA FIX
