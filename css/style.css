@@ -1608,7 +1608,6 @@ padding: 30px 30px;
     background: var(--blue);
     color: #fff;
     border-radius: 999px;
-    box-shadow: 0 8px 22px rgba(111,168,214,0.35);
   }
   .hero-cta::after{
     color: #fff; /* la flecha también blanca */
