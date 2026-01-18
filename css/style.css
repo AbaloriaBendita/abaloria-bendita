@@ -770,6 +770,14 @@ position: relative;
   color: #666;
 }
 
+@media (max-width: 768px){
+  .collections-cta p{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+
 /* =========================
    CTA PILL – GLOBAL
 ========================= */
@@ -1565,7 +1573,7 @@ padding: 30px 30px;
   position: relative;
   z-index: 2;
   margin-top: auto;
-  padding: 15px 20px 36px;
+  padding: 32px 20px 36px;
 }
 
 .hero-editorial::after{
