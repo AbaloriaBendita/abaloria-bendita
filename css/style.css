@@ -926,18 +926,6 @@ position: relative;
   margin-bottom: 28px;           /* 🔑 título cerca pero no pegado */
 }
 
-.how-section .section-head h2{
-  font-size: clamp(28px, 3vw, 36px); /* 🔑 más contenido */
-  line-height: 1.2;
-    margin-left: 20px;   /* ajusta entre 32–48 */
-}
-
-.how-section .section-head p{
-  font-size: 15px;
-  max-width: 48ch;
-    margin-left: 20px;   /* ajusta entre 32–48 */
-}
-
 /* =========================
    HOW CARDS
 ========================= */
