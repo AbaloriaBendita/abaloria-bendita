@@ -989,6 +989,16 @@ max-width: 860px;   /* prueba 860–920 */
   height: auto;
   opacity: 0.9;
 }
+.how-instagram .cta-pill{
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(196,58,43,0.3);
+}
+
+.how-instagram .cta-pill::after{
+  color: #fff;
+}
+
 
 /* =========================
    HOW DESKTOP
