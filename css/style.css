@@ -1035,6 +1035,16 @@ max-width: 860px;   /* prueba 860–920 */
   }
 }
 
+@media (max-width: 768px){
+  .how-section .section-head h2{
+    margin-bottom: 10px;   /* antes más compacto */
+  }
+
+  .how-section .section-head p{
+    margin-top: 0;
+    margin-bottom: 20px;  /* da aire antes de las cards */
+  }
+}
 
 /* =====================
    FORM BLOCKS
