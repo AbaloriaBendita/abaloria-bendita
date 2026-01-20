@@ -696,6 +696,41 @@
   });
 </script>
 
+    <script>
+  const tipologias = document.querySelectorAll('input[name="tipologia"]');
+  const panels = document.querySelectorAll('.class-panel');
+  const classRadios = document.querySelectorAll('input[name="clase"]');
+
+  tipologias.forEach(radio => {
+    radio.addEventListener('change', () => {
+      const value = radio.value;
+
+      panels.forEach(panel => {
+        panel.classList.remove('is-visible');
+
+        if(panel.dataset.tipologia === value){
+          panel.classList.add('is-visible');
+        }
+      });
+
+      // reset clases al cambiar tipología
+      classRadios.forEach(r => {
+        r.checked = false;
+        r.closest('.class-card')?.classList.remove('is-selected');
+      });
+    });
+  });
+
+  document.querySelectorAll('.class-card input').forEach(input => {
+    input.addEventListener('change', () => {
+      document.querySelectorAll('.class-card').forEach(card => {
+        card.classList.remove('is-selected');
+      });
+      input.closest('.class-card').classList.add('is-selected');
+    });
+  });
+</script>
+
 
 
 </body>
