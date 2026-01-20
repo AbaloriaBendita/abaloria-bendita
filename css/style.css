@@ -1093,10 +1093,12 @@ padding: 30px 30px;
   opacity: 1;       /* evita que el navegador lo haga demasiado tenue */
 }
 .form-group textarea{
-width: 100%;
+  display: block;
+  width: 100%;
   max-width: 100%;
-  min-height: 120px;
-  resize: vertical;
+  min-height: 140px;
+  padding: 14px 16px;
+  font-size: 15px;
 }
 
 /* =====================
