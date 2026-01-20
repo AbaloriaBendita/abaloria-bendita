@@ -1205,6 +1205,28 @@ textarea::placeholder{
 }
 
 /* =====================
+   CLASS CARDS
+===================== */
+.class-card{
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.95);
+  border: 2px solid rgba(0,0,0,0.12);
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.class-card:hover{
+  border-color: var(--blue);
+  transform: translateY(-1px);
+}
+
+.class-card.is-selected{
+  border-color: var(--blue);
+  background: rgba(111,168,214,0.08);
+}
+
+/* =====================
    CHIPS (COLECCIONES)
 ===================== */
 
