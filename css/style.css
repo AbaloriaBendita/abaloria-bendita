@@ -1091,6 +1091,12 @@ textarea{
   resize: vertical;
   min-height: 96px;
   max-width: 520px;
+  max-width: 100%;
+}
+textarea::placeholder{
+  font-size: 13px;
+  color: #9a9a9a;   /* gris claro, claramente “ejemplo” */
+  opacity: 1;       /* evita que el navegador lo haga demasiado tenue */
 }
 
 /* =====================
