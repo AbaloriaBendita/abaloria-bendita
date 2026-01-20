@@ -315,143 +315,133 @@
 ===================== -->
 
 <div class="form-inner" id="encargo">
-  <form
-  class="form"
-  method="POST"
-  action="/api/encargo"
->
-  <!-- Honeypot anti-spam -->
-  <input
-    type="text"
-    name="company"
-    tabindex="-1"
-    autocomplete="off"
-    style="position:absolute;left:-9999px"
-  >
-    
-<fieldset class="form-block">
-  <legend>Tu pieza</legend><p class="form-intro">
-  Danos pistas de lo que deseas, nosotros te lo diseñaremos con mucha gracia.
-</p>
+  <form class="form" method="POST" action="/api/encargo">
 
-  <!-- TIPOLOGÍA -->
-<div class="form-group">
-  <label class="group-label">Tipología</label>
+    <!-- Honeypot -->
+    <input type="text" name="company" tabindex="-1" autocomplete="off"
+      style="position:absolute;left:-9999px">
 
-  <div class="pill-group pill-radio">
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Collar" required>
-      <span class="pill-btn">
-        <span class="pill-text">Collar</span>
-      </span>
-    </label>
+    <fieldset class="form-block">
+      <legend>Tu pieza</legend>
 
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Pendientes" required>
-      <span class="pill-btn">
-        <span class="pill-text">Pendientes</span>
-      </span>
-    </label>
+      <p class="form-intro">
+        Danos pistas de lo que deseas, nosotros te lo diseñaremos con mucha gracia.
+      </p>
 
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Broche" required>
-      <span class="pill-btn">
-        <span class="pill-text">Broche</span>
-      </span>
-    </label>
-  </div>
-</div>
+      <!-- =====================
+           TIPOLOGÍA + CLASES
+      ===================== -->
 
- <!-- CLASE DE PIEZA -->
-<div class="form-group">
+      <div class="form-group">
 
-  <label class="group-label">
-    Clase de pieza
-    <span class="group-help">Precio base según tipología</span>
-  </label>
+        <!-- Tipología -->
+        <label class="group-label">Tipología</label>
 
-  <!-- COLLAR -->
-  <div class="class-panel" data-tipologia="Collar">
-    <div class="how-grid">
+        <div class="pill-group pill-radio">
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Collar" required>
+            <span class="pill-btn">
+              <span class="pill-text">Collar</span>
+            </span>
+          </label>
 
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Collar · Sencillo con gracia">
-        <div class="how-content">
-          <h3>Sencillo con gracia</h3>
-          <p>Desde 79€ · Minimalista con un toque especial</p>
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Pendientes">
+            <span class="pill-btn">
+              <span class="pill-text">Pendientes</span>
+            </span>
+          </label>
+
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Broche">
+            <span class="pill-btn">
+              <span class="pill-text">Broche</span>
+            </span>
+          </label>
         </div>
-      </label>
 
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Collar · Elegancia divertida">
-        <div class="how-content">
-          <h3>Elegancia divertida</h3>
-          <p>Desde 89€ · El equilibrio Abaloria</p>
+        <!-- Clases: COLLAR -->
+        <div class="class-panel" data-tipologia="Collar">
+          <div class="how-grid">
+
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Collar · Sencillo con gracia">
+              <div class="how-content">
+                <h3>Sencillo con gracia</h3>
+                <p>Desde 79€ · Minimalista con un toque especial</p>
+              </div>
+            </label>
+
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Collar · Elegancia divertida">
+              <div class="how-content">
+                <h3>Elegancia divertida</h3>
+                <p>Desde 89€ · El equilibrio Abaloria</p>
+              </div>
+            </label>
+
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Collar · Súper guay">
+              <div class="how-content">
+                <h3>Súper guay</h3>
+                <p>Desde 99€ · Protagonista total</p>
+              </div>
+            </label>
+
+          </div>
         </div>
-      </label>
 
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Collar · Súper guay">
-        <div class="how-content">
-          <h3>Súper guay</h3>
-          <p>Desde 99€ · Protagonista total</p>
+        <!-- Clases: PENDIENTES -->
+        <div class="class-panel" data-tipologia="Pendientes">
+          <div class="how-grid">
+
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Pendientes · Toque especial">
+              <div class="how-content">
+                <h3>Toque especial</h3>
+                <p>Desde 39€ · Pequeña joyita</p>
+              </div>
+            </label>
+
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Pendientes · Muy especial">
+              <div class="how-content">
+                <h3>Muy especial</h3>
+                <p>Desde 49€ · Más presencia y detalle</p>
+              </div>
+            </label>
+
+          </div>
         </div>
-      </label>
 
-    </div>
-  </div>
+        <!-- Clases: BROCHE -->
+        <div class="class-panel" data-tipologia="Broche">
+          <div class="how-grid">
 
-  <!-- PENDIENTES -->
-  <div class="class-panel" data-tipologia="Pendientes">
-    <div class="how-grid">
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Broche · Toque especial">
+              <div class="how-content">
+                <h3>Toque especial</h3>
+                <p>Desde 39€ · Pequeña joyita</p>
+              </div>
+            </label>
 
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Pendientes · Toque especial">
-        <div class="how-content">
-          <h3>Toque especial</h3>
-          <p>Desde 39€ · Pequeña joyita</p>
+            <label class="how-card class-card">
+              <input type="radio" name="clase" value="Broche · Muy especial">
+              <div class="how-content">
+                <h3>Muy especial</h3>
+                <p>Desde 49€ · Más presencia y detalle</p>
+              </div>
+            </label>
+
+          </div>
         </div>
-      </label>
 
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Pendientes · Muy especial">
-        <div class="how-content">
-          <h3>Muy especial</h3>
-          <p>Desde 49€ · Más presencia y detalle</p>
-        </div>
-      </label>
+        <p class="form-intro">
+          El precio final puede variar según piedras, tamaño y peticiones especiales.
+        </p>
 
-    </div>
-  </div>
-
-  <!-- BROCHES -->
-  <div class="class-panel" data-tipologia="Broche">
-    <div class="how-grid">
-
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Broche · Toque especial">
-        <div class="how-content">
-          <h3>Toque especial</h3>
-          <p>Desde 39€ · Pequeña joyita</p>
-        </div>
-      </label>
-
-      <label class="how-card class-card">
-        <input type="radio" name="clase" value="Broche · Muy especial">
-        <div class="how-content">
-          <h3>Muy especial</h3>
-          <p>Desde 49€ · Más presencia y detalle</p>
-        </div>
-      </label>
-
-    </div>
-  </div>
-
-  <p class="form-intro">
-    El precio final puede variar según piedras, tamaño y peticiones especiales.
-  </p>
-
-</div>
+      </div>
 
   <!-- Colecciones -->
   <div class="form-group">
