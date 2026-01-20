@@ -1098,6 +1098,9 @@ textarea::placeholder{
   color: #9a9a9a;   /* gris claro, claramente “ejemplo” */
   opacity: 1;       /* evita que el navegador lo haga demasiado tenue */
 }
+.form-group textarea{
+  max-width: 100%;
+}
 
 /* =====================
    TIPOLOGÍA – PILLS
