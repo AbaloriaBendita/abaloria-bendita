@@ -1207,7 +1207,6 @@ width: 100%;
 /* Panels ocultos por defecto */
 .class-panel{
   display: none;
-  overflow: hidden;
 }
 
 /* panel activo */
