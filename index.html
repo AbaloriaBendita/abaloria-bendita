@@ -448,80 +448,59 @@
 </fieldset>
 
 
-<!-- FORM TAMANO  -->
-
-<div class="form-group">
-  <label class="group-label">Tamaño</label>
-
-  <div class="size-group">
-    <label class="size-option">
-      <input type="radio" name="tamano" value="Pequeño" required>
-      <span class="size-card">
-        <span class="size-title">Pequeño</span>
-        <span class="size-desc">Discreto y ligero</span>
-      </span>
-    </label>
-
-    <label class="size-option">
-      <input type="radio" name="tamano" value="Mediano">
-      <span class="size-card">
-        <span class="size-title">Mediano</span>
-        <span class="size-desc">Equilibrio perfecto</span>
-      </span>
-    </label>
-
-    <label class="size-option">
-      <input type="radio" name="tamano" value="Grande">
-      <span class="size-card">
-        <span class="size-title">Grande</span>
-        <span class="size-desc">Protagonista</span>
-      </span>
-    </label>
-  </div>
-</div>
-
-<!-- FORM COLORES -->
-
+<!-- CLASES -->
 <div class="form-group">
   <label class="group-label">
-    Colores
-    <span class="group-help">Elige entre 2 y 4</span>
+    Clase de pieza
+    <span class="group-help">Precio base según tipología</span>
   </label>
 
-  <div class="color-group" data-min="2" data-max="4">
-    <label class="color-dot" style="--c:#C43A2B">
-      <input type="checkbox" name="colores" value="Rojo">
-      <span></span>
+  <div class="size-group">
+    <!-- Collares -->
+    <label class="size-option">
+      <input type="radio" name="clase" value="Collar 79€" required>
+      <span class="size-card">
+        <span class="size-title">Collar · Clase A</span>
+        <span class="size-desc">Desde 79€</span>
+      </span>
     </label>
 
-    <label class="color-dot" style="--c:#6FA8D6">
-      <input type="checkbox" name="colores" value="Azul">
-      <span></span>
+    <label class="size-option">
+      <input type="radio" name="clase" value="Collar 89€">
+      <span class="size-card">
+        <span class="size-title">Collar · Clase B</span>
+        <span class="size-desc">Desde 89€</span>
+      </span>
     </label>
 
-    <label class="color-dot" style="--c:#D4B72A">
-      <input type="checkbox" name="colores" value="Amarillo">
-      <span></span>
+    <label class="size-option">
+      <input type="radio" name="clase" value="Collar 99€">
+      <span class="size-card">
+        <span class="size-title">Collar · Clase C</span>
+        <span class="size-desc">Desde 99€</span>
+      </span>
     </label>
 
-    <label class="color-dot" style="--c:#3F7F6B">
-      <input type="checkbox" name="colores" value="Verde">
-      <span></span>
+    <!-- Pendientes / Broches -->
+    <label class="size-option">
+      <input type="radio" name="clase" value="Pieza 39€">
+      <span class="size-card">
+        <span class="size-title">Pendientes / Broche</span>
+        <span class="size-desc">Desde 39€</span>
+      </span>
     </label>
 
-    <label class="color-dot" style="--c:#F2EEE8">
-      <input type="checkbox" name="colores" value="Crema">
-      <span></span>
-    </label>
-
-    <label class="color-dot" style="--c:#2C2C2C">
-      <input type="checkbox" name="colores" value="Negro">
-      <span></span>
+    <label class="size-option">
+      <input type="radio" name="clase" value="Pieza 49€">
+      <span class="size-card">
+        <span class="size-title">Pendientes / Broche</span>
+        <span class="size-desc">Desde 49€</span>
+      </span>
     </label>
   </div>
 
-  <p class="color-helper">
-    Has seleccionado <strong><span id="color-count">0</span></strong> colores.
+  <p class="form-intro">
+    El precio final puede variar según piedras, tamaño y peticiones especiales.
   </p>
 </div>
 
