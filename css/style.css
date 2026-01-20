@@ -1207,8 +1207,35 @@ textarea::placeholder{
 /* =====================
    CLASS CARDS
 ===================== */
+/* =====================
+   CLASES – HOW STYLE
+===================== */
+
+.class-panel{
+  display: none;
+  margin-top: 20px;
+}
+
+.class-panel.is-visible{
+  display: block;
+}
+
+.class-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 860px;
+}
+
+@media (min-width: 769px){
+  .class-grid{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .class-card{
-  padding: 18px 20px;
+  position: relative;
+  padding: 22px 24px;
   border-radius: 20px;
   background: rgba(255,255,255,0.95);
   border: 2px solid rgba(0,0,0,0.12);
@@ -1216,9 +1243,26 @@ textarea::placeholder{
   transition: all .2s ease;
 }
 
+.class-card h4{
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+
+.class-card p{
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.8;
+  max-width: 45ch;
+}
+
+.class-card input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .class-card:hover{
   border-color: var(--blue);
-  transform: translateY(-1px);
 }
 
 .class-card.is-selected{
