@@ -1088,7 +1088,7 @@ padding: 30px 30px;
   opacity: 0.75;
   max-width: 100ch;
 }
-textarea::placeholder{
+.form-group textarea::placeholder{
   font-size: 12px;
   color: #9a9a9a;
   opacity: 1;
@@ -1096,11 +1096,12 @@ textarea::placeholder{
 .form-group textarea{
   display: block;
   width: 100%;
-  min-height: 140px;
+  min-height: 120px;
+  resize: none;                 /* 🔑 elimina crecimiento raro */
 
   padding: 14px 16px;
-  font-size: 14px;          /* 🔑 MÁS PEQUEÑO */
-  line-height: 1.5;
+  font-size: 14px;              /* 🔑 tamaño correcto */
+  line-height: 1.45;
 
   border-radius: 16px;
 }
@@ -1213,6 +1214,7 @@ textarea::placeholder{
 /* Panels ocultos por defecto */
 .class-panel{
   display: none;
+  margin-top: 16px;
 }
 
 /* panel activo */
@@ -1234,6 +1236,13 @@ textarea::placeholder{
 
 .class-card.is-selected{
   border-color: var(--blue);
+  background: rgba(111,168,214,0.08);
+}
+.class-panel .how-card{
+  border: 2px solid rgba(90,140,210,0.25);
+}
+.class-card input:checked + .how-content,
+.class-card.is-selected{
   background: rgba(111,168,214,0.08);
 }
 
