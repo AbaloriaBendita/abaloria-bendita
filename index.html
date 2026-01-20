@@ -729,34 +729,20 @@
 </script>
 
 <script>
-  const tipologias = document.querySelectorAll('input[name="tipologia"]');
+  const tipologiaRadios = document.querySelectorAll('input[name="tipologia"]');
   const panels = document.querySelectorAll('.class-panel');
-  const classInputs = document.querySelectorAll('input[name="clase"]');
 
-  tipologias.forEach(radio => {
+  tipologiaRadios.forEach(radio => {
     radio.addEventListener('change', () => {
       const selected = radio.value;
 
       panels.forEach(panel => {
-        panel.classList.toggle(
-          'is-visible',
-          panel.dataset.tipologia === selected
-        );
+        if (panel.dataset.tipologia === selected) {
+          panel.classList.add('is-visible');
+        } else {
+          panel.classList.remove('is-visible');
+        }
       });
-
-      classInputs.forEach(input => {
-        input.checked = false;
-        input.closest('.class-card')?.classList.remove('is-selected');
-      });
-    });
-  });
-
-  classInputs.forEach(input => {
-    input.addEventListener('change', () => {
-      document.querySelectorAll('.class-card').forEach(card => {
-        card.classList.remove('is-selected');
-      });
-      input.closest('.class-card').classList.add('is-selected');
     });
   });
 </script>
