@@ -1087,6 +1087,11 @@ padding: 30px 30px;
   opacity: 0.75;
   max-width: 100ch;
 }
+textarea{
+  resize: vertical;
+  min-height: 96px;
+  max-width: 520px;
+}
 
 /* =====================
    TIPOLOGÍA – PILLS
