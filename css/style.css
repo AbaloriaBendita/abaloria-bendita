@@ -1087,13 +1087,8 @@ padding: 30px 30px;
   opacity: 0.75;
   max-width: 100ch;
 }
-textarea{
-  resize: vertical;
-  max-width: 520px;
-  max-width: 100%;
-}
-textarea::placeholder{
-  font-size: 8px;
+.textarea::placeholder{
+  font-size: 12px;
   color: #9a9a9a;   /* gris claro, claramente “ejemplo” */
   opacity: 1;       /* evita que el navegador lo haga demasiado tenue */
 }
@@ -1211,18 +1206,13 @@ width: 100%;
 ===================== */
 /* Panels ocultos por defecto */
 .class-panel{
-  max-height: 0;
+  display: none;
   overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transition: max-height .35s ease, opacity .25s ease;
 }
 
 /* panel activo */
 .class-panel.is-visible{
-  max-height: 2000px; /* suficiente para 3 cards */
-  opacity: 1;
-  pointer-events: auto;
+  display: block;
   margin-top: 20px;
 }
 
