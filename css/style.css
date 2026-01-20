@@ -1099,7 +1099,7 @@ textarea::placeholder{
   opacity: 1;       /* evita que el navegador lo haga demasiado tenue */
 }
 .form-group textarea{
-  max-width: 100%;
+  max-width: 120px;
 }
 
 /* =====================
