@@ -334,87 +334,55 @@
   Danos pistas de lo que deseas, nosotros te lo diseñaremos con mucha gracia.
 </p>
 
-  <!-- Tipología -->
-  <div class="form-group">
-    <label class="group-label">Tipología</label>
-
-    <div class="pill-group pill-radio">
-      <label class="pill">
-  <input type="radio" name="tipologia" value="Collar" required>
-  <span class="pill-btn">
-    <span class="pill-icon"><img src="assets/icons/collar.png" alt="Collar">
-</span>
-    <span class="pill-text">Collar</span>
-  </span>
-</label>
-
-<label class="pill">
-  <input type="radio" name="tipologia" value="Pendientes" required>
-  <span class="pill-btn">
-    <span class="pill-icon"><img src="assets/icons/pendiente.png" alt="Pendientes"></span>
-    <span class="pill-text">Pendientes</span>
-  </span>
-</label>
-  <label class="pill">
-  <input type="radio" name="tipologia" value="Broche" required>
-  <span class="pill-btn">
-    <span class="pill-icon"><img src="assets/icons/broches.png" alt="Broches"></span>
-    <span class="pill-text">Broche</span>
-  </span>
-</label>
-    </div>
-  </div>
-
-  <!-- CLASES -->
+ <!-- CLASES -->
 <div class="form-group">
   <label class="group-label">
     Clase de pieza
     <span class="group-help">Precio base según tipología</span>
   </label>
 
-  <div class="size-group">
-    
-    <!-- Collares -->
-    <label class="size-option">
-      <input type="radio" name="clase" value="Collar 79€" required>
-      <span class="size-card">
-        <span class="size-title">Collar · Clase A</span>
-        <span class="size-desc">Desde 79€</span>
-      </span>
-    </label>
+  <!-- CLASES COLLAR -->
+  <div class="class-group" data-tipologia="Collar">
+    <div class="class-grid">
 
-    <label class="size-option">
-      <input type="radio" name="clase" value="Collar 89€">
-      <span class="size-card">
-        <span class="size-title">Collar · Clase B</span>
-        <span class="size-desc">Desde 89€</span>
-      </span>
-    </label>
+      <label class="class-card">
+        <input type="radio" name="clase" value="Collar · Sencillo con gracia" required>
+        <h4>Sencillo con gracia</h4>
+        <p>Desde 79€ · Minimalista con un toque especial</p>
+      </label>
 
-    <label class="size-option">
-      <input type="radio" name="clase" value="Collar 99€">
-      <span class="size-card">
-        <span class="size-title">Collar · Clase C</span>
-        <span class="size-desc">Desde 99€</span>
-      </span>
-    </label>
+      <label class="class-card">
+        <input type="radio" name="clase" value="Collar · Elegancia divertida">
+        <h4>Elegancia divertida</h4>
+        <p>Desde 89€ · El equilibrio Abaloria</p>
+      </label>
 
-    <!-- Pendientes / Broches -->
-    <label class="size-option">
-      <input type="radio" name="clase" value="Pieza 39€">
-      <span class="size-card">
-        <span class="size-title">Pendientes / Broche</span>
-        <span class="size-desc">Desde 39€</span>
-      </span>
-    </label>
+      <label class="class-card">
+        <input type="radio" name="clase" value="Collar · Súper guay">
+        <h4>Súper guay</h4>
+        <p>Desde 99€ · Protagonista total</p>
+      </label>
 
-    <label class="size-option">
-      <input type="radio" name="clase" value="Pieza 49€">
-      <span class="size-card">
-        <span class="size-title">Pendientes / Broche</span>
-        <span class="size-desc">Desde 49€</span>
-      </span>
-    </label>
+    </div>
+  </div>
+
+  <!-- CLASES PENDIENTES / BROCHE -->
+  <div class="class-group" data-tipologia="Pendientes Broche">
+    <div class="class-grid">
+
+      <label class="class-card">
+        <input type="radio" name="clase" value="Pieza · Toque especial">
+        <h4>Toque especial</h4>
+        <p>Desde 39€ · Pequeña joyita</p>
+      </label>
+
+      <label class="class-card">
+        <input type="radio" name="clase" value="Pieza · Muy especial">
+        <h4>Muy especial</h4>
+        <p>Desde 49€ · Más presencia y detalle</p>
+      </label>
+
+    </div>
   </div>
 
   <p class="form-intro">
