@@ -335,18 +335,19 @@
 </p>
 
  <!-- CLASES -->
-<div class="form-group">
+<div class="form-group" id="clases">
+
   <label class="group-label">
     Clase de pieza
     <span class="group-help">Precio base según tipología</span>
   </label>
 
-  <!-- CLASES COLLAR -->
-  <div class="class-group" data-tipologia="Collar">
+  <!-- COLLAR -->
+  <div class="class-panel" data-tipologia="Collar">
     <div class="class-grid">
 
       <label class="class-card">
-        <input type="radio" name="clase" value="Collar · Sencillo con gracia" required>
+        <input type="radio" name="clase" value="Collar · Sencillo con gracia">
         <h4>Sencillo con gracia</h4>
         <p>Desde 79€ · Minimalista con un toque especial</p>
       </label>
@@ -366,18 +367,37 @@
     </div>
   </div>
 
-  <!-- CLASES PENDIENTES / BROCHE -->
-  <div class="class-group" data-tipologia="Pendientes Broche">
+  <!-- PENDIENTES -->
+  <div class="class-panel" data-tipologia="Pendientes">
     <div class="class-grid">
 
       <label class="class-card">
-        <input type="radio" name="clase" value="Pieza · Toque especial">
+        <input type="radio" name="clase" value="Pendientes · Toque especial">
         <h4>Toque especial</h4>
         <p>Desde 39€ · Pequeña joyita</p>
       </label>
 
       <label class="class-card">
-        <input type="radio" name="clase" value="Pieza · Muy especial">
+        <input type="radio" name="clase" value="Pendientes · Muy especial">
+        <h4>Muy especial</h4>
+        <p>Desde 49€ · Más presencia y detalle</p>
+      </label>
+
+    </div>
+  </div>
+
+  <!-- BROCHES -->
+  <div class="class-panel" data-tipologia="Broche">
+    <div class="class-grid">
+
+      <label class="class-card">
+        <input type="radio" name="clase" value="Broche · Toque especial">
+        <h4>Toque especial</h4>
+        <p>Desde 39€ · Pequeña joyita</p>
+      </label>
+
+      <label class="class-card">
+        <input type="radio" name="clase" value="Broche · Muy especial">
         <h4>Muy especial</h4>
         <p>Desde 49€ · Más presencia y detalle</p>
       </label>
@@ -388,6 +408,7 @@
   <p class="form-intro">
     El precio final puede variar según piedras, tamaño y peticiones especiales.
   </p>
+
 </div>
 
   <!-- Colecciones -->
