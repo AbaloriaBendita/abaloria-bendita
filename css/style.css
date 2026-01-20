@@ -1208,12 +1208,19 @@ textarea::placeholder{
 ===================== */
 /* Panels ocultos por defecto */
 .class-panel{
-  display: none;
-  margin-top: 20px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: max-height .35s ease, opacity .25s ease;
 }
 
+/* panel activo */
 .class-panel.is-visible{
-  display: block;
+  max-height: 2000px; /* suficiente para 3 cards */
+  opacity: 1;
+  pointer-events: auto;
+  margin-top: 20px;
 }
 
 /* Cards seleccionables */
