@@ -1089,7 +1089,6 @@ padding: 30px 30px;
 }
 textarea{
   resize: vertical;
-  min-height: 96px;
   max-width: 520px;
   max-width: 100%;
 }
@@ -1206,9 +1205,6 @@ textarea::placeholder{
 
 /* =====================
    CLASS CARDS
-===================== */
-/* =====================
-   CLASES – HOW STYLE
 ===================== */
 
 .class-panel{
