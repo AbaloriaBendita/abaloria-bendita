@@ -720,13 +720,14 @@
       const selected = radio.value;
 
       panels.forEach(panel => {
-        panel.classList.toggle(
-          'is-visible',
-          panel.dataset.tipologia === selected
-        );
+        panel.classList.remove('is-visible');
+
+        if(panel.dataset.tipologia === selected){
+          panel.classList.add('is-visible');
+        }
       });
 
-      // reset selección de clase
+      // reset clases
       classInputs.forEach(input => {
         input.checked = false;
         input.closest('.class-card')?.classList.remove('is-selected');
