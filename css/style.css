@@ -1226,7 +1226,7 @@ padding: 30px 30px;
 
 /* Cards seleccionables */
 .class-card{
-  cursor: pointer;
+  border: 2px solid rgba(90,140,210,0.25);
 }
 
 .class-card input{
@@ -1235,16 +1235,14 @@ padding: 30px 30px;
   pointer-events: none;
 }
 
-.class-card.is-selected{
+.class-card input:checked + .how-content{
+  /* no lo usamos */
+}
+
+/* 🔑 estado activo real */
+.class-card:has(input:checked){
   border-color: var(--blue);
-  background: rgba(111,168,214,0.08);
-}
-.class-panel .how-card{
-  border: 2px solid rgba(90,140,210,0.25);
-}
-.class-card input:checked + .how-content,
-.class-card.is-selected{
-  background: rgba(111,168,214,0.08);
+  background: rgba(111,168,214,0.10);
 }
 
 /* =====================
