@@ -1587,31 +1587,32 @@ const precios = {
   .form-cta{
     display: flex;
     flex-direction: column;
-    gap: 16px !important;     /* 🔑 separación real */
+    gap: 14px;
     margin-top: 32px;
   }
 
-  .form-cta button{
+  /* CTA principal */
+  .cta-main{
     width: 100%;
-    margin: 0 !important;     /* 🔑 mata márgenes heredados */
+    font-size: 16px;
+    padding: 16px 20px;
   }
 
-  .cta-main,
+  /* CTA secundario: claramente menor */
   .cta-alt{
-    font-size: 15px;
-    padding: 14px 18px;       /* 🔑 menos alto */
-    line-height: 1.2;
+    width: 100%;
+    font-size: 14px;
+    padding: 12px 18px;
+    opacity: 0.85;
   }
 
-  .cta-alt{
-    border-width: 1.5px;
-  }
-
-  .cta-helper{
-    margin-top: 16px;
-    font-size: 13px;
+  /* Separador visual */
+  .cta-separator{
     text-align: center;
+    font-size: 13px;
+    opacity: 0.6;
   }
+
 }
 
 /* =========================
