@@ -1182,8 +1182,9 @@ padding: 30px 30px;
 
 /* estados (los que ya usas con JS) */
 .pill.is-selected .pill-btn{
-  border-color: #111;
-  background: rgba(0,0,0,0.05);
+  border-color: var(--blue);
+  background: rgba(111,168,214,0.12);
+  color: #000;
 }
 
 .pill.is-dimmed .pill-btn{
