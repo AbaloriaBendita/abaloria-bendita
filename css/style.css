@@ -1539,6 +1539,11 @@ padding: 30px 30px;
   font-size: 14px;
   color: #666;
 }
+const precios = {
+  "Collar · Sencillo con gracia": 79,
+  "Collar · Elegancia divertida": 89,
+  "Collar · Súper guay": 99
+};
 
 /* Mobile */
 @media (max-width: 540px){
