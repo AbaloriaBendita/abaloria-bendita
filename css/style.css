@@ -1580,31 +1580,35 @@ const precios = {
   }
 }
 /* =====================
-   CTA FINAL – MOBILE FIX
+   CTA FINAL – MOBILE FIX DEFINITIVO
 ===================== */
 @media (max-width: 540px){
 
   .form-cta{
     display: flex;
     flex-direction: column;
-    gap: 12px;              /* 🔑 aire entre botones */
-    margin-top: 28px;
+    gap: 16px !important;     /* 🔑 separación real */
+    margin-top: 32px;
+  }
+
+  .form-cta button{
+    width: 100%;
+    margin: 0 !important;     /* 🔑 mata márgenes heredados */
   }
 
   .cta-main,
   .cta-alt{
-    width: 100%;
-    font-size: 15px;        /* 🔑 más contenido, menos botón */
-    padding: 14px 20px;     /* 🔑 menos alto */
+    font-size: 15px;
+    padding: 14px 18px;       /* 🔑 menos alto */
+    line-height: 1.2;
   }
 
   .cta-alt{
-    border-width: 1.5px;    /* más ligero visualmente */
-    opacity: 0.9;
+    border-width: 1.5px;
   }
 
   .cta-helper{
-    margin-top: 14px;
+    margin-top: 16px;
     font-size: 13px;
     text-align: center;
   }
