@@ -797,6 +797,23 @@ y la disponibilidad de piezas.
   }
 </script>
 
+    <script>
+  document.getElementById('pay-now').addEventListener('click', () => {
+    const total = calculateTotal(true);
+
+    if(!total){
+      alert("Por favor, selecciona una tipología y una clase antes de pagar.");
+      return;
+    }
+
+    // Aquí luego conectas con SumUp
+    alert("Total a pagar ahora: " + total + " €");
+
+    // Ejemplo futuro:
+    // window.location.href = `https://pay.sumup.com/b2c/XXXX?amount=${total}`;
+  });
+</script>
+
 
 </body>
 </html>
