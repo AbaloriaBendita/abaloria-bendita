@@ -1496,6 +1496,29 @@ padding: 30px 30px;
 /* =====================
    CTA FINAL – FORM
 ===================== */
+.price-summary{
+  margin: 32px 0 24px;
+  padding: 16px 18px;
+  border-radius: 16px;
+  background: rgba(0,0,0,0.04);
+  max-width: 520px;
+}
+
+.price-row{
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.price-row.discount{
+  color: #2f7dd1;
+}
+
+.price-row.total{
+  font-size: 16px;
+  margin-top: 12px;
+}
 
 .form-cta{
   margin-top: 36px;
