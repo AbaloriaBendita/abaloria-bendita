@@ -1579,6 +1579,36 @@ const precios = {
     padding: 16px 24px;
   }
 }
+/* =====================
+   CTA FINAL – MOBILE FIX
+===================== */
+@media (max-width: 540px){
+
+  .form-cta{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;              /* 🔑 aire entre botones */
+    margin-top: 28px;
+  }
+
+  .cta-main,
+  .cta-alt{
+    width: 100%;
+    font-size: 15px;        /* 🔑 más contenido, menos botón */
+    padding: 14px 20px;     /* 🔑 menos alto */
+  }
+
+  .cta-alt{
+    border-width: 1.5px;    /* más ligero visualmente */
+    opacity: 0.9;
+  }
+
+  .cta-helper{
+    margin-top: 14px;
+    font-size: 13px;
+    text-align: center;
+  }
+}
 
 /* =========================
    FOOTER
