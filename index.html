@@ -761,7 +761,9 @@ y la disponibilidad de piezas.
   });
 </script>
 
-  <script>
+ <script>
+document.addEventListener("DOMContentLoaded", () => {
+
   const PRICES = {
     "Collar · Sencillo con gracia": 79,
     "Collar · Elegancia divertida": 89,
@@ -780,13 +782,13 @@ y la disponibilidad de piezas.
     const selected = document.querySelector('input[name="clase"]:checked');
     if(!selected) return null;
 
-    let basePrice = PRICES[selected.value];
+    const basePrice = PRICES[selected.value];
     if(!basePrice) return null;
 
     let total = basePrice;
 
     if(prepay){
-      total = total * (11 - DISCOUNT);
+      total = total * (1 - DISCOUNT);
     }
 
     if(total < FREE_SHIPPING_FROM){
@@ -796,26 +798,27 @@ y la disponibilidad de piezas.
     return Math.round(total * 100) / 100;
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const payNowBtn = document.getElementById('pay-now');
+  const payNowBtn = document.getElementById('pay-now');
 
-    if(payNowBtn){
-      payNowBtn.addEventListener('click', () => {
-        const total = calculateTotal(true);
+  if(payNowBtn){
+    payNowBtn.addEventListener('click', () => {
+      const total = calculateTotal(true);
 
-        if(!total){
-          alert("Por favor, selecciona una tipología y una clase antes de pagar.");
-          return;
-        }
+      if(!total){
+        alert("Por favor, selecciona una tipología y una clase antes de pagar.");
+        return;
+      }
 
-        alert("Total a pagar ahora: " + total + " €");
+      alert("Total a pagar ahora: " + total + " €");
 
-        // FUTURO:
-        // window.location.href = `https://pay.sumup.com/b2c/XXXX?amount=${total}`;
-      });
-    }
-  });
+      // FUTURO:
+      // window.location.href = `https://pay.sumup.com/b2c/XXXX?amount=${total}`;
+    });
+  }
+
+});
 </script>
+
 
    <script>
   document.addEventListener("DOMContentLoaded", () => {
