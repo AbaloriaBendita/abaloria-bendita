@@ -787,6 +787,9 @@ y la disponibilidad de piezas.
  <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+  /* =====================
+     CONFIGURACIÓN
+  ===================== */
   const PRICES = {
     "Collar · Sencillo con gracia": 79,
     "Collar · Elegancia divertida": 89,
@@ -801,6 +804,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const SHIPPING = 15;
   const FREE_SHIPPING_FROM = 150;
 
+  /* =====================
+     CÁLCULO
+  ===================== */
   function calculateTotal(prepay = false){
     const selected = document.querySelector('input[name="clase"]:checked');
     if(!selected) return null;
@@ -821,8 +827,45 @@ document.addEventListener("DOMContentLoaded", () => {
     return Math.round(total * 100) / 100;
   }
 
-  const payNowBtn = document.getElementById('pay-now');
+  /* =====================
+     RESUMEN DE PRECIO (⬅️ AQUÍ VA LA “ÚLTIMA PARTE”)
+  ===================== */
+  function updatePriceSummary(prepay = false){
+    const selected = document.querySelector('input[name="clase"]:checked');
+    if(!selected) return;
 
+    const base = PRICES[selected.value];
+    if(!base) return;
+
+    const discount = prepay ? base * DISCOUNT : 0;
+    const subtotal = base - discount;
+    const shipping = subtotal < FREE_SHIPPING_FROM ? SHIPPING : 0;
+    const total = subtotal + shipping;
+
+    document.getElementById('price-base').textContent = base.toFixed(2) + " €";
+    document.getElementById('price-discount').textContent =
+      prepay ? `–${discount.toFixed(2)} €` : "—";
+    document.getElementById('price-shipping').textContent =
+      shipping === 0 ? "Gratis" : shipping.toFixed(2) + " €";
+    document.getElementById('price-total').textContent =
+      total.toFixed(2) + " €";
+
+    document.getElementById('price-summary').hidden = false;
+  }
+
+  /* =====================
+     EVENTOS
+  ===================== */
+
+  // Cuando cambia la clase
+  document.querySelectorAll('input[name="clase"]').forEach(input => {
+    input.addEventListener('change', () => {
+      updatePriceSummary(false);
+    });
+  });
+
+  // Botón pagar ahora
+  const payNowBtn = document.getElementById('pay-now');
   if(payNowBtn){
     payNowBtn.addEventListener('click', () => {
       const total = calculateTotal(true);
@@ -831,6 +874,8 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Por favor, selecciona una tipología y una clase antes de pagar.");
         return;
       }
+
+      updatePriceSummary(true);
 
       alert("Total a pagar ahora: " + total + " €");
 
@@ -841,66 +886,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 </script>
-
-
-   <script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    const PRICES = {
-      "Collar · Sencillo con gracia": 79,
-      "Collar · Elegancia divertida": 89,
-      "Collar · Súper guay": 99,
-      "Pendientes · Toque especial": 39,
-      "Pendientes · Muy especial": 49,
-      "Broche · Toque especial": 39,
-      "Broche · Muy especial": 49
-    };
-
-    const DISCOUNT = 0.10;
-    const SHIPPING = 15;
-    const FREE_SHIPPING_FROM = 150;
-
-    function calculateTotal(prepay = false){
-      const selected = document.querySelector('input[name="clase"]:checked');
-      if(!selected) return null;
-
-      const basePrice = PRICES[selected.value];
-      if(!basePrice) return null;
-
-      let total = basePrice;
-
-      if(prepay){
-        total = total * (1 - DISCOUNT);   // ✅ FIX
-      }
-
-      if(total < FREE_SHIPPING_FROM){
-        total += SHIPPING;
-      }
-
-      return Math.round(total * 100) / 100;
-    }
-
-    const payNowBtn = document.getElementById('pay-now');
-
-    if(payNowBtn){
-      payNowBtn.addEventListener('click', () => {
-        const total = calculateTotal(true);
-
-        if(!total){
-          alert("Por favor, selecciona una tipología y una clase antes de pagar.");
-          return;
-        }
-
-        alert("Total a pagar ahora: " + total + " €");
-
-        // FUTURO SUMUP:
-        // window.location.href = `https://pay.sumup.com/b2c/XXXX?amount=${total}`;
-      });
-    }
-
-  });
-</script>
-
+    
 
 
 
