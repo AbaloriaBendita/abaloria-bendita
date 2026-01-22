@@ -903,7 +903,51 @@ document.getElementById('qty-minus').addEventListener('click', () => {
   }
 });
 </script>
-    
+
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const PRICES = {
+    "Collar · Sencillo con gracia": 79,
+    "Collar · Elegancia divertida": 89,
+    "Collar · Súper guay": 99,
+    "Pendientes · Toque especial": 39,
+    "Pendientes · Muy especial": 49,
+    "Broche · Toque especial": 39,
+    "Broche · Muy especial": 49
+  };
+
+  const SHIPPING = 15;
+  const FREE_SHIPPING_FROM = 150;
+
+  const summary = document.getElementById("price-summary");
+  const baseEl = document.getElementById("price-base");
+  const shippingEl = document.getElementById("price-shipping");
+  const totalEl = document.getElementById("price-total");
+
+  document.querySelectorAll('input[name="clase"]').forEach(input => {
+    input.addEventListener("change", () => {
+
+      const price = PRICES[input.value];
+      if (!price) return;
+
+      summary.hidden = false;
+
+      baseEl.textContent = price.toFixed(2) + " €";
+
+      if (price >= FREE_SHIPPING_FROM) {
+        shippingEl.textContent = "Gratis";
+        totalEl.textContent = price.toFixed(2) + " €";
+      } else {
+        shippingEl.textContent = SHIPPING.toFixed(2) + " €";
+        totalEl.textContent = (price + SHIPPING).toFixed(2) + " €";
+      }
+    });
+  });
+
+});
+</script>
+
 
 
 
