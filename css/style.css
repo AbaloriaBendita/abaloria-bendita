@@ -1595,6 +1595,16 @@ padding: 30px 30px;
   font-weight: 600;
   opacity: 0.85;
 }
+.cta-price{
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 12px;
+}
+
+.cta-price strong{
+  font-size: 17px;
+}
+
 const precios = {
   "Collar · Sencillo con gracia": 79,
   "Collar · Elegancia divertida": 89,
