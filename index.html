@@ -844,7 +844,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const selected = document.querySelector('input[name="clase"]:checked');
     if(!selected) return;
 
-    const base = PRICES[selected.value];
+    const base = PRICES[selected.value] * quantity;
     if(!base) return;
 
     const discount = prepay ? base * DISCOUNT : 0;
@@ -904,6 +904,22 @@ if(prepay){
     });
   }
 
+});
+   let quantity = 1;
+const qtyInput = document.getElementById('qty');
+
+document.getElementById('qty-plus').addEventListener('click', () => {
+  quantity++;
+  qtyInput.value = quantity;
+  updatePriceSummary(false);
+});
+
+document.getElementById('qty-minus').addEventListener('click', () => {
+  if(quantity > 1){
+    quantity--;
+    qtyInput.value = quantity;
+    updatePriceSummary(false);
+  }
 });
 </script>
     
