@@ -619,7 +619,9 @@ y la disponibilidad de piezas.
   </div>
 </div>
 <div class="form-cta">
-
+<div class="cta-price" id="cta-price" hidden>
+  Total con pago anticipado: <strong id="cta-total">—</strong>
+</div>
   <button type="button" class="cta-main" id="pay-now">
   Encargar y pagar ahora
   <span class="cta-note">–10%</span>
@@ -852,6 +854,16 @@ document.addEventListener("DOMContentLoaded", () => {
       total.toFixed(2) + " €";
 
     document.getElementById('price-summary').hidden = false;
+    const ctaPrice = document.getElementById('cta-price');
+const ctaTotal = document.getElementById('cta-total');
+
+if(prepay){
+  ctaTotal.textContent = total.toFixed(2) + " €";
+  ctaPrice.hidden = false;
+}else{
+  ctaPrice.hidden = true;
+}
+
   }
 
   /* =====================
