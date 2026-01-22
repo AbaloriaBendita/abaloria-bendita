@@ -435,15 +435,23 @@ y la disponibilidad de piezas.
             <label class="how-card class-card">
               <input type="radio" name="clase" value="Broche · Muy especial">
               <div class="how-content">
-                <h3>Muy especial</h3>
-                <p>Desde 49€ Más presencia y detalle</p>
-                <span style="opacity:.7;font-size:13px">Pago anticipado -5%</span>
-              </div>
-               <!-- Clases: CONTADOR BROCHE -->
-      <div class="quantity-selector">
-  <button type="button" class="qty-btn" id="qty-minus">–</button>
-  <input type="number" id="qty" value="1" min="1" readonly>
-  <button type="button" class="qty-btn" id="qty-plus">+</button>
+
+  <h3>Muy especial</h3>
+
+  <p class="price-line">
+    Desde 49€ · Más presencia y detalle
+  </p>
+
+  <p class="prepay-line">
+    Pago anticipado · –5%
+  </p>
+
+  <div class="quantity-selector inside-card">
+    <button type="button" class="qty-btn" id="qty-minus">–</button>
+    <span class="qty-value" id="qty">1</span>
+    <button type="button" class="qty-btn" id="qty-plus">+</button>
+  </div>
+
 </div>
             </label>
 
