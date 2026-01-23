@@ -1881,6 +1881,122 @@ max-width: 860px;   /* prueba 860–920 */
   line-height: 1;
   font-size: 16px;
 }
+/* =====================
+   DISPONIBLES
+===================== */
+
+.available-page{
+  padding: 40px 20px 80px;
+}
+
+.available-intro{
+  max-width: 720px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+.available-intro h1{
+  font-size: 34px;
+  margin-bottom: 12px;
+}
+
+.available-intro p{
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* GRID */
+.available-grid{
+  display: grid;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px){
+  .available-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px){
+  .available-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* CARD */
+.piece-card{
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.piece-image{
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+.piece-image img{
+  width: 100%;
+  display: block;
+  transition: opacity .3s ease;
+}
+
+.piece-image .hover-img{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+@media (hover: hover){
+  .piece-card.available:hover .hover-img{
+    opacity: 1;
+  }
+}
+
+/* TEXT */
+.piece-card h3{
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.piece-price{
+  font-size: 14px;
+}
+
+.piece-price span{
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* STATUS */
+.piece-status{
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+/* CTA */
+.piece-cta{
+  margin-top: 6px;
+  align-self: flex-start;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.piece-cta.alt{
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+}
+
 
 }
 
