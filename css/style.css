@@ -1937,10 +1937,38 @@ max-width: 860px;   /* prueba 860–920 */
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
+/* BADGE BASE */
+.piece-card::after{
+  content: attr(data-status);
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  z-index: 3
+    }
+
+    /* DISPONIBLE */
+.piece-card.available::after{
+  content: "Disponible";
+  background: var(--blue);
+  color: #fff;
+}
+
+/* VENDIDA */
+.piece-card.sold::after{
+  content: "Vendida";
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+}
+
 .piece-image{
   position: relative;
-  overflow: hidden;
   border-radius: 18px;
+  overflow: hidden;
 }
 
 .piece-image img{
