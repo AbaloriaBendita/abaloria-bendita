@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abaloria Bendita — Collares únicos hechos a mano</title>
+  <meta name="description" content="Collares únicos y divertidos hechos a mano. Piezas irrepetibles. Encargos personalizados por pasos." />
+
+  <!-- Google Font (muy parecida al estilo del logo: bold, limpia) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+ 
+
+ <!-- Header -->
+
+  <header class="site-header">
+  <div class="header-inner">
+
+    <a href="#contenido" class="logo-text">
+      Abal<span class="logo-o">o</span>ria
+      <span class="logo-b">B</span>endita<span class="logo-dot">.</span>
+    </a>
+
+    <nav class="main-nav">
+      <a href="#disenos">Diseños</a>
+      <a href="#como-atraparlo">Cómo atraparlo</a>
+      <a href="/disponibles.html">Ver disponibles</a>
+
+      <!-- CTA SOLO PARA DESKTOP -->
+      <a href="#encargo" class="nav-cta desktop-only">
+        Encargar<span class="cta-dot">.</span>
+      </a>
+    </nav>
+
+    <div class="header-actions mobile-only">
+      <a href="#encargo" class="nav-cta">
+        Encargar<span class="cta-dot">.</span>
+      </a>
+
+      <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+
+  </div>
+</header>
+
+  <main id="contenido">
+ <main id="contenido">
+
+  <section class="available-page">
+
+    <div class="available-intro">
+      <h1>Piezas disponibles<span class="c-yellow">.</span></h1>
+      <p>
+        Collares únicos ya creados.  
+        Cuando se venden, no se repiten.
+      </p>
+    </div>
+
+    <div class="available-grid">
+      <!-- cards -->
+    </div>
+
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+  <footer class="site-footer">
+  <div class="container footer-inner">
+
+    <!-- Logo -->
+    <div class="footer-brand">
+      <a href="/" class="logo-text">
+        Abal<span class="logo-o">o</span>ria
+        <span class="logo-b">B</span>endita<span class="logo-dot">.</span>
+      </a>
+    </div>
+
+    <!-- Contacto / RRSS -->
+    <div class="footer-links">
+      <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener" class="footer-ig">
+        <img src="assets/IG_logo.png" alt="Instagram Abaloria Bendita">
+        <span>Síguenos en Instagram</span>
+      </a>
+
+      <a href="mailto:hola@abaloriabendita.es" class="footer-mail">
+        hola@abaloriabendita.es
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+
+<script>
+  const chipGroup = document.querySelector('.chip-group');
+  const checkboxes = chipGroup.querySelectorAll('input[type="checkbox"]');
+  const limit = 3;
+
+  checkboxes.forEach(cb => {
+    cb.addEventListener('change', () => {
+      const checked = chipGroup.querySelectorAll('input[type="checkbox"]:checked');
+
+      if (checked.length >= limit) {
+        checkboxes.forEach(box => {
+          if (!box.checked) {
+            box.disabled = true;
+            box.parentElement.classList.add('is-disabled');
+          }
+        });
+      } else {
+        checkboxes.forEach(box => {
+          box.disabled = false;
+          box.parentElement.classList.remove('is-disabled');
+        });
+      }
+    });
+  });
+</script>
+
+<script>
+  const tipologiaGroup = document.querySelector('.pill-group');
+  const radios = tipologiaGroup.querySelectorAll('input[type="radio"]');
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      radios.forEach(r => {
+        r.parentElement.classList.remove('is-selected');
+        r.parentElement.classList.add('is-dimmed');
+      });
+
+      radio.parentElement.classList.add('is-selected');
+      radio.parentElement.classList.remove('is-dimmed');
+    });
+  });
+</script>
+
+<script>
+  const colorGroup = document.querySelector('.color-group');
+  const colorInputs = colorGroup.querySelectorAll('input');
+  const countEl = document.getElementById('color-count');
+  const min = 2;
+  const max = 4;
+
+  colorInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      const checked = colorGroup.querySelectorAll('input:checked').length;
+      countEl.textContent = checked;
+
+      if (checked >= max) {
+        colorInputs.forEach(i => {
+          if (!i.checked) i.disabled = true;
+        });
+      } else {
+        colorInputs.forEach(i => i.disabled = false);
+      }
+    });
+  });
+</script>
+
+<script>
+  const track = document.querySelector('.carousel-track');
+  const slides = document.querySelectorAll('.carousel-slide');
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % slides.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+  }, 3500); // cambia cada 3.5s
+</script>
+
+<script>
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.main-nav');
+  const links = nav.querySelectorAll('a');
+
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('is-open');
+  });
+
+  links.forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+    });
+  });
+</script>
+
+<script>
+  const tipologiaRadios = document.querySelectorAll('input[name="tipologia"]');
+  const panels = document.querySelectorAll('.class-panel');
+
+  tipologiaRadios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      const selected = radio.value;
+
+      panels.forEach(panel => {
+        if (panel.dataset.tipologia === selected) {
+          panel.classList.add('is-visible');
+        } else {
+          panel.classList.remove('is-visible');
+        }
+      });
+    });
+  });
+</script>
+
+    
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const PRICES = {
+    "Collar · Sencillo con gracia": 79,
+    "Collar · Elegancia divertida": 89,
+    "Collar · Súper guay": 99,
+    "Pendientes · Toque especial": 39,
+    "Pendientes · Muy especial": 49,
+    "Broche · Toque especial": 39,
+    "Broche · Muy especial": 49
+  };
+
+  const SHIPPING = 15;
+  const FREE_SHIPPING_FROM = 150;
+
+  const summary = document.getElementById("price-summary");
+  const baseEl = document.getElementById("price-base");
+  const shippingEl = document.getElementById("price-shipping");
+  const totalEl = document.getElementById("price-total");
+
+  // Escuchamos cambios en TODO el documento
+  document.addEventListener("change", (e) => {
+
+    if (!e.target.matches('input[name="clase"]')) return;
+
+    const value = e.target.value;
+    const basePrice = PRICES[value];
+    if (!basePrice) return;
+
+    summary.hidden = false;
+
+    baseEl.textContent = basePrice.toFixed(2) + " €";
+
+    if (basePrice >= FREE_SHIPPING_FROM) {
+      shippingEl.textContent = "Gratis";
+      totalEl.textContent = basePrice.toFixed(2) + " €";
+    } else {
+      shippingEl.textContent = SHIPPING.toFixed(2) + " €";
+      totalEl.textContent = (basePrice + SHIPPING).toFixed(2) + " €";
+    }
+  });
+
+});
+</script>
+
+
+
+</body>
+</html>
