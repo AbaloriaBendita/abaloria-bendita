@@ -1997,6 +1997,42 @@ max-width: 860px;   /* prueba 860–920 */
   }
 }
 
+@media (max-width: 768px){
+
+  /* Contenedor como carrusel */
+  .piece-image{
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+
+  /* Cada imagen ocupa el 100% */
+  .piece-image img{
+    flex: 0 0 100%;
+    width: 100%;
+    scroll-snap-align: start;
+  }
+
+  /* Anulamos lógica hover en mobile */
+  .piece-image .hover-img{
+    position: relative;
+    opacity: 1;
+  }
+
+  .piece-image img:first-child{
+    opacity: 1;
+  }
+
+  /* Quitamos efectos hover de la card */
+  .piece-card{
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+}
+
 /* TEXT */
 .piece-card h3{
   font-size: 18px;
