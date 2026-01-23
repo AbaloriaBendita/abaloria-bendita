@@ -2030,7 +2030,15 @@ max-width: 860px;   /* prueba 860–920 */
     transform: none !important;
     box-shadow: none !important;
   }
-
+  .piece-image::after{
+    content: "⇆";
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 14px;
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }
 
 /* TEXT */
