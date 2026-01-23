@@ -1787,6 +1787,8 @@ max-width: 860px;   /* prueba 860–920 */
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 /* Mobile */
