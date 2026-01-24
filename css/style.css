@@ -6,6 +6,7 @@
   --red: #C43A2B;        /* acento */
   --blue: #6FA8D6;       /* acento */
   --yellow: #D4B72A;     /* acento */
+  --green: #2E8B57; /* verde estado disponible */
 
   --radius: 18px;
   --radius-lg: 26px;
@@ -1943,6 +1944,21 @@ max-width: 860px;   /* prueba 860–920 */
   position: relative;
   transition: transform .25s ease, box-shadow .25s ease;
 }
+.piece-card::after{
+  content: attr(data-status);
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  z-index: 3;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .2s ease, transform .2s ease;
+}
 
 /* BADGE */
 .piece-card.available::after,
@@ -1960,7 +1976,7 @@ max-width: 860px;   /* prueba 860–920 */
 
 .piece-card.available::after{
   content: "Disponible";
-  background: var(--blue);
+  background: var(--green);
   color: #fff;
 }
 
@@ -1999,6 +2015,11 @@ max-width: 860px;   /* prueba 860–920 */
     transform: translateY(-4px);
     box-shadow: 0 16px 38px rgba(0,0,0,0.14);
   }
+  @media (hover:hover){
+  .piece-card:hover::after{
+    transform: translateY(-2px);
+  }
+}
 
   .piece-card:hover .hover-img{
     opacity: 1;
