@@ -311,7 +311,7 @@ input:focus, select:focus, textarea:focus{
 
 
 /* =========================
-   HEADER EDITORIAL
+   HEADER EDITORIAL (FINAL)
 ========================= */
 
 .site-header {
@@ -322,6 +322,7 @@ input:focus, select:focus, textarea:focus{
   z-index: 10;
 }
 
+/* Contenedor interno */
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -331,55 +332,66 @@ input:focus, select:focus, textarea:focus{
   justify-content: space-between;
 }
 
-.header-actions{
-  display: none;
+/* =====================
+   LOGO SVG
+===================== */
+
+/* Enlace del logo */
+.logo-link{
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  line-height: 0;
+
+  /* 🔑 blindaje contra herencias */
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-.logo-text {
-  font-weight: 900;
-  font-size: 20px;
-  color: #000;
-  letter-spacing: -0.02em;
+/* Imagen SVG */
+.logo-img{
+  display: block;
+  height: 38px;          /* desktop */
+  width: auto;
+
+  opacity: 1 !important;
+  filter: none !important;
 }
 
-.logo-o {
-  color: #C43A2B; /* rojo */
+/* Mobile */
+@media (max-width: 768px){
+  .logo-img{
+    height: 26px;        /* mobile equilibrado */
+  }
 }
 
-.logo-b {
-  color: #6FA8D6; /* azul */
-}
-
-.logo-dot {
-  color: var(--yellow);
-}
+/* =====================
+   NAVEGACIÓN
+===================== */
 
 .main-nav {
   display: flex;
   gap: 24px;
   font-size: 14px;
-margin-left: auto;
-    padding-right: 24px; /* ajusta entre 16–32 */
+  margin-left: auto;
+  padding-right: 24px;
 }
 
 .main-nav a {
   text-decoration: none;
   color: #000;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
   opacity: 0.85;
-z-index: 15;
+  transition: opacity .2s ease;
 }
 
 .main-nav a:hover {
   opacity: 1;
 }
-.main-nav a {
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
 
+/* CTA del menú */
 .nav-cta{
   font-weight: 800;
   letter-spacing: 0.01em;
@@ -387,26 +399,81 @@ z-index: 15;
   align-items: center;
 }
 
-.header-cta{
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  position: relative;
-}
-.nav-cta:hover .cta-dot{
-  transform: translateY(-1px);
-}
-
 .cta-dot{
   margin-left: 0.5px;
   color: var(--yellow);
-  font-size: 1.2em;     /* 🔑 más presencia */
+  font-size: 1.2em;
   line-height: 1;
 }
 
-#encargo{
-  scroll-margin-top: 100px; /* ajusta a la altura real del header */
+/* =====================
+   HEADER MOBILE
+===================== */
+
+.header-actions{
+  display: none;
+  align-items: center;
+  gap: 12px;
 }
 
+/* NAV DESKTOP */
+@media (min-width: 769px){
+  .nav-toggle{
+    display: none;
+  }
+}
+
+/* NAV MOBILE */
+@media (max-width: 768px){
+
+  .header-actions{
+    display: flex;
+  }
+
+  .main-nav{
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    position: absolute;
+    top: 100%;
+    right: 16px;
+
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    padding: 14px 18px;
+
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+    transition: opacity .25s ease, transform .25s ease;
+  }
+
+  .main-nav.is-open{
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-toggle{
+    background: none;
+    border: 0;
+    font-size: 22px;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+  }
+}
+
+/* =====================
+   SCROLL OFFSET
+===================== */
+
+#encargo{
+  scroll-margin-top: 100px;
+}
 
 /* =========================
    COLORES DE MARCA – GLOBAL
@@ -2119,27 +2186,6 @@ max-width: 860px;   /* prueba 860–920 */
   }
 }
 
-/* =====================
-   LOGO SVG
-===================== */
-
-.logo-link{
-  display: inline-flex;
-  align-items: center;
-  line-height: 0;
-}
-
-.logo-img{
-  height: 24px;   /* desktop */
-  width: auto;
-  display: block;
-}
-
-@media (max-width: 768px){
-  .logo-img{
-    height: 20px; /* mobile */
-  }
-}
 
 
 
