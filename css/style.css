@@ -2119,6 +2119,27 @@ max-width: 860px;   /* prueba 860–920 */
   }
 }
 
+/* =====================
+   LOGO SVG
+===================== */
+
+.logo-link{
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+}
+
+.logo-img{
+  height: 24px;   /* desktop */
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 768px){
+  .logo-img{
+    height: 20px; /* mobile */
+  }
+}
 
 
 
