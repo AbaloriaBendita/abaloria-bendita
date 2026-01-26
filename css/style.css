@@ -44,6 +44,19 @@ img{ max-width: 100%; display:block; }
   box-shadow: var(--shadow-soft);
 }
 
+/* Accessibility: oculto visual pero accesible */
+.sr-only{
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 /* Buttons */
 .btn{
   display:inline-flex;
@@ -1147,9 +1160,9 @@ max-width: 860px;   /* prueba 860–920 */
 /* Desktop: sin caja */
 @media (min-width: 769px){
   .form-inner{
-    background: none;
-    backdrop-filter: none;
-    border-radius: 0;
+    background: rgba(255,255,255,0.86);
+    backdrop-filter: blur(3px);
+    border-radius: 24px;
   }
 }
 
