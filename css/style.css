@@ -346,66 +346,25 @@ input:focus, select:focus, textarea:focus{
 }
 
 /* =====================
-   LOGO SVG
+   LOGO SVG (ARCHIVO)
 ===================== */
 
-/* Enlace del logo */
-.logo-link{
+.logo-link {
   display: inline-flex;
   align-items: center;
   line-height: 0;
-
-  /* 🔑 blindaje contra herencias */
-  opacity: 1 !important;
-  filter: none !important;
 }
 
-/* Imagen SVG */
-.logo-img{
+.logo-img {
   display: block;
-  height: 38px;          /* desktop */
+  height: 38px;     /* desktop */
   width: auto;
-
-  opacity: 1 !important;
-  filter: none !important;
 }
 
 /* Mobile */
-@media (max-width: 768px){
-  .logo-img{
-    height: 26px;        /* mobile equilibrado */
-  }
-}
-
-/* =====================
-   LOGO SVG INLINE
-===================== */
-
-.logo-svg {
-  height: 34px;
-  width: auto;
-  display: block;
-}
-
-.logo-svg .logo-main {
-  fill: #000;
-}
-
-.logo-svg .logo-o {
-  fill: #C43A2B;
-}
-
-.logo-svg .logo-b {
-  fill: #6FA8D6;
-}
-
-.logo-svg .logo-dot {
-  fill: var(--yellow);
-}
-
 @media (max-width: 768px) {
-  .logo-svg {
-    height: 20px;
+  .logo-img {
+    height: 26px;
   }
 }
 
