@@ -378,6 +378,38 @@ input:focus, select:focus, textarea:focus{
 }
 
 /* =====================
+   LOGO SVG INLINE
+===================== */
+
+.logo-svg {
+  height: 34px;
+  width: auto;
+  display: block;
+}
+
+.logo-svg .logo-main {
+  fill: #000;
+}
+
+.logo-svg .logo-o {
+  fill: #C43A2B;
+}
+
+.logo-svg .logo-b {
+  fill: #6FA8D6;
+}
+
+.logo-svg .logo-dot {
+  fill: var(--yellow);
+}
+
+@media (max-width: 768px) {
+  .logo-svg {
+    height: 20px;
+  }
+}
+
+/* =====================
    NAVEGACIÓN
 ===================== */
 
