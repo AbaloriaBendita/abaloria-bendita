@@ -357,14 +357,14 @@ input:focus, select:focus, textarea:focus{
 
 .logo-img {
   display: block;
-  height: 18px;     /* desktop */
+  height: 16px;     /* desktop */
   width: auto;
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .logo-img {
-    height: 14px;
+    height: 12px;
   }
 }
 
