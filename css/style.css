@@ -469,6 +469,15 @@ input:focus, select:focus, textarea:focus{
     position: relative;
     z-index: 20;
   }
+  .nav-cta{
+    font-weight: 600;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  .nav-cta .cta-dot{
+    display: none;
+  }
 }
 
 /* =====================
