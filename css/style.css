@@ -749,6 +749,28 @@ color: var(--yellow);
 }
 
 /* =========================
+   HEADERS DE SECCIÓN
+========================= */
+
+.section-header{
+  max-width: 900px;
+  margin: 0 auto 24px;
+  padding: 0 16px;   /* 🔑 esto los desplaza visualmente a la derecha */
+}
+
+.section-header h2{
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+
+.section-header p{
+  max-width: 520px;
+  font-size: 15px;
+  color: #555;
+}
+
+
+/* =========================
    COLECCIONES (NUEVO)
 ========================= */
 
