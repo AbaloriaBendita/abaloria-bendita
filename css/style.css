@@ -753,22 +753,22 @@ color: var(--yellow);
 ========================= */
 
 .section-header{
-  max-width: 900px;
-  margin: 0 auto 24px;
-  padding: 0 16px;   /* 🔑 esto los desplaza visualmente a la derecha */
+  max-width: 900px;     /* 🔑 igual que las cards */
+  margin: 0 auto 28px; /* centra el bloque */
+  padding: 0 16px;     /* mismo padding que grid */
 }
 
 .section-header h2{
   font-size: 28px;
-  margin-bottom: 6px;
+  margin: 0 0 6px;
 }
 
 .section-header p{
   max-width: 520px;
   font-size: 15px;
   color: #555;
+  margin: 0;
 }
-
 
 /* =========================
    COLECCIONES (NUEVO)
@@ -812,40 +812,29 @@ color: var(--yellow);
   }
 }
 
-/* ---------- CARD ---------- */
+/* =========================
+   TARJETA COLECCIÓN
+========================= */
 
 .collection-card{
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* Imagen */
-.collection-frame{
-  aspect-ratio: 4 / 5;   /* 🔑 antes era muy cuadrado */
-  border-radius: 18px;
-  overflow: hidden;
-  background: #f2efe9;
-}
-
-.collection-frame img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-/* Título integrado */
+/* Título arriba */
 .collection-body{
-  padding: 2px 4px 0;
+  order: -1;           /* 🔑 lo sube arriba */
+  padding: 0 6px;
 }
 
 .collection-card h3{
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
   text-align: center;
 }
+
 /* ---------- FRAME IMAGEN ---------- */
 
 .collection-frame{
@@ -892,6 +881,14 @@ color: var(--yellow);
   font-weight: 700;
   text-align: center;
   margin: 0;
+}
+
+.collection-price{
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 4px;
+  text-align: center;
+  opacity: 0.9;
 }
 
 /* ---------- MOBILE ---------- */
