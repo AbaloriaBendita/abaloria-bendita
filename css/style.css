@@ -286,7 +286,18 @@ input:focus, select:focus, textarea:focus{
   justify-content:space-between;
   gap: 16px;
 }
-.footer-logo{ height: 34px; width:auto; }
+.footer-logo{
+  height: 26px;       /* desktop */
+  width: auto;
+  opacity: 0.85;      /* más editorial */
+}
+
+@media (max-width: 768px){
+  .footer-logo{
+    height: 20px;     /* mobile */
+  }
+}
+
 .footer-right{
   display:flex;
   gap: 14px;
