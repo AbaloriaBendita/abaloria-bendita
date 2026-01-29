@@ -950,16 +950,26 @@ color: var(--yellow);
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  z-index: 5;
+
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(0,0,0,.55);
-  color: #fff;
+
   border: none;
-  font-size: 20px;
+  background: rgba(255,255,255,0.85);
+  color: #000;
+  font-size: 22px;
   font-weight: 700;
+  line-height: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   cursor: pointer;
-  z-index: 4;
+  pointer-events: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .img-nav.prev{ left: 10px; }
@@ -969,6 +979,23 @@ color: var(--yellow);
   .collection-card:not(:hover) .img-nav{
     opacity: 0;
     pointer-events: none;
+  }
+}
+
+/* Hover desktop */
+@media (hover: hover){
+  .img-nav:hover{
+    background: #fff;
+    transform: translateY(-50%) scale(1.05);
+  }
+}
+
+/* Mobile: un poco más grandes */
+@media (max-width: 768px){
+  .img-nav{
+    width: 42px;
+    height: 42px;
+    font-size: 24px;
   }
 }
 
