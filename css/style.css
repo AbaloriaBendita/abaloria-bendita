@@ -1262,7 +1262,12 @@ max-width: 860px;   /* prueba 860–920 */
     background-position: center bottom;
   }
 .how-inner{
-    margin-bottom: 25px; /* antes más */
+    padding: 28px 20px 32px; /* 🔑 más ancho visual */
+    border-radius: 20px;
+  }
+
+  .how-grid{
+    max-width: 100%;
   }
 
   .form-inner{
