@@ -924,6 +924,13 @@ color: var(--yellow);
   opacity: 0.85;
   margin: 0;
 }
+.collections-inspo{
+  margin-top: 32px; /* antes era mucho mayor */
+}
+
+.collections-inspo h3{
+  margin-bottom: 12px; /* 🔑 aquí estaba el aire */
+}
 
 /* =========================
    MOBILE
