@@ -1128,6 +1128,54 @@ color: var(--yellow);
   }
 }
 
+/* =========================
+   MODAL SWIPE
+========================= */
+
+.modal{
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+}
+
+.modal.is-open{
+  display: block;
+}
+
+.modal-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.modal-box{
+  position: relative;
+  max-width: 420px;
+  margin: 5vh auto;
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  z-index: 2;
+}
+
+.modal-image img{
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 12px;
+}
+
+.modal-close{
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
 
 /* =========================
    CTA PILL – GLOBAL
