@@ -919,6 +919,37 @@ color: var(--yellow);
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   z-index: 3;
 }
+.collection-frame .nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.85);
+  border: none;
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity .2s ease;
+  z-index: 4;
+}
+
+.collection-frame .prev{ left: 10px; }
+.collection-frame .next{ right: 10px; }
+
+.collection-card:hover .nav{
+  opacity: 1;
+}
 
 /* ---------- DESCRIPCIÓN ---------- */
 
