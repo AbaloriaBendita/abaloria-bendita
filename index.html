@@ -913,6 +913,21 @@ document.querySelectorAll('.collection-frame').forEach(frame => {
 });
 </script>
 
+<script>
+document.querySelectorAll('.js-collection-reference').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+
+    const frame = btn.closest('.collection-frame');
+    const activeImg = frame.querySelector('img.is-active');
+
+    if (!activeImg) return;
+
+    window.location.href =
+      `/disponible.html?img=${encodeURIComponent(activeImg.src)}`;
+  });
+});
+</script>
 
 
 
