@@ -833,6 +833,31 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+    <script>
+document.querySelectorAll('.collection-frame').forEach(frame => {
+  const imgs = frame.querySelectorAll('img');
+  let index = 0;
+
+  const show = i => {
+    imgs.forEach(img => img.classList.remove('is-active'));
+    imgs[i].classList.add('is-active');
+  };
+
+  frame.querySelector('.next')?.addEventListener('click', e => {
+    e.stopPropagation();
+    index = (index + 1) % imgs.length;
+    show(index);
+  });
+
+  frame.querySelector('.prev')?.addEventListener('click', e => {
+    e.stopPropagation();
+    index = (index - 1 + imgs.length) % imgs.length;
+    show(index);
+  });
+});
+</script>
+
+
 
 
 </body>
