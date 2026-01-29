@@ -900,25 +900,22 @@ color: var(--yellow);
   position: absolute;
   top: 12px;
   left: 12px;
-
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-
   background: #000;
   color: #fff;
+  font-weight: 800;
+  font-size: 14px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 14px;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   z-index: 3;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
+
 .collection-frame .nav{
   position: absolute;
   top: 50%;
@@ -973,7 +970,7 @@ color: var(--yellow);
 
 @media (max-width: 540px){
   .collection-frame{
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 4 / 5;
   }
 }
 
