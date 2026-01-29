@@ -771,29 +771,37 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES (NUEVO)
+   COLECCIONES
 ========================= */
 
 .collections{
   background: #fff;
 }
 
-.collections .container{
-  max-width: 1040px;
+/* =========================
+   CABECERA DE SECCIÓN
+========================= */
+
+.section-header{
+  max-width: 900px;
+  margin: 0 auto 24px;
+  padding: 0 16px;
 }
 
-/* ---------- TÍTULO SECCIÓN ---------- */
-
-.collections h2{
-  margin-left: 12px;     /* 🔑 más a la derecha */
+.section-header h2,
+.section-header h3{
+  margin: 0 0 6px;
 }
 
-.collections .section-intro{
-  margin-left: 12px;
+.section-header p{
   max-width: 520px;
+  margin: 0;
+  opacity: 0.85;
 }
 
-/* ---------- GRID ---------- */
+/* =========================
+   GRID
+========================= */
 
 .collections-grid{
   display: grid;
@@ -801,7 +809,7 @@ color: var(--yellow);
   gap: 28px;
   max-width: 900px;
   margin: 0 auto;
-  padding: 12px 16px 32px;
+  padding: 0 16px 40px;
 }
 
 /* Mobile */
@@ -822,17 +830,24 @@ color: var(--yellow);
   gap: 10px;
 }
 
-/* Título arriba */
-.collection-body{
-  order: -1;           /* 🔑 lo sube arriba */
-  padding: 0 6px;
+/* ---------- CABECERA CARD ---------- */
+
+.collection-head{
+  text-align: center;
 }
 
-.collection-card h3{
+.collection-head h3,
+.collection-head h4{
   font-size: 15px;
   font-weight: 800;
   margin: 0;
-  text-align: center;
+}
+
+.collection-price{
+  font-size: 14px;
+  font-weight: 700;
+  margin-top: 2px;
+  opacity: 0.9;
 }
 
 /* ---------- FRAME IMAGEN ---------- */
@@ -840,7 +855,7 @@ color: var(--yellow);
 .collection-frame{
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;   /* 🔑 más rectangular */
+  aspect-ratio: 4 / 5; /* más editorial */
   border-radius: 18px;
   overflow: hidden;
 
@@ -855,13 +870,21 @@ color: var(--yellow);
 }
 
 .collection-frame img{
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  opacity: 0;
+  transition: opacity .3s ease;
 }
 
-/* Hover sutil */
+/* muestra la primera por defecto */
+.collection-frame img:first-child{
+  opacity: 1;
+}
+
+/* hover: micro elevación */
 .collection-card:hover .collection-frame{
   transform: translateY(-4px);
   box-shadow:
@@ -869,38 +892,22 @@ color: var(--yellow);
     0 10px 28px rgba(0,0,0,0.12);
 }
 
-/* ---------- TEXTO ---------- */
+/* ---------- DESCRIPCIÓN ---------- */
 
-.collection-body{
-  padding: 4px 4px 0; /* 🔑 casi sin espacio */
-}
-
-.collection-body h3,
-.collection-body h4{
-  font-size: 15px;
-  font-weight: 700;
+.collection-desc{
+  font-size: 14px;
   text-align: center;
+  opacity: 0.85;
   margin: 0;
 }
 
-.collection-price{
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: 4px;
-  text-align: center;
-  opacity: 0.9;
-}
-
-/* ---------- MOBILE ---------- */
+/* =========================
+   MOBILE
+========================= */
 
 @media (max-width: 540px){
   .collection-frame{
     aspect-ratio: 1 / 1;
-  }
-
-  .collections h2,
-  .collections .section-intro{
-    margin-left: 8px;
   }
 }
 
