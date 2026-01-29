@@ -974,6 +974,22 @@ color: var(--yellow);
   }
 }
 
+@media (max-width: 768px){
+
+  .collection-frame{
+    aspect-ratio: auto !important;
+    height: auto;
+    min-height: 280px;
+  }
+
+  .collection-frame img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+}
+
 /* =========================
    CTA PILL – GLOBAL
 ========================= */
