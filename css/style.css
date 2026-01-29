@@ -974,21 +974,33 @@ color: var(--yellow);
   }
 }
 
+/* =========================
+   COLECCIONES – FIX MOBILE
+========================= */
+
 @media (max-width: 768px){
 
+  .collections-grid{
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .collection-card{
+    gap: 8px;
+  }
+
   .collection-frame{
-    aspect-ratio: auto !important;
+    aspect-ratio: auto;   /* 🔑 CLAVE */
     height: auto;
-    min-height: 280px;
   }
 
   .collection-frame img{
     width: 100%;
     height: auto;
-    object-fit: contain;
+    display: block;
   }
-
 }
+
 
 /* =========================
    CTA PILL – GLOBAL
