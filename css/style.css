@@ -771,7 +771,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES
+   COLECCIONES · SECCIÓN
 ========================= */
 
 .collections{
@@ -779,7 +779,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   CABECERA DE SECCIÓN
+   COLECCIONES · CABECERA
 ========================= */
 
 .section-header{
@@ -800,7 +800,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   GRID
+   COLECCIONES · GRID
 ========================= */
 
 .collections-grid{
@@ -821,7 +821,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   TARJETA COLECCIÓN
+   COLECCIONES · TARJETA
 ========================= */
 
 .collection-card{
@@ -850,12 +850,15 @@ color: var(--yellow);
   opacity: 0.9;
 }
 
-/* ---------- FRAME IMAGEN ---------- */
+/* =========================
+   COLECCIONES · FRAME IMAGEN (DESKTOP)
+   - Desktop usa "is-active" + flechas
+========================= */
 
 .collection-frame{
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5; /* más editorial */
+  aspect-ratio: 4 / 5;
   border-radius: 18px;
   overflow: hidden;
 
@@ -878,6 +881,7 @@ color: var(--yellow);
   opacity: 0;
   transition: opacity .3s ease;
 }
+
 .collection-frame img.is-active{
   opacity: 1;
   position: relative;
@@ -896,6 +900,10 @@ color: var(--yellow);
     0 10px 28px rgba(0,0,0,0.12);
 }
 
+/* =========================
+   COLECCIONES · BADGE PRECIO
+========================= */
+
 .price-badge{
   position: absolute;
   top: 12px;
@@ -913,6 +921,10 @@ color: var(--yellow);
   z-index: 6;
   box-shadow: 0 4px 10px rgba(0,0,0,.2);
 }
+
+/* =========================
+   COLECCIONES · FLECHAS (DESKTOP)
+========================= */
 
 .collection-frame .nav{
   position: absolute;
@@ -936,7 +948,7 @@ color: var(--yellow);
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   opacity: 0;
   transition: opacity .2s ease;
-  z-index: 4;
+  z-index: 8;
 }
 
 .collection-frame .prev{ left: 10px; }
@@ -946,6 +958,7 @@ color: var(--yellow);
   opacity: 1;
 }
 
+/* Flechas para inspo (si las usas) */
 .img-nav{
   position: absolute;
   top: 50%;
@@ -980,26 +993,16 @@ color: var(--yellow);
     opacity: 0;
     pointer-events: none;
   }
-}
 
-/* Hover desktop */
-@media (hover: hover){
   .img-nav:hover{
     background: #fff;
     transform: translateY(-50%) scale(1.05);
   }
 }
 
-/* Mobile: un poco más grandes */
-@media (max-width: 768px){
-  .img-nav{
-    width: 42px;
-    height: 42px;
-    font-size: 24px;
-  }
-}
-
-/* ---------- DESCRIPCIÓN ---------- */
+/* =========================
+   COLECCIONES · DESCRIPCIÓN
+========================= */
 
 .collection-desc{
   font-size: 14px;
@@ -1007,21 +1010,20 @@ color: var(--yellow);
   opacity: 0.85;
   margin: 0;
 }
+
 .collections-inspo{
-  margin-top: 32px; /* antes era mucho mayor */
+  margin-top: 32px;
 }
 
 .collections-inspo h3{
-  margin-bottom: 12px; /* 🔑 aquí estaba el aire */
+  margin-bottom: 12px;
 }
 
 /* =========================
-   COLLECTION CTA – REFINED
+   COLECCIONES · CTA OVERLAY (BOTÓN SUTIL)
+   - Desktop: aparece en hover
+   - Mobile: visible y pequeño
 ========================= */
-
-.collection-frame{
-  position: relative;
-}
 
 .collection-cta-overlay{
   position: absolute;
@@ -1047,7 +1049,6 @@ color: var(--yellow);
   transition: opacity .2s ease;
 }
 
-/* Desktop hover */
 @media (hover:hover){
   .collection-frame:hover .collection-cta-overlay{
     opacity: 1;
@@ -1055,27 +1056,11 @@ color: var(--yellow);
   }
 }
 
-/* Mobile: visible pero sutil */
-@media (max-width: 768px){
-  .collection-cta-overlay{
-    opacity: 0.9;
-    pointer-events: auto;
-  }
-}
-
 /* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 540px){
-  .collection-frame{
-    aspect-ratio: 4 / 5;
-    touch-action: pan-x;
-  }
-}
-
-/* =========================
-   COLECCIONES – FIX MOBILE
+   COLECCIONES · MOBILE (SWIPE REAL)
+   - En mobile NO usamos is-active
+   - Todas las imágenes se vuelven "slides" horizontales
+   - Evita el bug de "card fina" y el CTA tragando el swipe
 ========================= */
 
 @media (max-width: 768px){
@@ -1092,43 +1077,58 @@ color: var(--yellow);
   .collection-frame{
     display: flex;
     overflow-x: auto;
+
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
   }
 
+  /* IMPORTANTE: en mobile anulamos el "stack absolute" */
   .collection-frame img{
     position: relative;
+    inset: auto;
+
     flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+
+    opacity: 1 !important;
     scroll-snap-align: start;
-  }
-}
 
-/* =========================
-   COLLECTION SWIPE (MOBILE)
-========================= */
-
-@media (max-width: 768px){
-
-  .collection-frame{
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    object-fit: cover;
   }
 
-  .collection-frame img{
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-  }
-
-  /* Ocultamos scrollbar */
+  /* scrollbar off */
   .collection-frame::-webkit-scrollbar{
     display: none;
   }
+
+  /* CTA visible pero discreto (y no enorme) */
+  .collection-cta-overlay{
+    opacity: 0.9;
+    pointer-events: auto;
+  }
+
+  /* Flechas más sutiles (si decides mantenerlas) */
+  .collection-frame .nav,
+  .img-nav{
+    opacity: 0.35;
+    transform: translateY(-50%) scale(0.85);
+  }
 }
 
 /* =========================
-   MODAL SWIPE
+   COLECCIONES · MOBILE PEQUEÑO
+========================= */
+
+@media (max-width: 540px){
+  .collection-frame{
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* =========================
+   MODAL · FORMULARIO POPUP
 ========================= */
 
 .modal{
@@ -1173,7 +1173,6 @@ color: var(--yellow);
   border: none;
   cursor: pointer;
 }
-
 
 
 /* =========================
