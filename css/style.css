@@ -1052,6 +1052,30 @@ color: var(--yellow);
   }
 }
 
+/* =========================
+   COLLECTION SWIPE (MOBILE)
+========================= */
+
+@media (max-width: 768px){
+
+  .collection-frame{
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .collection-frame img{
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  /* Ocultamos scrollbar */
+  .collection-frame::-webkit-scrollbar{
+    display: none;
+  }
+}
+
 
 /* =========================
    CTA PILL – GLOBAL
