@@ -892,6 +892,30 @@ color: var(--yellow);
     0 10px 28px rgba(0,0,0,0.12);
 }
 
+.price-badge{
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+
+  background: #000;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  z-index: 3;
+}
+
 /* ---------- DESCRIPCIÓN ---------- */
 
 .collection-desc{
