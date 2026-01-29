@@ -878,6 +878,10 @@ color: var(--yellow);
   opacity: 0;
   transition: opacity .3s ease;
 }
+.collection-frame img.is-active{
+  opacity: 1;
+  position: relative;
+}
 
 /* muestra la primera por defecto */
 .collection-frame img:first-child{
