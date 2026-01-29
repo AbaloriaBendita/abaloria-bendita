@@ -1070,6 +1070,7 @@ color: var(--yellow);
 @media (max-width: 540px){
   .collection-frame{
     aspect-ratio: 4 / 5;
+    touch-action: pan-x;
   }
 }
 
