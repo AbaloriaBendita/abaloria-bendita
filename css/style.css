@@ -1091,14 +1091,16 @@ color: var(--yellow);
   }
 
   .collection-frame{
-    aspect-ratio: auto;   /* 🔑 CLAVE */
-    height: auto;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
   .collection-frame img{
-    width: 100%;
-    height: auto;
-    display: block;
+    position: relative;
+    flex: 0 0 100%;
+    scroll-snap-align: start;
   }
 }
 
