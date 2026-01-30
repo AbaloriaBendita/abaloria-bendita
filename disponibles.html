@@ -499,37 +499,35 @@ if (window.innerWidth <= 768) {
      ABRIR MODAL DESDE CTA
   ========================= */
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", e => {
+  const btn = e.target.closest(".js-open-modal");
+  if (!btn) return;
 
-    const btn = e.target.closest(".js-open-modal");
-    if (!btn) return;
+  e.preventDefault();
+  e.stopImmediatePropagation();
 
-    e.preventDefault();
+  const modal = document.getElementById("modal-encargo");
+  if (!modal) return;
 
-    let imgUrl = "";
+  const modalImg = document.getElementById("modal-img-preview");
+  const modalInput = document.getElementById("modal-img-input");
 
-    /* Caso SOLD (disponibles.html) */
-    if (btn.dataset.img) {
-      imgUrl = btn.dataset.img;
-    }
+  let imgUrl = "";
 
-    /* Caso COLECCIONES (index.html) */
-    if (!imgUrl) {
-      const frame = btn.closest(".collection-frame");
-      if (frame) {
-        const activeImg = getActiveImage(frame);
-        if (activeImg) imgUrl = activeImg.src;
-      }
-    }
+  // CASO 1 · disponibles.html (sold)
+  if (btn.dataset.img) {
+    imgUrl = btn.dataset.img;
+  }
 
-    if (!imgUrl) return;
+  if (!imgUrl) return;
 
-    modalImg.src = imgUrl;
-    modalInput.value = imgUrl;
+  modalImg.src = imgUrl;
+  modalInput.value = imgUrl;
 
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-  });
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+});
+
 
   /* =========================
      CERRAR MODAL
