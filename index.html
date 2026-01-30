@@ -929,49 +929,7 @@ document.querySelectorAll('.js-collection-reference').forEach(btn => {
 });
 </script>
 
-    <div class="modal" id="modal-encargo" aria-hidden="true">
-  <div class="modal-backdrop"></div>
-
-  <div class="modal-box">
-    <button class="modal-close" aria-label="Cerrar">×</button>
-
-    <div class="modal-image">
-      <img id="modal-img-preview" src="" alt="">
-    </div>
-
-    <form method="POST" action="/api/encargo" class="modal-form">
-
-      <input type="hidden" name="imagen_referencia" id="modal-img-input">
-      <input type="hidden" name="tipo" value="Referencia / pieza similar">
-
-      <div class="form-group">
-        <label>Nombre y apellidos</label>
-        <input type="text" name="nombre" required>
-      </div>
-
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" required>
-      </div>
-
-      <div class="form-group">
-        <label>Teléfono</label>
-        <input type="tel" name="telefono">
-      </div>
-
-      <div class="form-group">
-        <label>Comentarios</label>
-        <textarea name="comentarios" rows="3"></textarea>
-      </div>
-
-      <button type="submit" class="cta-main">
-        Encargar una Abaloria parecida
-      </button>
-
-    </form>
-  </div>
-</div>
-
+    
 <script>
 (function(){
 
