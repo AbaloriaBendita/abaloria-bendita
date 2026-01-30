@@ -1106,13 +1106,13 @@ color: var(--yellow);
   /* CTA visible pero discreto (y no enorme) */
   .collection-cta-overlay{
     opacity: 0.9;
-    pointer-events: auto;
-    position: sticky;
-    top: 10px;
-    right: auto;
-    left: auto;
-    margin-left: auto;
-    margin-right: 10px;
+  pointer-events: auto;
+
+  position: absolute;   /* 👈 vuelve a absolute */
+  top: 10px;
+  right: 10px;
+
+  margin: 0;
   }
 
   /* Flechas más sutiles (si decides mantenerlas) */
