@@ -504,7 +504,6 @@ if (window.innerWidth <= 768) {
   if (!btn) return;
 
   e.preventDefault();
-  e.stopImmediatePropagation();
 
   const modal = document.getElementById("modal-encargo");
   if (!modal) return;
@@ -527,7 +526,8 @@ if (window.innerWidth <= 768) {
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
 });
-
+    return activeImg;   // 🔑 ESTE RETURN ES IMPRESCINDIBLE
+}
 
   /* =========================
      CERRAR MODAL
