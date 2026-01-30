@@ -499,11 +499,7 @@ if (window.innerWidth <= 768) {
      ABRIR MODAL DESDE CTA
   ========================= */
 
-  document.addEventListener("click", e => {
-  const btn = e.target.closest(".js-open-modal");
-  if (!btn) return;
-
-  e.preventDefault();
+ document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("modal-encargo");
   if (!modal) return;
@@ -511,23 +507,64 @@ if (window.innerWidth <= 768) {
   const modalImg = document.getElementById("modal-img-preview");
   const modalInput = document.getElementById("modal-img-input");
 
-  let imgUrl = "";
+  function getActiveImage(frame){
+    const images = frame.querySelectorAll("img");
+    const frameRect = frame.getBoundingClientRect();
 
-  // CASO 1 · disponibles.html (sold)
-  if (btn.dataset.img) {
-    imgUrl = btn.dataset.img;
+    let activeImg = images[0];
+    let minDistance = Infinity;
+
+    images.forEach(img => {
+      const rect = img.getBoundingClientRect();
+      const centerDiff = Math.abs(
+        (rect.left + rect.width / 2) -
+        (frameRect.left + frameRect.width / 2)
+      );
+
+      if (centerDiff < minDistance) {
+        minDistance = centerDiff;
+        activeImg = img;
+      }
+    });
+
+    return activeImg;
   }
 
-  if (!imgUrl) return;
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".js-open-modal");
+    if (!btn) return;
 
-  modalImg.src = imgUrl;
-  modalInput.value = imgUrl;
+    e.preventDefault();
 
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
+    let imgUrl = "";
+
+    // DISPONIBLES
+    if (btn.dataset.img) {
+      imgUrl = btn.dataset.img;
+    }
+
+    if (!imgUrl) return;
+
+    modalImg.src = imgUrl;
+    modalInput.value = imgUrl;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+
+    modal.querySelector(".modal-box").scrollTop = 0;
+  });
+
+  modal.addEventListener("click", e => {
+    if (
+      e.target.classList.contains("modal-backdrop") ||
+      e.target.classList.contains("modal-close")
+    ) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  });
+
 });
-    return activeImg;   // 🔑 ESTE RETURN ES IMPRESCINDIBLE
-}
 
   /* =========================
      CERRAR MODAL
