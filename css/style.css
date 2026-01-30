@@ -1190,6 +1190,12 @@ color: var(--yellow);
   border: none;
   cursor: pointer;
 }
+.modal-copy{
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 6px 0 14px;
+  color: #333;
+}
 
 
 /* =========================
