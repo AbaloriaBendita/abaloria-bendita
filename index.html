@@ -1034,6 +1034,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   if (!imgUrl) return;
+    return activeImg;   // 🔑 ESTE RETURN ES IMPRESCINDIBLE
+}
 
   modalImg.src = imgUrl;
   modalInput.value = imgUrl;
