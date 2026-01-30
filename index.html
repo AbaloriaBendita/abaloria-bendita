@@ -1025,11 +1025,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let imgUrl = "";
 
-  // CASO 1 · disponibles.html (sold)
-  if (btn.dataset.img) {
-    imgUrl = btn.dataset.img;
-  }
-
   // CASO 2 · colecciones (index.html)
   if (!imgUrl) {
     const frame = btn.closest(".collection-frame");
