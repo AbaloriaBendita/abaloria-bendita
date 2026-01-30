@@ -1101,6 +1101,10 @@ color: var(--yellow);
 
     object-fit: cover;
   }
+  .collection-frame .collection-cta-overlay{
+    opacity: 0.9 !important;
+    pointer-events: auto !important;
+  }
 
   /* scrollbar off */
   .collection-frame::-webkit-scrollbar{
@@ -1209,9 +1213,9 @@ color: var(--yellow);
 @media (max-width: 768px){
 
   .modal-box{
-    max-height: 92vh;
+    max-height: 90vh;
     margin: 4vh auto;
-    padding: 16px;
+    padding: 14px;
   }
 
   .modal-image img{
