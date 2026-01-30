@@ -1057,14 +1057,15 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · MOBILE (SWIPE REAL)
-   - En mobile NO usamos is-active
-   - Todas las imágenes se vuelven "slides" horizontales
-   - Evita el bug de "card fina" y el CTA tragando el swipe
+   COLECCIONES · MOBILE (SWIPE REAL · FIX DEFINITIVO)
+   - Swipe horizontal por imágenes
+   - Scroll vertical fluido
+   - CTA siempre visible (NO forma parte del swipe)
 ========================= */
 
 @media (max-width: 768px){
 
+  /* Grid */
   .collections-grid{
     padding-left: 16px;
     padding-right: 16px;
@@ -1074,18 +1075,21 @@ color: var(--yellow);
     gap: 8px;
   }
 
+  /* ---------- FRAME ---------- */
   .collection-frame{
+    position: relative;              /* 🔑 referencia para CTA */
     display: flex;
     overflow-x: auto;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-y pan-x;
+
+    touch-action: pan-x pan-y;        /* 🔑 swipe + scroll */
   }
 
-  /* IMPORTANTE: en mobile anulamos el "stack absolute" */
+  /* ---------- IMÁGENES (slides reales) ---------- */
   .collection-frame img{
-    position: relative;
+    position: relative;              /* 🔑 anulamos absolute */
     inset: auto;
 
     flex: 0 0 100%;
@@ -1103,25 +1107,25 @@ color: var(--yellow);
     display: none;
   }
 
-  /* CTA visible pero discreto (y no enorme) */
+  /* ---------- CTA OVERLAY (FUERA DEL SWIPE) ---------- */
   .collection-cta-overlay{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    z-index: 30;                      /* 🔑 por encima del carrusel */
+    flex: none;                       /* 🔑 NO es un slide */
+
     opacity: 0.9;
-  pointer-events: auto;
-
-  position: absolute;   /* 👈 vuelve a absolute */
-  top: 10px;
-  right: 10px;
-
-  margin: 0;
+    pointer-events: auto;
+    margin: 0;
   }
 
-  /* Flechas más sutiles (si decides mantenerlas) */
+  /* ---------- FLECHAS (ocultas en mobile) ---------- */
   .collection-frame .nav,
   .img-nav{
-    opacity: 0.35;
-    transform: translateY(-50%) scale(0.85);
-    touch-action: manipulation;
     display: none;
+    pointer-events: none;
   }
 }
 
