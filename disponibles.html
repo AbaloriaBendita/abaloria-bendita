@@ -392,74 +392,92 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-  <script>
-(function(){
+<script>
+document.addEventListener("DOMContentLoaded", () => {
 
-  const modal = document.getElementById('modal-encargo');
-  if(!modal) return;
+  const modal = document.getElementById("modal-encargo");
+  if (!modal) return;
 
-  const modalImg = document.getElementById('modal-img-preview');
-  const modalInput = document.getElementById('modal-img-input');
+  const modalImg = document.getElementById("modal-img-preview");
+  const modalInput = document.getElementById("modal-img-input");
 
-  let isSwiping = false;
+  /* =========================
+     UTIL · IMAGEN ACTIVA EN SWIPE
+  ========================= */
 
-  document.addEventListener('touchmove', () => {
-    isSwiping = true;
-  }, { passive: true });
+  function getActiveImage(frame){
+    const images = frame.querySelectorAll("img");
+    const frameRect = frame.getBoundingClientRect();
 
-  document.addEventListener('touchend', () => {
-    setTimeout(() => isSwiping = false, 50);
-  });
+    let activeImg = images[0];
+    let minDiff = Infinity;
 
-  function openModal(imgUrl){
-    if(!imgUrl) return;
-    modalImg.src = imgUrl;
-    modalInput.value = imgUrl;
-    modal.classList.add('is-open');
+    images.forEach(img => {
+      const rect = img.getBoundingClientRect();
+      const diff = Math.abs(rect.left - frameRect.left);
+
+      if (diff < minDiff) {
+        minDiff = diff;
+        activeImg = img;
+      }
+    });
+
+    return activeImg;
   }
 
-  document.addEventListener('click', function(e){
+  /* =========================
+     ABRIR MODAL DESDE CTA
+  ========================= */
 
-    /* CTA SOLD (disponibles.html) */
-    const soldBtn = e.target.closest('.js-open-modal');
-    if(soldBtn){
-      e.preventDefault();
-      if(isSwiping) return;
+  document.addEventListener("click", (e) => {
 
-      const img = soldBtn.dataset.img;
-      openModal(img);
-      return;
+    const btn = e.target.closest(".js-open-modal");
+    if (!btn) return;
+
+    e.preventDefault();
+
+    let imgUrl = "";
+
+    /* Caso SOLD (disponibles.html) */
+    if (btn.dataset.img) {
+      imgUrl = btn.dataset.img;
     }
 
-    /* CTA COLECCIONES */
-    const colBtn = e.target.closest('.js-collection-reference');
-    if(colBtn){
-      e.preventDefault();
-      if(isSwiping) return;
-
-      const frame = colBtn.closest('.collection-frame');
-      if(!frame) return;
-
-      const activeImg =
-        frame.querySelector('img.is-active') ||
-        frame.querySelector('img');
-
-      if(activeImg) openModal(activeImg.src);
-      return;
+    /* Caso COLECCIONES (index.html) */
+    if (!imgUrl) {
+      const frame = btn.closest(".collection-frame");
+      if (frame) {
+        const activeImg = getActiveImage(frame);
+        if (activeImg) imgUrl = activeImg.src;
+      }
     }
 
-    /* Cerrar modal */
-    if(
-      e.target.classList.contains('modal-backdrop') ||
-      e.target.classList.contains('modal-close')
-    ){
-      modal.classList.remove('is-open');
-    }
+    if (!imgUrl) return;
 
+    modalImg.src = imgUrl;
+    modalInput.value = imgUrl;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
   });
 
-})();
+  /* =========================
+     CERRAR MODAL
+  ========================= */
+
+  modal.addEventListener("click", (e) => {
+    if (
+      e.target.classList.contains("modal-backdrop") ||
+      e.target.classList.contains("modal-close")
+    ) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  });
+
+});
 </script>
+
 
 
 
