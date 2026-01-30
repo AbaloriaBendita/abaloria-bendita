@@ -1164,6 +1164,15 @@ color: var(--yellow);
   border-radius: 20px;
   padding: 20px;
   z-index: 2;
+  max-height: 90vh;          /* clave */
+  overflow-y: auto;          /* scroll interno */
+}
+
+.modal-image img{
+  max-height: 35vh;          /* limita la imagen */
+  object-fit: cover;
+}
+
 }
 
 .modal-image img{
