@@ -1080,7 +1080,7 @@ color: var(--yellow);
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+    touch-action: pan-y pan-x;
   }
 
   /* IMPORTANTE: en mobile anulamos el "stack absolute" */
@@ -1107,6 +1107,12 @@ color: var(--yellow);
   .collection-cta-overlay{
     opacity: 0.9;
     pointer-events: auto;
+    position: sticky;
+    top: 10px;
+    right: auto;
+    left: auto;
+    margin-left: auto;
+    margin-right: 10px;
   }
 
   /* Flechas más sutiles (si decides mantenerlas) */
@@ -1114,6 +1120,8 @@ color: var(--yellow);
   .img-nav{
     opacity: 0.35;
     transform: translateY(-50%) scale(0.85);
+    touch-action: manipulation;
+    display: none;
   }
 }
 
