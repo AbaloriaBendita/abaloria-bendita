@@ -459,24 +459,27 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
 
   function getActiveImage(frame){
-    const images = frame.querySelectorAll("img");
-    const frameRect = frame.getBoundingClientRect();
+  const images = frame.querySelectorAll("img");
+  const frameRect = frame.getBoundingClientRect();
 
-    let activeImg = images[0];
-    let minDiff = Infinity;
+  let activeImg = images[0];
+  let minDistance = Infinity;
 
-    images.forEach(img => {
-      const rect = img.getBoundingClientRect();
-      const diff = Math.abs(rect.left - frameRect.left);
+  images.forEach(img => {
+    const rect = img.getBoundingClientRect();
+    const centerDiff = Math.abs(
+      (rect.left + rect.width / 2) -
+      (frameRect.left + frameRect.width / 2)
+    );
 
-      if (diff < minDiff) {
-        minDiff = diff;
-        activeImg = img;
-      }
-    });
+    if (centerDiff < minDistance) {
+      minDistance = centerDiff;
+      activeImg = img;
+    }
+  });
 
-    return activeImg;
-  }
+  return activeImg;
+}
 
   /* =========================
      ABRIR MODAL DESDE CTA
