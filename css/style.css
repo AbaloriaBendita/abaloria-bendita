@@ -1197,6 +1197,22 @@ color: var(--yellow);
   color: #333;
 }
 
+@media (max-width: 768px){
+
+  .modal-box{
+    max-height: 92vh;
+    margin: 4vh auto;
+    padding: 16px;
+    overflow-y: auto;
+  }
+
+  .modal-image img{
+    max-height: 26vh;     /* 🔑 más pequeña */
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+}
+
 
 /* =========================
    CTA PILL – GLOBAL
