@@ -2556,6 +2556,18 @@ max-width: 860px;   /* prueba 860–920 */
   textarea::placeholder{
   color: #aaa;
 }
+  .field-label{
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+  color: #333;
+}
+
+.modal-form input,
+.modal-form textarea{
+  width: 100%;
+}
   .piece-card{
     box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     transform: none !important;
