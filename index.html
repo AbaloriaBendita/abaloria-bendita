@@ -1010,11 +1010,7 @@ document.addEventListener("DOMContentLoaded", () => {
      ABRIR MODAL DESDE CTA
   ========================= */
 
-  document.addEventListener("click", e => {
-  const btn = e.target.closest(".js-open-modal");
-  if (!btn) return;
-
-  e.preventDefault();
+  document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("modal-encargo");
   if (!modal) return;
@@ -1022,26 +1018,67 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalImg = document.getElementById("modal-img-preview");
   const modalInput = document.getElementById("modal-img-input");
 
-  let imgUrl = "";
+  function getActiveImage(frame){
+    const images = frame.querySelectorAll("img");
+    const frameRect = frame.getBoundingClientRect();
 
-  // CASO 2 · colecciones (index.html)
-  if (!imgUrl) {
-    const frame = btn.closest(".collection-frame");
-    if (frame) {
-      const activeImg = getActiveImage(frame);
-      if (activeImg) imgUrl = activeImg.src;
-    }
+    let activeImg = images[0];
+    let minDistance = Infinity;
+
+    images.forEach(img => {
+      const rect = img.getBoundingClientRect();
+      const centerDiff = Math.abs(
+        (rect.left + rect.width / 2) -
+        (frameRect.left + frameRect.width / 2)
+      );
+
+      if (centerDiff < minDistance) {
+        minDistance = centerDiff;
+        activeImg = img;
+      }
+    });
+
+    return activeImg;
   }
 
-  if (!imgUrl) return;
-    return activeImg;   // 🔑 ESTE RETURN ES IMPRESCINDIBLE
-}
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".js-open-modal");
+    if (!btn) return;
 
-  modalImg.src = imgUrl;
-  modalInput.value = imgUrl;
+    e.preventDefault();
 
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
+    let imgUrl = "";
+    
+    // COLECCIONES
+    if (!imgUrl) {
+      const frame = btn.closest(".collection-frame");
+      if (frame) {
+        const activeImg = getActiveImage(frame);
+        if (activeImg) imgUrl = activeImg.src;
+      }
+    }
+
+    if (!imgUrl) return;
+
+    modalImg.src = imgUrl;
+    modalInput.value = imgUrl;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+
+    modal.querySelector(".modal-box").scrollTop = 0;
+  });
+
+  modal.addEventListener("click", e => {
+    if (
+      e.target.classList.contains("modal-backdrop") ||
+      e.target.classList.contains("modal-close")
+    ) {
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+  });
+
 });
    
   /* =========================
