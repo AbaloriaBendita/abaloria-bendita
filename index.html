@@ -973,51 +973,74 @@ document.querySelectorAll('.js-collection-reference').forEach(btn => {
 </div>
 
 <script>
-const modal = document.getElementById('modal-encargo');
-const modalImg = document.getElementById('modal-img-preview');
-const modalInput = document.getElementById('modal-img-input');
+(function(){
 
-let isSwiping = false;
+  const modal = document.getElementById('modal-encargo');
+  if(!modal) return;
 
-document.addEventListener('touchmove', () => isSwiping = true);
-document.addEventListener('touchend', () => {
-  setTimeout(() => isSwiping = false, 50);
-});
+  const modalImg = document.getElementById('modal-img-preview');
+  const modalInput = document.getElementById('modal-img-input');
 
-function openModalWithImage(img){
-  modalImg.src = img;
-  modalInput.value = img;
-  modal.classList.add('is-open');
-}
+  let isSwiping = false;
 
-document.addEventListener('click', e => {
+  document.addEventListener('touchmove', () => {
+    isSwiping = true;
+  }, { passive: true });
 
-  const btn = e.target.closest('.js-open-modal');
-  if(btn){
-    if(isSwiping) return;
-    e.preventDefault();
+  document.addEventListener('touchend', () => {
+    setTimeout(() => isSwiping = false, 50);
+  });
 
-    const frame = btn.closest('.collection-frame');
-    let img = btn.dataset.img;
+  function openModal(imgUrl){
+    if(!imgUrl) return;
+    modalImg.src = imgUrl;
+    modalInput.value = imgUrl;
+    modal.classList.add('is-open');
+  }
 
-    if(!img && frame){
-      const active =
-        frame.querySelector('img.is-active') ||
-        frame.querySelector('img');
-      if(active) img = active.src;
+  document.addEventListener('click', function(e){
+
+    /* CTA SOLD (disponibles.html) */
+    const soldBtn = e.target.closest('.js-open-modal');
+    if(soldBtn){
+      e.preventDefault();
+      if(isSwiping) return;
+
+      const img = soldBtn.dataset.img;
+      openModal(img);
+      return;
     }
 
-    if(img) openModalWithImage(img);
-  }
+    /* CTA COLECCIONES */
+    const colBtn = e.target.closest('.js-collection-reference');
+    if(colBtn){
+      e.preventDefault();
+      if(isSwiping) return;
 
-  if(
-    e.target.classList.contains('modal-backdrop') ||
-    e.target.classList.contains('modal-close')
-  ){
-    modal.classList.remove('is-open');
-  }
-});
+      const frame = colBtn.closest('.collection-frame');
+      if(!frame) return;
+
+      const activeImg =
+        frame.querySelector('img.is-active') ||
+        frame.querySelector('img');
+
+      if(activeImg) openModal(activeImg.src);
+      return;
+    }
+
+    /* Cerrar modal */
+    if(
+      e.target.classList.contains('modal-backdrop') ||
+      e.target.classList.contains('modal-close')
+    ){
+      modal.classList.remove('is-open');
+    }
+
+  });
+
+})();
 </script>
+
 
 
 
