@@ -1100,6 +1100,7 @@ color: var(--yellow);
     scroll-snap-align: start;
 
     object-fit: cover;
+      flex-shrink: 0;
   }
   .collection-frame .collection-cta-overlay{
     opacity: 0.9 !important;
@@ -2563,10 +2564,21 @@ max-width: 860px;   /* prueba 860–920 */
     opacity: 0.5;
     pointer-events: none;
   }
-  textarea::placeholder{
+  .piece-card{
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    transform: none !important;
+  }
+}
+
+/* =====================
+   FORM · CAMPOS (GLOBAL)
+===================== */
+
+textarea::placeholder{
   color: #aaa;
 }
-  .field-label{
+
+.field-label{
   font-size: 12px;
   font-weight: 600;
   margin-bottom: 4px;
@@ -2578,11 +2590,7 @@ max-width: 860px;   /* prueba 860–920 */
 .modal-form textarea{
   width: 100%;
 }
-  .piece-card{
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    transform: none !important;
-  }
-}
+
 
 
 
