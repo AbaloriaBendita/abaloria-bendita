@@ -976,64 +976,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const modal = document.getElementById("modal-encargo");
   if (!modal) return;
 
-  const modalImg = document.getElementById("modal-img-preview");
+  const modalImg   = document.getElementById("modal-img-preview");
   const modalInput = document.getElementById("modal-img-input");
 
-  /* =========================
-     UTIL · IMAGEN ACTIVA EN SWIPE
-  ========================= */
-
- function getActiveImage(frame){
-  const images = frame.querySelectorAll("img");
-  const frameRect = frame.getBoundingClientRect();
-
-  let activeImg = images[0];
-  let minDistance = Infinity;
-
-  images.forEach(img => {
-    const rect = img.getBoundingClientRect();
-    const centerDiff = Math.abs(
-      (rect.left + rect.width / 2) -
-      (frameRect.left + frameRect.width / 2)
-    );
-
-    if (centerDiff < minDistance) {
-      minDistance = centerDiff;
-      activeImg = img;
-    }
-  });
-   if (window.innerWidth <= 768) {
-  return activeImg;
-}
-
-  /* =========================
-     ABRIR MODAL DESDE CTA
-  ========================= */
-
-  document.addEventListener("DOMContentLoaded", () => {
-
-  const modal = document.getElementById("modal-encargo");
-  if (!modal) return;
-
-  const modalImg = document.getElementById("modal-img-preview");
-  const modalInput = document.getElementById("modal-img-input");
-
+  /* =====================
+     UTIL · IMAGEN ACTIVA
+  ===================== */
   function getActiveImage(frame){
     const images = frame.querySelectorAll("img");
-    const frameRect = frame.getBoundingClientRect();
+    if (!images.length) return null;
 
+    // Desktop: si hay is-active, usarla
+    const byClass = frame.querySelector("img.is-active");
+    if (byClass && window.innerWidth > 768) return byClass;
+
+    // Mobile: imagen más centrada
+    const frameRect = frame.getBoundingClientRect();
     let activeImg = images[0];
-    let minDistance = Infinity;
+    let min = Infinity;
 
     images.forEach(img => {
-      const rect = img.getBoundingClientRect();
-      const centerDiff = Math.abs(
-        (rect.left + rect.width / 2) -
-        (frameRect.left + frameRect.width / 2)
-      );
+      const r = img.getBoundingClientRect();
+      const imgCenter = r.left + r.width / 2;
+      const frameCenter = frameRect.left + frameRect.width / 2;
+      const d = Math.abs(imgCenter - frameCenter);
 
-      if (centerDiff < minDistance) {
-        minDistance = centerDiff;
+      if (d < min) {
+        min = d;
         activeImg = img;
       }
     });
@@ -1041,6 +1010,9 @@ document.addEventListener("DOMContentLoaded", () => {
     return activeImg;
   }
 
+  /* =====================
+     ABRIR MODAL
+  ===================== */
   document.addEventListener("click", e => {
     const btn = e.target.closest(".js-open-modal");
     if (!btn) return;
@@ -1048,13 +1020,18 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     let imgUrl = "";
-    
-    // COLECCIONES
+
+    // Caso 1 · disponibles.html (sold)
+    if (btn.dataset.img) {
+      imgUrl = btn.dataset.img;
+    }
+
+    // Caso 2 · index.html (colecciones)
     if (!imgUrl) {
       const frame = btn.closest(".collection-frame");
       if (frame) {
-        const activeImg = getActiveImage(frame);
-        if (activeImg) imgUrl = activeImg.src;
+        const img = getActiveImage(frame);
+        if (img) imgUrl = img.src;
       }
     }
 
@@ -1065,10 +1042,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
-
     modal.querySelector(".modal-box").scrollTop = 0;
   });
 
+  /* =====================
+     CERRAR MODAL
+  ===================== */
   modal.addEventListener("click", e => {
     if (
       e.target.classList.contains("modal-backdrop") ||
@@ -1079,41 +1058,42 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-});
-   
-  /* =========================
-     CERRAR MODAL
-  ========================= */
-
-  modal.addEventListener("click", (e) => {
-    if (
-      e.target.classList.contains("modal-backdrop") ||
-      e.target.classList.contains("modal-close")
-    ) {
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && modal.classList.contains("is-open")) {
       modal.classList.remove("is-open");
       modal.setAttribute("aria-hidden", "true");
+    }
+  });
+
+  /* =====================
+     SUBMIT + REDIRECT
+  ===================== */
+  document.addEventListener("submit", async e => {
+    const form = e.target;
+    if (!form.matches(".modal-form")) return;
+
+    e.preventDefault();
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form)
+      });
+
+      if (!res.ok) throw new Error("Submit failed");
+
+      const redirect = form.dataset.redirect;
+      if (redirect) window.location.href = redirect;
+
+    } catch (err) {
+      console.error(err);
+      alert("No se pudo enviar el formulario. Inténtalo de nuevo.");
     }
   });
 
 });
 </script>
 
-<script>
-document.addEventListener("submit", e => {
-  const form = e.target;
-  if (!form.matches(".modal-form")) return;
-
-  e.preventDefault();
-
-  fetch(form.action, {
-    method: "POST",
-    body: new FormData(form)
-  }).then(() => {
-    const redirect = form.dataset.redirect;
-    if (redirect) window.location.href = redirect;
-  });
-});
-</script>
 
 </body>
 </html>
