@@ -1173,6 +1173,8 @@ color: var(--yellow);
   background: #fff;
   border-radius: 20px;
   padding: 20px;
+
+  
   z-index: 2;
 
   max-height: 90vh;     /* 🔑 no se sale de pantalla */
@@ -1180,12 +1182,18 @@ color: var(--yellow);
 }
 
 /* Imagen referencia */
+.modal-image{
+  background: #f6f6f6;
+  border-radius: 14px;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
 .modal-image img{
   width: 100%;
-  max-height: 35vh;     /* desktop */
-  object-fit: cover;
-  border-radius: 14px;
-  margin-bottom: 12px;
+  max-height: 30vh;     /* desktop */
+  object-fit: contain; /* 🔑 no se corta la pieza */
+  border-radius: 10px;
 }
 
 /* Cerrar */
