@@ -1057,10 +1057,10 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · MOBILE (SWIPE REAL · FIX DEFINITIVO)
-   - Swipe horizontal por imágenes
-   - Scroll vertical fluido
-   - CTA siempre visible (NO forma parte del swipe)
+   COLECCIONES · MOBILE (SWIPE REAL · DEFINITIVO)
+   - Swipe horizontal real por imágenes
+   - Scroll vertical sin bloqueo
+   - CTA siempre visible en TODAS las imágenes
 ========================= */
 
 @media (max-width: 768px){
@@ -1077,22 +1077,23 @@ color: var(--yellow);
 
   /* ---------- FRAME ---------- */
   .collection-frame{
-    position: relative;              /* 🔑 referencia para CTA */
+    position: relative;              /* referencia para CTA */
     display: flex;
     overflow-x: auto;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
 
-    touch-action: pan-x pan-y;        /* 🔑 swipe + scroll */
+    touch-action: pan-x pan-y;       /* swipe + scroll vertical */
   }
 
   /* ---------- IMÁGENES (slides reales) ---------- */
   .collection-frame img{
-    position: relative;              /* 🔑 anulamos absolute */
+    position: relative;              /* anulamos absolute */
     inset: auto;
 
     flex: 0 0 100%;
+    flex-shrink: 0;                  /* 🔑 CLAVE: no se encoge */
     width: 100%;
     height: auto;
 
@@ -1100,47 +1101,37 @@ color: var(--yellow);
     scroll-snap-align: start;
 
     object-fit: cover;
-      flex-shrink: 0;
-  }
-  .collection-frame .collection-cta-overlay{
-    opacity: 0.9 !important;
-    pointer-events: auto !important;
   }
 
-  /* scrollbar off */
+  /* Ocultar scrollbar */
   .collection-frame::-webkit-scrollbar{
     display: none;
   }
 
-  /* ---------- CTA OVERLAY (FUERA DEL SWIPE) ---------- */
+  /* ---------- CTA OVERLAY (FIJO SOBRE EL FRAME) ---------- */
   .collection-cta-overlay{
     position: absolute;
     top: 10px;
     right: 10px;
 
-    z-index: 30;                      /* 🔑 por encima del carrusel */
-    flex: none;                       /* 🔑 NO es un slide */
-
+    z-index: 40;                     /* 🔑 siempre encima */
     opacity: 0.9;
     pointer-events: auto;
+
+    flex: none;                      /* NO forma parte del swipe */
     margin: 0;
   }
 
-  /* ---------- FLECHAS (ocultas en mobile) ---------- */
+  /* Seguridad extra: nunca ocultar CTA en mobile */
+  .collection-frame:hover .collection-cta-overlay{
+    opacity: 0.9;
+  }
+
+  /* ---------- FLECHAS (NO en mobile) ---------- */
   .collection-frame .nav,
   .img-nav{
     display: none;
     pointer-events: none;
-  }
-}
-
-/* =========================
-   COLECCIONES · MOBILE PEQUEÑO
-========================= */
-
-@media (max-width: 540px){
-  .collection-frame{
-    aspect-ratio: 3 / 4;
   }
 }
 
