@@ -788,7 +788,9 @@ Quiero mi Abaloria Bendita.
 <!-- SCRIPTS -->
 
 <script>
-  const chipGroup = document.querySelector('.chip-group');
+const chipGroup = document.querySelector('.chip-group');
+
+if (chipGroup) {
   const checkboxes = chipGroup.querySelectorAll('input[type="checkbox"]');
   const limit = 3;
 
@@ -811,10 +813,13 @@ Quiero mi Abaloria Bendita.
       }
     });
   });
+}
 </script>
-
+    
 <script>
-  const tipologiaGroup = document.querySelector('.pill-group');
+const tipologiaGroup = document.querySelector('.pill-group');
+
+if (tipologiaGroup) {
   const radios = tipologiaGroup.querySelectorAll('input[type="radio"]');
 
   radios.forEach(radio => {
@@ -828,29 +833,7 @@ Quiero mi Abaloria Bendita.
       radio.parentElement.classList.remove('is-dimmed');
     });
   });
-</script>
-
-<script>
-  const colorGroup = document.querySelector('.color-group');
-  const colorInputs = colorGroup.querySelectorAll('input');
-  const countEl = document.getElementById('color-count');
-  const min = 2;
-  const max = 4;
-
-  colorInputs.forEach(input => {
-    input.addEventListener('change', () => {
-      const checked = colorGroup.querySelectorAll('input:checked').length;
-      countEl.textContent = checked;
-
-      if (checked >= max) {
-        colorInputs.forEach(i => {
-          if (!i.checked) i.disabled = true;
-        });
-      } else {
-        colorInputs.forEach(i => i.disabled = false);
-      }
-    });
-  });
+}
 </script>
 
 <script>
