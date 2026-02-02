@@ -1002,6 +1002,20 @@ color: var(--yellow);
 }
 
 /* =========================
+   GRID INSPÍRATE · DESKTOP
+========================= */
+
+@media (min-width: 1024px){
+  .collections-grid.inspo{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
+
+/* =========================
    MODAL · FORMULARIO POPUP
 ========================= */
 
