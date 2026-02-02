@@ -801,11 +801,11 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · FRAME IMAGEN (DESKTOP)
+   COLECCIONES · FRAME (BASE)
 ========================= */
 
 .collection-frame{
-  position: relative;              /* 🔑 SIEMPRE relativo */
+  position: relative;
   width: 100%;
   aspect-ratio: 4 / 5;
   border-radius: 18px;
@@ -819,36 +819,42 @@ color: var(--yellow);
   transition: transform .25s ease, box-shadow .25s ease;
 }
 
-.collection-frame img{
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0;
-  transition: opacity .3s ease;
-}
+/* =========================
+   IMÁGENES · DESKTOP
+========================= */
 
-.collection-frame img.is-active{
-  opacity: 1;
-  position: relative;
-}
+@media (min-width: 769px){
 
-/* muestra la primera por defecto */
-.collection-frame img:first-child{
-  opacity: 1;
-}
+  .collection-frame img{
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 
-/* hover: micro elevación */
-.collection-card:hover .collection-frame{
-  transform: translateY(-4px);
-  box-shadow:
-    inset 0 0 0 1px rgba(0,0,0,0.06),
-    0 10px 28px rgba(0,0,0,0.12);
+    opacity: 0;
+    transition: opacity .3s ease;
+    z-index: 1;
+  }
+
+  .collection-frame img.is-active{
+    opacity: 1;
+  }
+
+  .collection-frame img:first-child{
+    opacity: 1;
+  }
+
+  .collection-card:hover .collection-frame{
+    transform: translateY(-4px);
+    box-shadow:
+      inset 0 0 0 1px rgba(0,0,0,0.06),
+      0 10px 28px rgba(0,0,0,0.12);
+  }
 }
 
 /* =========================
-   COLECCIONES · BADGE PRECIO
+   BADGE PRECIO
 ========================= */
 
 .price-badge{
@@ -862,52 +868,20 @@ color: var(--yellow);
   color: #fff;
   font-size: 13px;
   font-weight: 800;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  z-index: 60;                     /* 🔑 por encima del CTA */
+  z-index: 60;
   box-shadow: 0 4px 10px rgba(0,0,0,.2);
 }
 
 /* =========================
-   COLECCIONES · FLECHAS (DESKTOP)
+   FLECHAS · DESKTOP
 ========================= */
 
-.collection-frame .nav{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-
-  background: rgba(255,255,255,0.85);
-  border: none;
-  font-size: 22px;
-  font-weight: 700;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  opacity: 0;
-  transition: opacity .2s ease;
-
-  z-index: 55;
-}
-
-.collection-frame .prev{ left: 10px; }
-.collection-frame .next{ right: 10px; }
-
-.collection-card:hover .nav{
-  opacity: 1;
-}
-
-/* Flechas para inspo (si las usas) */
+.collection-frame .nav,
 .img-nav{
   position: absolute;
   top: 50%;
@@ -918,53 +892,32 @@ color: var(--yellow);
   height: 36px;
   border-radius: 50%;
 
-  border: none;
   background: rgba(255,255,255,0.85);
-  color: #000;
+  border: none;
   font-size: 22px;
   font-weight: 700;
-  line-height: 1;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   cursor: pointer;
-  pointer-events: auto;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  transition: opacity .2s ease;
 }
 
 .img-nav.prev{ left: 10px; }
 .img-nav.next{ right: 10px; }
 
-@media (hover: hover){
-  .collection-card:not(:hover) .img-nav{
-    opacity: 0;
-    pointer-events: none;
+@media (hover:hover){
+  .collection-card:hover .img-nav{
+    opacity: 1;
   }
 }
 
 /* =========================
-   COLECCIONES · DESCRIPCIÓN
-========================= */
-
-.collection-desc{
-  font-size: 14px;
-  text-align: center;
-  opacity: 0.85;
-  margin: 0;
-}
-
-.collections-inspo{
-  margin-top: 32px;
-}
-
-.collections-inspo h3{
-  margin-bottom: 12px;
-}
-
-/* =========================
-   COLECCIONES · CTA OVERLAY
+   CTA OVERLAY
 ========================= */
 
 .collection-cta-overlay{
@@ -972,10 +925,10 @@ color: var(--yellow);
   top: 10px;
   right: 10px;
 
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 999px;
 
-  background: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.9);
   color: #000;
 
   font-size: 12px;
@@ -987,17 +940,15 @@ color: var(--yellow);
 
   z-index: 50;
 
-  /* 🔑 Por defecto (desktop) oculto */
   opacity: 0;
   pointer-events: none;
-  transition: opacity .2s ease;
 
-  /* 🔑 evita “vertical CTA” raro */
-  writing-mode: horizontal-tb;
   white-space: nowrap;
+  writing-mode: horizontal-tb;
+  transition: opacity .2s ease;
 }
 
-/* desktop: aparece en hover */
+/* Hover desktop */
 @media (hover:hover){
   .collection-frame:hover .collection-cta-overlay{
     opacity: 1;
@@ -1006,59 +957,45 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · MOBILE (SWIPE)
-   - CTA siempre visible
-   - CTA NO se sale ni empuja layout
+   MOBILE · SWIPE REAL
 ========================= */
 
 @media (max-width: 768px){
 
   .collection-frame{
-    position: relative;
-    display: block;           /* 🔑 NO flex */
-    overflow: hidden;
-  }
-
-  .collection-frame .slides{
-    display: flex;
+    aspect-ratio: 3 / 4;
     overflow-x: auto;
+    display: flex;
+
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
   .collection-frame img{
+    position: relative;
     flex: 0 0 100%;
     width: 100%;
     height: auto;
-    scroll-snap-align: start;
+
     object-fit: cover;
+    scroll-snap-align: start;
+
     opacity: 1 !important;
-    position: relative;
+    z-index: 1;
   }
 
   .collection-frame::-webkit-scrollbar{
     display: none;
   }
 
-  /* CTA FIJO SOBRE LA CARD */
+  /* CTA SIEMPRE VISIBLE */
   .collection-cta-overlay{
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    z-index: 30;
-
     opacity: 1;
     pointer-events: auto;
-
-    white-space: nowrap;
-    writing-mode: horizontal-tb;
-  }
-
-  /* Precio visible */
-  .price-badge{
     z-index: 40;
   }
 
+  /* Flechas OFF */
   .collection-frame .nav,
   .img-nav{
     display: none;
