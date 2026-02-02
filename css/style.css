@@ -1015,47 +1015,53 @@ color: var(--yellow);
 
   .collection-frame{
     position: relative;
+    display: block;           /* 🔑 NO flex */
+    overflow: hidden;
+  }
+
+  .collection-frame .slides{
     display: flex;
     overflow-x: auto;
-
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-
-    touch-action: pan-x pan-y;
   }
 
   .collection-frame img{
-    position: relative;       /* anulamos absolute */
-    inset: auto;
-
     flex: 0 0 100%;
-    flex-shrink: 0;
     width: 100%;
     height: auto;
-
-    opacity: 1 !important;
     scroll-snap-align: start;
     object-fit: cover;
+    opacity: 1 !important;
+    position: relative;
   }
 
   .collection-frame::-webkit-scrollbar{
     display: none;
   }
 
-  /* 🔑 CTA siempre visible y clicable en mobile */
-  .collection-frame > .collection-cta-overlay{
-    opacity: 1 !important;
-    pointer-events: auto !important;
+  /* CTA FIJO SOBRE LA CARD */
+  .collection-cta-overlay{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    z-index: 30;
 
-    /* 🔑 tap rápido + no interferir con scroll */
-    touch-action: manipulation;
+    opacity: 1;
+    pointer-events: auto;
+
+    white-space: nowrap;
+    writing-mode: horizontal-tb;
   }
 
-  /* flechas fuera */
+  /* Precio visible */
+  .price-badge{
+    z-index: 40;
+  }
+
   .collection-frame .nav,
   .img-nav{
-    display: none !important;
-    pointer-events: none !important;
+    display: none;
   }
 }
 
