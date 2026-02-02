@@ -832,6 +832,26 @@ color: var(--yellow);
   }
 }
 
+.collection-frame .nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+
+  background: rgba(255,255,255,0.85);
+  font-size: 20px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.collection-frame .nav.prev{ left: 10px; }
+.collection-frame .nav.next{ right: 10px; }
+
 /* =========================
    IMÁGENES · DESKTOP
    → carrusel con is-active
@@ -973,15 +993,15 @@ color: var(--yellow);
   }
 
   /* CTA + precio siempre visibles en mobile */
-  .collection-cta-overlay{
-    opacity: 1;
+  .collection-cta-overlay,
+  .price-badge{
+    opacity: 1 !important;
     pointer-events: auto;
-    bottom: 12px;
-    top: auto;
   }
 
-  .price-badge{
-    opacity: 1;
+  .collection-cta-overlay{
+    bottom: 12px;
+    top: auto;
   }
 
   /* Ocultamos flechas en mobile */
