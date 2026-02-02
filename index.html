@@ -1000,9 +1000,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalInput = document.getElementById("modal-img-input");
 
   /* =====================
-     ABRIR MODAL
-  ===================== */
-  document.addEventListener("click", e => {
+   ABRIR MODAL
+===================== */
+document.addEventListener("click", e => {
   const btn = e.target.closest(".js-open-modal");
   if (!btn) return;
 
@@ -1011,8 +1011,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const imgUrl = btn.dataset.img;
   if (!imgUrl) return;
 
-  modalImg.src = imgUrl;
-  modalInput.value = imgUrl;
+  const publicUrl = new URL(imgUrl, window.location.origin).href;
+
+  modalImg.src = publicUrl;
+  modalInput.value = publicUrl;
 
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
