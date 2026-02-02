@@ -793,11 +793,19 @@ color: var(--yellow);
   margin: 0;
 }
 
-.collection-price{
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: 2px;
-  opacity: 0.9;
+/* =========================
+   GRID ENTRE COLECCIONES (DESKTOP)
+   → como disponibles.html
+========================= */
+
+@media (min-width: 1024px){
+  .collections-grid.main{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
 }
 
 /* =========================
@@ -817,37 +825,16 @@ color: var(--yellow);
     0 6px 18px rgba(0,0,0,0.06);
 }
 
-/* Desktop · Colecciones como grid editorial */
+/* Ajuste proporción en desktop */
 @media (min-width: 1024px){
-  .collections-grid.main{
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
   .collection-frame{
-    aspect-ratio: 3 / 4; /* más compacta */
-  }
-}
-
-/* Index · Cards con comportamiento mobile también en desktop */
-.collections-main .collection-cta-overlay{
-  opacity: 1;
-  pointer-events: auto;
-  bottom: 12px;
-  top: auto;
-}
-
-@media (min-width: 769px){
-  .collections-main .collection-frame img{
-    opacity: 1 !important;
-    position: relative;
+    aspect-ratio: 3 / 4;
   }
 }
 
 /* =========================
    IMÁGENES · DESKTOP
+   → carrusel con is-active
 ========================= */
 
 @media (min-width: 769px){
@@ -855,13 +842,12 @@ color: var(--yellow);
   .collection-frame img{
     position: absolute;
     inset: 0;
-
     width: 100%;
     height: 100%;
     object-fit: cover;
 
     opacity: 0;
-    z-index: 1;              /* 🔑 IMÁGENES SIEMPRE POR DEBAJO */
+    z-index: 1;
     transition: opacity .3s ease;
   }
 
@@ -871,13 +857,9 @@ color: var(--yellow);
   }
 }
 
-.img-item{
-  position: relative;
-  flex: 0 0 100%;
-}
-
 /* =========================
    BADGE PRECIO
+   → una por imagen (misma cifra)
 ========================= */
 
 .price-badge{
@@ -898,7 +880,7 @@ color: var(--yellow);
   align-items: center;
   justify-content: center;
 
-  z-index: 30;               /* 🔑 SIEMPRE SOBRE IMÁGENES */
+  z-index: 30;
 }
 
 /* =========================
@@ -920,13 +902,28 @@ color: var(--yellow);
   text-decoration: none;
 
   white-space: nowrap;
-  writing-mode: horizontal-tb;
 
-  z-index: 30;               /* 🔑 POR ENCIMA DE TODO */
+  z-index: 30;
   opacity: 0;
   pointer-events: none;
 
   transition: opacity .2s ease;
+}
+
+/* Mostrar CTA + precio SOLO en imagen activa (desktop) */
+@media (min-width: 769px){
+
+  .collection-frame .price-badge,
+  .collection-frame .collection-cta-overlay{
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .collection-frame img.is-active + .collection-cta-overlay,
+  .collection-frame img.is-active + .collection-cta-overlay + .price-badge{
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 /* Hover desktop */
@@ -939,19 +936,20 @@ color: var(--yellow);
 
 /* =========================
    MOBILE · SWIPE REAL
+   (TODO MOBILE AL FINAL)
 ========================= */
 
 @media (max-width: 768px){
 
+  /* Más aire lateral */
   .collections{
     padding-left: 16px;
     padding-right: 16px;
   }
-  
+
   .collection-frame{
     display: flex;
     overflow-x: auto;
-
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     border-radius: 22px;
@@ -974,15 +972,23 @@ color: var(--yellow);
     display: none;
   }
 
-  /* CTA SIEMPRE VISIBLE EN MOBILE */
+  /* CTA + precio siempre visibles en mobile */
   .collection-cta-overlay{
     opacity: 1;
     pointer-events: auto;
     bottom: 12px;
     top: auto;
   }
-}
 
+  .price-badge{
+    opacity: 1;
+  }
+
+  /* Ocultamos flechas en mobile */
+  .collection-frame .nav{
+    display: none;
+  }
+}
 
 /* =========================
    MODAL · FORMULARIO POPUP
