@@ -817,6 +817,35 @@ color: var(--yellow);
     0 6px 18px rgba(0,0,0,0.06);
 }
 
+/* Desktop · Colecciones como grid editorial */
+@media (min-width: 1024px){
+  .collections-grid.main{
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .collection-frame{
+    aspect-ratio: 3 / 4; /* más compacta */
+  }
+}
+
+/* Index · Cards con comportamiento mobile también en desktop */
+.collections-main .collection-cta-overlay{
+  opacity: 1;
+  pointer-events: auto;
+  bottom: 12px;
+  top: auto;
+}
+
+@media (min-width: 769px){
+  .collections-main .collection-frame img{
+    opacity: 1 !important;
+    position: relative;
+  }
+}
+
 /* =========================
    IMÁGENES · DESKTOP
 ========================= */
@@ -840,6 +869,11 @@ color: var(--yellow);
   .collection-frame img:first-child{
     opacity: 1;
   }
+}
+
+.img-item{
+  position: relative;
+  flex: 0 0 100%;
 }
 
 /* =========================
@@ -909,12 +943,18 @@ color: var(--yellow);
 
 @media (max-width: 768px){
 
+  .collections{
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
   .collection-frame{
     display: flex;
     overflow-x: auto;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    border-radius: 22px;
   }
 
   .collection-frame img{
