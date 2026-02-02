@@ -788,9 +788,10 @@ Quiero mi Abaloria Bendita.
 <!-- SCRIPTS -->
 
 <script>
-const chipGroup = document.querySelector('.chip-group');
+document.addEventListener("DOMContentLoaded", () => {
+  const chipGroup = document.querySelector('.chip-group');
+  if (!chipGroup) return;
 
-if (chipGroup) {
   const checkboxes = chipGroup.querySelectorAll('input[type="checkbox"]');
   const limit = 3;
 
@@ -798,26 +799,24 @@ if (chipGroup) {
     cb.addEventListener('change', () => {
       const checked = chipGroup.querySelectorAll('input[type="checkbox"]:checked');
 
-      if (checked.length >= limit) {
-        checkboxes.forEach(box => {
-          if (!box.checked) {
-            box.disabled = true;
-            box.parentElement.classList.add('is-disabled');
-          }
-        });
-      } else {
-        checkboxes.forEach(box => {
+      checkboxes.forEach(box => {
+        if (!box.checked && checked.length >= limit) {
+          box.disabled = true;
+          box.parentElement.classList.add('is-disabled');
+        } else {
           box.disabled = false;
           box.parentElement.classList.remove('is-disabled');
-        });
-      }
+        }
+      });
     });
   });
-}
+});
 </script>
     
 <script>
 const tipologiaGroup = document.querySelector('.pill-group');
+  if (pill-group) {
+  const inputs = pill-group.querySelectorAll('input');
 
 if (tipologiaGroup) {
   const radios = tipologiaGroup.querySelectorAll('input[type="radio"]');
@@ -838,6 +837,8 @@ if (tipologiaGroup) {
 
 <script>
   const track = document.querySelector('.carousel-track');
+  if (carousel-track) {
+  const inputs = carousel-track.querySelectorAll('input');
   const slides = document.querySelectorAll('.carousel-slide');
   let index = 0;
 
@@ -865,6 +866,8 @@ if (tipologiaGroup) {
 
 <script>
   const tipologiaRadios = document.querySelectorAll('input[name="tipologia"]');
+  if (tipologia) {
+  const inputs = tipologia.querySelectorAll('input');
   const panels = document.querySelectorAll('.class-panel');
 
   tipologiaRadios.forEach(radio => {
