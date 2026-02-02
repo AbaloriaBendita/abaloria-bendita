@@ -349,70 +349,27 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalInput = document.getElementById("modal-img-input");
 
   /* =====================
-     UTIL · IMAGEN ACTIVA
-  ===================== */
-  function getActiveImage(frame){
-    const images = frame.querySelectorAll("img");
-    if (!images.length) return null;
+   ABRIR MODAL
+===================== */
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".js-open-modal");
+  if (!btn) return;
 
-    // Desktop: si hay is-active, usarla
-    const byClass = frame.querySelector("img.is-active");
-    if (byClass && window.innerWidth > 768) return byClass;
+  e.preventDefault();
 
-    // Mobile: imagen más centrada
-    const frameRect = frame.getBoundingClientRect();
-    let activeImg = images[0];
-    let min = Infinity;
+  const imgUrl = btn.dataset.img;
+  if (!imgUrl) return;
 
-    images.forEach(img => {
-      const r = img.getBoundingClientRect();
-      const imgCenter = r.left + r.width / 2;
-      const frameCenter = frameRect.left + frameRect.width / 2;
-      const d = Math.abs(imgCenter - frameCenter);
+  const publicUrl = new URL(imgUrl, window.location.origin).href;
 
-      if (d < min) {
-        min = d;
-        activeImg = img;
-      }
-    });
+  modalImg.src = publicUrl;
+  modalInput.value = publicUrl;
 
-    return activeImg;
-  }
-
-  /* =====================
-     ABRIR MODAL
-  ===================== */
-  document.addEventListener("click", e => {
-    const btn = e.target.closest(".js-open-modal");
-    if (!btn) return;
-
-    e.preventDefault();
-
-    let imgUrl = "";
-
-    // Caso 1 · disponibles.html (sold)
-    if (btn.dataset.img) {
-      imgUrl = btn.dataset.img;
-    }
-
-    // Caso 2 · index.html (colecciones)
-    if (!imgUrl) {
-      const frame = btn.closest(".collection-frame");
-      if (frame) {
-        const img = getActiveImage(frame);
-        if (img) imgUrl = img.src;
-      }
-    }
-
-    if (!imgUrl) return;
-
-    modalImg.src = imgUrl;
-    modalInput.value = imgUrl;
-
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-    modal.querySelector(".modal-box").scrollTop = 0;
-  });
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+  modal.querySelector(".modal-box").scrollTop = 0;
+});
+  
 
   /* =====================
      CERRAR MODAL
