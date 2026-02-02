@@ -2372,15 +2372,16 @@ max-width: 860px;   /* prueba 860–920 */
 ===================== */
 
 .piece-body{
-  padding: 18px 18px 20px;
+  padding: 14px 18px 20px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .piece-card h3{
   font-size: 18px;
   font-weight: 700;
+    margin: 0 0 4px; /* 🔑 antes era mayor implícito */
 }
 
 .piece-price{
@@ -2400,7 +2401,7 @@ max-width: 860px;   /* prueba 860–920 */
   font-size: 12px;
   font-weight: 600;
   color: #444;
-  margin: 6px 0 12px;
+  margin: 4px 0 10px;
 }
 
 /* CTA */
