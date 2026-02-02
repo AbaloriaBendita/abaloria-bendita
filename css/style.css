@@ -965,8 +965,9 @@ color: var(--yellow);
     border-radius: 22px;
   }
 
-  /* Cada slide ocupa 100% del ancho */
+  /* 🔑 CLAVE: cada slide vuelve al flujo normal */
   .collection-frame .img-item{
+    position: relative;     /* ← ESTA ES LA LÍNEA QUE FALTABA */
     flex: 0 0 100%;
     width: 100%;
     height: auto;
@@ -974,7 +975,9 @@ color: var(--yellow);
   }
 
   .collection-frame .img-item img{
+    width: 100%;
     height: auto;
+    display: block;
   }
 
   .collection-frame::-webkit-scrollbar{
@@ -983,13 +986,13 @@ color: var(--yellow);
 
   /* CTA siempre visible en mobile (arriba derecha) */
   .collection-frame .collection-cta-overlay{
-    opacity: 1 !important;
+    opacity: 1;
     pointer-events: auto;
   }
 
   /* Precio siempre visible en mobile */
   .collection-frame .price-badge{
-    opacity: 1 !important;
+    opacity: 1;
   }
 
   /* Ocultar flechas en mobile */
