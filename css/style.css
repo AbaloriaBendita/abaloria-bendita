@@ -777,7 +777,7 @@ color: var(--yellow);
 .collection-card{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 6px;
 }
 
 .collection-head{
