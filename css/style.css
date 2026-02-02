@@ -2343,6 +2343,7 @@ max-width: 860px;   /* prueba 860–920 */
   .piece-card:hover{
     transform: translateY(-4px);
     box-shadow: 0 16px 38px rgba(0,0,0,0.14);
+        margin-top: 18px;
   }
 
   .piece-card:hover::after{
@@ -2406,6 +2407,7 @@ max-width: 860px;   /* prueba 860–920 */
 /* CTA */
 .piece-cta{
   margin-top: auto;
+  margin-top: 12px;   /* 🔑 colchón visual */
   align-self: flex-start;
   padding: 8px 16px;
   border-radius: 999px;
