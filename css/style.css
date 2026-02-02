@@ -2338,12 +2338,15 @@ max-width: 860px;   /* prueba 860–920 */
   opacity: 0;
 }
 
-/* Hover desktop */
+/* =====================
+   HOVER · DESKTOP
+===================== */
+
 @media (hover:hover){
+
   .piece-card:hover{
     transform: translateY(-4px);
     box-shadow: 0 16px 38px rgba(0,0,0,0.14);
-        margin-top: 18px;
   }
 
   .piece-card:hover::after{
@@ -2357,14 +2360,10 @@ max-width: 860px;   /* prueba 860–920 */
   .piece-card:hover .piece-image img:first-child{
     opacity: 0;
   }
-}
 
-  .piece-card:hover .hover-img{
-    opacity: 1;
-  }
-
-  .piece-card:hover .piece-image img:first-child{
-    opacity: 0;
+  /* Aire extra solo en hover (opcional, elegante) */
+  .piece-card:hover .piece-cta{
+    padding-top: 18px;
   }
 }
 
