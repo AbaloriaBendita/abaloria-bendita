@@ -801,7 +801,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · FRAME (BASE)
+   COLECCIONES · FRAME BASE
 ========================= */
 
 .collection-frame{
@@ -815,8 +815,6 @@ color: var(--yellow);
   box-shadow:
     inset 0 0 0 1px rgba(0,0,0,0.05),
     0 6px 18px rgba(0,0,0,0.06);
-
-  transition: transform .25s ease, box-shadow .25s ease;
 }
 
 /* =========================
@@ -828,28 +826,19 @@ color: var(--yellow);
   .collection-frame img{
     position: absolute;
     inset: 0;
+
     width: 100%;
     height: 100%;
     object-fit: cover;
 
     opacity: 0;
+    z-index: 1;              /* 🔑 IMÁGENES SIEMPRE POR DEBAJO */
     transition: opacity .3s ease;
-    z-index: 1;
   }
 
-  .collection-frame img.is-active{
-    opacity: 1;
-  }
-
+  .collection-frame img.is-active,
   .collection-frame img:first-child{
     opacity: 1;
-  }
-
-  .collection-card:hover .collection-frame{
-    transform: translateY(-4px);
-    box-shadow:
-      inset 0 0 0 1px rgba(0,0,0,0.06),
-      0 10px 28px rgba(0,0,0,0.12);
   }
 }
 
@@ -861,9 +850,11 @@ color: var(--yellow);
   position: absolute;
   top: 12px;
   left: 12px;
+
   width: 44px;
   height: 44px;
   border-radius: 50%;
+
   background: #000;
   color: #fff;
   font-size: 13px;
@@ -873,47 +864,7 @@ color: var(--yellow);
   align-items: center;
   justify-content: center;
 
-  z-index: 60;
-  box-shadow: 0 4px 10px rgba(0,0,0,.2);
-}
-
-/* =========================
-   FLECHAS · DESKTOP
-========================= */
-
-.collection-frame .nav,
-.img-nav{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 55;
-
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-
-  background: rgba(255,255,255,0.85);
-  border: none;
-  font-size: 22px;
-  font-weight: 700;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  opacity: 0;
-  transition: opacity .2s ease;
-}
-
-.img-nav.prev{ left: 10px; }
-.img-nav.next{ right: 10px; }
-
-@media (hover:hover){
-  .collection-card:hover .img-nav{
-    opacity: 1;
-  }
+  z-index: 20;               /* 🔑 SIEMPRE SOBRE IMÁGENES */
 }
 
 /* =========================
@@ -930,21 +881,17 @@ color: var(--yellow);
 
   background: rgba(255,255,255,0.9);
   color: #000;
-
   font-size: 12px;
   font-weight: 800;
   text-decoration: none;
 
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  white-space: nowrap;
+  writing-mode: horizontal-tb;
 
-  z-index: 50;
-
+  z-index: 25;               /* 🔑 POR ENCIMA DE TODO */
   opacity: 0;
   pointer-events: none;
 
-  white-space: nowrap;
-  writing-mode: horizontal-tb;
   transition: opacity .2s ease;
 }
 
@@ -963,9 +910,8 @@ color: var(--yellow);
 @media (max-width: 768px){
 
   .collection-frame{
-    aspect-ratio: 3 / 4;
-    overflow-x: auto;
     display: flex;
+    overflow-x: auto;
 
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
@@ -988,19 +934,13 @@ color: var(--yellow);
     display: none;
   }
 
-  /* CTA SIEMPRE VISIBLE */
+  /* CTA SIEMPRE VISIBLE EN MOBILE */
   .collection-cta-overlay{
     opacity: 1;
     pointer-events: auto;
-    z-index: 40;
-  }
-
-  /* Flechas OFF */
-  .collection-frame .nav,
-  .img-nav{
-    display: none;
   }
 }
+
 
 /* =========================
    MODAL · FORMULARIO POPUP
