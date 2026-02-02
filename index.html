@@ -965,25 +965,25 @@ document.addEventListener("DOMContentLoaded", () => {
    <script>
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.collection-frame').forEach(frame => {
-    const imgs = frame.querySelectorAll('img');
-    if (imgs.length <= 1) return;
+    const slides = frame.querySelectorAll('.img-item');
+    if (slides.length <= 1) return;
 
     let index = 0;
 
     const show = i => {
-      imgs.forEach(img => img.classList.remove('is-active'));
-      imgs[i].classList.add('is-active');
+      slides.forEach(s => s.classList.remove('is-active'));
+      slides[i].classList.add('is-active');
     };
 
     frame.querySelector('.next')?.addEventListener('click', e => {
       e.stopPropagation();
-      index = (index + 1) % imgs.length;
+      index = (index + 1) % slides.length;
       show(index);
     });
 
     frame.querySelector('.prev')?.addEventListener('click', e => {
       e.stopPropagation();
-      index = (index - 1 + imgs.length) % imgs.length;
+      index = (index - 1 + slides.length) % slides.length;
       show(index);
     });
   });
