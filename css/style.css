@@ -871,10 +871,9 @@ color: var(--yellow);
     transition: opacity .3s ease;
   }
 
-  .collection-frame img.is-active,
-  .collection-frame img:first-child{
-    opacity: 1;
-  }
+  .collection-frame img.is-active{
+  opacity: 1;
+}
 }
 
 /* =========================
@@ -930,20 +929,10 @@ color: var(--yellow);
   transition: opacity .2s ease;
 }
 
-/* Mostrar CTA + precio SOLO en imagen activa (desktop) */
-@media (min-width: 769px){
-
-  .collection-frame .price-badge,
-  .collection-frame .collection-cta-overlay{
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .collection-frame img.is-active + .collection-cta-overlay,
-  .collection-frame img.is-active + .collection-cta-overlay + .price-badge{
-    opacity: 1;
-    pointer-events: auto;
-  }
+/* CTA oculto por defecto */
+.collection-cta-overlay{
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Hover desktop */
