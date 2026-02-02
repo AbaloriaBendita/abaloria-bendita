@@ -780,8 +780,6 @@ color: var(--yellow);
   gap: 10px;
 }
 
-/* ---------- CABECERA CARD ---------- */
-
 .collection-head{
   text-align: center;
 }
@@ -797,7 +795,6 @@ color: var(--yellow);
    GRID ENTRE COLECCIONES (DESKTOP)
    → como disponibles.html
 ========================= */
-
 @media (min-width: 1024px){
   .collections-grid.main{
     display: grid;
@@ -809,7 +806,7 @@ color: var(--yellow);
 }
 
 /* =========================
-   COLECCIONES · FRAME BASE
+   FRAME BASE
 ========================= */
 
 .collection-frame{
@@ -818,7 +815,6 @@ color: var(--yellow);
   aspect-ratio: 4 / 5;
   border-radius: 18px;
   overflow: hidden;
-
   background: #eee;
   box-shadow:
     inset 0 0 0 1px rgba(0,0,0,0.05),
@@ -827,22 +823,39 @@ color: var(--yellow);
 
 /* Ajuste proporción en desktop */
 @media (min-width: 1024px){
-  .collection-frame{
-    aspect-ratio: 3 / 4;
-  }
+  .collection-frame{ aspect-ratio: 3 / 4; }
 }
+
+/* =========================
+   SLIDES (estructura común)
+========================= */
+
+.img-item{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.img-item img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* =========================
+   FLECHAS DESKTOP
+========================= */
 
 .collection-frame .nav{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 40;
-
+  z-index: 50;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   border: none;
-
   background: rgba(255,255,255,0.85);
   font-size: 20px;
   font-weight: 800;
@@ -853,99 +866,86 @@ color: var(--yellow);
 .collection-frame .nav.next{ right: 10px; }
 
 /* =========================
-   IMÁGENES · DESKTOP
-   → carrusel con is-active
-========================= */
-
-@media (min-width: 769px){
-
-  .collection-frame img{
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    opacity: 0;
-    z-index: 1;
-    transition: opacity .3s ease;
-  }
-
-  .collection-frame img.is-active{
-  opacity: 1;
-}
-}
-
-/* =========================
-   BADGE PRECIO
-   → una por imagen (misma cifra)
+   BADGE PRECIO (siempre visible en desktop + mobile)
 ========================= */
 
 .price-badge{
   position: absolute;
   top: 12px;
   left: 12px;
-
   width: 44px;
   height: 44px;
   border-radius: 50%;
-
   background: #000;
   color: #fff;
   font-size: 13px;
   font-weight: 800;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  z-index: 30;
+  z-index: 40;
 }
 
 /* =========================
    CTA OVERLAY
+   - Desktop: sólo aparece al hover
+   - Mobile: siempre visible
 ========================= */
 
 .collection-cta-overlay{
   position: absolute;
   top: 12px;
   right: 12px;
-
   padding: 6px 12px;
   border-radius: 999px;
-
   background: rgba(255,255,255,0.9);
   color: #000;
   font-size: 12px;
   font-weight: 800;
   text-decoration: none;
-
   white-space: nowrap;
-
-  z-index: 30;
-  opacity: 0;
-  pointer-events: none;
-
-  transition: opacity .2s ease;
+  z-index: 40;
 }
 
-/* CTA oculto por defecto */
-.collection-cta-overlay{
-  opacity: 0;
-  pointer-events: none;
-}
+/* =========================
+   DESKTOP · Carrusel por opacidad
+========================= */
 
-/* Hover desktop */
-@media (hover:hover){
-  .collection-frame:hover .collection-cta-overlay{
+@media (min-width: 769px){
+
+  /* Todos los slides ocultos */
+  .collection-frame .img-item{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+
+  /* Activo visible */
+  .collection-frame .img-item.is-active{
     opacity: 1;
     pointer-events: auto;
+  }
+
+  /* CTA oculto por defecto en desktop */
+  .collection-frame .collection-cta-overlay{
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+  }
+
+  /* CTA aparece SOLO en el slide activo cuando hay hover */
+  @media (hover:hover){
+    .collection-frame:hover .img-item.is-active .collection-cta-overlay{
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 }
 
 /* =========================
-   MOBILE · SWIPE REAL
-   (TODO MOBILE AL FINAL)
+   MOBILE · TODO AL FINAL
 ========================= */
 
 @media (max-width: 768px){
@@ -956,6 +956,7 @@ color: var(--yellow);
     padding-right: 16px;
   }
 
+  /* Swipe: el frame se vuelve carrusel horizontal */
   .collection-frame{
     display: flex;
     overflow-x: auto;
@@ -964,36 +965,34 @@ color: var(--yellow);
     border-radius: 22px;
   }
 
-  .collection-frame img{
-    position: relative;
+  /* Cada slide ocupa 100% del ancho */
+  .collection-frame .img-item{
     flex: 0 0 100%;
     width: 100%;
     height: auto;
-
-    object-fit: cover;
     scroll-snap-align: start;
+  }
 
-    opacity: 1 !important;
-    z-index: 1;
+  .collection-frame .img-item img{
+    height: auto;
   }
 
   .collection-frame::-webkit-scrollbar{
     display: none;
   }
 
-  /* CTA + precio siempre visibles en mobile */
-  .collection-cta-overlay,
-  .price-badge{
+  /* CTA siempre visible en mobile (arriba derecha) */
+  .collection-frame .collection-cta-overlay{
     opacity: 1 !important;
     pointer-events: auto;
   }
 
-  .collection-cta-overlay{
-    bottom: 12px;
-    top: auto;
+  /* Precio siempre visible en mobile */
+  .collection-frame .price-badge{
+    opacity: 1 !important;
   }
 
-  /* Ocultamos flechas en mobile */
+  /* Ocultar flechas en mobile */
   .collection-frame .nav{
     display: none;
   }
