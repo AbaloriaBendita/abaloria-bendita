@@ -2344,9 +2344,17 @@ max-width: 860px;   /* prueba 860–920 */
     transform: translateY(-4px);
     box-shadow: 0 16px 38px rgba(0,0,0,0.14);
   }
-  @media (hover:hover){
+
   .piece-card:hover::after{
     transform: translateY(-2px);
+  }
+
+  .piece-card:hover .hover-img{
+    opacity: 1;
+  }
+
+  .piece-card:hover .piece-image img:first-child{
+    opacity: 0;
   }
 }
 
