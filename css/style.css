@@ -969,6 +969,7 @@ color: var(--yellow);
     border-radius: 22px;
 
     height: auto;            /* 🔑 clave */
+    aspect-ratio: unset !important; /* 🔑 mata el ratio */
   }
 
   /* 🔑 CLAVE: cada slide vuelve al flujo normal */
@@ -2533,10 +2534,29 @@ textarea::placeholder{
   margin: 0;
   flex: 0 0 auto;
 }
+.modal-form .rgpd-group{
+  display: block;
+  margin-top: 14px;
+}
+
+.modal-form .rgpd-label{
+  display: inline-flex;     /* 🔑 no flex completo */
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+
+  width: auto;              /* 🔑 clave */
+  max-width: 100%;
+}
+
 
 .rgpd-label span{
   display: inline;
 }
+.modal-form{
+  text-align: left;
+}
+
 
 
 
