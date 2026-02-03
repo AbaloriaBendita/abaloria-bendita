@@ -661,7 +661,6 @@ color: var(--yellow);
 
 }
 
-
 /* =========================
    CAROUSEL EDITORIAL + COLECCIONES
 ========================= */
@@ -777,7 +776,7 @@ color: var(--yellow);
 .collection-card{
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .collection-head{
@@ -967,6 +966,8 @@ color: var(--yellow);
   background: transparent;
     max-width: 92%;
     margin: 0 auto;
+    aspect-ratio: auto;   /* 🔑 clave */
+    height: auto;
   }
 
   /* 🔑 CLAVE: cada slide vuelve al flujo normal */
@@ -1021,6 +1022,12 @@ color: var(--yellow);
     max-width: 1200px;
     margin: 0 auto;
   }
+}
+
+.collections-grid.inspo .collection-frame{
+  aspect-ratio: 3 / 4;
+  max-width: 90%;
+  margin: 0 auto;
 }
 
 /* =========================
@@ -2506,6 +2513,28 @@ textarea::placeholder{
 
 .modal-form .rgpd-label span{
   display: inline-block;
+}
+.rgpd-group{
+  width: 100%;
+  margin-top: 12px;
+}
+
+.rgpd-label{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* 🔑 fuerza izquierda */
+  gap: 6px;
+  width: 100%;
+  text-align: left;
+}
+
+.rgpd-label input{
+  margin: 0;
+  flex: 0 0 auto;
+}
+
+.rgpd-label span{
+  display: inline;
 }
 
 
