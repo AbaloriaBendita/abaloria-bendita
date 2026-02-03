@@ -1879,6 +1879,9 @@ max-width: 860px;   /* prueba 860–920 */
 
 .rgpd-group{
   margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* separación vertical entre RGPDs */
 }
 
 .rgpd-label{
@@ -2491,6 +2494,20 @@ textarea::placeholder{
 .modal-form textarea{
   width: 100%;
 }
+
+.modal-form .rgpd-group{
+  margin-top: 12px;
+}
+
+.modal-form .rgpd-label{
+  align-items: center;   /* centra verticalmente */
+  gap: 6px;              /* acerca texto a checkbox */
+}
+
+.modal-form .rgpd-label span{
+  display: inline-block;
+}
+
 
 
 
