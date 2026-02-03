@@ -1,29 +1,26 @@
-<!doctype html>
+ <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <title>Sencilla con gracia · Abaloria Bendita</title>
-  <meta name="description" content="Collares sencillos y divertidos hechos a mano. Piezas únicas de la colección Sencilla con gracia. Precio fijo 55€.">
+  <meta name="description" content="Collares únicos hechos a mano. Colección Sencilla con gracia. Precio fijo 55 €.">
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
 
-  <!-- CSS -->
+  <!-- CSS GLOBAL -->
   <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-
 <a class="skip" href="#contenido">Saltar al contenido</a>
 
-<!-- =========================
-     HEADER
-========================= -->
+<!-- ================= HEADER ================= -->
 <header class="site-header">
   <div class="header-inner">
 
@@ -33,7 +30,6 @@
         alt="Abaloria Bendita"
         class="logo-img"
         loading="eager"
-        decoding="async"
       >
     </a>
 
@@ -55,34 +51,29 @@
   </div>
 </header>
 
-<!-- =========================
-     MAIN
-========================= -->
+<!-- ================= MAIN ================= -->
 <main id="contenido">
 
 <section class="available-page">
 
-  <!-- INTRO -->
   <div class="available-intro">
-    <h1>
-      Sencilla con grac<span class="c-red">i</span>a<span class="c-yellow">.</span>
-    </h1>
+    <h1>Sencilla con gracia<span class="c-yellow">.</span></h1>
     <p>
       Collares únicos hechos a mano.<br>
-      Precio fijo: <strong>55 €</strong>
+      <strong>Precio fijo: 55 €</strong>
     </p>
   </div>
 
-  <!-- GRID DINÁMICO -->
-  <div class="available-grid" id="collection-grid"></div>
+  <!-- GRID -->
+  <div class="available-grid" id="collection-grid">
+    <!-- Cards se pintan por JS -->
+  </div>
 
 </section>
 
 </main>
 
-<!-- =========================
-     FOOTER
-========================= -->
+<!-- ================= FOOTER ================= -->
 <footer class="site-footer">
   <div class="container footer-inner">
 
@@ -95,12 +86,10 @@
     </div>
 
     <div class="footer-links">
-      <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener" class="footer-ig">
-        <img src="/assets/IG_logo.png" alt="Instagram Abaloria Bendita">
-        <span>Síguenos en Instagram</span>
+      <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener">
+        Síguenos en Instagram
       </a>
-
-      <a href="mailto:hola@abaloriabendita.es" class="footer-mail">
+      <a href="mailto:hola@abaloriabendita.es">
         hola@abaloriabendita.es
       </a>
     </div>
@@ -108,9 +97,7 @@
   </div>
 </footer>
 
-<!-- =========================
-     MODAL · ENCARGO RÁPIDO
-========================= -->
+<!-- ================= MODAL ENCARGO ================= -->
 <div class="modal" id="modal-encargo" aria-hidden="true">
 
   <div class="modal-backdrop"></div>
@@ -152,7 +139,7 @@
         <textarea
           name="comentarios"
           rows="3"
-          placeholder="Petición especial, pieza específica, estilo, colección, colores…"
+          placeholder="Petición especial, estilo, colores…"
         ></textarea>
       </div>
 
@@ -160,30 +147,36 @@
         Encargar una Abaloria parecida
       </button>
 
+      <div class="rgpd-group">
+        <label class="rgpd-label">
+          <input type="checkbox" name="rgpd" required>
+          <span>
+            He leído y acepto la
+            <a href="/privacidad.html" target="_blank">política de privacidad</a>
+          </span>
+        </label>
+      </div>
+
     </form>
   </div>
-
 </div>
 
-<!-- =========================
-     SCRIPTS
-========================= -->
-
-<!-- NAV MOBILE -->
+<!-- ================= JS ================= -->
 <script>
+/* NAV MOBILE */
 document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.main-nav');
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".main-nav");
   if (!toggle || !nav) return;
 
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('is-open');
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("is-open");
   });
 });
 </script>
 
-<!-- MODAL -->
 <script>
+/* MODAL */
 document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("modal-encargo");
@@ -195,18 +188,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!btn) return;
 
     e.preventDefault();
-
-    const imgUrl = btn.dataset.img;
-    if (!imgUrl) return;
-
-    const publicUrl = new URL(imgUrl, window.location.origin).href;
-
-    modalImg.src = publicUrl;
-    modalInput.value = publicUrl;
+    modalImg.src = btn.dataset.img;
+    modalInput.value = btn.dataset.img;
 
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden", "false");
-    modal.querySelector(".modal-box").scrollTop = 0;
   });
 
   modal.addEventListener("click", e => {
@@ -215,25 +201,16 @@ document.addEventListener("DOMContentLoaded", () => {
       e.target.classList.contains("modal-close")
     ) {
       modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
     }
   });
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && modal.classList.contains("is-open")) {
-      modal.classList.remove("is-open");
-      modal.setAttribute("aria-hidden", "true");
-    }
-  });
-
 });
 </script>
 
-<!-- GRID DINÁMICO -->
 <script>
+/* CARGA COLECCIÓN 55 */
 (async () => {
 
-  const BASE_PATH = "/assets/colecciones/55/";
+  const BASE = "/assets/colecciones/55/";
   const GRID = document.getElementById("collection-grid");
 
   const PIEZAS = [
@@ -246,13 +223,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for (const id of PIEZAS) {
     try {
-      const res = await fetch(`${BASE_PATH}${id}/data.json`);
+      const res = await fetch(`${BASE}${id}/data.json`);
       if (!res.ok) continue;
 
       const data = await res.json();
 
-      const mainImg = `${BASE_PATH}${id}/main.jpg`;
-      const hoverImg = `${BASE_PATH}${id}/hover.jpg`;
+      const mainImg = `${BASE}${id}/main.jpg`;
+      const hoverImg = `${BASE}${id}/hover.jpg`;
 
       let hasHover = false;
       try {
@@ -265,8 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       card.innerHTML = `
         <div class="piece-image">
-          <img src="${mainImg}" alt="${data.titulo}" loading="lazy">
-          ${hasHover ? `<img src="${hoverImg}" class="hover-img" alt="" loading="lazy">` : ""}
+          <img src="${mainImg}" alt="${data.titulo}">
+          ${hasHover ? `<img src="${hoverImg}" class="hover-img" alt="">` : ""}
         </div>
 
         <div class="piece-body">
@@ -274,24 +251,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
           ${
             data.estado === "disponible"
-              ? `
-                <p class="piece-price">
-                  55€ <span>IVA incluido · Envío 8€</span>
-                </p>
-                <a href="${data.sumup_link}" target="_blank" class="piece-cta">
-                  Comprar ahora
-                </a>
-              `
-              : `
-                <p class="piece-sold-copy">
-                  Esta pieza está vendida, pero puedes encargar una muy parecida.
-                </p>
-                <a href="#"
-                   class="piece-cta alt js-open-modal"
-                   data-img="${mainImg}">
-                  Encargar parecida
-                </a>
-              `
+              ? `<p class="piece-price">55 € <span>IVA incluido</span></p>
+                 <a href="${data.sumup_link}" target="_blank" class="piece-cta">
+                   Comprar ahora
+                 </a>`
+              : `<p class="piece-sold-copy">
+                   Esta pieza está vendida, pero puedes encargar una muy parecida.
+                 </p>
+                 <a href="#"
+                    class="piece-cta alt js-open-modal"
+                    data-img="${mainImg}">
+                   Encargar parecida
+                 </a>`
           }
         </div>
       `;
