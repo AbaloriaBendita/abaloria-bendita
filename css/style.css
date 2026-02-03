@@ -1284,7 +1284,7 @@ color: var(--yellow);
 .how-section{
   padding: 60px 0;               /* 🔑 más aire vertical */
   background: #fff;              /* caja blanca única */
-    margin-bottom: 80px;
+    margin-bottom: 100px;
 }
 
 /* Caja HOW (igual lógica que el formulario) */
@@ -1294,11 +1294,6 @@ color: var(--yellow);
   padding: 48px 48px 40px;
   background: #fff;
   border-radius: 24px;
-}
-
-/* Separación clara con el formulario */
-.how-inner{
-  margin-bottom: 60px;
 }
 
 /* Título */
