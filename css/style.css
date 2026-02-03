@@ -1004,8 +1004,8 @@ color: var(--yellow);
     display: none;
   }
   .collection-card{
-  padding-bottom: 6px;
-}
+  overflow: hidden;
+  border-radius: 22px;}
 
 }
 
