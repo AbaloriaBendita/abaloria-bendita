@@ -2504,56 +2504,28 @@ textarea::placeholder{
   width: 100%;
 }
 
-.modal-form .rgpd-group{
-  margin-top: 12px;
-}
+/* =====================
+   RGPD · MODAL (FIX FINAL)
+===================== */
 
-.modal-form .rgpd-label{
-  align-items: center;   /* centra verticalmente */
-  gap: 6px;              /* acerca texto a checkbox */
-}
-
-.modal-form .rgpd-label span{
-  display: inline-block;
-}
-.rgpd-group{
-  width: 100%;
-  margin-top: 12px;
-}
-
-.rgpd-label{
-  display: flex;
-  align-items: center;
-  justify-content: flex-start; /* 🔑 fuerza izquierda */
-  gap: 6px;
-  width: 100%;
-  text-align: left;
-}
-
-.rgpd-label input{
-  margin: 0;
-  flex: 0 0 auto;
-}
-.modal-form .rgpd-group{
-  display: block;
+.rgpd-modal{
   margin-top: 14px;
 }
 
-.modal-form .rgpd-label{
-  display: inline-flex;     /* 🔑 no flex completo */
-  align-items: center;
-  justify-content: flex-start;
-  gap: 6px;
-
-  width: auto;              /* 🔑 clave */
-  max-width: 100%;
+.rgpd-modal .rgpd-row{
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
 }
 
-
-.rgpd-label span{
-  display: inline;
+.rgpd-modal input[type="checkbox"]{
+  margin: 2px 0 0 0;   /* 🔑 clave iOS */
+  flex: 0 0 auto;
 }
-.modal-form{
+
+.rgpd-modal label{
+  font-size: 13px;
+  line-height: 1.35;
   text-align: left;
 }
 
