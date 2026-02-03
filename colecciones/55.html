@@ -420,3 +420,74 @@ document.addEventListener("click", e => {
 });
 </script>
 
+  <script>
+(async () => {
+  const BASE_PATH = "/assets/colecciones/55/";
+  const GRID = document.getElementById("collection-grid");
+
+  // ⚠️ listado manual inicial (Cloudflare no lista carpetas)
+  const PIEZAS = [
+    "55-01",
+    "55-02",
+    "55-03",
+    "55-04",
+    "55-05"
+  ];
+
+  for (const id of PIEZAS) {
+    try {
+      const dataRes = await fetch(`${BASE_PATH}${id}/data.json`);
+      if (!dataRes.ok) continue;
+
+      const data = await dataRes.json();
+
+      const mainImg = `${BASE_PATH}${id}/main.jpg`;
+      const hoverImg = `${BASE_PATH}${id}/hover.jpg`;
+
+      // comprobamos si existe hover
+      let hasHover = false;
+      try {
+        const h = await fetch(hoverImg, { method: "HEAD" });
+        hasHover = h.ok;
+      } catch {}
+
+      const card = document.createElement("article");
+      card.className = `piece-card ${data.estado}`;
+
+      card.innerHTML = `
+        <div class="piece-image">
+          <img src="${mainImg}" alt="${data.titulo}">
+          ${hasHover ? `<img src="${hoverImg}" class="hover-img" alt="">` : ""}
+        </div>
+
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+
+          ${
+            data.estado === "disponible"
+              ? `<p class="piece-price">55€ <span>IVA incluido · Envío 8€</span></p>
+                 <a href="${data.sumup_link}" target="_blank" class="piece-cta">
+                   Comprar ahora
+                 </a>`
+              : `<p class="piece-sold-copy">
+                   Esta pieza está vendida, pero puedes encargar una muy parecida.
+                 </p>
+                 <a href="#"
+                    class="piece-cta alt js-open-modal"
+                    data-img="${mainImg}">
+                   Encargar parecida
+                 </a>`
+          }
+        </div>
+      `;
+
+      GRID.appendChild(card);
+
+    } catch (err) {
+      console.error("Error cargando pieza", id, err);
+    }
+  }
+})();
+</script>
+
+
