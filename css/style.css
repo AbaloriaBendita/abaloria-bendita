@@ -2562,6 +2562,26 @@ textarea::placeholder{
   text-align: left;
 }
 
+/* =====================
+   RGPD · FIX DESKTOP MODAL
+===================== */
+
+@media (min-width: 769px){
+
+  .modal-form .rgpd-group{
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .modal-form .rgpd-row{
+    max-width: 360px;      /* 🔑 evita que el texto se “escape” */
+  }
+
+  .modal-form .rgpd-row label{
+    font-size: 13px;
+    line-height: 1.35;
+  }
+}
 
 
 
