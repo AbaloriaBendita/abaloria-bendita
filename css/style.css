@@ -961,18 +961,16 @@ color: var(--yellow);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+
+    background: transparent; /* 🔑 quita el gris */
+    padding: 0;
     border-radius: 22px;
-    padding: 0px;          /* 🔑 aire interno */
-  background: transparent;
-    max-width: 92%;
-    margin: 0 auto;
-    aspect-ratio: auto;   /* 🔑 clave */
-    height: auto;
+
+    height: auto;            /* 🔑 clave */
   }
 
   /* 🔑 CLAVE: cada slide vuelve al flujo normal */
   .collection-frame .img-item{
-    position: relative;     /* ← ESTA ES LA LÍNEA QUE FALTABA */
     flex: 0 0 100%;
     width: 100%;
     height: auto;
@@ -1004,6 +1002,7 @@ color: var(--yellow);
   .collection-frame .nav{
     display: none;
   }
+  
   .collection-card{
   overflow: hidden;
   border-radius: 22px;}
