@@ -1118,6 +1118,7 @@ color: var(--yellow);
   margin: 0;
 }
 
+
 /* =========================
    MODAL · MOBILE
 ========================= */
@@ -1134,6 +1135,26 @@ color: var(--yellow);
     max-height: 22vh;   /* 🔑 clave para que se vea todo el form */
     margin-bottom: 10px;
   }
+}
+
+/* Inspírate más pequeño */
+.collections-grid.inspo .collection-frame{
+  max-width: 88%;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px){
+  .collections-grid.inspo{
+    gap: 20px;
+  }
+}
+
+.collections-separator{
+  border: none;
+  height: 1px;
+  background: rgba(0,0,0,0.08);
+  max-width: 1200px;
+  margin: 64px auto 48px;
 }
 
 /* =========================
@@ -1263,6 +1284,7 @@ color: var(--yellow);
 .how-section{
   padding: 60px 0;               /* 🔑 más aire vertical */
   background: #fff;              /* caja blanca única */
+    margin-bottom: 80px;
 }
 
 /* Caja HOW (igual lógica que el formulario) */
