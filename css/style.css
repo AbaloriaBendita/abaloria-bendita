@@ -963,6 +963,10 @@ color: var(--yellow);
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     border-radius: 22px;
+    padding: 0px;          /* 🔑 aire interno */
+  background: transparent;
+    max-width: 92%;
+    margin: 0 auto;
   }
 
   /* 🔑 CLAVE: cada slide vuelve al flujo normal */
@@ -999,6 +1003,10 @@ color: var(--yellow);
   .collection-frame .nav{
     display: none;
   }
+  .collection-card{
+  padding-bottom: 6px;
+}
+
 }
 
 /* =========================
