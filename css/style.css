@@ -1010,6 +1010,17 @@ color: var(--yellow);
   overflow: hidden;
   border-radius: 22px;}
 
+  /* FIX hueco gris en inspírate */
+  .collections-grid.inspo .collection-frame{
+    aspect-ratio: auto;
+    height: auto;
+  }
+
+  .collections-grid.inspo .img-item,
+  .collections-grid.inspo .img-item img{
+    height: auto;
+  }
+
 }
 
 /* =========================
