@@ -2606,33 +2606,65 @@ textarea::placeholder{
 
 /* =========================
    CATÁLOGO · CARDS
+   Este CSS SOLO afecta a vistas de catálogo
 ========================= */
 
-.catalog-card .piece-image{
+/* CONTEXTO */
+.catalog-grid .piece-card{
+  position: relative;
+}
+
+/* =========================
+   IMÁGENES
+========================= */
+
+.catalog-grid .piece-image{
   position: relative;
   overflow: hidden;
 }
 
-.catalog-card .piece-image img{
+.catalog-grid .piece-image img{
   display: block;
   width: 100%;
   height: auto;
+  opacity: 1;              /* 🔑 nunca apagamos la imagen base */
 }
 
-/* Imagen secundaria */
-.catalog-card .hover-img{
+/* Imagen secundaria (hover) */
+.catalog-grid .piece-image .hover-img{
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity .25s ease;
 }
 
-/* Hover SOLO si hay hover-img y SOLO en desktop real */
-@media (hover:hover) and (pointer:fine){
-  .catalog-card:hover .hover-img{
+/* =========================
+   HOVER SOLO CUANDO TOCA
+========================= */
+
+/* Solo desktop real */
+@media (hover: hover) and (pointer: fine){
+
+  /* Hover SOLO si existe hover-img */
+  .catalog-grid .piece-card:hover .hover-img{
     opacity: 1;
   }
+
 }
+
+/* =========================
+   MOBILE
+========================= */
+
+/* En mobile no hay hover */
+@media (hover: none){
+
+  .catalog-grid .piece-image .hover-img{
+    display: none;
+  }
+
+}
+
 
 
 
