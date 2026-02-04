@@ -2412,6 +2412,9 @@ max-width: 860px;   /* prueba 860–920 */
   .piece-card:hover .piece-image img:first-child{
     opacity: 0;
   }
+  .no-hover .hover-img {
+  display: none !important;
+}
 
   /* Aire extra solo en hover (opcional, elegante) */
   .piece-card:hover .piece-cta{
