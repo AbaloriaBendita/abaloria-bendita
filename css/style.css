@@ -2536,49 +2536,30 @@ textarea::placeholder{
 }
 
 /* =====================
-   RGPD · MODAL (FIX FINAL)
+   RGPD · MODAL (DEFINITIVO)
 ===================== */
 
-.rgpd-modal{
+.modal .rgpd-group{
   margin-top: 14px;
 }
 
-.rgpd-modal .rgpd-row{
+.modal .rgpd-row{
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
 }
 
-.rgpd-modal input[type="checkbox"]{
-  margin: 2px 0 0 0;   /* 🔑 clave iOS */
+.modal .rgpd-row input[type="checkbox"]{
+  margin-top: 2px; /* alineación visual con texto */
   flex: 0 0 auto;
 }
 
-.rgpd-modal label{
+.modal .rgpd-row label{
   font-size: 13px;
   line-height: 1.35;
   text-align: left;
-}
-
-/* =====================
-   RGPD · FIX DESKTOP MODAL
-===================== */
-
-@media (min-width: 769px){
-
-  .modal-form .rgpd-group{
-    display: flex;
-    justify-content: flex-start;
-  }
-
-  .modal-form .rgpd-row{
-    max-width: 360px;      /* 🔑 evita que el texto se “escape” */
-  }
-
-  .modal-form .rgpd-row label{
-    font-size: 13px;
-    line-height: 1.35;
-  }
+  cursor: pointer;
+  max-width: 360px;
 }
 
 /* =========================
@@ -2660,19 +2641,6 @@ textarea::placeholder{
   .catalog-grid .piece-card:hover .piece-cta{
   padding-top: 12px !important; /* mismo valor base */
 }
-}
-
-/* =========================
-   MODAL · RGPD ALIGN FIX
-========================= */
-
-.modal .rgpd-group{
-  align-items: flex-start;
-  text-align: left;
-}
-
-.modal .rgpd-label{
-  justify-content: flex-start;
 }
 
 /* =========================
