@@ -2536,30 +2536,31 @@ textarea::placeholder{
 }
 
 /* =====================
-   RGPD · MODAL (DEFINITIVO)
+   RGPD · FIX DEFINITIVO EN MODAL ESTRECHO
 ===================== */
 
 .modal .rgpd-group{
-  margin-top: 14px;
+  width: 100%;
 }
 
 .modal .rgpd-row{
   display: flex;
   align-items: flex-start;
   gap: 10px;
+  width: 100%;
 }
 
 .modal .rgpd-row input[type="checkbox"]{
-  margin-top: 2px; /* alineación visual con texto */
+  margin-top: 3px;
   flex: 0 0 auto;
 }
 
 .modal .rgpd-row label{
+  display: block;
+  flex: 1;              /* 🔑 ocupa todo el ancho disponible */
+  text-align: left;
   font-size: 13px;
   line-height: 1.35;
-  text-align: left;
-  cursor: pointer;
-  max-width: 360px;
 }
 
 /* =========================
