@@ -2627,7 +2627,7 @@ textarea::placeholder{
   display: block;
   width: 100%;
   height: auto;
-  opacity: 1;              /* 🔑 nunca apagamos la imagen base */
+  opacity: 1; /* 🔑 nunca apagamos la imagen base */
 }
 
 /* Imagen secundaria (hover) */
@@ -2639,17 +2639,21 @@ textarea::placeholder{
 }
 
 /* =========================
-   HOVER SOLO CUANDO TOCA
+   CATÁLOGO · RESET + HOVER PROPIO
 ========================= */
 
 /* Solo desktop real */
 @media (hover: hover) and (pointer: fine){
 
-  /* Hover SOLO si existe hover-img */
+  /* 🔑 Reset total del hover heredado */
+  .catalog-grid .piece-card:hover .piece-image img:first-child{
+    opacity: 1 !important;
+  }
+
+  /* Hover catálogo: solo superponer la secundaria */
   .catalog-grid .piece-card:hover .hover-img{
     opacity: 1;
   }
-
 }
 
 /* =========================
@@ -2662,7 +2666,6 @@ textarea::placeholder{
   .catalog-grid .piece-image .hover-img{
     display: none;
   }
-
 }
 
 
