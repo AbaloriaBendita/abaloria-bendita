@@ -2562,38 +2562,9 @@ textarea::placeholder{
   font-size: 13px;
   line-height: 1.35;
 }
-/* =====================
-   RGPD · SALIR DEL CENTRADO DEL FORM (FIX FINAL)
-===================== */
-
-.modal-form .rgpd-group{
-  width: 100%;
-  align-self: flex-start;   /* 🔑 rompe el centrado heredado */
-}
-
-.modal-form .rgpd-row{
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  width: 100%;
-}
-
-.modal-form .rgpd-row input[type="checkbox"]{
-  margin-top: 3px;
-  flex: 0 0 auto;
-}
-
-.modal-form .rgpd-row label{
-  flex: 1;
-  text-align: left;
-  font-size: 13px;
-  line-height: 1.35;
-}
 .modal-form{
   align-items: stretch !important;
 }
-
 
 /* =========================
    HOVER SOLO CUANDO EXISTE Y SOLO EN DESKTOP REAL
