@@ -2590,6 +2590,9 @@ textarea::placeholder{
   font-size: 13px;
   line-height: 1.35;
 }
+.modal-form{
+  align-items: stretch !important;
+}
 
 
 /* =========================
