@@ -2582,19 +2582,26 @@ textarea::placeholder{
 }
 
 /* =========================
-   FIX: NO HOVER cuando solo hay 1 imagen
-   (usa .piece-image.no-hover que ya añade tu JS)
+   HOVER SOLO CUANDO EXISTE Y SOLO EN DESKTOP REAL
 ========================= */
 
-/* Evita que en hover se apague la única imagen */
-.piece-card:hover .piece-image.no-hover img,
-.piece-card:hover .piece-image.no-hover img:first-child{
-  opacity: 1 !important;
+/* Por defecto: nunca apagar la imagen */
+.piece-image img{
+  opacity: 1;
 }
 
-/* Por si alguna vez existiese un hover-img accidental */
-.piece-image.no-hover .hover-img{
-  display: none !important;
+/* Solo dispositivos con hover REAL */
+@media (hover: hover) and (pointer: fine) {
+
+  /* Hover solo si existe una imagen secundaria */
+  .piece-card:has(.hover-img):hover .piece-image img:first-child{
+    opacity: 0;
+  }
+
+  .piece-card:has(.hover-img):hover .hover-img{
+    opacity: 1;
+  }
+
 }
 
 
