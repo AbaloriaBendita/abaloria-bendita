@@ -2562,9 +2562,20 @@ textarea::placeholder{
   font-size: 13px;
   line-height: 1.35;
 }
+/* =====================
+   MODAL FORM · LAYOUT DEFINITIVO
+===================== */
+
 .modal-form{
-  align-items: stretch !important;
+  display: block !important;
 }
+
+/* El botón se centra explícitamente */
+.modal-form .cta-main{
+  display: block;
+  margin: 0 auto;
+}
+
 
 /* =========================
    HOVER SOLO CUANDO EXISTE Y SOLO EN DESKTOP REAL
