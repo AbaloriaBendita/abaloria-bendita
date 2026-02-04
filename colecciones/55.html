@@ -207,12 +207,21 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-/* CARGA COLECCIÓN 55 */
+/* =========================
+   CARGA COLECCIÓN · 55 €
+========================= */
 (async () => {
 
-  const BASE = "/assets/colecciones/55/";
+  /* 🔑 RUTA ABSOLUTA (CLAVE) */
+  const BASE = "https://abaloriabendita.es/assets/colecciones/55/";
   const GRID = document.getElementById("collection-grid");
 
+  if (!GRID) {
+    console.error("❌ No existe #collection-grid en el HTML");
+    return;
+  }
+
+  /* ⚠️ Listado manual (Cloudflare no lista carpetas) */
   const PIEZAS = [
     "55-01",
     "55-02",
@@ -223,14 +232,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   for (const id of PIEZAS) {
     try {
-      const res = await fetch(`${BASE}${id}/data.json`);
-      if (!res.ok) continue;
+      console.log("➡️ Cargando pieza:", id);
 
-      const data = await res.json();
+      const dataRes = await fetch(`${BASE}${id}/data.json`);
+      if (!dataRes.ok) {
+        console.warn(`⚠️ No se pudo cargar data.json de ${id}`);
+        continue;
+      }
 
-      const mainImg = `${BASE}${id}/main.jpg`;
+      const data = await dataRes.json();
+
+      const mainImg  = `${BASE}${id}/main.jpg`;
       const hoverImg = `${BASE}${id}/hover.jpg`;
 
+      /* Comprobamos si existe hover */
       let hasHover = false;
       try {
         const h = await fetch(hoverImg, { method: "HEAD" });
@@ -251,18 +266,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
           ${
             data.estado === "disponible"
-              ? `<p class="piece-price">55 € <span>IVA incluido</span></p>
-                 <a href="${data.sumup_link}" target="_blank" class="piece-cta">
-                   Comprar ahora
-                 </a>`
-              : `<p class="piece-sold-copy">
-                   Esta pieza está vendida, pero puedes encargar una muy parecida.
-                 </p>
-                 <a href="#"
-                    class="piece-cta alt js-open-modal"
-                    data-img="${mainImg}">
-                   Encargar parecida
-                 </a>`
+              ? `
+                <p class="piece-price">
+                  55 € <span>IVA incluido</span>
+                </p>
+                <a href="${data.sumup_link}" target="_blank" rel="noopener" class="piece-cta">
+                  Comprar ahora
+                </a>
+              `
+              : `
+                <p class="piece-sold-copy">
+                  Esta pieza está vendida, pero puedes encargar una muy parecida.
+                </p>
+                <a href="#"
+                   class="piece-cta alt js-open-modal"
+                   data-img="${mainImg}">
+                  Encargar parecida
+                </a>
+              `
           }
         </div>
       `;
@@ -270,12 +291,12 @@ document.addEventListener("DOMContentLoaded", () => {
       GRID.appendChild(card);
 
     } catch (err) {
-      console.error("Error cargando pieza", id, err);
+      console.error("❌ Error cargando pieza:", id, err);
     }
   }
 
 })();
 </script>
-
+ 
 </body>
 </html>
