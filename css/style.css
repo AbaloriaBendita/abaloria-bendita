@@ -2663,6 +2663,19 @@ textarea::placeholder{
 }
 
 /* =========================
+   MODAL · RGPD ALIGN FIX
+========================= */
+
+.modal .rgpd-group{
+  align-items: flex-start;
+  text-align: left;
+}
+
+.modal .rgpd-label{
+  justify-content: flex-start;
+}
+
+/* =========================
    MOBILE
 ========================= */
 
