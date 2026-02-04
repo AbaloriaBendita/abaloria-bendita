@@ -207,96 +207,57 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-/* =========================
-   CARGA COLECCIÓN · 55 €
-========================= */
-(async () => {
+document.addEventListener("DOMContentLoaded", async () => {
 
-  /* 🔑 RUTA ABSOLUTA (CLAVE) */
-  const BASE = "https://abaloriabendita.es/assets/colecciones/55/";
+  console.log("✅ Script colección cargado");
+
   const GRID = document.getElementById("collection-grid");
-
   if (!GRID) {
     console.error("❌ No existe #collection-grid en el HTML");
     return;
   }
 
-  /* ⚠️ Listado manual (Cloudflare no lista carpetas) */
-  const PIEZAS = [
-    "55-01",
-    "55-02",
-    "55-03",
-    "55-04",
-    "55-05"
-  ];
+  // 🔑 BASE DINÁMICA REAL
+  const BASE = window.location.origin + "/assets/colecciones/55/";
+  console.log("📁 Base path:", BASE);
+
+  const PIEZAS = ["55-01","55-02","55-03","55-04","55-05"];
 
   for (const id of PIEZAS) {
     try {
-      console.log("➡️ Cargando pieza:", id);
+      console.log("➡️ Cargando", id);
 
-      const dataRes = await fetch(`${BASE}${id}/data.json`);
-      if (!dataRes.ok) {
-        console.warn(`⚠️ No se pudo cargar data.json de ${id}`);
+      const res = await fetch(`${BASE}${id}/data.json`);
+      if (!res.ok) {
+        console.warn("⚠️ No existe data.json de", id);
         continue;
       }
 
-      const data = await dataRes.json();
-
-      const mainImg  = `${BASE}${id}/main.jpg`;
-      const hoverImg = `${BASE}${id}/hover.jpg`;
-
-      /* Comprobamos si existe hover */
-      let hasHover = false;
-      try {
-        const h = await fetch(hoverImg, { method: "HEAD" });
-        hasHover = h.ok;
-      } catch {}
+      const data = await res.json();
 
       const card = document.createElement("article");
-      card.className = `piece-card ${data.estado}`;
+      card.className = "piece-card";
 
       card.innerHTML = `
         <div class="piece-image">
-          <img src="${mainImg}" alt="${data.titulo}">
-          ${hasHover ? `<img src="${hoverImg}" class="hover-img" alt="">` : ""}
+          <img src="${BASE}${id}/main.jpg" alt="${data.titulo}">
         </div>
-
         <div class="piece-body">
           <h2>${data.titulo}</h2>
-
-          ${
-            data.estado === "disponible"
-              ? `
-                <p class="piece-price">
-                  55 € <span>IVA incluido</span>
-                </p>
-                <a href="${data.sumup_link}" target="_blank" rel="noopener" class="piece-cta">
-                  Comprar ahora
-                </a>
-              `
-              : `
-                <p class="piece-sold-copy">
-                  Esta pieza está vendida, pero puedes encargar una muy parecida.
-                </p>
-                <a href="#"
-                   class="piece-cta alt js-open-modal"
-                   data-img="${mainImg}">
-                  Encargar parecida
-                </a>
-              `
-          }
+          <p>Estado: <strong>${data.estado}</strong></p>
         </div>
       `;
 
       GRID.appendChild(card);
 
-    } catch (err) {
-      console.error("❌ Error cargando pieza:", id, err);
+    } catch (e) {
+      console.error("❌ Error cargando", id, e);
     }
   }
 
-})();
+});
 </script>
+
  
 </body>
 </html>
