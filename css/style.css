@@ -2657,6 +2657,9 @@ textarea::placeholder{
   .catalog-grid .piece-card:hover .hover-img{
     opacity: 1;
   }
+  .catalog-grid .piece-card:hover .piece-cta{
+  padding-top: 12px !important; /* mismo valor base */
+}
 }
 
 /* =========================
