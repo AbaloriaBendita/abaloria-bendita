@@ -209,54 +209,49 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  console.log("✅ Script colección 55 (escalable) cargado");
+  console.log("✅ Script colección 55 cargado");
 
   const GRID = document.getElementById("collection-grid");
-  if (!GRID) return;
-
-  const BASE = window.location.origin + "/assets/colecciones/55/";
-  const INDEX_URL = BASE + "index.json";
-
-  let PIEZAS = [];
-
-  /* =========================
-     CARGAR ÍNDICE
-  ========================= */
-  try {
-    const res = await fetch(INDEX_URL);
-    if (!res.ok) throw new Error("No existe index.json");
-
-    PIEZAS = await res.json();
-  } catch (e) {
-    console.error("❌ No se pudo cargar index.json", e);
+  if (!GRID) {
+    console.error("❌ No existe #collection-grid");
     return;
   }
 
-  /* =========================
-     PINTAR PIEZAS
-  ========================= */
+  const BASE = window.location.origin + "/assets/colecciones/55/";
+  const PIEZAS = ["55-01","55-02","55-03","55-04","55-05"];
+
   for (const id of PIEZAS) {
     try {
+      /* =========================
+         DATA
+      ========================= */
       const res = await fetch(`${BASE}${id}/data.json`);
       if (!res.ok) continue;
 
       const data = await res.json();
 
+      /* =========================
+         CLASE SEGÚN ESTADO
+      ========================= */
       const estadoClass =
         data.estado === "disponible" ? "available" : "sold";
 
       const card = document.createElement("article");
       card.className = `piece-card ${estadoClass}`;
 
-      /* ===== IMÁGENES ===== */
+      /* =========================
+         IMÁGENES
+      ========================= */
       const mainImg  = `${BASE}${id}/main.jpg`;
       const hoverImg = `${BASE}${id}/hover.jpg`;
 
       let hasHover = false;
       try {
-        const check = await fetch(hoverImg, { method: "HEAD" });
-        hasHover = check.ok;
-      } catch (_) {}
+        const hoverCheck = await fetch(hoverImg, { method: "HEAD" });
+        hasHover = hoverCheck.ok;
+      } catch (_) {
+        hasHover = false;
+      }
 
       const imageHTML = hasHover
         ? `
@@ -271,7 +266,9 @@ document.addEventListener("DOMContentLoaded", async () => {
           </div>
         `;
 
-      /* ===== CTA ===== */
+      /* =========================
+         CTA SEGÚN ESTADO
+      ========================= */
       const cta =
         data.estado === "disponible"
           ? `
@@ -289,6 +286,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             </a>
           `;
 
+      /* =========================
+         CONTENIDO FINAL CARD
+      ========================= */
       card.innerHTML = `
         ${imageHTML}
 
@@ -297,10 +297,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           ${
             data.estado === "disponible"
-              ? `<p class="piece-price">${data.precio}€ <span>IVA incluido</span></p>`
-              : `<p class="piece-sold-copy">
-                   Esta pieza está vendida, pero puedes encargar una muy parecida.
-                 </p>`
+              ? `
+                <p class="piece-price">
+                  ${data.precio}€ <span>IVA incluido</span>
+                </p>
+              `
+              : `
+                <p class="piece-sold-copy">
+                  Esta pieza está vendida, pero puedes encargar una muy parecida.
+                </p>
+              `
           }
 
           ${cta}
@@ -310,11 +316,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       GRID.appendChild(card);
 
     } catch (err) {
-      console.error("❌ Error cargando pieza", id, err);
+      console.error("❌ Error cargando", id, err);
     }
   }
 });
 </script>
+
 
  
 </body>
