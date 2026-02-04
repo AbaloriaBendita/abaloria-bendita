@@ -2582,11 +2582,19 @@ textarea::placeholder{
 }
 
 /* =========================
-   FIX HOVER SOLO SI EXISTE
+   FIX: NO HOVER cuando solo hay 1 imagen
+   (usa .piece-image.no-hover que ya añade tu JS)
 ========================= */
 
-.piece-card:not(:has(.hover-img)):hover .piece-image img {
+/* Evita que en hover se apague la única imagen */
+.piece-card:hover .piece-image.no-hover img,
+.piece-card:hover .piece-image.no-hover img:first-child{
   opacity: 1 !important;
+}
+
+/* Por si alguna vez existiese un hover-img accidental */
+.piece-image.no-hover .hover-img{
+  display: none !important;
 }
 
 
