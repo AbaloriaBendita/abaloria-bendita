@@ -2613,6 +2613,9 @@ textarea::placeholder{
 .catalog-grid .piece-card{
   position: relative;
 }
+.catalog-grid .piece-card::after{
+  display: none !important;
+}
 
 /* =========================
    IMÁGENES
