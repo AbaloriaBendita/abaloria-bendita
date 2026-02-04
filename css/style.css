@@ -2581,6 +2581,15 @@ textarea::placeholder{
   }
 }
 
+/* =========================
+   FIX HOVER SOLO SI EXISTE
+========================= */
+
+.piece-card:not(:has(.hover-img)):hover .piece-image img {
+  opacity: 1 !important;
+}
+
+
 
 
 
