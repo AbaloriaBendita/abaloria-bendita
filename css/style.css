@@ -2536,7 +2536,7 @@ textarea::placeholder{
 }
 
 /* =====================
-   RGPD · FIX DEFINITIVO EN MODAL ESTRECHO
+   RGPD · FIX DEFINITIVO EN MODAL
 ===================== */
 
 .modal .rgpd-group{
@@ -2556,8 +2556,8 @@ textarea::placeholder{
 }
 
 .modal .rgpd-row label{
+  flex: 1;
   display: block;
-  flex: 1;              /* 🔑 ocupa todo el ancho disponible */
   text-align: left;
   font-size: 13px;
   line-height: 1.35;
