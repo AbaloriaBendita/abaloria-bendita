@@ -2654,6 +2654,24 @@ textarea::placeholder{
   padding-top: 12px !important;
 }
 
+/* =========================
+   CATÁLOGO · PRICE BADGE
+========================= */
+
+.catalog-grid .price-badge{
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: #fff;
+  color: #000;
+  font-weight: 800;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  z-index: 3;
+}
+
 
 /* =========================
    MOBILE
