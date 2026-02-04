@@ -209,52 +209,88 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  console.log("✅ Script colección cargado");
+  console.log("✅ Script colección 55 cargado");
 
   const GRID = document.getElementById("collection-grid");
   if (!GRID) {
-    console.error("❌ No existe #collection-grid en el HTML");
+    console.error("❌ No existe #collection-grid");
     return;
   }
 
-  // 🔑 BASE DINÁMICA REAL
   const BASE = window.location.origin + "/assets/colecciones/55/";
-  console.log("📁 Base path:", BASE);
-
   const PIEZAS = ["55-01","55-02","55-03","55-04","55-05"];
 
   for (const id of PIEZAS) {
     try {
-      console.log("➡️ Cargando", id);
-
       const res = await fetch(`${BASE}${id}/data.json`);
-      if (!res.ok) {
-        console.warn("⚠️ No existe data.json de", id);
-        continue;
-      }
+      if (!res.ok) continue;
 
       const data = await res.json();
 
-      const card = document.createElement("article");
-      card.className = "piece-card";
+      /* =========================
+         CLASE SEGÚN ESTADO
+      ========================= */
+      const estadoClass =
+        data.estado === "disponible" ? "available" : "sold";
 
+      const card = document.createElement("article");
+      card.className = `piece-card ${estadoClass}`;
+
+      /* =========================
+         CTA SEGÚN ESTADO
+      ========================= */
+      const cta =
+        data.estado === "disponible"
+          ? `
+            <a href="${data.sumup_link}" class="piece-cta">
+              Comprar ahora.
+            </a>
+          `
+          : `
+            <a
+              href="#"
+              class="piece-cta alt js-open-modal"
+              data-img="${BASE}${id}/main.jpg"
+            >
+              Encargar parecida
+            </a>
+          `;
+
+      /* =========================
+         CONTENIDO CARD
+      ========================= */
       card.innerHTML = `
         <div class="piece-image">
           <img src="${BASE}${id}/main.jpg" alt="${data.titulo}">
         </div>
+
         <div class="piece-body">
           <h2>${data.titulo}</h2>
-          <p>Estado: <strong>${data.estado}</strong></p>
+
+          ${
+            data.estado === "disponible"
+              ? `
+                <p class="piece-price">
+                  ${data.precio}€ <span>IVA incluido</span>
+                </p>
+              `
+              : `
+                <p class="piece-sold-copy">
+                  Esta pieza está vendida, pero puedes encargar una muy parecida.
+                </p>
+              `
+          }
+
+          ${cta}
         </div>
       `;
 
       GRID.appendChild(card);
 
-    } catch (e) {
-      console.error("❌ Error cargando", id, e);
+    } catch (err) {
+      console.error("❌ Error cargando", id, err);
     }
   }
-
 });
 </script>
 
