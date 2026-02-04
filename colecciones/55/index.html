@@ -222,6 +222,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   for (const id of PIEZAS) {
     try {
+      /* =========================
+         DATA
+      ========================= */
       const res = await fetch(`${BASE}${id}/data.json`);
       if (!res.ok) continue;
 
@@ -237,6 +240,33 @@ document.addEventListener("DOMContentLoaded", async () => {
       card.className = `piece-card ${estadoClass}`;
 
       /* =========================
+         IMÁGENES
+      ========================= */
+      const mainImg  = `${BASE}${id}/main.jpg`;
+      const hoverImg = `${BASE}${id}/hover.jpg`;
+
+      let hasHover = false;
+      try {
+        const hoverCheck = await fetch(hoverImg, { method: "HEAD" });
+        hasHover = hoverCheck.ok;
+      } catch (_) {
+        hasHover = false;
+      }
+
+      const imageHTML = hasHover
+        ? `
+          <div class="piece-image">
+            <img src="${mainImg}" alt="${data.titulo}">
+            <img src="${hoverImg}" alt="${data.titulo}" class="hover-img">
+          </div>
+        `
+        : `
+          <div class="piece-image no-hover">
+            <img src="${mainImg}" alt="${data.titulo}">
+          </div>
+        `;
+
+      /* =========================
          CTA SEGÚN ESTADO
       ========================= */
       const cta =
@@ -250,19 +280,17 @@ document.addEventListener("DOMContentLoaded", async () => {
             <a
               href="#"
               class="piece-cta alt js-open-modal"
-              data-img="${BASE}${id}/main.jpg"
+              data-img="${mainImg}"
             >
               Encargar parecida
             </a>
           `;
 
       /* =========================
-         CONTENIDO CARD
+         CONTENIDO FINAL CARD
       ========================= */
       card.innerHTML = `
-        <div class="piece-image">
-          <img src="${BASE}${id}/main.jpg" alt="${data.titulo}">
-        </div>
+        ${imageHTML}
 
         <div class="piece-body">
           <h2>${data.titulo}</h2>
