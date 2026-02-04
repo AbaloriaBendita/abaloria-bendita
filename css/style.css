@@ -2604,6 +2604,37 @@ textarea::placeholder{
 
 }
 
+/* =========================
+   CATÁLOGO · CARDS
+========================= */
+
+.catalog-card .piece-image{
+  position: relative;
+  overflow: hidden;
+}
+
+.catalog-card .piece-image img{
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Imagen secundaria */
+.catalog-card .hover-img{
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+/* Hover SOLO si hay hover-img y SOLO en desktop real */
+@media (hover:hover) and (pointer:fine){
+  .catalog-card:hover .hover-img{
+    opacity: 1;
+  }
+}
+
+
 
 
 
