@@ -2642,6 +2642,18 @@ textarea::placeholder{
   padding-top: 12px !important; /* mismo valor base */
 }
 }
+/* =========================
+   CATÁLOGO · CTA FIJO (ANTI-SALTO)
+========================= */
+
+.catalog-grid .piece-cta{
+  padding-top: 12px;
+}
+
+.catalog-grid .piece-card:hover .piece-cta{
+  padding-top: 12px !important;
+}
+
 
 /* =========================
    MOBILE
