@@ -2667,6 +2667,8 @@ textarea::placeholder{
   }
   .catalog-grid .piece-card:hover .piece-cta{
   padding-top: 12px !important; /* mismo valor base */
+      transform: none !important;
+  transform: none !important;
 }
 }
 /* =========================
@@ -2682,6 +2684,7 @@ textarea::placeholder{
 
 .catalog-grid .piece-card:hover .piece-cta{
   padding-top: 12px !important;
+    transform: none !important;
 }
 
 /* =========================
@@ -2740,6 +2743,13 @@ textarea::placeholder{
   right: 14px;
   background: rgba(0,0,0,0.85);
   color: #fff;
+}
+
+/* Estado → arriba derecha */
+.catalog-grid .status-badge{
+  top: 14px;
+  right: 14px;
+  left: auto;
 }
 
 /* =====================
