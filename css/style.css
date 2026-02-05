@@ -2963,11 +2963,17 @@ textarea::placeholder{
 
 /* Card base */
 .home-collections .collection-card{
-  background: #fff;
+  background: rgba(255,255,255,0.92);
   border-radius: 22px;
   overflow: hidden;
-  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   transition: transform .2s ease, box-shadow .2s ease;
+  backdrop-filter: blur(4px);
+}
+
+.home-collections .collection-card a{
+  box-shadow: none;
+  transform: none;
 }
 
 @media (hover:hover){
@@ -2986,8 +2992,19 @@ textarea::placeholder{
 
 /* Contenido */
 .home-collections .collection-body{
-  padding: 16px 18px 20px;
+  padding: 16px 16px 10px;
   text-align: center;
+}
+
+.home-collections .collection-body h3{
+  font-size: 16px;
+  font-weight: 800;
+  margin: 0;
+}
+
+.home-collections .collection-media{
+  position: relative;
+  padding: 14px;
 }
 
 .home-collections h3{
@@ -3007,8 +3024,9 @@ textarea::placeholder{
   border-radius: 999px;
   background: var(--blue);
   color: #fff;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
+  margin: 12px auto 0;
 }
 
 .collection-media{
@@ -3032,6 +3050,21 @@ textarea::placeholder{
 
   box-shadow: 0 6px 16px rgba(0,0,0,0.18);
 }
+
+/* =========================
+   HOME · INTRO COLECCIONES
+========================= */
+
+.collections-intro{
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  padding: 0 20px;
+}
+
+.collections-intro h2{
+  margin-left: 0;
+}
+
 
 
 
