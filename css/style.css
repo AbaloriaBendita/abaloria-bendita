@@ -2608,12 +2608,13 @@ textarea::placeholder{
 /* CONTEXTO */
 .catalog-grid .piece-card{
   position: relative;
-    border-radius: 16px;
+    border-radius: 14px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
 }
 
 .catalog-grid h2{
-  font-size: 15px;
-    margin-bottom: 6px;
+  font-size: 14.5px;
+    margin-bottom: 4px;
 }
 
 .catalog-grid .piece-card::after{
@@ -2628,7 +2629,7 @@ textarea::placeholder{
   position: relative;
   overflow: hidden;
     aspect-ratio: 4 / 5;
-  padding: 10px 10px 0;
+  padding: 8px 8px 0;
   background: #fff;
 }
 
@@ -2777,12 +2778,12 @@ textarea::placeholder{
   margin-bottom: 4px;
 }
 .catalog-grid .piece-body{
-  padding: 12px 16px 10px;
+  padding: 10px 14px 8px;
 }
 .catalog-grid .piece-legal{
-  margin-top: 8px;
-  font-size: 10.5px;
-  line-height: 1.45;
+  margin-top: 6px;
+  font-size: 10px;
+  line-height: 1.4;
 }
 
 
