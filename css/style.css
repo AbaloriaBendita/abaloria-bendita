@@ -2931,6 +2931,84 @@ textarea::placeholder{
   font-weight: 700;
 }
 
+/* =========================
+   HOME · COLECCIONES SIMPLES
+========================= */
+
+.home-collections{
+  display: grid;
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px){
+  .home-collections{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1023px){
+  .home-collections{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px){
+  .home-collections{
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card base */
+.home-collections .collection-card{
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+@media (hover:hover){
+  .home-collections .collection-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+  }
+}
+
+/* Imagen simple */
+.home-collections .collection-card img{
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Contenido */
+.home-collections .collection-body{
+  padding: 16px 18px 20px;
+  text-align: center;
+}
+
+.home-collections h3{
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.home-collections .collection-price{
+  font-size: 14px;
+  opacity: 0.75;
+  margin-bottom: 12px;
+}
+
+.home-collections .collection-cta{
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 800;
+}
 
 
 
