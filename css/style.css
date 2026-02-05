@@ -2855,6 +2855,81 @@ textarea::placeholder{
   white-space: nowrap; /* si prefieres que NO parta “política de privacidad” */
 }
 
+/* =====================
+   COLECCIONES
+===================== */
+.collections-grid{
+  display: grid;
+  gap: 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px){
+  .collections-grid{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1023px){
+  .collections-grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px){
+  .collections-grid{
+    grid-template-columns: 1fr;
+  }
+}
+
+.collection-card a{
+  display: block;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+@media (hover:hover){
+  .collection-card a:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+  }
+}
+
+.collection-card img{
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.collection-body{
+  padding: 16px 18px 20px;
+}
+
+.collection-body h3{
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.collection-price{
+  font-size: 14px;
+  opacity: .75;
+  margin-bottom: 10px;
+}
+
+.collection-cta{
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+}
 
 
 
