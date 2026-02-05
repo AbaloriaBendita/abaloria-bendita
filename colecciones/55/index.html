@@ -244,63 +244,77 @@ document.addEventListener("DOMContentLoaded", async () => {
   data.estado === "disponible" ? "Disponible" : "Vendida";
 
 /* =========================
-   IMÁGENES + BADGES (STATUS IZQ / PRECIO DER)
+   IMÁGENES + BADGES (PRECIO IZQ / ESTADO DER)
 ========================= */
 
+/* Candidatos de imagen */
 const mainImgCandidates = [
   `${BASE}${id}/main.jpg`,
-  `${BASE}${id}/man.jpg`,     // por si algunas carpetas lo tienen así
+  `${BASE}${id}/man.jpg`,
 ];
 
 const hoverImgCandidates = [
   `${BASE}${id}/hover.jpg`,
-  `${BASE}${id}/hver.jpg`,    // por si alguna carpeta lo tiene mal escrito
+  `${BASE}${id}/hver.jpg`,
 ];
 
-// helper: comprueba carga REAL (GET) y no HEAD
+/* Helper: comprobación REAL de carga (no HEAD) */
 const canLoad = (url) =>
   new Promise((resolve) => {
     const img = new Image();
     img.onload = () => resolve(true);
     img.onerror = () => resolve(false);
-    img.src = url + `?v=${Date.now()}`; // evita caché agresiva
+    img.src = url + `?v=${Date.now()}`; // evita caché
   });
 
+/* MAIN IMAGE (obligatoria) */
 let mainImg = null;
 for (const url of mainImgCandidates) {
-  if (await canLoad(url)) { mainImg = url; break; }
+  if (await canLoad(url)) {
+    mainImg = url;
+    break;
+  }
 }
 if (!mainImg) {
-  // si no hay main, no pintamos card (evita “alt” visible)
   console.warn("⚠️ No se pudo cargar main image para", id);
-  continue;
+  continue; // no pintamos la card
 }
 
+/* HOVER IMAGE (opcional) */
 let hoverImg = null;
 for (const url of hoverImgCandidates) {
-  if (await canLoad(url)) { hoverImg = url; break; }
+  if (await canLoad(url)) {
+    hoverImg = url;
+    break;
+  }
 }
 
-const statusText = data.estado === "disponible" ? "Disponible" : "Vendida";
+/* Texto de estado */
+const statusText =
+  data.estado === "disponible" ? "Disponible" : "Vendida";
 
-const imageHTML = hoverImg
-  ? `
-    <div class="piece-image">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
+/* HTML FINAL DE IMAGEN */
+const imageHTML = `
+  <div class="piece-image ${hoverImg ? "" : "no-hover"}">
 
-      <img src="${mainImg}" alt="">
-      <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
-    </div>
-  `
-  : `
-    <div class="piece-image no-hover">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
+    <!-- PRECIO · ARRIBA IZQUIERDA -->
+    <span class="price-badge">${data.precio}€</span>
 
-      <img src="${mainImg}" alt="">
-    </div>
-  `;
+    <!-- ESTADO · ARRIBA DERECHA -->
+    <span class="status-badge ${estadoClass}">
+      ${statusText}
+    </span>
+
+    <img src="${mainImg}" alt="" loading="lazy">
+
+    ${
+      hoverImg
+        ? `<img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">`
+        : ``
+    }
+
+  </div>
+`;
      
       /* =========================
          CTA SEGÚN ESTADO
