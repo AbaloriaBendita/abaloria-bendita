@@ -2608,7 +2608,13 @@ textarea::placeholder{
 /* CONTEXTO */
 .catalog-grid .piece-card{
   position: relative;
+    border-radius: 18px;
 }
+
+.catalog-grid h2{
+  font-size: 16px;
+}
+
 .catalog-grid .piece-card::after{
   display: none !important;
 }
@@ -2670,6 +2676,8 @@ textarea::placeholder{
 .catalog-grid .piece-cta{
   padding-top: 12px;
   margin-top: 6px;
+  font-size: 13px;
+  padding: 7px 14px;
 }
 
 .catalog-grid .piece-card:hover .piece-cta{
