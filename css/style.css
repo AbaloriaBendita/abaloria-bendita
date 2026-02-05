@@ -2667,22 +2667,8 @@ textarea::placeholder{
   .catalog-grid .piece-card:hover .hover-img{
     opacity: 1;
   }
-  .catalog-grid .piece-card:hover .piece-cta{
-  padding-top: 12px !important; /* mismo valor base */
-      transform: none !important;
-  transform: none !important;
-}
 }
 
-/* Ni hover, ni focus, ni active */
-.catalog-grid .piece-card:hover .piece-cta,
-.catalog-grid .piece-cta:hover,
-.catalog-grid .piece-cta:focus,
-.catalog-grid .piece-cta:active{
-  transform: none !important;
-  box-shadow: none !important;
-  padding: 7px 14px !important;
-}
 /* =========================
    CATÁLOGO · CTA FIJO (ANTI-SALTO)
 ========================= */
@@ -2697,10 +2683,30 @@ textarea::placeholder{
   transition: none !important;
 }
 
-.catalog-grid .piece-card:hover .piece-cta{
-  padding-top: 12px !important;
-    transform: none !important;
+/* =========================
+   CATÁLOGO · CTA FIJO (DEFINITIVO)
+========================= */
+
+.catalog-grid .piece-cta{
+  font-size: 13px;
+  padding: 7px 14px;
+  margin-top: 6px;
+
+  transform: none;
+  box-shadow: none;
+  transition: none;
 }
+
+/* Blindaje total contra hover global */
+.catalog-grid .piece-cta:hover,
+.catalog-grid .piece-cta:focus,
+.catalog-grid .piece-cta:active,
+.catalog-grid .piece-card:hover .piece-cta{
+  transform: none;
+  box-shadow: none;
+  padding: 7px 14px;
+}
+
 
 /* =========================
    CATÁLOGO · PRICE BADGE
