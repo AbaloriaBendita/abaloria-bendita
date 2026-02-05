@@ -293,7 +293,7 @@ const imageHTML = hasHover
             </a>
           `;
 
-     /* =========================
+/* =========================
    CONTENIDO FINAL CARD
 ========================= */
 card.innerHTML = `
@@ -302,25 +302,19 @@ card.innerHTML = `
   <div class="piece-body">
     <h2>${data.titulo}</h2>
 
-    ${
-      data.estado === "vendida"
-        ? `
-          <p class="piece-sold-copy">
-            Esta pieza está vendida, pero puedes encargar una muy parecida.
-          </p>
-        `
-        : ``
-    }
+    <span class="piece-status ${estadoClass}">
+      ${data.estado === "disponible" ? "Disponible" : "Vendida"}
+    </span>
 
     ${cta}
 
     <ul class="piece-legal">
-  <li>El precio puede variar según piedras, tamaño y peticiones especiales.</li>
-  <li>Envío gratis a partir de 150 €.</li>
-  <li>IVA incluido.</li>
-</ul>
+      <li>Envío gratis a partir de 150 €.</li>
+      <li>IVA incluido.</li>
+    </ul>
   </div>
 `;
+
 
       GRID.appendChild(card);
 
