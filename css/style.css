@@ -3065,6 +3065,40 @@ textarea::placeholder{
   margin-left: 0;
 }
 
+/* =========================
+   HOME · FOOTER CARD
+========================= */
+
+.home-collections .collection-footer{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 18px 18px;
+  gap: 12px;
+    border-top: 1px solid rgba(0,0,0,0.04);
+}
+
+/* Precio (texto limpio) */
+.home-collections .collection-price-text{
+  font-size: 14px;
+  font-weight: 800;
+  color: #000;
+  white-space: nowrap;
+}
+
+/* CTA alineado a la derecha */
+.home-collections .collection-cta{
+  margin: 0;                 /* 🔑 elimina desplazamientos */
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 800;
+  border-radius: 999px;
+
+  background: var(--blue);
+  color: #fff;
+}
+
 
 
 
