@@ -2700,6 +2700,55 @@ textarea::placeholder{
   }
 }
 
+/* =====================
+   MODAL · RGPD (FORZADO CHECKBOX REAL)
+   Pegar AL FINAL del CSS
+===================== */
+
+.modal .rgpd-group{
+  width: 100%;
+  margin-top: 12px;
+}
+
+.modal .rgpd-row{
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+/* 🔑 Esto es lo que suele arreglarlo: matar estilos globales del input */
+.modal .rgpd-row input[type="checkbox"]{
+  appearance: auto;         /* vuelve a checkbox nativo */
+  -webkit-appearance: auto;
+  width: 18px;
+  height: 18px;
+
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: transparent !important;
+
+  margin: 2px 0 0 0 !important;
+  flex: 0 0 auto;
+}
+
+.modal .rgpd-row label{
+  flex: 1;
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.35;
+  margin: 0;
+}
+
+/* Evita cosas raras del link */
+.modal .rgpd-row label a{
+  display: inline;
+  white-space: nowrap; /* si prefieres que NO parta “política de privacidad” */
+}
 
 
 
