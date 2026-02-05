@@ -240,6 +240,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const card = document.createElement("article");
       card.className = `piece-card ${estadoClass}`;
+     card.dataset.status =
+  data.estado === "disponible" ? "Disponible" : "Vendida";
 
       /* =========================
    IMÁGENES + PRICE BADGE
