@@ -2629,6 +2629,7 @@ textarea::placeholder{
   display: block;
   width: 100%;
   height: auto;
+    object-fit: contain;
   opacity: 1; /* 🔑 nunca apagamos la imagen base */
     visibility: visible !important;
 }
@@ -2668,6 +2669,7 @@ textarea::placeholder{
 
 .catalog-grid .piece-cta{
   padding-top: 12px;
+  margin-top: 6px;
 }
 
 .catalog-grid .piece-card:hover .piece-cta{
@@ -2712,6 +2714,14 @@ textarea::placeholder{
 
 .piece-legal li{
   margin-bottom: 4px;
+}
+.catalog-grid .piece-body{
+  padding: 12px 16px 10px;
+}
+.catalog-grid .piece-legal{
+  margin-top: 8px;
+  font-size: 10.5px;
+  line-height: 1.45;
 }
 
 
