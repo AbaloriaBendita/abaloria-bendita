@@ -242,31 +242,34 @@ document.addEventListener("DOMContentLoaded", async () => {
       card.className = `piece-card ${estadoClass}`;
 
       /* =========================
-         IMÁGENES
-      ========================= */
-      const mainImg  = `${BASE}${id}/main.jpg`;
-      const hoverImg = `${BASE}${id}/hover.jpg`;
+   IMÁGENES + PRICE BADGE
+========================= */
 
-      let hasHover = false;
-      try {
-        const hoverCheck = await fetch(hoverImg, { method: "HEAD" });
-        hasHover = hoverCheck.ok;
-      } catch (_) {
-        hasHover = false;
-      }
+const mainImg  = `${BASE}${id}/main.jpg`;
+const hoverImg = `${BASE}${id}/hover.jpg`;
 
-      const imageHTML = hasHover
-        ? `
-          <div class="piece-image">
-            <img src="${mainImg}" alt="${data.titulo}">
-            <img src="${hoverImg}" alt="${data.titulo}" class="hover-img">
-          </div>
-        `
-        : `
-          <div class="piece-image no-hover">
-            <img src="${mainImg}" alt="${data.titulo}">
-          </div>
-        `;
+let hasHover = false;
+try {
+  const hoverCheck = await fetch(hoverImg, { method: "HEAD" });
+  hasHover = hoverCheck.ok;
+} catch (_) {
+  hasHover = false;
+}
+
+const imageHTML = hasHover
+  ? `
+    <div class="piece-image">
+      <span class="price-badge">${data.precio}€</span>
+      <img src="${mainImg}" alt="${data.titulo}">
+      <img src="${hoverImg}" alt="${data.titulo}" class="hover-img">
+    </div>
+  `
+  : `
+    <div class="piece-image no-hover">
+      <span class="price-badge">${data.precio}€</span>
+      <img src="${mainImg}" alt="${data.titulo}">
+    </div>
+  `;
 
       /* =========================
          CTA SEGÚN ESTADO
@@ -288,32 +291,33 @@ document.addEventListener("DOMContentLoaded", async () => {
             </a>
           `;
 
-      /* =========================
-         CONTENIDO FINAL CARD
-      ========================= */
-      card.innerHTML = `
-        ${imageHTML}
+     /* =========================
+   CONTENIDO FINAL CARD
+========================= */
+card.innerHTML = `
+  ${imageHTML}
 
-        <div class="piece-body">
-          <h2>${data.titulo}</h2>
+  <div class="piece-body">
+    <h2>${data.titulo}</h2>
 
-          ${
-            data.estado === "disponible"
-              ? `
-                <p class="piece-price">
-                  ${data.precio}€ <span>IVA incluido</span>
-                </p>
-              `
-              : `
-                <p class="piece-sold-copy">
-                  Esta pieza está vendida, pero puedes encargar una muy parecida.
-                </p>
-              `
-          }
+    ${
+      data.estado === "vendida"
+        ? `
+          <p class="piece-sold-copy">
+            Esta pieza está vendida, pero puedes encargar una muy parecida.
+          </p>
+        `
+        : ``
+    }
 
-          ${cta}
-        </div>
-      `;
+    ${cta}
+
+    <p class="piece-legal">
+      El precio final puede variar según piedras, tamaño y peticiones especiales.<br>
+      Envío gratis a partir de 150 €. IVA incluido.
+    </p>
+  </div>
+`;
 
       GRID.appendChild(card);
 
