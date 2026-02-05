@@ -2707,6 +2707,41 @@ textarea::placeholder{
   z-index: 3;
 }
 
+/* Badges encima de la imagen */
+.catalog-grid .piece-image{
+  position: relative;
+}
+
+.catalog-grid .status-badge,
+.catalog-grid .price-badge{
+  position: absolute;
+  top: 14px;
+  z-index: 5;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+/* Estado: arriba izquierda */
+.catalog-grid .status-badge{ left: 14px; }
+.catalog-grid .status-badge.available{
+  background: var(--green);
+  color: #fff;
+}
+.catalog-grid .status-badge.sold{
+  background: rgba(0,0,0,0.75);
+  color: #fff;
+}
+
+/* Precio: arriba derecha (negro con texto blanco) */
+.catalog-grid .price-badge{
+  right: 14px;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+}
+
 /* =====================
    CARD · TEXTO LEGAL
 ===================== */
