@@ -243,36 +243,65 @@ document.addEventListener("DOMContentLoaded", async () => {
      card.dataset.status =
   data.estado === "disponible" ? "Disponible" : "Vendida";
 
-      /* =========================
-   IMÁGENES + PRICE BADGE
+/* =========================
+   IMÁGENES + BADGES (STATUS IZQ / PRECIO DER)
 ========================= */
 
-const mainImg  = `${BASE}${id}/main.jpg`;
-const hoverImg = `${BASE}${id}/hover.jpg`;
+const mainImgCandidates = [
+  `${BASE}${id}/main.jpg`,
+  `${BASE}${id}/man.jpg`,     // por si algunas carpetas lo tienen así
+];
 
-let hasHover = false;
-try {
-  const hoverCheck = await fetch(hoverImg, { method: "HEAD" });
-  hasHover = hoverCheck.ok;
-} catch (_) {
-  hasHover = false;
+const hoverImgCandidates = [
+  `${BASE}${id}/hover.jpg`,
+  `${BASE}${id}/hver.jpg`,    // por si alguna carpeta lo tiene mal escrito
+];
+
+// helper: comprueba carga REAL (GET) y no HEAD
+const canLoad = (url) =>
+  new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url + `?v=${Date.now()}`; // evita caché agresiva
+  });
+
+let mainImg = null;
+for (const url of mainImgCandidates) {
+  if (await canLoad(url)) { mainImg = url; break; }
+}
+if (!mainImg) {
+  // si no hay main, no pintamos card (evita “alt” visible)
+  console.warn("⚠️ No se pudo cargar main image para", id);
+  continue;
 }
 
-const imageHTML = hasHover
+let hoverImg = null;
+for (const url of hoverImgCandidates) {
+  if (await canLoad(url)) { hoverImg = url; break; }
+}
+
+const statusText = data.estado === "disponible" ? "Disponible" : "Vendida";
+
+const imageHTML = hoverImg
   ? `
     <div class="piece-image">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
       <span class="price-badge">${data.precio}€</span>
-      <img src="${mainImg}" alt="${data.titulo}">
-      <img src="${hoverImg}" alt="${data.titulo}" class="hover-img">
+
+      <img src="${mainImg}" alt="">
+      <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
     </div>
   `
   : `
     <div class="piece-image no-hover">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
       <span class="price-badge">${data.precio}€</span>
-      <img src="${mainImg}" alt="${data.titulo}">
+
+      <img src="${mainImg}" alt="">
     </div>
   `;
-
+     
       /* =========================
          CTA SEGÚN ESTADO
       ========================= */
