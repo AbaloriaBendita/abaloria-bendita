@@ -2672,15 +2672,28 @@ textarea::placeholder{
   transform: none !important;
 }
 }
+
+/* Ni hover, ni focus, ni active */
+.catalog-grid .piece-card:hover .piece-cta,
+.catalog-grid .piece-cta:hover,
+.catalog-grid .piece-cta:focus,
+.catalog-grid .piece-cta:active{
+  transform: none !important;
+  box-shadow: none !important;
+  padding: 7px 14px !important;
+}
 /* =========================
    CATÁLOGO · CTA FIJO (ANTI-SALTO)
 ========================= */
 
 .catalog-grid .piece-cta{
-  padding-top: 12px;
-  margin-top: 6px;
   font-size: 13px;
   padding: 7px 14px;
+  margin-top: 6px;
+
+  transform: none !important;
+  box-shadow: none !important;
+  transition: none !important;
 }
 
 .catalog-grid .piece-card:hover .piece-cta{
