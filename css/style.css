@@ -2427,7 +2427,7 @@ max-width: 860px;   /* prueba 860–920 */
 ===================== */
 
 .piece-body{
-  padding: 14px 18px 14px;
+  padding: 14px 18px 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -2620,7 +2620,9 @@ textarea::placeholder{
 .catalog-grid .piece-image{
   position: relative;
   overflow: hidden;
-    aspect-ratio: 4 / 4.5; /* antes 4 / 5 */
+    aspect-ratio: 4 / 5;
+  padding: 10px 10px 0;
+  background: #fff;
 }
 
 .catalog-grid .piece-image img{
@@ -2628,6 +2630,7 @@ textarea::placeholder{
   width: 100%;
   height: auto;
   opacity: 1; /* 🔑 nunca apagamos la imagen base */
+    visibility: visible !important;
 }
 
 /* Imagen secundaria (hover) */
@@ -2648,6 +2651,7 @@ textarea::placeholder{
   /* 🔑 Reset total del hover heredado */
   .catalog-grid .piece-card:hover .piece-image img:first-child{
     opacity: 1 !important;
+        visibility: visible !important;
   }
 
   /* Hover catálogo: solo superponer la secundaria */
@@ -2698,11 +2702,12 @@ textarea::placeholder{
 ===================== */
 
 .piece-legal{
-  margin-top: 10px;
+  margin-top: 8px;
   padding-left: 16px;
   font-size: 11px;
   line-height: 1.4;
   color: #666;
+    margin-bottom: 0;
 }
 
 .piece-legal li{
