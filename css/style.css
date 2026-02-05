@@ -2608,11 +2608,12 @@ textarea::placeholder{
 /* CONTEXTO */
 .catalog-grid .piece-card{
   position: relative;
-    border-radius: 18px;
+    border-radius: 16px;
 }
 
 .catalog-grid h2{
-  font-size: 16px;
+  font-size: 15px;
+    margin-bottom: 6px;
 }
 
 .catalog-grid .piece-card::after{
