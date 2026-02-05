@@ -2694,21 +2694,15 @@ textarea::placeholder{
 
 .catalog-grid .price-badge{
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(2px);
-  color: #fff;
-
-  font-size: 16px;
+  top: 14px;
+  left: 14px;
+  padding: 6px 12px;
+  font-size: 12px;
   font-weight: 800;
-
-  padding: 6px 14px;
   border-radius: 999px;
-
-  box-shadow: 0 6px 16px rgba(0,0,0,0.18);
-  z-index: 3;
+  background: rgba(0,0,0,0.85);
+  color: #fff;
+  z-index: 5;
 }
 
 /* Badges encima de la imagen */
