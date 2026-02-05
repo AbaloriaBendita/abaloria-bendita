@@ -3075,7 +3075,7 @@ textarea::placeholder{
   justify-content: space-between;
 
   padding: 18px 22px 22px;   /* 🔑 más aire general */
-  gap: 28px;                 /* 🔑 separa precio y CTA */
+  gap: 20px;                 /* 🔑 separa precio y CTA */
 
   background: #fff;
 }
