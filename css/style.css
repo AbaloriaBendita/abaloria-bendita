@@ -3066,7 +3066,7 @@ textarea::placeholder{
 }
 
 /* =========================
-   HOME · FOOTER CARD
+   HOME · FOOTER CARD (FINAL)
 ========================= */
 
 .home-collections .collection-footer{
@@ -3074,29 +3074,35 @@ textarea::placeholder{
   align-items: center;
   justify-content: space-between;
 
-  padding: 14px 18px 18px;
-  gap: 12px;
-    border-top: 1px solid rgba(0,0,0,0.04);
+  padding: 18px 22px 22px;   /* 🔑 más aire general */
+  gap: 28px;                 /* 🔑 separa precio y CTA */
+
+  background: #fff;
 }
 
-/* Precio (texto limpio) */
+/* PRECIO */
 .home-collections .collection-price-text{
-  font-size: 14px;
-  font-weight: 800;
+  font-size: 16px;           /* 🔑 más cuerpo */
+  font-weight: 900;          /* 🔑 más presencia */
   color: #000;
+
+  margin-left: 6px;          /* 🔑 no tan a la izquierda */
   white-space: nowrap;
 }
 
-/* CTA alineado a la derecha */
+/* CTA */
 .home-collections .collection-cta{
-  margin: 0;                 /* 🔑 elimina desplazamientos */
-  padding: 8px 18px;
+  margin: 0;
+
+  padding: 10px 20px;        /* 🔑 botón más “serio” */
   font-size: 13px;
   font-weight: 800;
-  border-radius: 999px;
 
+  border-radius: 999px;
   background: var(--blue);
   color: #fff;
+
+  white-space: nowrap;
 }
 
 
