@@ -2624,13 +2624,20 @@ textarea::placeholder{
 /* =========================
    IMÁGENES
 ========================= */
-
 .catalog-grid .piece-image{
   position: relative;
-  overflow: hidden;
-    aspect-ratio: 4 / 4.5;
-  padding: 8px 8px 0;
-  background: #fff;
+  overflow: visible;      /* 🔑 clave absoluta */
+  padding: 8px;
+  background: transparent;
+}
+
+.catalog-grid .piece-image img{
+  display: block;
+  width: 100%;
+  height: auto;           /* 🔑 deja crecer */
+  object-fit: contain;    /* 🔑 nunca recorta */
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .catalog-grid .piece-image img{
@@ -2786,14 +2793,6 @@ textarea::placeholder{
 .catalog-grid .piece-body{
   padding: 10px 14px 12px;
 }
-.catalog-grid .piece-image{
-  max-height: 320px; /* ajusta 300–360 según te guste */
-}
-
-@media (max-width: 420px){
-  .catalog-grid .piece-image{
-    max-height: 280px;
-  }
   
 .catalog-grid .piece-legal{
   margin-top: 6px;
