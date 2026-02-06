@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
-  console.log("✅ Script colección 55 cargado");
+  console.log("✅ Script catálogo universal cargado");
 
   const GRID = document.getElementById("collection-grid");
   if (!GRID) {
@@ -218,111 +218,123 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const BASE = window.location.origin + "/assets/colecciones/55/";
-  const PIEZAS = ["55-01","55-02","55-03","55-04","55-05"];
+  /* =========================
+     1. DETECTAR COLECCIÓN ACTUAL
+  ========================= */
+
+  // Ej: /colecciones/55/ → "55"
+  const slug = window.location.pathname
+    .split("/")
+    .filter(Boolean)
+    .pop();
+
+  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
+
+  console.log("📁 Colección:", slug);
+  console.log("📦 Assets base:", BASE);
+
+  /* =========================
+     2. CONFIGURACIÓN PIEZAS
+     (edita SOLO este array por colección si quieres)
+  ========================= */
+
+  const PIEZAS = [
+    `${slug}-01`,
+    `${slug}-02`,
+    `${slug}-03`,
+    `${slug}-04`,
+    `${slug}-05`,
+  ];
+
+  /* =========================
+     3. HELPERS
+  ========================= */
+
+  // Comprobación REAL de imagen (evita hover en blanco)
+  const canLoad = (url) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url + `?v=${Date.now()}`; // anti-cache
+    });
+
+  /* =========================
+     4. LOOP PIEZAS
+  ========================= */
 
   for (const id of PIEZAS) {
     try {
-      /* =========================
-         DATA
-      ========================= */
+      /* ---------- DATA ---------- */
       const res = await fetch(`${BASE}${id}/data.json`);
       if (!res.ok) continue;
 
       const data = await res.json();
 
-      /* =========================
-         CLASE SEGÚN ESTADO
-      ========================= */
       const estadoClass =
         data.estado === "disponible" ? "available" : "sold";
 
+      const statusText =
+        data.estado === "disponible" ? "Disponible" : "Vendida";
+
       const card = document.createElement("article");
       card.className = `piece-card ${estadoClass}`;
-     card.dataset.status =
-  data.estado === "disponible" ? "Disponible" : "Vendida";
 
-/* =========================
-   IMÁGENES + BADGES (PRECIO IZQ / ESTADO DER)
-========================= */
+      /* ---------- IMÁGENES ---------- */
 
-/* Candidatos de imagen */
-const mainImgCandidates = [
-  `${BASE}${id}/main.jpg`,
-  `${BASE}${id}/man.jpg`,
-];
+      const mainCandidates = [
+        `${BASE}${id}/main.jpg`,
+        `${BASE}${id}/man.jpg`,
+      ];
 
-const hoverImgCandidates = [
-  `${BASE}${id}/hover.jpg`,
-  `${BASE}${id}/hver.jpg`,
-];
+      const hoverCandidates = [
+        `${BASE}${id}/hover.jpg`,
+        `${BASE}${id}/hver.jpg`,
+      ];
 
-/* Helper: comprobación REAL de carga (no HEAD) */
-const canLoad = (url) =>
-  new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url + `?v=${Date.now()}`; // evita caché
-  });
+      let mainImg = null;
+      for (const url of mainCandidates) {
+        if (await canLoad(url)) {
+          mainImg = url;
+          break;
+        }
+      }
+      if (!mainImg) continue;
 
-/* MAIN IMAGE (obligatoria) */
-let mainImg = null;
-for (const url of mainImgCandidates) {
-  if (await canLoad(url)) {
-    mainImg = url;
-    break;
-  }
-}
-if (!mainImg) {
-  console.warn("⚠️ No se pudo cargar main image para", id);
-  continue; // no pintamos la card
-}
+      let hoverImg = null;
+      for (const url of hoverCandidates) {
+        if (await canLoad(url)) {
+          hoverImg = url;
+          break;
+        }
+      }
 
-/* HOVER IMAGE (opcional) */
-let hoverImg = null;
-for (const url of hoverImgCandidates) {
-  if (await canLoad(url)) {
-    hoverImg = url;
-    break;
-  }
-}
+      const imageHTML = hoverImg
+        ? `
+          <div class="piece-image">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
 
-/* Texto de estado */
-const statusText =
-  data.estado === "disponible" ? "Disponible" : "Vendida";
+            <img src="${mainImg}" alt="">
+            <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+          </div>
+        `
+        : `
+          <div class="piece-image no-hover">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
 
-/* HTML FINAL DE IMAGEN */
-const imageHTML = `
-  <div class="piece-image ${hoverImg ? "" : "no-hover"}">
+            <img src="${mainImg}" alt="">
+          </div>
+        `;
 
-    <!-- PRECIO · ARRIBA IZQUIERDA -->
-    <span class="price-badge">${data.precio}€</span>
+      /* ---------- CTA ---------- */
 
-    <!-- ESTADO · ARRIBA DERECHA -->
-    <span class="status-badge ${estadoClass}">
-      ${statusText}
-    </span>
-
-    <img src="${mainImg}" alt="" loading="lazy">
-
-    ${
-      hoverImg
-        ? `<img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">`
-        : ``
-    }
-
-  </div>
-`;
-     
-      /* =========================
-         CTA SEGÚN ESTADO
-      ========================= */
       const cta =
         data.estado === "disponible"
           ? `
             <a href="${data.sumup_link}" class="piece-cta">
-              Comprar ahora.
+              Comprar ahora
             </a>
           `
           : `
@@ -335,24 +347,16 @@ const imageHTML = `
             </a>
           `;
 
-/* =========================
-   CONTENIDO FINAL CARD
-========================= */
-card.innerHTML = `
-  ${imageHTML}
+      /* ---------- CARD FINAL ---------- */
 
-  <div class="piece-body">
-    <h2>${data.titulo}</h2>
+      card.innerHTML = `
+        ${imageHTML}
 
-    ${cta}
-
-    <ul class="piece-legal">
-      <li>Envío gratis a partir de 150 €.</li>
-      <li>IVA incluido.</li>
-    </ul>
-  </div>
-`;
-
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+          ${cta}
+        </div>
+      `;
 
       GRID.appendChild(card);
 
@@ -362,6 +366,7 @@ card.innerHTML = `
   }
 });
 </script>
+
 
 
  
