@@ -2628,8 +2628,8 @@ textarea::placeholder{
 .catalog-grid .piece-image{
   position: relative;
   overflow: hidden;
-    aspect-ratio: 4 / 5;
-  padding: 14px 14px 0;
+    aspect-ratio: 4 / 4.5;
+  padding: 8px 8px 0;
   background: #fff;
 }
 
@@ -2784,7 +2784,7 @@ textarea::placeholder{
   margin-bottom: 4px;
 }
 .catalog-grid .piece-body{
-  padding: 10px 14px 8px;
+  padding: 10px 12px 8px;
 }
 .catalog-grid .piece-legal{
   margin-top: 6px;
