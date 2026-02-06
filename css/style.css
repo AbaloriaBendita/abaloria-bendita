@@ -2808,18 +2808,6 @@ textarea::placeholder{
   margin-bottom: 4px;
 }
 
-/* =========================
-   MOBILE
-========================= */
-
-/* En mobile no hay hover */
-@media (hover: none){
-
-  .catalog-grid .piece-image .hover-img{
-    display: none;
-  }
-}
-
 /* =====================
    MODAL · RGPD (FORZADO CHECKBOX REAL)
    Pegar AL FINAL del CSS
@@ -3121,25 +3109,27 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE (FIX FINAL REAL)
+   CATÁLOGO · MOBILE SWIPE (CORRECTO)
 ========================= */
 
 @media (max-width: 768px){
 
-  /* Solo activamos swipe si hay hover-img */
-  .catalog-grid .piece-image:has(.hover-img){
+  /* El contenedor de imagen */
+  .catalog-grid .piece-image{
     display: flex;
     overflow-x: auto;
-    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+
+    padding: 0;
+    background: transparent;
   }
 
-  .catalog-grid .piece-image:has(.hover-img)::-webkit-scrollbar{
+  .catalog-grid .piece-image::-webkit-scrollbar{
     display: none;
   }
 
-  /* 🔑 CLAVE: las imágenes vuelven al flujo normal */
+  /* TODAS las imágenes se comportan igual */
   .catalog-grid .piece-image img{
     position: relative !important;
     inset: auto !important;
@@ -3153,10 +3143,16 @@ textarea::placeholder{
 
     opacity: 1 !important;
     visibility: visible !important;
+    display: block;
   }
 
-  /* En mobile la hover-img NO se oculta */
-  .catalog-grid .piece-image .hover-img{
+  /* Si solo hay UNA imagen → no hay swipe visual */
+  .catalog-grid .piece-image img:only-child{
+    flex: 1 0 100%;
+  }
+
+  /* El hover no existe en mobile */
+  .catalog-grid .hover-img{
     opacity: 1 !important;
   }
 }
