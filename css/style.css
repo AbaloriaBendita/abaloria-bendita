@@ -3115,3 +3115,52 @@ textarea::placeholder{
     margin-top: 6px;
   }
 }
+
+/* =========================
+   FIX REAL · MOBILE SWIPE CATÁLOGO
+========================= */
+@media (max-width: 768px){
+
+  /* 1️⃣ El contenedor DEBE crecer */
+  .catalog-grid .piece-image{
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .catalog-grid .piece-image::-webkit-scrollbar{
+    display: none;
+  }
+
+  /* 2️⃣ Las imágenes vuelven al flujo normal */
+  .catalog-grid .piece-image img{
+    position: relative !important;
+    inset: auto !important;
+
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto !important;
+
+    object-fit: contain;
+    scroll-snap-align: start;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block;
+  }
+
+  /* 3️⃣ SOLO swipe si hay hover-img */
+  .catalog-grid .piece-image:not(:has(.hover-img)){
+    overflow-x: hidden;
+  }
+
+  /* 4️⃣ En mobile no hay hover */
+  .catalog-grid .hover-img{
+    opacity: 1 !important;
+  }
+}
+
