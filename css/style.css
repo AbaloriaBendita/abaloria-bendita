@@ -2784,12 +2784,22 @@ textarea::placeholder{
   margin-bottom: 4px;
 }
 .catalog-grid .piece-body{
-  padding: 10px 14px 8px;
+  padding: 10px 14px 12px;
 }
+.catalog-grid .piece-image{
+  max-height: 320px; /* ajusta 300–360 según te guste */
+}
+
+@media (max-width: 420px){
+  .catalog-grid .piece-image{
+    max-height: 280px;
+  }
+  
 .catalog-grid .piece-legal{
   margin-top: 6px;
   font-size: 10px;
   line-height: 1.4;
+  display:block
 }
 
 
@@ -3106,56 +3116,64 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE
+   CATÁLOGO · MOBILE SWIPE (FIX DEFINITIVO)
+   - Si hay hover-img => swipe
+   - Si NO hay hover-img => 1 imagen normal
 ========================= */
 
 @media (max-width: 768px){
 
-  /* Swipe solo si hay más de una imagen */
+  /* 1) La card no debe recortar el contenido del body en mobile */
+  .catalog-grid .piece-card{
+    overflow: hidden; /* OK para bordes */
+  }
+
+  /* 2) Imagen: quitamos ratio/padding que “aplastan” y recortan */
   .catalog-grid .piece-image{
+    padding: 0 !important;
+    aspect-ratio: unset !important;
+    height: auto !important;
+    background: transparent !important;
+  }
+
+  /* 3) Si hay 2 imágenes (main + hover) => activamos swipe */
+  .catalog-grid .piece-image:has(.hover-img){
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    gap: 0;
   }
 
-  .catalog-grid .piece-image img{
-    position: relative !important;
-    flex: 0 0 100%;
-    width: 100%;
-    height: auto;
-    scroll-snap-align: start;
-    opacity: 1 !important;
-  }
-
-  /* La hover deja de ser absoluta en mobile */
-  .catalog-grid .piece-image .hover-img{
-    position: relative;
-    inset: auto;
-    opacity: 1;
-  }
-
-  /* Si solo hay una imagen, no pasa nada */
-  .catalog-grid .piece-image.no-hover{
-    overflow: hidden;
-  }
-
-  /* Ocultar scroll bar */
-  .catalog-grid .piece-image::-webkit-scrollbar{
+  .catalog-grid .piece-image:has(.hover-img)::-webkit-scrollbar{
     display: none;
   }
+
+  /* 4) Las imágenes vuelven al flujo normal (NO absolutas) */
+  .catalog-grid .piece-image img{
+    position: relative !important;
+    inset: auto !important;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto !important;
+    object-fit: contain !important; /* para que se vea completa */
+    opacity: 1 !important;
+    visibility: visible !important;
+    scroll-snap-align: start;
+    display: block;
+  }
+
+  /* 5) En mobile la hover-img NO debe estar escondida */
+  .catalog-grid .piece-image .hover-img{
+    position: relative !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* 6) Legal: que siempre se vea y no se “coma” el layout */
+  .catalog-grid .piece-legal{
+    display: block !important;
+    margin: 6px 0 0 !important;
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
