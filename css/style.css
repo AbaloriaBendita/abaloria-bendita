@@ -2479,42 +2479,6 @@ max-width: 860px;   /* prueba 860–920 */
 }
 
 /* =====================
-   MOBILE: SWIPE
-===================== */
-
-@media (max-width: 768px){
-
-  .piece-image{
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    aspect-ratio: 3 / 4;
-  }
-
-  .piece-image img{
-    position: relative;
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-    opacity: 1 !important;
-  }
-
-  .piece-image::after{
-    content: "⇆";
-    position: absolute;
-    bottom: 10px;
-    right: 12px;
-    font-size: 14px;
-    opacity: 0.5;
-    pointer-events: none;
-  }
-  .piece-card{
-    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-    transform: none !important;
-  }
-}
-
-/* =====================
    FORM · CAMPOS (GLOBAL)
 ===================== */
 
@@ -2622,39 +2586,38 @@ textarea::placeholder{
 }
 
 /* =========================
-   IMÁGENES
+   CATÁLOGO · IMÁGENES (SISTEMA ÚNICO)
 ========================= */
+
+/* BASE */
 .catalog-grid .piece-image{
   position: relative;
-  overflow: visible;      /* 🔑 clave absoluta */
-  padding: 8px;
-  background: transparent;
+  overflow: hidden;
+  background: #fff;
 }
 
+/* Desktop: imágenes superpuestas */
 .catalog-grid .piece-image img{
-  display: block;
-  width: 100%;
-  height: auto;           /* 🔑 deja crecer */
-  object-fit: contain;    /* 🔑 nunca recorta */
-  visibility: visible !important;
-  opacity: 1 !important;
-}
-
-.catalog-grid .piece-image img{
-  display: block;
-  width: 100%;
-  height: auto;
-    object-fit: contain;
-  opacity: 1; /* 🔑 nunca apagamos la imagen base */
-    visibility: visible !important;
-}
-
-/* Imagen secundaria (hover) */
-.catalog-grid .piece-image .hover-img{
   position: absolute;
   inset: 0;
-  opacity: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1;
+  visibility: visible;
   transition: opacity .25s ease;
+}
+
+/* Hover image apagada por defecto */
+.catalog-grid .piece-image .hover-img{
+  opacity: 0;
+}
+
+/* Hover SOLO desktop real */
+@media (hover:hover) and (pointer:fine){
+  .catalog-grid .piece-card:hover .hover-img{
+    opacity: 1;
+  }
 }
 
 /* =========================
@@ -3109,19 +3072,15 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE (CORRECTO)
+   CATÁLOGO · MOBILE SWIPE (ÚNICO)
 ========================= */
-
 @media (max-width: 768px){
 
-  /* El contenedor de imagen */
   .catalog-grid .piece-image{
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-
-    padding: 0;
     background: transparent;
   }
 
@@ -3129,7 +3088,7 @@ textarea::placeholder{
     display: none;
   }
 
-  /* TODAS las imágenes se comportan igual */
+  /* 🔑 CRÍTICO: romper absolute */
   .catalog-grid .piece-image img{
     position: relative !important;
     inset: auto !important;
@@ -3143,16 +3102,16 @@ textarea::placeholder{
 
     opacity: 1 !important;
     visibility: visible !important;
-    display: block;
   }
 
-  /* Si solo hay UNA imagen → no hay swipe visual */
-  .catalog-grid .piece-image img:only-child{
-    flex: 1 0 100%;
-  }
-
-  /* El hover no existe en mobile */
+  /* Hover no existe en mobile */
   .catalog-grid .hover-img{
     opacity: 1 !important;
+  }
+
+  /* Legal SIEMPRE visible */
+  .catalog-grid .piece-legal{
+    display: block !important;
+    margin-top: 6px;
   }
 }
