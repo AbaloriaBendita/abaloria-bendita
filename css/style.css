@@ -3072,57 +3072,112 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE DEFINITIVO
+   CATÁLOGO · TUNING + SWIPE ROBUSTO (SIN :has)
+   Pegar al FINAL del CSS
+========================= */
+
+/* ---------- Proporción imagen (más pequeña sin recortar) ---------- */
+.catalog-grid .piece-image{
+  background: #fff;
+  padding: 10px 10px 6px;        /* más marco → imagen “más pequeña” */
+}
+
+.catalog-grid .piece-image img{
+  object-fit: contain;
+  height: auto;
+  max-height: 360px;             /* ajusta 320–420 según te guste */
+  margin: 0 auto;
+}
+
+/* ---------- Título + spacing ---------- */
+.catalog-grid .piece-body{
+  padding: 10px 14px 12px;
+  gap: 6px;
+}
+
+.catalog-grid .piece-body h2{
+  font-size: 16px;               /* antes 14 */
+  margin: 2px 0 0;               /* menos hueco con la imagen */
+  line-height: 1.2;
+}
+
+/* ---------- CTA un poco más grande (desktop) ---------- */
+.catalog-grid .piece-cta{
+  font-size: 14px;
+  padding: 9px 16px;
+  margin-top: 6px;
+}
+
+/* ---------- Desktop hover (se mantiene) ---------- */
+@media (hover: hover) and (pointer: fine){
+  .catalog-grid .piece-image.has-swipe .hover-img{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .25s ease;
+  }
+
+  .catalog-grid .piece-card:hover .piece-image.has-swipe .hover-img{
+    opacity: 1;
+  }
+}
+
+/* =========================
+   MOBILE · SWIPE SOLO SI HAY 2 IMÁGENES
 ========================= */
 @media (max-width: 768px){
 
-  /* 🔑 1. Estado BASE: una sola imagen, sin swipe */
+  /* Imagen algo más compacta en mobile */
   .catalog-grid .piece-image{
-    display: block;
-    overflow: hidden;
-    padding: 0;
-    background: transparent;
+    padding: 8px 8px 4px;
   }
 
   .catalog-grid .piece-image img{
-    position: relative !important;
-    inset: auto !important;
-
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-    display: block;
+    max-height: 320px;           /* ajusta 280–340 */
   }
 
-  /* 🔑 2. SOLO si hay hover-img → activamos swipe */
-  .catalog-grid .piece-image:has(.hover-img){
+  /* Título un pelín mayor en mobile */
+  .catalog-grid .piece-body h2{
+    font-size: 17px;
+    margin-top: 2px;
+  }
+
+  /* CTA más grande en mobile */
+  .catalog-grid .piece-cta{
+    font-size: 15px;
+    padding: 11px 18px;
+    margin-top: 8px;
+  }
+
+  /* 🔑 Swipe SOLO para las que tienen hover */
+  .catalog-grid .piece-image.has-swipe{
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
   }
 
-  .catalog-grid .piece-image:has(.hover-img)::-webkit-scrollbar{
+  .catalog-grid .piece-image.has-swipe::-webkit-scrollbar{
     display: none;
   }
 
-  .catalog-grid .piece-image:has(.hover-img) img{
-    flex: 0 0 100%;
-    scroll-snap-align: start;
-  }
-
-  /* 🔑 3. En mobile NO hay hover */
-  .catalog-grid .hover-img{
-    opacity: 1 !important;
+  /* En swipe: las imágenes vuelven al flujo normal */
+  .catalog-grid .piece-image.has-swipe img{
     position: relative !important;
+    inset: auto !important;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    scroll-snap-align: start;
+    display: block;
   }
 
-  /* 🔑 4. Legal siempre visible */
-  .catalog-grid .piece-legal{
-    display: block !important;
-    margin-top: 6px;
+  /* En mobile, la hover-img no debe ser absoluta (si no, “se pega”) */
+  .catalog-grid .piece-image.has-swipe .hover-img{
+    position: relative !important;
+    opacity: 1 !important;
   }
 }
