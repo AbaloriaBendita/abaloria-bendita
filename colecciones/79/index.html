@@ -1,0 +1,374 @@
+ <!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Elegancia Divertida · Abaloria Bendita</title>
+  <meta name="description" content="Collares únicos hechos a mano. Colección Sencilla con gracia. Precio fijo 55 €.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS GLOBAL -->
+  <link rel="stylesheet" href="/css/style.css">
+ <!-- CSS CATÁLOGO -->
+<link rel="stylesheet" href="/css/catalog.css">
+</head>
+
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-inner">
+
+    <a href="/" class="logo-link" aria-label="Abaloria Bendita">
+      <img
+        src="/assets/icons/logo-abaloria-horizontal.svg"
+        alt="Abaloria Bendita"
+        class="logo-img"
+        loading="eager"
+      >
+    </a>
+
+    <nav class="main-nav">
+      <a href="/index.html#colecciones">Colecciones</a>
+      <a href="/index.html#como-atraparlo">Cómo atraparlo</a>
+      <a href="/index.html#encargo" class="nav-cta desktop-only">
+        Encargar<span class="cta-dot">.</span>
+      </a>
+    </nav>
+
+    <div class="header-actions mobile-only">
+      <a href="/index.html#encargo" class="nav-cta">
+        Encargar<span class="cta-dot">.</span>
+      </a>
+      <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main id="contenido">
+
+<section class="available-page">
+
+  <div class="available-intro">
+    <h1>Elegancia <span class="c-blue">D</span>ivertida<span class="c-yellow">.</span></h1>
+    <p>
+      Collares únicos hechos a mano.<br>
+    </p>
+  </div>
+
+  <!-- GRID -->
+<div class="available-grid catalog-grid" id="collection-grid">
+    <!-- Cards se pintan por JS -->
+  </div>
+
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <div class="footer-brand">
+      <img
+        src="/assets/icons/logo-abaloria-horizontal.svg"
+        alt="Abaloria Bendita"
+        class="footer-logo"
+      >
+    </div>
+
+    <div class="footer-links">
+      <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener">
+        Síguenos en Instagram
+      </a>
+      <a href="mailto:hola@abaloriabendita.es">
+        hola@abaloriabendita.es
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ================= MODAL ENCARGO ================= -->
+<div class="modal" id="modal-encargo" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Cerrar">×</button>
+
+    <div class="modal-image">
+      <img id="modal-img-preview" src="" alt="">
+    </div>
+
+    <p class="modal-copy">
+      <strong>Encarga tu Abaloria parecida a esta.</strong><br>
+      Danos tus datos y la diseñaremos especialmente para ti.
+    </p>
+
+    <form method="POST" action="/api/encargo" data-redirect="/gracias.html" class="modal-form">
+
+      <input type="hidden" name="imagen_referencia" id="modal-img-input">
+      <input type="hidden" name="tipo" value="Referencia / pieza similar">
+
+      <div class="form-group">
+        <label class="form-label">Nombre y apellidos</label>
+        <input type="text" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input type="tel" name="telefono">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Comentarios</label>
+        <textarea
+          name="comentarios"
+          rows="3"
+          placeholder="Petición especial, estilo, colores…"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="cta-main">
+        Encargar una Abaloria parecida
+      </button>
+
+     <div class="rgpd-group">
+  <div class="rgpd-row">
+    <input type="checkbox" name="rgpd" required>
+    <label>
+      He leído y acepto la
+      <a href="/privacidad.html" target="_blank">política de privacidad</a>
+    </label>
+  </div>
+</div>
+
+    </form>
+  </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script>
+/* NAV MOBILE */
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".main-nav");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("is-open");
+  });
+});
+</script>
+
+<script>
+/* MODAL */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const modal = document.getElementById("modal-encargo");
+  const modalImg = document.getElementById("modal-img-preview");
+  const modalInput = document.getElementById("modal-img-input");
+
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".js-open-modal");
+    if (!btn) return;
+
+    e.preventDefault();
+    modalImg.src = btn.dataset.img;
+    modalInput.value = btn.dataset.img;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+  });
+
+  modal.addEventListener("click", e => {
+    if (
+      e.target.classList.contains("modal-backdrop") ||
+      e.target.classList.contains("modal-close")
+    ) {
+      modal.classList.remove("is-open");
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  console.log("✅ Script catálogo universal cargado");
+
+  const GRID = document.getElementById("collection-grid");
+  if (!GRID) {
+    console.error("❌ No existe #collection-grid");
+    return;
+  }
+
+  /* =========================
+     1. DETECTAR COLECCIÓN ACTUAL
+  ========================= */
+
+  // Ej: /colecciones/55/ → "55"
+  const slug = window.location.pathname
+    .split("/")
+    .filter(Boolean)
+    .pop();
+
+  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
+
+  console.log("📁 Colección:", slug);
+  console.log("📦 Assets base:", BASE);
+
+  /* =========================
+     2. CONFIGURACIÓN PIEZAS
+     (edita SOLO este array por colección si quieres)
+  ========================= */
+
+  const PIEZAS = [
+    `${slug}-01`,
+    `${slug}-02`,
+    `${slug}-03`,
+    `${slug}-04`,
+    `${slug}-05`,
+  ];
+
+  /* =========================
+     3. HELPERS
+  ========================= */
+
+  // Comprobación REAL de imagen (evita hover en blanco)
+  const canLoad = (url) =>
+    new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url + `?v=${Date.now()}`; // anti-cache
+    });
+
+  /* =========================
+     4. LOOP PIEZAS
+  ========================= */
+
+  for (const id of PIEZAS) {
+    try {
+      /* ---------- DATA ---------- */
+      const res = await fetch(`${BASE}${id}/data.json`);
+      if (!res.ok) continue;
+
+      const data = await res.json();
+
+      const estadoClass =
+        data.estado === "disponible" ? "available" : "sold";
+
+      const statusText =
+        data.estado === "disponible" ? "Disponible" : "Vendida";
+
+      const card = document.createElement("article");
+      card.className = `piece-card ${estadoClass}`;
+
+      /* ---------- IMÁGENES ---------- */
+
+      const mainCandidates = [
+        `${BASE}${id}/main.jpg`,
+        `${BASE}${id}/man.jpg`,
+      ];
+
+      const hoverCandidates = [
+        `${BASE}${id}/hover.jpg`,
+        `${BASE}${id}/hver.jpg`,
+      ];
+
+      let mainImg = null;
+      for (const url of mainCandidates) {
+        if (await canLoad(url)) {
+          mainImg = url;
+          break;
+        }
+      }
+      if (!mainImg) continue;
+
+      let hoverImg = null;
+      for (const url of hoverCandidates) {
+        if (await canLoad(url)) {
+          hoverImg = url;
+          break;
+        }
+      }
+
+      const imageHTML = hoverImg
+        ? `
+          <div class="piece-image">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
+
+            <img src="${mainImg}" alt="">
+            <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+          </div>
+        `
+        : `
+          <div class="piece-image no-hover">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
+
+            <img src="${mainImg}" alt="">
+          </div>
+        `;
+
+      /* ---------- CTA ---------- */
+
+      const cta =
+        data.estado === "disponible"
+          ? `
+            <a href="${data.sumup_link}" class="piece-cta">
+              Comprar ahora
+            </a>
+          `
+          : `
+            <a
+              href="#"
+              class="piece-cta alt js-open-modal"
+              data-img="${mainImg}"
+            >
+              Encargar parecida
+            </a>
+          `;
+
+      /* ---------- CARD FINAL ---------- */
+
+      card.innerHTML = `
+        ${imageHTML}
+
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+          ${cta}
+        </div>
+      `;
+
+      GRID.appendChild(card);
+
+    } catch (err) {
+      console.error("❌ Error cargando", id, err);
+    }
+  }
+});
+</script>
+
+
+
+ 
+</body>
+</html>
