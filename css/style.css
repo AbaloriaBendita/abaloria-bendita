@@ -3105,6 +3105,49 @@ textarea::placeholder{
   white-space: nowrap;
 }
 
+/* =========================
+   CATÁLOGO · MOBILE SWIPE
+========================= */
+
+@media (max-width: 768px){
+
+  /* Swipe solo si hay más de una imagen */
+  .catalog-grid .piece-image{
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 0;
+  }
+
+  .catalog-grid .piece-image img{
+    position: relative !important;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    scroll-snap-align: start;
+    opacity: 1 !important;
+  }
+
+  /* La hover deja de ser absoluta en mobile */
+  .catalog-grid .piece-image .hover-img{
+    position: relative;
+    inset: auto;
+    opacity: 1;
+  }
+
+  /* Si solo hay una imagen, no pasa nada */
+  .catalog-grid .piece-image.no-hover{
+    overflow: hidden;
+  }
+
+  /* Ocultar scroll bar */
+  .catalog-grid .piece-image::-webkit-scrollbar{
+    display: none;
+  }
+}
+
+
 
 
 
