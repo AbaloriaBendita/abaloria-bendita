@@ -3072,95 +3072,57 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE (ÚNICO)
+   CATÁLOGO · MOBILE SWIPE DEFINITIVO
 ========================= */
 @media (max-width: 768px){
 
+  /* 🔑 1. Estado BASE: una sola imagen, sin swipe */
   .catalog-grid .piece-image{
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+    display: block;
+    overflow: hidden;
+    padding: 0;
     background: transparent;
   }
 
-  .catalog-grid .piece-image::-webkit-scrollbar{
-    display: none;
-  }
-
-  /* 🔑 CRÍTICO: romper absolute */
   .catalog-grid .piece-image img{
     position: relative !important;
     inset: auto !important;
 
-    flex: 0 0 100%;
     width: 100%;
     height: auto;
-
     object-fit: contain;
-    scroll-snap-align: start;
-
-    opacity: 1 !important;
-    visibility: visible !important;
-  }
-
-  /* Hover no existe en mobile */
-  .catalog-grid .hover-img{
-    opacity: 1 !important;
-  }
-
-  /* Legal SIEMPRE visible */
-  .catalog-grid .piece-legal{
-    display: block !important;
-    margin-top: 6px;
-  }
-}
-
-/* =========================
-   FIX REAL · MOBILE SWIPE CATÁLOGO
-========================= */
-@media (max-width: 768px){
-
-  /* 1️⃣ El contenedor DEBE crecer */
-  .catalog-grid .piece-image{
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-
-    height: auto !important;
-    min-height: 0 !important;
-  }
-
-  .catalog-grid .piece-image::-webkit-scrollbar{
-    display: none;
-  }
-
-  /* 2️⃣ Las imágenes vuelven al flujo normal */
-  .catalog-grid .piece-image img{
-    position: relative !important;
-    inset: auto !important;
-
-    flex: 0 0 100%;
-    width: 100%;
-    height: auto !important;
-
-    object-fit: contain;
-    scroll-snap-align: start;
 
     opacity: 1 !important;
     visibility: visible !important;
     display: block;
   }
 
-  /* 3️⃣ SOLO swipe si hay hover-img */
-  .catalog-grid .piece-image:not(:has(.hover-img)){
-    overflow-x: hidden;
+  /* 🔑 2. SOLO si hay hover-img → activamos swipe */
+  .catalog-grid .piece-image:has(.hover-img){
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* 4️⃣ En mobile no hay hover */
+  .catalog-grid .piece-image:has(.hover-img)::-webkit-scrollbar{
+    display: none;
+  }
+
+  .catalog-grid .piece-image:has(.hover-img) img{
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+  }
+
+  /* 🔑 3. En mobile NO hay hover */
   .catalog-grid .hover-img{
     opacity: 1 !important;
+    position: relative !important;
+  }
+
+  /* 🔑 4. Legal siempre visible */
+  .catalog-grid .piece-legal{
+    display: block !important;
+    margin-top: 6px;
   }
 }
-
