@@ -2795,12 +2795,18 @@ textarea::placeholder{
 }
   
 .catalog-grid .piece-legal{
-  margin-top: 6px;
-  font-size: 10px;
-  line-height: 1.4;
-  display:block
+  display: block;
+  margin-top: 8px;
+  padding-left: 16px;
+
+  font-size: 11px;
+  line-height: 1.45;
+  color: #666;
 }
 
+.catalog-grid .piece-legal li{
+  margin-bottom: 4px;
+}
 
 /* =========================
    MOBILE
@@ -3115,27 +3121,12 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · MOBILE SWIPE (FIX DEFINITIVO)
-   - Si hay hover-img => swipe
-   - Si NO hay hover-img => 1 imagen normal
+   CATÁLOGO · MOBILE SWIPE (FIX FINAL REAL)
 ========================= */
 
 @media (max-width: 768px){
 
-  /* 1) La card no debe recortar el contenido del body en mobile */
-  .catalog-grid .piece-card{
-    overflow: hidden; /* OK para bordes */
-  }
-
-  /* 2) Imagen: quitamos ratio/padding que “aplastan” y recortan */
-  .catalog-grid .piece-image{
-    padding: 0 !important;
-    aspect-ratio: unset !important;
-    height: auto !important;
-    background: transparent !important;
-  }
-
-  /* 3) Si hay 2 imágenes (main + hover) => activamos swipe */
+  /* Solo activamos swipe si hay hover-img */
   .catalog-grid .piece-image:has(.hover-img){
     display: flex;
     overflow-x: auto;
@@ -3148,31 +3139,24 @@ textarea::placeholder{
     display: none;
   }
 
-  /* 4) Las imágenes vuelven al flujo normal (NO absolutas) */
+  /* 🔑 CLAVE: las imágenes vuelven al flujo normal */
   .catalog-grid .piece-image img{
     position: relative !important;
     inset: auto !important;
+
     flex: 0 0 100%;
     width: 100%;
-    height: auto !important;
-    object-fit: contain !important; /* para que se vea completa */
+    height: auto;
+
+    object-fit: contain;
+    scroll-snap-align: start;
+
     opacity: 1 !important;
     visibility: visible !important;
-    scroll-snap-align: start;
-    display: block;
   }
 
-  /* 5) En mobile la hover-img NO debe estar escondida */
+  /* En mobile la hover-img NO se oculta */
   .catalog-grid .piece-image .hover-img{
-    position: relative !important;
     opacity: 1 !important;
-    transform: none !important;
-  }
-
-  /* 6) Legal: que siempre se vea y no se “coma” el layout */
-  .catalog-grid .piece-legal{
-    display: block !important;
-    margin: 6px 0 0 !important;
   }
 }
-
