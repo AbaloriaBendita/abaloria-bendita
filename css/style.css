@@ -2461,8 +2461,7 @@ max-width: 860px;   /* prueba 860–920 */
 
 /* CTA */
 .piece-cta{
-  margin-top: auto;
-  margin-top: 8px;   /* 🔑 colchón visual */
+  margin-top: 6px;   /* 🔑 colchón visual */
   align-self: flex-start;
   padding: 8px 16px;
   border-radius: 999px;
@@ -2574,6 +2573,8 @@ textarea::placeholder{
   position: relative;
     border-radius: 14px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  height: auto;
+  align-self: stretch;
 }
 
 .catalog-grid h2{
@@ -2752,9 +2753,6 @@ textarea::placeholder{
 
 .piece-legal li{
   margin-bottom: 4px;
-}
-.catalog-grid .piece-body{
-  padding: 10px 14px 12px;
 }
   
 .catalog-grid .piece-legal{
@@ -3091,8 +3089,8 @@ textarea::placeholder{
 
 /* ---------- Título + spacing ---------- */
 .catalog-grid .piece-body{
-  padding: 10px 14px 12px;
-  gap: 6px;
+  padding: 10px 14px 8px;
+  gap: 4px;
 }
 
 .catalog-grid .piece-body h2{
@@ -3140,6 +3138,10 @@ textarea::placeholder{
   .catalog-grid .piece-body h2{
     font-size: 18px;
     margin-top: 2px;
+  }
+
+  .catalog-grid .piece-body{
+    padding: 8px 12px 6px;
   }
 
   /* CTA más grande en mobile */
