@@ -2585,6 +2585,14 @@ textarea::placeholder{
 .catalog-grid .piece-card::after{
   display: none !important;
 }
+/* 🔑 Evita que el grid estire las cards en altura (causa del hueco blanco) */
+.catalog-grid{
+  align-items: start;
+}
+
+.catalog-grid .piece-card{
+  align-self: start;
+}
 
 /* =========================
    CATÁLOGO · IMÁGENES (SISTEMA ÚNICO)
