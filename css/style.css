@@ -2592,6 +2592,7 @@ textarea::placeholder{
 
 .catalog-grid .piece-card{
   align-self: start;
+    margin-top: 0;
 }
 
 /* =========================
