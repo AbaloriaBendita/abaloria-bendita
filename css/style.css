@@ -2574,7 +2574,7 @@ textarea::placeholder{
     border-radius: 14px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.08);
   height: auto;
-  align-self: stretch;
+  align-self: start;
 }
 
 .catalog-grid h2{
@@ -2606,21 +2606,48 @@ textarea::placeholder{
   background: #fff;
 }
 
-/* Desktop: imágenes superpuestas */
+/* =========================
+   CATÁLOGO · IMÁGENES (FIX DEFINITIVO SIN HUECO)
+========================= */
+
+.catalog-grid .piece-image{
+  position: relative;
+  background: #fff;
+
+  /* marco para “reducir” la imagen sin cortarla */
+  padding: 12px;
+  border-radius: 14px;
+
+  /* IMPORTANTÍSIMO: no recortar ni forzar alturas raras */
+  overflow: hidden;
+}
+
+/* Imagen principal en flujo normal: define altura real */
 .catalog-grid .piece-image img{
-  position: absolute;
-  inset: 0;
+  position: relative;      /* 🔑 ya NO absolute */
+  inset: auto;
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
-  opacity: 1;
-  visibility: visible;
+}
+
+/* Hover: solo la secundaria va superpuesta */
+.catalog-grid .piece-image .hover-img{
+  position: absolute;
+  inset: 12px;             /* 🔑 respeta el padding del marco */
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+
+  opacity: 0;
   transition: opacity .25s ease;
 }
 
-/* Hover image apagada por defecto */
-.catalog-grid .piece-image .hover-img{
-  opacity: 0;
+@media (hover:hover) and (pointer:fine){
+  .catalog-grid .piece-card:hover .piece-image .hover-img{
+    opacity: 1;
+  }
 }
 
 /* Hover SOLO desktop real */
@@ -3130,82 +3157,47 @@ textarea::placeholder{
 }
 
 /* =========================
-   MOBILE · SWIPE SOLO SI HAY 2 IMÁGENES
+   CATÁLOGO · MOBILE SWIPE (SOLO SI HAY 2 IMÁGENES)
 ========================= */
 @media (max-width: 768px){
 
-  /* Imagen algo más compacta en mobile */
-  .catalog-grid .piece-image{
-    padding: 8px 8px 4px;
-  }
-
-  .catalog-grid .piece-image img{
-    max-height: 320px;           /* ajusta 280–340 */
-  }
-
-  /* Título un pelín mayor en mobile */
-  .catalog-grid .piece-body h2{
-    font-size: 18px;
-    margin-top: 2px;
-  }
-
-  .catalog-grid .piece-body{
-    padding: 8px 12px 6px;
-  }
-
-  /* CTA más grande en mobile */
-  .catalog-grid .piece-cta{
-    font-size: 15px;
-    padding: 11px 20px;
-    margin-top: 8px;
-  }
-
-  /* 🔑 Swipe SOLO para las que tienen hover */
+  /* Si hay hover-img: carrusel */
   .catalog-grid .piece-image.has-swipe{
     display: flex;
     overflow-x: auto;
-    overflow-y: hidden;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
+    gap: 0;
   }
 
   .catalog-grid .piece-image.has-swipe::-webkit-scrollbar{
     display: none;
   }
 
-  /* En swipe: las imágenes vuelven al flujo normal */
+  /* Las imágenes en mobile vuelven al flujo normal */
   .catalog-grid .piece-image.has-swipe img{
     position: relative !important;
     inset: auto !important;
     flex: 0 0 100%;
     width: 100%;
     height: auto !important;
-    opacity: 1 !important;
-    visibility: visible !important;
+    object-fit: contain !important;
     scroll-snap-align: start;
-    display: block;
+    opacity: 1 !important;
   }
 
-  /* En mobile, la hover-img no debe ser absoluta (si no, “se pega”) */
-  .catalog-grid .piece-image.has-swipe .hover-img{
-    position: relative !important;
-    opacity: 1 !important;
-  }
-  /* Indicador swipe SOLO si hay hover-img */
+  /* Indicador swipe */
   .catalog-grid .piece-image.has-swipe::after{
     content: "⇆";
     position: absolute;
-    bottom: 8px;
+    bottom: 10px;
     right: 10px;
-
     font-size: 14px;
-    font-weight: 700;
-    opacity: 0.5;
-
-    background: rgba(255,255,255,0.7);
+    font-weight: 800;
+    opacity: .55;
+    background: rgba(255,255,255,.75);
     border-radius: 999px;
-    padding: 2px 6px;
-
+    padding: 2px 8px;
     pointer-events: none;
   }
 }
