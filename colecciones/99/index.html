@@ -305,23 +305,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       const imageHTML = hoverImg
-        ? `
-          <div class="piece-image">
-            <span class="status-badge ${estadoClass}">${statusText}</span>
-            <span class="price-badge">${data.precio}€</span>
+  ? `
+    <div class="piece-image has-swipe">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
 
-            <img src="${mainImg}" alt="">
-            <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
-          </div>
-        `
-        : `
-          <div class="piece-image no-hover">
-            <span class="status-badge ${estadoClass}">${statusText}</span>
-            <span class="price-badge">${data.precio}€</span>
+      <img src="${mainImg}" alt="">
+      <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+    </div>
+  `
+  : `
+<div class="piece-image has-swipe">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
 
-            <img src="${mainImg}" alt="">
-          </div>
-        `;
+      <img src="${mainImg}" alt="">
+    </div>
+  `;
 
       /* ---------- CTA ---------- */
 
