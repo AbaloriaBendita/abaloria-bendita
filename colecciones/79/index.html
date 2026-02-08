@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <title>Elegancia Divertida · Abaloria Bendita</title>
-  <meta name="description" content="Collares únicos hechos a mano. Colección Elegancia divertida. Precio 79 €.">
+  <meta name="description" content="Collares únicos hechos a mano. Colección Sencilla con gracia. Precio 79 €.">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -59,7 +59,7 @@
 <section class="available-page">
 
   <div class="available-intro">
-    <h1>Elegancia <span class="c-blue">D</span>ivertida<span class="c-yellow">.</span></h1>
+    <h1>Elegancia divertida<span class="c-yellow">.</span></h1>
     <p>
       Collares únicos hechos a mano.<br>
     </p>
@@ -305,23 +305,23 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       const imageHTML = hoverImg
-        ? `
-          <div class="piece-image">
-            <span class="status-badge ${estadoClass}">${statusText}</span>
-            <span class="price-badge">${data.precio}€</span>
+  ? `
+    <div class="piece-image has-swipe">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
 
-            <img src="${mainImg}" alt="">
-            <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
-          </div>
-        `
-        : `
-          <div class="piece-image no-hover">
-            <span class="status-badge ${estadoClass}">${statusText}</span>
-            <span class="price-badge">${data.precio}€</span>
+      <img src="${mainImg}" alt="">
+      <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+    </div>
+  `
+  : `
+<div class="piece-image has-swipe">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
 
-            <img src="${mainImg}" alt="">
-          </div>
-        `;
+      <img src="${mainImg}" alt="">
+    </div>
+  `;
 
       /* ---------- CTA ---------- */
 
