@@ -621,7 +621,7 @@ Quiero mi Abaloria Bendita.
   </div>
 </footer>
 
-    <!-- =========================
+ <!-- =========================
      MODAL · ENCARGO RÁPIDO
 ========================= -->
 <div class="modal" id="modal-encargo" aria-hidden="true">
@@ -632,62 +632,68 @@ Quiero mi Abaloria Bendita.
     <button class="modal-close" aria-label="Cerrar">×</button>
 
     <div class="modal-image">
-  <img id="modal-img-preview" alt="">
+      <img id="modal-img-preview" alt="">
     </div>
+
     <p class="modal-copy">
-  <strong>Encarga tu Abaloria parecida a esta.</strong><br>
-  Danos tus datos y la diseñaremos especialmente para ti.
-</p>
+      <strong>Encarga tu Abaloria parecida a esta.</strong><br>
+      Danos tus datos y la diseñaremos especialmente para ti.
+    </p>
 
-<form method="POST" action="/api/encargo" data-redirect="/gracias.html" class="modal-form">
+    <form method="POST"
+          action="/api/encargo"
+          data-redirect="/gracias.html"
+          class="modal-form">
 
-  <!-- Referencia interna -->
-  <input type="hidden" name="imagen_referencia" id="modal-img-input">
-  <input type="hidden" name="tipo" value="Referencia / pieza similar">
+      <!-- Referencia interna -->
+      <input type="hidden" name="imagen_referencia" id="modal-img-input">
+      <input type="hidden" name="tipo" value="Referencia / pieza similar">
 
-  <div class="form-group">
-    <label class="form-label">Nombre y apellidos</label>
-    <input type="text" name="nombre" required>
-  </div>
+      <div class="form-group">
+        <label class="form-label">Nombre y apellidos</label>
+        <input type="text" name="nombre" required>
+      </div>
 
-  <div class="form-group">
-    <label class="form-label">Email</label>
-    <input type="email" name="email" required>
-  </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" required>
+      </div>
 
-  <div class="form-group">
-    <label class="form-label">Teléfono</label>
-    <input type="tel" name="telefono">
-  </div>
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input type="tel" name="telefono">
+      </div>
 
-  <div class="form-group">
-    <label class="form-label">Comentarios</label>
-    <textarea
-      name="comentarios"
-      rows="3"
-      placeholder="Petición especial, pieza específica, estilo, colección, colores…"
-    ></textarea>
-  </div>
+      <div class="form-group">
+        <label class="form-label">Comentarios</label>
+        <textarea
+          name="comentarios"
+          rows="3"
+          placeholder="Petición especial, pieza específica, estilo, colección, colores…"
+        ></textarea>
+      </div>
 
-  <button type="submit" class="cta-main">
-    Encargar una Abaloria parecida
-  </button>
-  <div class="rgpd-group">
-  <div class="rgpd-group">
-  <div class="rgpd-row">
-    <input type="checkbox" name="rgpd" required>
-    <label>
-      He leído y acepto la
-      <a href="/privacidad.html" target="_blank">política de privacidad</a>
-    </label>
+      <button type="submit" class="cta-main">
+        Encargar una Abaloria parecida
+      </button>
+
+      <!-- RGPD -->
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" name="rgpd" required>
+          <label>
+            He leído y acepto la
+            <a href="/privacidad.html" target="_blank" rel="noopener">
+              política de privacidad
+            </a>
+          </label>
+        </div>
+      </div>
+
+    </form>
   </div>
 </div>
-
-</form>
-  </div>
-
-</div>
-
+    
 <!-- SCRIPTS -->
 
 <script>
