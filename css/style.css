@@ -3225,4 +3225,20 @@ textarea::placeholder{
   }
 }
 
+.how-label{
+  display: block;
+}
+
+.how-title{
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.how-desc{
+  display: block;
+  font-size: 14px;
+}
+
+
 
