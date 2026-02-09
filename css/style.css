@@ -2694,16 +2694,6 @@ textarea::placeholder{
    CATÁLOGO · CTA FIJO (DEFINITIVO)
 ========================= */
 
-.catalog-grid .piece-cta{
-  font-size: 14px;
-  padding: 9px 18px;
-  margin-top: 6px;
-
-  transform: none;
-  box-shadow: none;
-  transition: none;
-}
-
 /* Blindaje total contra hover global */
 .catalog-grid .piece-cta:hover,
 .catalog-grid .piece-cta:focus,
@@ -3243,6 +3233,31 @@ textarea::placeholder{
   opacity: 0.85;
 }
 
+/* =========================
+   FIX FINAL · CTA CATÁLOGO NO SE CORTA
+========================= */
+
+/* Da aire fijo entre imagen y CTA */
+.catalog-grid .piece-body{
+  padding-bottom: 14px !important;
+}
+
+/* La card puede subir, pero el contenido interno NO colapsa */
+@media (hover: hover) and (pointer: fine){
+  .catalog-grid .piece-card{
+    will-change: transform;
+  }
+
+  .catalog-grid .piece-card:hover{
+    transform: translateY(-4px);
+  }
+
+  /* Blindaje total del CTA */
+  .catalog-grid .piece-card:hover .piece-cta{
+    transform: none !important;
+    margin-top: 6px !important;
+  }
+}
 
 
 
