@@ -2711,7 +2711,7 @@ textarea::placeholder{
 .catalog-grid .piece-card:hover .piece-cta{
   transform: none;
   box-shadow: none;
-  padding: 7px 14px;
+  padding: 9px 18px;
 }
 
 
@@ -3201,3 +3201,25 @@ textarea::placeholder{
     pointer-events: none;
   }
 }
+
+/* =========================
+   FIX · CATÁLOGO SIN HUECO (pisar aspect-ratio global)
+   Pegar AL FINAL del CSS
+========================= */
+.catalog-grid .piece-image{
+  aspect-ratio: unset !important;  /* 🔑 mata el ratio heredado */
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+.catalog-grid .piece-image img{
+  height: auto !important;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .catalog-grid .piece-card:hover .piece-cta{
+    padding-top: 0 !important;
+  }
+}
+
+
