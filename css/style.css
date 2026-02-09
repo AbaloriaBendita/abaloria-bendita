@@ -777,6 +777,7 @@ color: var(--yellow);
   display: flex;
   flex-direction: column;
   gap: 4px;
+    transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .collection-head{
@@ -2884,7 +2885,7 @@ textarea::placeholder{
 }
 
 @media (hover:hover){
-  .collection-card a:hover{
+  .collection-card:hover{
     transform: translateY(-4px);
     box-shadow: 0 14px 36px rgba(0,0,0,0.14);
   }
