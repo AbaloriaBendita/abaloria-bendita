@@ -3234,30 +3234,28 @@ textarea::placeholder{
 }
 
 /* =========================
-   FIX FINAL · CTA CATÁLOGO NO SE CORTA
+   FIX DEFINITIVO · CTA CATÁLOGO NO SE RECORTA
+   (Pegar al FINAL del CSS)
 ========================= */
 
-/* Da aire fijo entre imagen y CTA */
-.catalog-grid .piece-body{
-  padding-bottom: 14px !important;
+/* 1) En catálogo, la card NO debe recortar (el recorte es de la imagen) */
+.catalog-grid .piece-card{
+  overflow: visible !important;
 }
 
-/* La card puede subir, pero el contenido interno NO colapsa */
+/* 2) La imagen sí recorta (mantiene esquinas limpias) */
+.catalog-grid .piece-image{
+  overflow: hidden;
+}
+
+/* 3) Mata el “salto” del CTA heredado en hover global */
 @media (hover: hover) and (pointer: fine){
-  .catalog-grid .piece-card{
-    will-change: transform;
-  }
-
-  .catalog-grid .piece-card:hover{
-    transform: translateY(-4px);
-  }
-
-  /* Blindaje total del CTA */
   .catalog-grid .piece-card:hover .piece-cta{
+    padding-top: 0 !important;   /* anula tu padding-top:18px global */
     transform: none !important;
-    margin-top: 6px !important;
   }
 }
+
 
 
 
