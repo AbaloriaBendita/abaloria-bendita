@@ -3227,18 +3227,22 @@ textarea::placeholder{
 
 .how-label{
   display: block;
+  cursor: pointer;
 }
 
 .how-title{
   display: block;
   font-size: 18px;
   font-weight: 800;
+  margin-bottom: 4px;
 }
 
 .how-desc{
   display: block;
   font-size: 14px;
+  opacity: 0.85;
 }
+
 
 
 
