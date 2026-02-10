@@ -2705,66 +2705,6 @@ textarea::placeholder{
   padding: 9px 18px;
 }
 
-
-/* =========================
-   CATÁLOGO · PRICE BADGE
-========================= */
-
-.catalog-grid .price-badge{
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 800;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-  z-index: 5;
-}
-
-/* Badges encima de la imagen */
-.catalog-grid .piece-image{
-  position: relative;
-}
-
-.catalog-grid .status-badge,
-.catalog-grid .price-badge{
-  position: absolute;
-  top: 14px;
-  z-index: 5;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 800;
-  border-radius: 999px;
-  letter-spacing: 0.03em;
-}
-
-/* Estado: arriba izquierda */
-.catalog-grid .status-badge{ left: 14px; }
-.catalog-grid .status-badge.available{
-  background: var(--green);
-  color: #fff;
-}
-.catalog-grid .status-badge.sold{
-  background: rgba(0,0,0,0.75);
-  color: #fff;
-}
-
-/* Precio: arriba derecha (negro con texto blanco) */
-.catalog-grid .price-badge{
-  right: 14px;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
-}
-
-/* Estado → arriba derecha */
-.catalog-grid .status-badge{
-  top: 14px;
-  right: 14px;
-  left: auto;
-}
-
 /* =====================
    CARD · TEXTO LEGAL
 ===================== */
@@ -3310,28 +3250,49 @@ textarea::placeholder{
   margin: 4px 0 6px;
 }
 
-/* Badge de estado (Disponible / Variaciones / Vendida) */
+/* =====================
+   BADGE · ESTADO (FINAL)
+===================== */
+
 .status-badge{
+  position: absolute;
   top: 14px;
   right: 14px;
+
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
 
   background: #fff;
   color: #000;
 
   box-shadow: 0 6px 18px rgba(0,0,0,0.12);
   border: 1px solid rgba(0,0,0,0.08);
+
+  z-index: 5;
 }
 
-/* Variante: variaciones */
+/* Disponible (verde) */
+.status-badge.available{
+  background: var(--green);
+  color: #fff;
+  border: none;
+}
+
+/* Disponible con variaciones (azul fino) */
 .status-badge.variation{
-  background: #fff7e0;        /* tono cálido */
-  color: #000;
-  font-weight: 800;
+  background: #f3f8ff;
+  color: var(--blue);
+  border: 1px solid rgba(0,0,0,0.08);
 }
 
-
-
-
-
-
+/* Vendida (amarillo) */
+.status-badge.sold{
+  background: #fff3c4;
+  color: #000;
+  border: 1px solid rgba(0,0,0,0.12);
+}
 
