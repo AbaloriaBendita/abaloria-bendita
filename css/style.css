@@ -3251,7 +3251,7 @@ textarea::placeholder{
 }
 
 /* =====================
-   BADGE · ESTADO (FINAL)
+   BADGE · ESTADO (FINAL MARCA)
 ===================== */
 
 .status-badge{
@@ -3282,17 +3282,17 @@ textarea::placeholder{
   border: none;
 }
 
-/* Disponible con variaciones (azul fino) */
+/* Disponible con variaciones (MISMO VERDE) */
 .status-badge.variation{
-  background: #f3f8ff;
-  color: var(--blue);
-  border: 1px solid rgba(0,0,0,0.08);
+  background: var(--green);
+  color: #fff;
+  border: none;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
 }
 
-/* Vendida (amarillo) */
+/* Vendida (rojo suave, no agresivo) */
 .status-badge.sold{
-  background: #fff3c4;
-  color: #000;
-  border: 1px solid rgba(0,0,0,0.12);
+  background: #ffe3e3;      /* rojo muy suave */
+  color: #8b1d1d;           /* rojo oscuro elegante */
+  border: 1px solid rgba(139,29,29,0.15);
 }
-
