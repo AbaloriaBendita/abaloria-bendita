@@ -3257,6 +3257,54 @@ textarea::placeholder{
   }
 }
 
+/* =========================
+   RESET TOTAL · CTA + LINKS EN CATÁLOGO
+========================= */
+
+/* 1. Ningún <a> se mueve */
+.catalog-grid a,
+.collection-card a{
+  transform: none !important;
+}
+
+/* 2. Ningún CTA cambia padding, posición o transform */
+.catalog-grid .piece-cta,
+.catalog-grid .piece-cta:hover,
+.catalog-grid .piece-card:hover .piece-cta,
+.collection-card .collection-cta,
+.collection-card:hover .collection-cta{
+  transform: none !important;
+  padding: 8px 16px !important;
+  margin-top: 8px !important;
+}
+
+/* =========================
+   HOVER ÚNICO · CARD (NO CTA)
+========================= */
+
+@media (hover:hover) and (pointer:fine){
+  .collection-card,
+  .catalog-grid .piece-card{
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+
+  .collection-card:hover,
+  .catalog-grid .piece-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px rgba(0,0,0,0.14);
+  }
+}
+
+/* =========================
+   COLCHÓN FIJO ENTRE IMAGEN Y CTA
+========================= */
+
+.catalog-grid .piece-body,
+.collection-body{
+  padding-bottom: 16px;
+}
+
+
 
 
 
