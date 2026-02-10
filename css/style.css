@@ -3290,9 +3290,10 @@ textarea::placeholder{
     box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
 }
 
-/* Vendida (rojo suave, no agresivo) */
+/* Vendida (gris claro, neutro) */
 .status-badge.sold{
-  background: #ffe3e3;      /* rojo muy suave */
-  color: #8b1d1d;           /* rojo oscuro elegante */
-  border: 1px solid rgba(139,29,29,0.15);
+  background: #f2f2f2;          /* gris muy claro */
+  color: #666;                  /* texto suave */
+  border: 1px solid #e0e0e0;    /* borde casi imperceptible */
 }
+
