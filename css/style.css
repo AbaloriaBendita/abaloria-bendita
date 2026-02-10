@@ -3310,6 +3310,26 @@ textarea::placeholder{
   margin: 4px 0 6px;
 }
 
+/* Badge de estado (Disponible / Variaciones / Vendida) */
+.status-badge{
+  top: 14px;
+  right: 14px;
+
+  background: #fff;
+  color: #000;
+
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Variante: variaciones */
+.status-badge.variation{
+  background: #fff7e0;        /* tono cálido */
+  color: #000;
+  font-weight: 800;
+}
+
+
 
 
 
