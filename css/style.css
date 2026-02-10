@@ -3304,6 +3304,13 @@ textarea::placeholder{
   padding-bottom: 16px;
 }
 
+.piece-note{
+  font-size: 12px;
+  opacity: 0.75;
+  margin: 4px 0 6px;
+}
+
+
 
 
 
