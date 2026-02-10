@@ -233,17 +233,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   console.log("📁 Colección:", slug);
   console.log("📦 Assets base:", BASE);
 
-  /* =========================
-     2. PIEZAS (universal)
-  ========================= */
+ /* =========================
+   2. GENERAR PIEZAS AUTOMÁTICAMENTE
+========================= */
 
-  const PIEZAS = [
-    `${slug}-01`,
-    `${slug}-02`,
-    `${slug}-03`,
-    `${slug}-04`,
-    `${slug}-05`,
-  ];
+const MAX_PIEZAS = 50; // ajustable
+const PIEZAS = [];
+
+for (let i = 1; i <= MAX_PIEZAS; i++) {
+  const num = String(i).padStart(2, "0"); // 01, 02, 03...
+  PIEZAS.push(`${slug}-${num}`);
+}
 
   /* =========================
      3. HELPER: comprobar imagen real
@@ -257,149 +257,164 @@ document.addEventListener("DOMContentLoaded", async () => {
       img.src = url + `?v=${Date.now()}`;
     });
 
-  /* =========================
-     4. LOOP PIEZAS
-  ========================= */
+ /* =========================
+   4. LOOP PIEZAS (AUTO + CORTE INTELIGENTE)
+========================= */
 
-  for (const id of PIEZAS) {
-    try {
-      /* ---------- DATA ---------- */
-      const res = await fetch(`${BASE}${id}/data.json`);
-      if (!res.ok) continue;
+let misses = 0;
+const MAX_MISSES = 5;
 
-      const data = await res.json();
+for (let i = 1; i <= MAX_PIEZAS; i++) {
+  const num = String(i).padStart(2, "0"); // 01, 02, 03...
+  const id = `${slug}-${num}`;
 
-      let estadoClass = "sold";
-let statusText  = "Vendida";
+  try {
+    /* ---------- DATA ---------- */
+    const res = await fetch(`${BASE}${id}/data.json`);
+    if (!res.ok) {
+      misses++;
+      if (misses >= MAX_MISSES) break;
+      continue;
+    }
 
-if (data.estado === "disponible") {
-  estadoClass = "available";
-  statusText  = "Disponible";
-}
+    misses = 0;
+    const data = await res.json();
 
-if (data.estado === "variaciones") {
-  estadoClass = "variation";
-  statusText  = "Disponible con variaciones";
-}
+    /* =========================
+       TODO LO QUE YA TENÍAS
+       (NO CAMBIA NADA DE AQUÍ ABAJO)
+    ========================= */
 
-      const card = document.createElement("article");
-      card.className = `piece-card ${estadoClass}`;
+    let estadoClass = "sold";
+    let statusText  = "Vendida";
 
-      /* ---------- IMÁGENES ---------- */
+    if (data.estado === "disponible") {
+      estadoClass = "available";
+      statusText  = "Disponible";
+    }
 
-      const mainCandidates = [
-        `${BASE}${id}/main.jpg`,
-        `${BASE}${id}/man.jpg`,
-      ];
+    if (data.estado === "variaciones") {
+      estadoClass = "variation";
+      statusText  = "Disponible con variaciones";
+    }
 
-      const hoverCandidates = [
-        `${BASE}${id}/hover.jpg`,
-        `${BASE}${id}/hver.jpg`,
-      ];
+    const card = document.createElement("article");
+    card.className = `piece-card ${estadoClass}`;
 
-      let mainImg = null;
-      for (const url of mainCandidates) {
-        if (await canLoad(url)) {
-          mainImg = url;
-          break;
-        }
+    /* ---------- IMÁGENES ---------- */
+
+    const mainCandidates = [
+      `${BASE}${id}/main.jpg`,
+      `${BASE}${id}/man.jpg`,
+    ];
+
+    const hoverCandidates = [
+      `${BASE}${id}/hover.jpg`,
+      `${BASE}${id}/hver.jpg`,
+    ];
+
+    let mainImg = null;
+    for (const url of mainCandidates) {
+      if (await canLoad(url)) {
+        mainImg = url;
+        break;
       }
-      if (!mainImg) continue;
+    }
+    if (!mainImg) continue;
 
-      let hoverImg = null;
-      for (const url of hoverCandidates) {
-        if (await canLoad(url)) {
-          hoverImg = url;
-          break;
-        }
+    let hoverImg = null;
+    for (const url of hoverCandidates) {
+      if (await canLoad(url)) {
+        hoverImg = url;
+        break;
       }
+    }
 
-      const imageHTML = hoverImg
-  ? `
-    <div class="piece-image has-swipe">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
-
-      <img src="${mainImg}" alt="">
-      <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
-    </div>
-  `
-  : `
-<div class="piece-image has-swipe">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
-
-      <img src="${mainImg}" alt="">
-    </div>
-  `;
-
-      /* ---------- CTA ---------- */
-
-      let cta = "";
-
-if (data.estado === "disponible") {
-  cta = `
-    <a href="${data.sumup_link}" class="piece-cta">
-      Comprar ahora
-    </a>
-  `;
-}
-
-if (data.estado === "variaciones") {
-  cta = `
-    <a
-      href="#"
-      class="piece-cta alt js-open-modal"
-      data-img="${mainImg}"
-      data-titulo="${data.titulo}"
-    >
-      Quiero este collar con variaciones
-    </a>
-  `;
-}
-
-if (data.estado === "Vendida") {
-  cta = `
-    <a
-      href="#"
-      class="piece-cta alt js-open-modal"
-      data-img="${mainImg}"
-      data-titulo="${data.titulo}"
-    >
-      Encargar parecida
-    </a>
-  `;
-}
-      /* ---------- CARD FINAL ---------- */
-
-      card.innerHTML = `
-        ${imageHTML}
-
-        <div class="piece-body">
-  <h2>${data.titulo}</h2>
-
-  ${
-    data.estado === "variaciones" && data.nota_disponibilidad
-      ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
-      : ""
-  }
-
-  ${cta}
-
-          <ul class="piece-legal">
-            <li>Envío gratis a partir de 150 €.</li>
-            <li>IVA incluido.</li>
-          </ul>
+    const imageHTML = hoverImg
+      ? `
+        <div class="piece-image has-swipe">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
+          <img src="${mainImg}" alt="">
+          <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+        </div>
+      `
+      : `
+        <div class="piece-image has-swipe">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
+          <img src="${mainImg}" alt="">
         </div>
       `;
 
-      GRID.appendChild(card);
+    /* ---------- CTA ---------- */
 
-    } catch (err) {
-      console.error("❌ Error cargando", id, err);
+    let cta = "";
+
+    if (data.estado === "disponible") {
+      cta = `
+        <a href="${data.sumup_link}" class="piece-cta">
+          Comprar ahora
+        </a>
+      `;
     }
+
+    if (data.estado === "variaciones") {
+      cta = `
+        <a
+          href="#"
+          class="piece-cta alt js-open-modal"
+          data-img="${mainImg}"
+          data-titulo="${data.titulo}"
+        >
+          Quiero este collar con variaciones
+        </a>
+      `;
+    }
+
+    if (data.estado === "Vendida") {
+      cta = `
+        <a
+          href="#"
+          class="piece-cta alt js-open-modal"
+          data-img="${mainImg}"
+          data-titulo="${data.titulo}"
+        >
+          Encargar parecida
+        </a>
+      `;
+    }
+
+    /* ---------- CARD FINAL ---------- */
+
+    card.innerHTML = `
+      ${imageHTML}
+
+      <div class="piece-body">
+        <h2>${data.titulo}</h2>
+
+        ${
+          data.estado === "variaciones" && data.nota_disponibilidad
+            ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
+            : ""
+        }
+
+        ${cta}
+
+        <ul class="piece-legal">
+          <li>Envío gratis a partir de 150 €.</li>
+          <li>IVA incluido.</li>
+        </ul>
+      </div>
+    `;
+
+    GRID.appendChild(card);
+
+  } catch (err) {
+    console.error("❌ Error cargando", id, err);
   }
-});
+}
+
 </script>
 
  
