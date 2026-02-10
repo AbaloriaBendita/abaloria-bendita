@@ -269,8 +269,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const data = await res.json();
 
-      const estadoClass = data.estado === "disponible" ? "available" : "sold";
-      const statusText  = data.estado === "disponible" ? "Disponible" : "Vendida";
+      let estadoClass = "sold";
+let statusText  = "Vendida";
+
+if (data.estado === "disponible") {
+  estadoClass = "available";
+  statusText  = "Disponible";
+}
+
+if (data.estado === "variaciones") {
+  estadoClass = "variation";
+  statusText  = "Disponible con variaciones";
+}
 
       const card = document.createElement("article");
       card.className = `piece-card ${estadoClass}`;
@@ -325,32 +335,56 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       /* ---------- CTA ---------- */
 
-      const cta =
-        data.estado === "disponible"
-          ? `
-            <a href="${data.sumup_link}" class="piece-cta">
-              Comprar ahora
-            </a>
-          `
-          : `
-            <a
-              href="#"
-              class="piece-cta alt js-open-modal"
-              data-img="${mainImg}"
-            >
-              Encargar parecida
-            </a>
-          `;
+      let cta = "";
 
+if (data.estado === "disponible") {
+  cta = `
+    <a href="${data.sumup_link}" class="piece-cta">
+      Comprar ahora
+    </a>
+  `;
+}
+
+if (data.estado === "variaciones") {
+  cta = `
+    <a
+      href="#"
+      class="piece-cta alt js-open-modal"
+      data-img="${mainImg}"
+      data-titulo="${data.titulo}"
+    >
+      Quiero este collar con variaciones
+    </a>
+  `;
+}
+
+if (data.estado === "Vendida") {
+  cta = `
+    <a
+      href="#"
+      class="piece-cta alt js-open-modal"
+      data-img="${mainImg}"
+      data-titulo="${data.titulo}"
+    >
+      Encargar parecida
+    </a>
+  `;
+}
       /* ---------- CARD FINAL ---------- */
 
       card.innerHTML = `
         ${imageHTML}
 
         <div class="piece-body">
-          <h2>${data.titulo}</h2>
+  <h2>${data.titulo}</h2>
 
-          ${cta}
+  ${
+    data.estado === "variaciones" && data.nota_disponibilidad
+      ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
+      : ""
+  }
+
+  ${cta}
 
           <ul class="piece-legal">
             <li>Envío gratis a partir de 150 €.</li>
