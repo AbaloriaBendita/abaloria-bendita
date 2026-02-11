@@ -3221,7 +3221,7 @@ textarea::placeholder{
 .catalog-grid .piece-image{
   position: relative;
   background: #fff;
-  padding: 12px;
+  padding: 0px;
   border-radius: 14px;
   overflow: hidden;
 }
