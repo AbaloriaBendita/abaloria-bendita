@@ -3055,27 +3055,45 @@ textarea::placeholder{
   overflow: hidden;
 }
 
-/* Ambas imágenes ocupan exactamente el mismo espacio */
+/* =========================
+   CATÁLOGO · IMAGEN ESTABLE
+========================= */
+
+.catalog-grid .piece-image{
+  position: relative;
+  background: #fff;
+  padding: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Imagen principal en flujo (define altura) */
 .catalog-grid .piece-image img{
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Hover superpuesta */
+.catalog-grid .piece-image .hover-img{
   position: absolute;
-  inset: 12px;              /* respeta el padding */
+  inset: 12px; /* respeta padding */
   width: calc(100% - 24px);
   height: calc(100% - 24px);
   object-fit: contain;
+
+  opacity: 0;
   transition: opacity .25s ease;
 }
 
-/* Principal visible */
-.catalog-grid .piece-image img:first-child{
-  opacity: 1;
-}
-
-/* Hover solo desktop real */
+/* Hover solo desktop */
 @media (hover: hover) and (pointer: fine){
-  .catalog-grid .piece-card:hover .piece-image img:first-child{
-    opacity: 0;
+  .catalog-grid .piece-card:hover .hover-img{
+    opacity: 1;
   }
 }
+
 
 /* =========================
    CATÁLOGO · MOBILE SWIPE (SOLO SI HAY 2 IMÁGENES)
