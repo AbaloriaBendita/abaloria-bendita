@@ -3299,3 +3299,41 @@ textarea::placeholder{
   border: 1px solid #e0e0e0;    /* borde casi imperceptible */
 }
 
+/* =========================
+   FIX DEFINITIVO · HOVER IMG NO SE DESPLAZA (DESKTOP)
+   Pegar AL FINAL del CSS
+========================= */
+
+/* En desktop, has-swipe NO debe comportarse como carrusel */
+@media (min-width: 769px){
+  .catalog-grid .piece-image.has-swipe{
+    display: block !important;
+    overflow: hidden !important;
+    scroll-snap-type: none !important;
+  }
+
+  .catalog-grid .piece-image.has-swipe img{
+    flex: none !important;
+  }
+
+  /* La principal define el alto, SIEMPRE */
+  .catalog-grid .piece-image.has-swipe img:not(.hover-img){
+    position: relative !important;
+    inset: auto !important;
+    opacity: 1 !important;
+    z-index: 1;
+  }
+
+  /* La hover va clavada encima, sin moverse */
+  .catalog-grid .piece-image.has-swipe .hover-img{
+    position: absolute !important;
+    inset: 12px !important;
+    width: calc(100% - 24px) !important;
+    height: calc(100% - 24px) !important;
+    z-index: 2;
+    transform: none !important;
+    margin: 0 !important;
+  }
+}
+
+
