@@ -2623,40 +2623,12 @@ textarea::placeholder{
   overflow: hidden;
 }
 
-/* Imagen principal en flujo normal: define altura real */
-.catalog-grid .piece-image img{
-  position: relative;      /* 🔑 ya NO absolute */
-  inset: auto;
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Hover: solo la secundaria va superpuesta */
-.catalog-grid .piece-image .hover-img{
-  position: absolute;
-  inset: 12px;             /* 🔑 respeta el padding del marco */
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
-  object-fit: contain;
-
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-
 @media (hover:hover) and (pointer:fine){
   .catalog-grid .piece-card:hover .piece-image .hover-img{
     opacity: 1;
   }
 }
 
-/* Hover SOLO desktop real */
-@media (hover:hover) and (pointer:fine){
-  .catalog-grid .piece-card:hover .hover-img{
-    opacity: 1;
-  }
-}
 
 /* =========================
    CATÁLOGO · RESET + HOVER PROPIO
@@ -3042,10 +3014,6 @@ textarea::placeholder{
 ========================= */
 
 /* ---------- Proporción imagen (más pequeña sin recortar) ---------- */
-.catalog-grid .piece-image{
-  background: #fff;
-  padding: 6px 6px 4px;        /* más marco → imagen “más pequeña” */
-}
 
 .catalog-grid .piece-image img{
   object-fit: contain;
@@ -3075,17 +3043,37 @@ textarea::placeholder{
   margin-top: 6px;
 }
 
-/* ---------- Desktop hover (se mantiene) ---------- */
-@media (hover: hover) and (pointer: fine){
-  .catalog-grid .piece-image.has-swipe .hover-img{
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity .25s ease;
-  }
+/* =========================
+   CATÁLOGO · SISTEMA IMAGEN DEFINITIVO
+========================= */
 
-  .catalog-grid .piece-card:hover .piece-image.has-swipe .hover-img{
-    opacity: 1;
+.catalog-grid .piece-image{
+  position: relative;
+  background: #fff;
+  padding: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Ambas imágenes ocupan exactamente el mismo espacio */
+.catalog-grid .piece-image img{
+  position: absolute;
+  inset: 12px;              /* respeta el padding */
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  transition: opacity .25s ease;
+}
+
+/* Principal visible */
+.catalog-grid .piece-image img:first-child{
+  opacity: 1;
+}
+
+/* Hover solo desktop real */
+@media (hover: hover) and (pointer: fine){
+  .catalog-grid .piece-card:hover .piece-image img:first-child{
+    opacity: 0;
   }
 }
 
