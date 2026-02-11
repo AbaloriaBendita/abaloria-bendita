@@ -289,8 +289,19 @@ document.addEventListener("DOMContentLoaded", async () => {
       const testMain = await fetch(mainImg, { method: "HEAD" });
       if (!testMain.ok) continue;
 
-      const testHover = await fetch(hoverImg, { method: "HEAD" });
-      const hasHover = testHover.ok;
+      let hasHover = false;
+
+try {
+  const imgTest = new Image();
+  imgTest.src = hoverImg;
+  await new Promise((resolve, reject) => {
+    imgTest.onload = resolve;
+    imgTest.onerror = reject;
+  });
+  hasHover = true;
+} catch {
+  hasHover = false;
+}
 
       const imageHTML = hasHover
         ? `
