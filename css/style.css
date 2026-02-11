@@ -2993,7 +2993,7 @@ textarea::placeholder{
 /* ---------- Proporción imagen (más pequeña sin recortar) ---------- */
 
 .catalog-grid .piece-image img{
-  object-fit: contain;
+  object-fit: cover;
   height: auto;
   max-height: 360px;             /* ajusta 320–420 según te guste */
   margin: 0 auto;
