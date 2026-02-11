@@ -3061,6 +3061,7 @@ textarea::placeholder{
   .catalog-grid .piece-image.has-swipe{
     display: flex;
     overflow-x: auto;
+      overflow-y: hidden;   /* 🔑 importante */
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     gap: 0;
