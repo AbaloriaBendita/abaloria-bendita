@@ -3337,4 +3337,109 @@ textarea::placeholder{
   }
 }
 
+/* =========================================================
+   FIX FINAL · IMÁGENES CATÁLOGO (NO LÍNEAS + SWIPE LIMPIO)
+   Pegar AL FINAL del CSS (último de todo)
+========================================================= */
+
+/* Contenedor de imagen: siempre estable */
+.catalog-grid .piece-image{
+  position: relative !important;
+  background: #fff !important;
+  border-radius: 14px !important;
+  overflow: hidden !important;
+
+  /* marco */
+  padding: 12px !important;
+  box-sizing: border-box !important;
+}
+
+/* Imagen base: bloque + sin “gaps” raros */
+.catalog-grid .piece-image > img{
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;     /* 🔑 elimina líneas blancas */
+  margin: 0 !important;
+
+  /* 🔑 evita líneas 1px por subpíxel/GPU */
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+}
+
+/* Hover: la secundaria SIEMPRE calcada al hueco interior del marco */
+.catalog-grid .piece-image > img.hover-img{
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  right: 12px !important;
+  bottom: 12px !important;
+
+  width: auto !important;
+  height: auto !important;
+  object-fit: cover !important;     /* 🔑 mismo “encuadre” que main */
+  opacity: 0 !important;
+  transition: opacity .25s ease !important;
+
+  transform: translateZ(0) !important;
+  backface-visibility: hidden !important;
+}
+
+/* Solo desktop real: aparece hover */
+@media (hover:hover) and (pointer:fine){
+  .catalog-grid .piece-card:hover .piece-image > img.hover-img{
+    opacity: 1 !important;
+  }
+}
+
+/* =========================
+   MOBILE SWIPE: NO ASOMA LA 2ª IMAGEN
+========================= */
+@media (max-width: 768px){
+
+  /* El carrusel NO lleva padding (si no, “asoma” la 2ª) */
+  .catalog-grid .piece-image.has-swipe{
+    padding: 0 !important;
+    display: flex !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    gap: 0 !important;
+  }
+
+  .catalog-grid .piece-image.has-swipe::-webkit-scrollbar{
+    display: none !important;
+  }
+
+  /* Cada imagen ocupa 100% EXACTO del viewport del carrusel */
+  .catalog-grid .piece-image.has-swipe > img{
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+
+    /* marco por imagen (en vez de marco del contenedor) */
+    padding: 12px !important;
+    box-sizing: border-box !important;
+
+    scroll-snap-align: start !important;
+    opacity: 1 !important;
+    position: relative !important;
+    inset: auto !important;
+    object-fit: cover !important;
+  }
+
+  /* En móvil el hover-img NO debe superponerse como hover */
+  .catalog-grid .piece-image.has-swipe > img.hover-img{
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    opacity: 1 !important;
+  }
+}
+
+
 
