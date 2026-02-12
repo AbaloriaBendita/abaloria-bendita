@@ -2990,15 +2990,6 @@ textarea::placeholder{
    Pegar al FINAL del CSS
 ========================= */
 
-/* ---------- Proporción imagen (más pequeña sin recortar) ---------- */
-
-.catalog-grid .piece-image img{
-  object-fit: cover;
-  height: auto;
-  max-height: 360px;             /* ajusta 320–420 según te guste */
-  margin: 0 auto;
-}
-
 /* ---------- Título + spacing ---------- */
 .catalog-grid .piece-body{
   padding: 10px 14px 8px;
@@ -3021,104 +3012,9 @@ textarea::placeholder{
 }
 
 /* =========================
-   CATÁLOGO · IMAGEN ESTABLE
-========================= */
-
-/* Imagen principal en flujo (define altura) */
-.catalog-grid .piece-image img{
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Hover superpuesta */
-.catalog-grid .piece-image .hover-img{
-  position: absolute;
-  inset: 12px; /* respeta padding */
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
-  object-fit: contain;
-
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-
-/* Hover solo desktop */
-@media (hover: hover) and (pointer: fine){
-  .catalog-grid .piece-card:hover .hover-img{
-    opacity: 1;
-  }
-}
-
-
-/* =========================
-   CATÁLOGO · MOBILE SWIPE (SOLO SI HAY 2 IMÁGENES)
-========================= */
-@media (max-width: 768px){
-
-  /* Si hay hover-img: carrusel */
-  .catalog-grid .piece-image.has-swipe{
-    display: flex;
-    overflow-x: auto;
-      overflow-y: hidden;   /* 🔑 importante */
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 0;
-  }
-
-  .catalog-grid .piece-image.has-swipe::-webkit-scrollbar{
-    display: none;
-  }
-
-  /* Las imágenes en mobile vuelven al flujo normal */
-  .catalog-grid .piece-image.has-swipe img{
-    position: relative !important;
-    inset: auto !important;
-    flex: 0 0 100%;
-    width: 100%;
-    height: auto !important;
-    object-fit: contain !important;
-    scroll-snap-align: start;
-    opacity: 1 !important;
-  }
-
-  /* Indicador swipe */
-  .catalog-grid .piece-image.has-swipe::after{
-    content: "⇆";
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 14px;
-    font-weight: 800;
-    opacity: .55;
-    background: rgba(255,255,255,.75);
-    border-radius: 999px;
-    padding: 2px 8px;
-    pointer-events: none;
-  }
-}
-
-/* =========================
    FIX · CATÁLOGO SIN HUECO (pisar aspect-ratio global)
    Pegar AL FINAL del CSS
 ========================= */
-.catalog-grid .piece-image{
-  aspect-ratio: unset !important;  /* 🔑 mata el ratio heredado */
-  height: auto !important;
-  min-height: 0 !important;
-}
-
-.catalog-grid .piece-image img{
-  height: auto !important;
-}
-
-@media (hover:hover) and (pointer:fine){
-  .catalog-grid .piece-card:hover .piece-cta{
-    padding-top: 0 !important;
-        transform: none;          /* 🔑 la card NO se desplaza */
-  }
-}
 
 .how-label{
   display: block;
@@ -3214,45 +3110,6 @@ textarea::placeholder{
   margin: 4px 0 6px;
 }
 
-/* =========================
-   CATÁLOGO · SISTEMA IMAGEN ÚNICO LIMPIO
-========================= */
-
-.catalog-grid .piece-image{
-  position: relative;
-  background: #fff;
-  padding: 12px;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-/* Imagen principal */
-.catalog-grid .piece-image img{
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
-}
-
-/* Hover superpuesta */
-.catalog-grid .piece-image .hover-img{
-  position: absolute;
-  inset: 12px;
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
-  object-fit: contain;
-
-  opacity: 0;
-  transition: opacity .25s ease;
-}
-
-/* Hover solo en desktop real */
-@media (hover: hover) and (pointer: fine){
-  .catalog-grid .piece-card:hover .hover-img{
-    opacity: 1;
-  }
-}
-
 /* =====================
    BADGE · ESTADO (FINAL MARCA)
 ===================== */
@@ -3300,199 +3157,75 @@ textarea::placeholder{
   border: 1px solid #e0e0e0;    /* borde casi imperceptible */
 }
 
-/* =========================
-   FIX DEFINITIVO · HOVER IMG NO SE DESPLAZA (DESKTOP)
-   Pegar AL FINAL del CSS
-========================= */
+/* =====================================================
+   CATÁLOGO · SISTEMA IMAGEN ÚNICO Y ESTABLE
+===================================================== */
 
-/* En desktop, has-swipe NO debe comportarse como carrusel */
-@media (min-width: 769px){
-  .catalog-grid .piece-image.has-swipe{
-    display: block !important;
-    overflow: hidden !important;
-    scroll-snap-type: none !important;
-  }
-
-  .catalog-grid .piece-image.has-swipe img{
-    flex: none !important;
-  }
-
-  /* La principal define el alto, SIEMPRE */
-  .catalog-grid .piece-image.has-swipe img:not(.hover-img){
-    position: relative !important;
-    inset: auto !important;
-    opacity: 1 !important;
-    z-index: 1;
-  }
-
-  /* La hover va clavada encima, sin moverse */
-  .catalog-grid .piece-image.has-swipe .hover-img{
-    position: absolute !important;
-    inset: 12px !important;
-    width: calc(100% - 24px) !important;
-    height: calc(100% - 24px) !important;
-    z-index: 2;
-    transform: none !important;
-    margin: 0 !important;
-  }
-}
-
-/* =========================================================
-   FIX FINAL · IMÁGENES CATÁLOGO (NO LÍNEAS + SWIPE LIMPIO)
-   Pegar AL FINAL del CSS (último de todo)
-========================================================= */
-
-/* Contenedor de imagen: siempre estable */
 .catalog-grid .piece-image{
-  position: relative !important;
-  background: #fff !important;
-  border-radius: 14px !important;
-  overflow: hidden !important;
-
-  /* marco */
-  padding: 12px !important;
-  box-sizing: border-box !important;
+  position: relative;
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  padding: 12px;
+  box-sizing: border-box;
 }
 
-/* Imagen base: bloque + sin “gaps” raros */
+/* Imagen principal define altura */
 .catalog-grid .piece-image > img{
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover !important;     /* 🔑 elimina líneas blancas */
-  margin: 0 !important;
-
-  /* 🔑 evita líneas 1px por subpíxel/GPU */
-  transform: translateZ(0) !important;
-  backface-visibility: hidden !important;
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-/* Hover: la secundaria SIEMPRE calcada al hueco interior del marco */
+/* Hover superpuesta exacta */
 .catalog-grid .piece-image > img.hover-img{
-  position: absolute !important;
-  top: 12px !important;
-  left: 12px !important;
-  right: 12px !important;
-  bottom: 12px !important;
-
-  width: auto !important;
-  height: auto !important;
-  object-fit: cover !important;     /* 🔑 mismo “encuadre” que main */
-  opacity: 0 !important;
-  transition: opacity .25s ease !important;
-
-  transform: translateZ(0) !important;
-  backface-visibility: hidden !important;
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .25s ease;
 }
 
-/* Solo desktop real: aparece hover */
+/* Hover solo desktop real */
 @media (hover:hover) and (pointer:fine){
   .catalog-grid .piece-card:hover .piece-image > img.hover-img{
-    opacity: 1 !important;
+    opacity: 1;
   }
 }
 
 /* =========================
-   MOBILE SWIPE: NO ASOMA LA 2ª IMAGEN
+   MOBILE SWIPE LIMPIO
 ========================= */
+
 @media (max-width: 768px){
 
-  /* El carrusel NO lleva padding (si no, “asoma” la 2ª) */
   .catalog-grid .piece-image.has-swipe{
-    padding: 0 !important;
-    display: flex !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    scroll-snap-type: x mandatory !important;
-    -webkit-overflow-scrolling: touch !important;
-    gap: 0 !important;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0; /* 🔑 importante */
   }
 
-  .catalog-grid .piece-image.has-swipe::-webkit-scrollbar{
-    display: none !important;
-  }
-
-  /* Cada imagen ocupa 100% EXACTO del viewport del carrusel */
   .catalog-grid .piece-image.has-swipe > img{
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-
-    /* marco por imagen (en vez de marco del contenedor) */
-    padding: 12px !important;
-    box-sizing: border-box !important;
-
-    scroll-snap-align: start !important;
-    opacity: 1 !important;
-    position: relative !important;
-    inset: auto !important;
-    object-fit: cover !important;
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    padding: 12px;
+    box-sizing: border-box;
+    scroll-snap-align: start;
+    position: relative;
+    inset: auto;
+    opacity: 1;
   }
 
-  /* En móvil el hover-img NO debe superponerse como hover */
+  /* En móvil no hay hover overlay */
   .catalog-grid .piece-image.has-swipe > img.hover-img{
-    position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    opacity: 1 !important;
+    position: relative;
   }
 }
-
-/* =========================================================
-   FIX FINAL · IMÁGENES CATÁLOGO (NO LÍNEAS + SWIPE LIMPIO)
-   Pegar AL FINAL del CSS (último de todo)
-========================================================= */
-
-/* Contenedor de imagen: siempre estable */
-.catalog-grid .piece-image{
-  position: relative !important;
-  background: #fff !important;
-  border-radius: 14px !important;
-  overflow: hidden !important;
-
-  /* marco */
-  padding: 12px !important;
-  box-sizing: border-box !important;
-}
-
-/* Imagen base: bloque + sin “gaps” raros */
-.catalog-grid .piece-image > img{
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  object-fit: cover !important;     /* 🔑 elimina líneas blancas */
-  margin: 0 !important;
-
-  /* 🔑 evita líneas 1px por subpíxel/GPU */
-  transform: translateZ(0) !important;
-  backface-visibility: hidden !important;
-}
-
-/* Hover: la secundaria SIEMPRE calcada al hueco interior del marco */
-.catalog-grid .piece-image > img.hover-img{
-  position: absolute !important;
-  top: 12px !important;
-  left: 12px !important;
-  right: 12px !important;
-  bottom: 12px !important;
-
-  width: auto !important;
-  height: auto !important;
-  object-fit: cover !important;     /* 🔑 mismo “encuadre” que main */
-  opacity: 0 !important;
-  transition: opacity .25s ease !important;
-
-  transform: translateZ(0) !important;
-  backface-visibility: hidden !important;
-}
-
-/* Solo desktop real: aparece hover */
-@media (hover:hover) and (pointer:fine){
-  .catalog-grid .piece-card:hover .piece-image > img.hover-img{
-    opacity: 1 !important;
-  }
-}
-
