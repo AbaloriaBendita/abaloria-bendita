@@ -3264,23 +3264,11 @@ textarea::placeholder{
 @media (min-width: 1200px){
 
   .catalog-grid{
-    max-width: 1200px;   /* controla ancho total */
-    margin: 0 auto;      /* centrado */
-    gap: 36px;           /* un poco más de aire */
-  }
-
-  .catalog-grid .piece-card{
-    max-width: 340px;    /* 🔑 tamaño final de cada card */
+    max-width: 1100px;              /* más estrecho */
     margin: 0 auto;
+    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
   }
-  .catalog-grid .piece-image > img{
-    object-fit: cover;
-  }
-
-  .catalog-grid .piece-image > img.hover-img{
-    object-fit: cover;
-  }
-
 }
 
 
