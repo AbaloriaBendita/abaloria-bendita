@@ -1,7 +1,9 @@
 {
   "id": "79-04",
-  "titulo": "Collar Rojo Elegancia",
+  "titulo": "Ágata",
   "precio": 79,
-  "estado": "vendida"
+  "estado": "disponible",
+  "nota_disponibilidad": "Agata natural turquesa, resina y perlas de fantasía.",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX"
 }
 
