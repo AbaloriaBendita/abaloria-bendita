@@ -3229,3 +3229,31 @@ textarea::placeholder{
     position: relative;
   }
 }
+
+/* =====================================================
+   FIX DEFINITIVO · EN HOVER NO SE VE NADA DE MAIN (DESKTOP)
+   Pegar AL FINAL del CSS (último)
+===================================================== */
+
+@media (hover:hover) and (pointer:fine){
+
+  /* Preparación: que ambas puedan fundirse */
+  .catalog-grid .piece-image.has-swipe > img{
+    transition: opacity .18s ease;
+  }
+
+  /* Hover: mostramos hover */
+  .catalog-grid .piece-image.has-swipe > img.hover-img{
+    opacity: 0;
+  }
+
+  .catalog-grid .piece-card:hover .piece-image.has-swipe > img.hover-img{
+    opacity: 1;
+  }
+
+  /* Hover: ocultamos main (clave para que no “asome” nunca) */
+  .catalog-grid .piece-card:hover .piece-image.has-swipe > img:not(.hover-img){
+    opacity: 0;
+  }
+}
+
