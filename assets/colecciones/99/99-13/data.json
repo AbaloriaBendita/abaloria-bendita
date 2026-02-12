@@ -2,6 +2,7 @@
   "id": "99-13",
   "titulo": "Hueso, piedras semipreciosas, piedra volcánica y cristal.",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+    "permite_variaciones": true,
   "nota_disponibilidad": "Disponible. Posibilidad de cambios de color en las piedras. Pregúntanos!"
 }
