@@ -2,7 +2,8 @@
   "id": "79-24",
   "titulo": "Agata natural y resina",
   "precio": 79,
-  "estado": "variaciones",
+  "estado": "disponible",
+    "permite_variaciones": true,
 "nota_disponibilidad": "Posibilidad de cambiar color piedra central. Pregúntanos!"
 }
 
