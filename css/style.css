@@ -3257,3 +3257,23 @@ textarea::placeholder{
   }
 }
 
+/* =========================================
+   DESKTOP · CARDS CATÁLOGO MÁS COMPACTAS
+========================================= */
+
+@media (min-width: 1200px){
+
+  .catalog-grid{
+    max-width: 1200px;   /* controla ancho total */
+    margin: 0 auto;      /* centrado */
+    gap: 36px;           /* un poco más de aire */
+  }
+
+  .catalog-grid .piece-card{
+    max-width: 340px;    /* 🔑 tamaño final de cada card */
+    margin: 0 auto;
+  }
+
+}
+
+
