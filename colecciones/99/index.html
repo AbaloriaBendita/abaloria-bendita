@@ -327,12 +327,24 @@ try {
       let cta = "";
 
       if (estado === "disponible") {
-        cta = `
-          <a href="${data.sumup_link}" class="piece-cta">
-            Comprar ahora
-          </a>
-        `;
-      }
+
+  const variacionesCTA = data.permite_variaciones
+    ? `
+      <a href="#"
+         class="piece-cta-secondary js-open-modal"
+         data-img="${mainImg}">
+        ¿Lo quieres con variaciones?
+      </a>
+    `
+    : "";
+
+  cta = `
+    <a href="${data.sumup_link}" class="piece-cta">
+      Comprar ahora
+    </a>
+    ${variacionesCTA}
+  `;
+}
 
       if (estado === "variaciones") {
         cta = `
