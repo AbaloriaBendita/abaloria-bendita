@@ -3273,6 +3273,13 @@ textarea::placeholder{
     max-width: 340px;    /* 🔑 tamaño final de cada card */
     margin: 0 auto;
   }
+  .catalog-grid .piece-image > img{
+    object-fit: cover;
+  }
+
+  .catalog-grid .piece-image > img.hover-img{
+    object-fit: cover;
+  }
 
 }
 
