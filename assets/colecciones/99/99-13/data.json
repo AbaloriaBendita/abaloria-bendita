@@ -3,6 +3,7 @@
   "titulo": "Hueso, piedras semipreciosas, piedra volcánica y cristal.",
   "precio": 99,
   "estado": "disponible",
-    "permite_variaciones": true,
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Disponible. Posibilidad de cambios de color en las piedras. Pregúntanos!"
 }
