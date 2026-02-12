@@ -1,7 +1,9 @@
 {
   "id": "99-19",
-  "titulo": "Agatas naturales, piedras semipreciosas y piedra de jade.",
+  "titulo": "Agatas naturales, piedras semipreciosas y piedra de jade",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Disponible. Se puede cambiar los colores de las piedras."
 }
