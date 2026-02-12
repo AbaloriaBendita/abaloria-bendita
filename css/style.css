@@ -3175,7 +3175,7 @@ textarea::placeholder{
   display: block;
   width: 100%;
   height: auto;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 /* Hover superpuesta exacta */
@@ -3184,7 +3184,7 @@ textarea::placeholder{
   inset: 12px;
   width: calc(100% - 24px);
   height: calc(100% - 24px);
-  object-fit: contain;
+  object-fit: cover;
   opacity: 0;
   transition: opacity .25s ease;
 }
