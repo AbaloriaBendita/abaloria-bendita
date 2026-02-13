@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", async () => {
      3. LOOP SECUENCIAL
   ========================= */
 
-  for (let i = 1; i <= MAX_PIEZAS; i++) {
+for (let i = MAX_PIEZAS; i >= 1; i--) {
 
     const num = String(i).padStart(2, "0"); // 01, 02...
     const id = `${slug}-${num}`;
