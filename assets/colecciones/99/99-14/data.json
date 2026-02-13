@@ -1,10 +1,7 @@
 {
   "id": "99-14",
-  "titulo": "Primavera",
+  "titulo": "Collar cerdito",
   "precio": 99,
-  "estado": "disponible",
-  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
-  "permite_variaciones": true,
-    "nota_disponibilidad": "Posibles cambios de color en las gemas. Piedras semipreciosas, ágatas y cristal"
+  "estado": "variaciones",
+  "nota_disponibilidad": "Disponible con canguro, oso, elefante y caballo."
 }
-

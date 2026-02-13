@@ -1,9 +1,8 @@
 {
   "id": "99-12",
-  "titulo": "Madera y resina",
+  "titulo": "Resina y cristal",
   "precio": 99,
   "estado": "disponible",
-    "sumup_link": "https://pay.sumup.com/b2c/XXXX",
-    "permite_variaciones": true,
-  "nota_disponibilidad": "Disponible con posibilidad de cambio de color: marrón, rojo, amarillo, rosa, verde, naranja y negro."
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX"
 }
+

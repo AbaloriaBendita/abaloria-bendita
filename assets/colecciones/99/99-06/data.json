@@ -1,7 +1,9 @@
 {
   "id": "99-06",
-  "titulo": "Collar cocodrilo",
+  "titulo": "Piedras semipreciosas, ágatas y cristal",
   "precio": 99,
-  "estado": "variaciones",
-  "nota_disponibilidad": "Disponible con cambios en las piedras. Pregúntanos!"
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponible. Posible cambio de color en las gemas. Pregúntanos!"
 }
