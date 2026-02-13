@@ -1,7 +1,9 @@
 {
   "id": "especiales-11",
-  "titulo": "Hueso, asta, madera, cristal",
-  "precio": 160,
-  "estado": "variaciones",
-  "nota_disponibilidad": "Disponible. Conjunto 2 collares. Por separado el más largo 89€ y el corto 79€."
+  "titulo": "Conjunto o por separado",
+  "precio": 150,
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Conjunto completo. Posible cambio de colores siempre en piedras semipreciosas. Por separado 65€ cada uno."
 }

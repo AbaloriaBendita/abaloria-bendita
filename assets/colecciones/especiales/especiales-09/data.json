@@ -1,7 +1,9 @@
 {
   "id": "especiales-09",
-  "titulo": "Agatas naturales, piedras semipreciosas y cristal",
-  "precio": 130,
-  "estado": "vendida"
+  "titulo": "Conjunto o por separado",
+  "precio": 120,
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Conjunto disponible. Por separado bolas grandes 66€ y elefante pequeño 54€. Posibilidades de colores."
 }
-

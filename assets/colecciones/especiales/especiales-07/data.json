@@ -1,9 +1,8 @@
 {
   "id": "especiales-07",
-  "titulo": "Hueso, asta, madera, cerámica y cuerda",
+  "titulo": "Piedras preciosas, cristal y resina",
   "precio": 120,
-   "estado": "disponible",
-  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
-  "permite_variaciones": true,
-  "nota_disponibilidad": "Disponible con posibilidad de cambiar el color de la cuerda y las piezas rojas de cerámica por otro color. Pregúntanos!"
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX"
 }
+
