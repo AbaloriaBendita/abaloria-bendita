@@ -1,7 +1,9 @@
 {
   "id": "55-03",
-  "titulo": "Collar Flor Verde",
-  "precio": 55,
-  "estado": "vendida"
+  "titulo": "Hueso, madera lacada pintada a mano, madera teñida, cristal y resina",
+  "precio": 62,
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponible por encargo. Posibles cambios de colores y piezas sujeto a disponibilidad."
 }
-

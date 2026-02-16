@@ -1,7 +1,8 @@
 {
   "id": "55-05",
-  "titulo": "Collar Flor Roja",
-  "precio": 55,
-  "estado": "vendida"
+  "titulo": "Cuerda y cerámica",
+  "precio": 62,
+  "estado": "disponible",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponible por encargo. Múltiples posibilidades. Versión larga 66€. Versión corta (hombre) 58€"
 }
-

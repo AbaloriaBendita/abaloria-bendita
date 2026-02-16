@@ -1,8 +1,9 @@
 {
-  "id": "55-04",
-  "titulo": "Agatas naturales y piezas de fantasía",
-  "precio": 62,
+  "id": "55-06",
+  "titulo": "Ágata azul turquesa",
+  "precio": 69,
   "estado": "disponible",
+  "permite_variaciones": true,
   "sumup_link": "https://pay.sumup.com/b2c/XXXX",
   "nota_disponibilidad": "Disponible por encargo."
 }
