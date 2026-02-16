@@ -1,7 +1,9 @@
 {
   "id": "broches-02",
-  "titulo": "Broches Gilda",
-  "precio": 55,
-  "estado": "vendida"
+  "titulo": "Gildas",
+  "precio": 45,
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/XXXX",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponibles en diferentes modelos. Piedras naturales, ágata y resina."
 }
-
