@@ -3330,3 +3330,12 @@ textarea::placeholder{
   }
 }
 
+/* Reducir separación entre título de colecciones y sus cards */
+.collections-intro{
+  margin-bottom: 8px;   /* antes más amplio */
+}
+
+.home-collections{
+  padding-top: 20px;    /* antes 60px */
+}
+
