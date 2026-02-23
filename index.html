@@ -322,57 +322,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 
-<!-- FLOW CONTINUO: HOW + FORM -->
-
-  <!-- HOW -->
-  <section class="section how-section" id="como-atraparlo">
-    <div class="container how-inner">
-
-      <div class="section-head">
-        <h2>Cómo conseguir tu Abal<span class="c-red">o</span>ria <span class="c-blue">B</span>endita<span class="c-yellow">.</span></h2>
-        <p>Dos caminos para atrapar una pieza única.</p>
-      </div>
-
-      <div class="how-grid">
-
-        <!-- Opción 1 -->
-        <article class="how-card how-instagram">
-          <div class="how-content">
-            <h3>C<span class="c-blue">o</span>llares ya cread<span class="c-red">o</span>s<span class="c-yellow">.</span></h3>
-            <p>
-              Piezas ya terminadas y listas para encontrar dueñ@. Cuando se venden, no vuelven a repetirse.
-              Si llegas a tiempo, es tuya. 
-            </p>
-
-            <a href="#colecciones" class="cta-pill">
-  Ver colecciones.
-</a>
-          </div>
-        </article>
-
-        <!-- Opción 2 -->
-        <article class="how-card how-custom">
-          <div class="how-content">
-            <h3>C<span class="c-blue">o</span>llares por encarg<span class="c-red">o</span><span class="c-yellow">.</span></h3>
-            <p>
-              Partiendo de tu petición, cada Abaloria es una interpretación única según la creatividad de la artista
-y la disponibilidad de piezas.
-            </p>
-
-            <a href="#encargo" class="cta-pill">
-              Encarga tu collar.
-            </a>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- =====================
-     TU PIEZA
+<!-- =====================
+   ENCARGO · VERSIÓN LIMPIA FINAL
 ===================== -->
 
+<!-- TÍTULO EDITORIAL -->
+<div class="section-head">
+  <h2>
+    Cómo conseguir tu Abal<span class="c-red">o</span>ria 
+    <span class="c-blue">B</span>endita<span class="c-yellow">.</span>
+  </h2>
+  <p>
+    Danos pistas de lo que deseas, nosotros te lo diseñaremos con mucha gracia. 
+    Déjate sorprender!
+  </p>
+</div>
+
+<!-- FORM -->
 <div class="form-inner" id="encargo">
   <form class="form" method="POST" action="/api/encargo">
 
@@ -383,273 +349,90 @@ y la disponibilidad de piezas.
     <fieldset class="form-block">
       <legend>Tu pieza</legend>
 
-      <p class="form-intro">
-      Danos pistas de lo que deseas, nosotros te lo diseñaremos con mucha gracia. Déjate sorprender! 
-      </p>
+      <!-- TIPOLÓGÍA -->
+      <div class="form-group">
+        <label class="group-label">Tipología</label>
 
-     <!-- =====================
-     TIPOLOGÍA + CLASES
-===================== -->
+        <div class="pill-group pill-radio">
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Collar" required>
+            <span class="pill-btn"><span class="pill-text">Collar</span></span>
+          </label>
 
-<div class="form-group">
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Pendientes">
+            <span class="pill-btn"><span class="pill-text">Pendientes</span></span>
+          </label>
 
-  <!-- Tipología -->
-  <label class="group-label">Tipología</label>
+          <label class="pill">
+            <input type="radio" name="tipologia" value="Broche">
+            <span class="pill-btn"><span class="pill-text">Broche</span></span>
+          </label>
+        </div>
+      </div>
 
-  <div class="pill-group pill-radio">
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Collar" required>
-      <span class="pill-btn"><span class="pill-text">Collar</span></span>
-    </label>
+      <!-- DESCRIPCIÓN LIBRE -->
+      <div class="form-group">
+        <label class="group-label" for="comentarios">
+          Cuéntanos qué tienes en mente
+        </label>
 
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Pendientes">
-      <span class="pill-btn"><span class="pill-text">Pendientes</span></span>
-    </label>
+        <textarea
+          id="comentarios"
+          name="comentarios"
+          rows="4"
+          placeholder="Colores, tipo de piedra, tamaño, inspiración…"
+          required
+        ></textarea>
+      </div>
 
-    <label class="pill">
-      <input type="radio" name="tipologia" value="Broche">
-      <span class="pill-btn"><span class="pill-text">Broche</span></span>
-    </label>
-  </div>
+      <!-- DATOS -->
+      <div class="form-group">
+        <label class="group-label">Tus datos</label>
 
-  <!-- =====================
-       CLASES · COLLAR
-  ===================== -->
-  <div class="class-panel" data-tipologia="Collar">
-    <div class="how-grid">
+        <div class="form-fields">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
 
-      <div class="how-card class-card">
-  <input type="radio" name="clase" id="collar-sencillo" value="Collar · Sencillo con gracia">
-  <label for="collar-sencillo" class="how-label">
-    <span class="how-title">Sencillo con gracia</span>
-    <span class="how-desc">Desde 55€ · Minimalista</span>
-  </label>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+
+          <div class="field">
+            <label for="telefono">Teléfono (opcional)</label>
+            <input type="tel" id="telefono" name="telefono">
+          </div>
+        </div>
+      </div>
+
+      <!-- RGPD -->
+      <div class="form-group rgpd-group">
+        <label class="rgpd">
+          <input type="checkbox" name="rgpd" required>
+          <span>
+            He leído y acepto la
+            <a href="privacidad.html" target="_blank" rel="noopener">
+              política de privacidad
+            </a>.
+          </span>
+        </label>
+      </div>
+
+      <!-- CTA -->
+      <div class="form-cta">
+        <button type="submit" class="cta-main">
+          Quiero mi Abaloria Bendita
+        </button>
+      </div>
+
+    </fieldset>
+
+  </form>
 </div>
-
-       <div class="how-card class-card">
-  <input type="radio" name="clase" id="collar-elegancia" value="Collar · Elegancia divertida">
-  <label for="collar-elegancia" class="how-label">
-    <span class="how-title">Elegancia divertida</span>
-    <span class="how-desc">Desde 79€ · El equilibrio Abaloria</span>
-  </label>
-</div>
-
- <div class="how-card class-card">
-  <input type="radio" name="clase" id="collar-super" value="Collar · Súper guay">
-  <label for="collar-super" class="how-label">
-    <span class="how-title">Protagonista</span>
-    <span class="how-desc">Desde 99€ · Protagonista</span>
-  </label>
-</div> 
-
-    </div>
-  </div>
-
-  <!-- =====================
-       CLASES · PENDIENTES
-  ===================== -->
-  <div class="class-panel" data-tipologia="Pendientes">
-    <div class="how-grid">
-
-<div class="how-card class-card">
-  <input type="radio" name="clase" id="pendientes-toque" value="Pendientes · Toque especial">
-  <label for="pendientes-toque" class="how-label">
-    <span class="how-title">Pendientes</span>
-    <span class="how-desc">Desde 39€ · Pequeña joyita</span>
-  </label>
-</div>
-      
-<div class="how-card class-card">
-  <input type="radio" name="clase" id="pendientes-muy" value="Pendientes · Muy especial">
-  <label for="pendientes-muy" class="how-label">
-    <span class="how-title">Pendientes</span>
-    <span class="how-desc">Desde 49€ · Más presencia y detalle</span>
-  </label>
-</div>
-
-    </div>
-  </div>
-
-  <!-- =====================
-       CLASES · BROCHE
-  ===================== -->
-  <div class="class-panel" data-tipologia="Broche">
-    <div class="how-grid">
-
-  <div class="how-card class-card">
-  <input type="radio" name="clase" id="broche-toque" value="Broche · Toque especial"
->
-  <label for="broche-toque" class="how-label">
-    <span class="how-title">Broches</span>
-    <span class="how-desc">Desde 39€ · Pequeña joyita</span>
-  </label>
-</div>   
-      
-<div class="how-card class-card">
-  <input type="radio" name="clase" id="broche-muy" value="Broche · Muy especial">
-  <label for="broche-muy" class="how-label">
-    <span class="how-title">Broches</span>
-    <span class="how-desc">Desde 49€ · Más presencia y detalle</span>
-  </label>
-</div>  
-
-    </div>
-  </div>
-
-  <p class="form-intro">
-    El precio final puede variar según piedras, tamaño y peticiones especiales.
-    *Gastos de envío gratis en pedidos a partir de 150€.
-    *Todos los precios incluyen IVA.
-  </p>
-
-</div>
-
-  <!-- Colecciones -->
-  <div class="form-group">
-    <label class="group-label">
-      Colecciones / inspiración
-      <span class="group-help">Elige hasta 3</span>
-    </label>
-
-    <div class="chip-group" data-limit="3">
-   <label class="chip">
-  <input type="checkbox" name="colecciones" value="Animales">
-  <span>🐶 Animales</span>
-</label>
-
-<label class="chip">
-  <input type="checkbox" name="colecciones" value="Dada">
-  <span>🎨 Dadá</span>
-</label>
-
-<label class="chip">
-  <input type="checkbox" name="colecciones" value="Circus">
-  <span>🎪 Circus</span>
-</label>
-
-<label class="chip">
-  <input type="checkbox" name="colecciones" value="Piedras">
-  <span>💎 Piedras</span>
-</label>
-
-<label class="chip">
-  <input type="checkbox" name="colecciones" value="Bolas">
-  <span>🔵 Bolas de colores</span>
-</label>
-
-<label class="chip">
-  <input type="checkbox" name="colecciones" value="Otros">
-  <span>✨ Otros</span>
-</label>
-
-    </div>
-  </div>
-</fieldset>
-
-    <!-- PETICIONES ESPECIALES -->
-<div class="form-group">
-  <label class="group-label" for="peticiones">
-    Peticiones especiales
-    <span class="group-help">Opcional</span>
-  </label>
-
-  <textarea
-    id="peticiones"
-    name="peticiones"
-    rows="4"
-    placeholder="Tipo de piedra, uso, tamaño, referencia, colores…"
-  ></textarea>
-  <p class="form-intro">
-  Cuantos más detalles, mejor podremos ajustar tu Abaloria Bendita. 
-  * Algunas peticiones especiales pueden variar el precio.
-</p>
-</div>
-
-<!-- DATOS -->
-<div class="form-group">
-  <label class="group-label">Tus datos</label>
-
-  <div class="form-fields">
-    <div class="field">
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" name="nombre" required>
-    </div>
-
-    <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required>
-    </div>
-
-    <div class="field">
-      <label for="telefono">Teléfono</label>
-      <input type="tel" id="telefono" name="telefono">
-    </div>
-  </div>
-</div>
-
-<!-- CONSENT -->
-<div class="form-group rgpd-group">
-
-  <!-- Obligatorio -->
-  <label class="rgpd">
-    <input type="checkbox" name="rgpd" required>
-    <span>
-      He leído y acepto la
-      <a href="privacidad.html" target="_blank" rel="noopener">
-        política de privacidad
-      </a>.
-    </span>
-  </label>
-
-  <!-- Opcional -->
-  <label class="rgpd">
-    <input type="checkbox" name="comunicaciones">
-    <span>
-      Quiero recibir comunicaciones ocasionales sobre nuevas Abalorias Benditas.
-    </span>
-  </label>
-
-</div>
-
-<!-- CTA FINAL -->
-<!-- RESUMEN DE PRECIO -->
-<div class="price-summary" id="price-summary" hidden>
-
-  <div class="price-row">
-    <span>Precio base</span>
-    <span id="price-base">—</span>
-  </div>
-
-  <div class="price-row">
-    <span>Gastos de envío</span>
-    <span id="price-shipping">—</span>
-  </div>
-
-  <div class="price-row total">
-    <strong>Total</strong>
-    <strong id="price-total">—</strong>
-  </div>
-
-  <p class="price-note">
-    * Los precios incluyen IVA.<br>
-    * Los gastos de envío son gratis en pedidos superiores a 150€.
-  </p>
-
-</div>
-
-<!-- CTA FINAL -->
-<div class="form-cta">
-<button type="submit" class="cta-main">
-Quiero mi Abaloria Bendita.
-</button>
-</div>
-</form>
-</div>
-</div> <!-- FIN flow-bg -->
-
-</main> <!-- cierre main -->
-
+  
 <!-- FOOTER -->
   <footer class="site-footer">
   <div class="container footer-inner">
