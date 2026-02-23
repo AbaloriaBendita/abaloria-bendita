@@ -3301,3 +3301,20 @@ textarea::placeholder{
   text-decoration: underline;
 }
 
+/* Alinear el titular del bloque ENCARGO con el inicio del formulario */
+.encargo-section .section-head{
+  max-width: 1000px;     /* igual que .form-inner */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 30px;    /* igual que el padding de .form-inner */
+  padding-right: 30px;
+}
+
+/* Mobile: mismo “inicio” visual que el form */
+@media (max-width: 768px){
+  .encargo-section .section-head{
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+}
+
