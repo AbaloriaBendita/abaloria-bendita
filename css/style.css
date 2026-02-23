@@ -3318,3 +3318,15 @@ textarea::placeholder{
   }
 }
 
+/* Más separación antes del formulario */
+#encargo{
+  margin-top: 120px;
+}
+
+/* En móvil un poco menos para no romper ritmo */
+@media (max-width: 768px){
+  #encargo{
+    margin-top: 80px;
+  }
+}
+
