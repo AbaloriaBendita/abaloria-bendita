@@ -645,32 +645,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
     
 <!-- SCRIPTS -->
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const chipGroup = document.querySelector('.chip-group');
-  if (!chipGroup) return;
-
-  const checkboxes = chipGroup.querySelectorAll('input[type="checkbox"]');
-  const limit = 3;
-
-  checkboxes.forEach(cb => {
-    cb.addEventListener('change', () => {
-      const checked = chipGroup.querySelectorAll('input[type="checkbox"]:checked');
-
-      checkboxes.forEach(box => {
-        if (!box.checked && checked.length >= limit) {
-          box.disabled = true;
-          box.parentElement.classList.add('is-disabled');
-        } else {
-          box.disabled = false;
-          box.parentElement.classList.remove('is-disabled');
-        }
-      });
-    });
-  });
-});
-</script>
     
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -747,54 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
-
     
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  const PRICES = {
-    "Collar · Sencillo con gracia": 55,
-    "Collar · Elegancia divertida": 79,
-    "Collar · Súper guay": 99,
-    "Pendientes · Toque especial": 39,
-    "Pendientes · Muy especial": 49,
-    "Broche · Toque especial": 39,
-    "Broche · Muy especial": 49
-  };
-
-  const SHIPPING = 8;
-  const FREE_SHIPPING_FROM = 150;
-
-  const summary = document.getElementById("price-summary");
-  const baseEl = document.getElementById("price-base");
-  const shippingEl = document.getElementById("price-shipping");
-  const totalEl = document.getElementById("price-total");
-
-  // Escuchamos cambios en TODO el documento
-  document.addEventListener("change", (e) => {
-
-    if (!e.target.matches('input[name="clase"]')) return;
-
-    const value = e.target.value;
-    const basePrice = PRICES[value];
-    if (!basePrice) return;
-
-    summary.hidden = false;
-
-    baseEl.textContent = basePrice.toFixed(2) + " €";
-
-    if (basePrice >= FREE_SHIPPING_FROM) {
-      shippingEl.textContent = "Gratis";
-      totalEl.textContent = basePrice.toFixed(2) + " €";
-    } else {
-      shippingEl.textContent = SHIPPING.toFixed(2) + " €";
-      totalEl.textContent = (basePrice + SHIPPING).toFixed(2) + " €";
-    }
-  });
-
-});
-</script>
-
    <script>
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('.collection-frame').forEach(frame => {
