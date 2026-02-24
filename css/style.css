@@ -3444,3 +3444,16 @@ textarea::placeholder{
 
 }
 
+@media (min-width: 1024px){
+
+  .editorial-section{
+    padding-top: 90px !important;
+    min-height: auto !important;
+  }
+
+  .editorial-grid{
+    align-items: start !important;
+  }
+
+}
+
