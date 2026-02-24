@@ -3494,4 +3494,104 @@ textarea::placeholder{
 
 }
 
+/* =========================
+   LIGHTBOX PREMIUM
+========================= */
+
+.image-lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+}
+
+.image-lightbox.is-open{
+  display: block;
+}
+
+.lightbox-backdrop{
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.88);
+  backdrop-filter: blur(2px);
+}
+
+.lightbox-content{
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-track{
+  display: flex;
+  transition: transform .35s ease;
+  max-width: 92vw;
+  max-height: 85vh;
+}
+
+.lightbox-track img{
+  flex: 0 0 100%;
+  max-width: 92vw;
+  max-height: 85vh;
+  object-fit: contain;
+}
+
+/* Cerrar */
+.lightbox-close{
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Flechas */
+.lightbox-nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 42px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.lightbox-nav.prev{ left: 40px; }
+.lightbox-nav.next{ right: 40px; }
+
+/* Contador */
+.lightbox-counter{
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: .08em;
+}
+
+/* Mobile */
+@media (max-width: 768px){
+
+  .lightbox-nav{
+    display: none;
+  }
+
+  .lightbox-track{
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+
+  .lightbox-track img{
+    scroll-snap-align: center;
+  }
+
+}
+
 
