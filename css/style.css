@@ -3484,6 +3484,13 @@ textarea::placeholder{
     box-shadow: none !important;
     padding: 0 !important;
   }
+   .header-inner{
+    justify-content: space-between;
+  }
+
+  .main-nav{
+    font-size: 14px;
+  }
 
 }
 
