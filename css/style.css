@@ -3374,7 +3374,7 @@ textarea::placeholder{
   min-height: 100vh;
   display: flex;
   align-items: flex-start;   /* 🔥 antes center */
-  padding-top: 140px;        /* espacio header */
+  padding-top: 100px;        /* espacio header */
 }
 
 .hero-copy{
