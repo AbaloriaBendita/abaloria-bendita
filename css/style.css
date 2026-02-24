@@ -3339,3 +3339,32 @@ textarea::placeholder{
   padding-top: 20px;    /* antes 60px */
 }
 
+/* Idioma */
+
+.lang-switch{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  margin-left: 16px;
+}
+
+.lang{
+  opacity: 0.5;
+  font-weight: 600;
+  transition: opacity .2s ease;
+}
+
+.lang.active{
+  opacity: 1;
+  font-weight: 800;
+}
+
+.lang:hover{
+  opacity: 1;
+}
+
+.lang-sep{
+  opacity: 0.4;
+}
+
