@@ -3371,7 +3371,6 @@ textarea::placeholder{
 /* HERO editorial layout mejorado */
 
 .editorial-section{
-  min-height: 80vh;
   display: flex;
   align-items: flex-start;   /* 🔥 antes center */
   padding-top: 100px;        /* espacio header */
