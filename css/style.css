@@ -740,7 +740,7 @@ color: var(--yellow);
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 32px;
-    align-items: start;
+    align-items: center;
   }
 
   .editorial-carousel{
