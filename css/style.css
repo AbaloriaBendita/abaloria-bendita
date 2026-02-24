@@ -3403,3 +3403,37 @@ textarea::placeholder{
   transform: translateY(-2px);
 }
 
+/* HERO Desktop refinado */
+
+@media (min-width: 1024px){
+
+  .editorial-section{
+    align-items: flex-start;
+    padding-top: 160px;
+  }
+
+  .hero-copy{
+    margin-top: 20px;   /* 🔥 sube el titular */
+  }
+
+  .hero-cta-fashion{
+    display: inline-block;
+    margin-top: 80px;   /* 🔥 baja el CTA */
+
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid #000;
+    padding-bottom: 4px;
+
+    transition: opacity .2s ease, letter-spacing .2s ease;
+  }
+
+  .hero-cta-fashion:hover{
+    opacity: .6;
+    letter-spacing: 0.12em;
+  }
+}
+
