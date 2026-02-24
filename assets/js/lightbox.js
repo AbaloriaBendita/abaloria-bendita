@@ -10,12 +10,12 @@ const counter = lightbox.querySelector('.lightbox-counter');
 let currentIndex = 0;
 let images = [];
 
-document.querySelectorAll('.piece-image').forEach(container => {
-
+document.querySelectorAll('.collection-frame').forEach(container => {
+  
   container.addEventListener('click', () => {
 
-    images = Array.from(container.querySelectorAll('img'))
-      .map(img => img.src);
+images = Array.from(container.querySelectorAll('.img-item img'))
+  .map(img => img.src);
 
     if (!images.length) return;
 
