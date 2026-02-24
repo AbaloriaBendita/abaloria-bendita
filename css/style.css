@@ -3437,3 +3437,11 @@ textarea::placeholder{
   }
 }
 
+@media (min-width: 1024px){
+
+  .editorial-section{
+    padding-top: 100px;  /* prueba entre 90–120 */
+  }
+
+}
+
