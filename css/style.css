@@ -1135,9 +1135,9 @@ color: var(--yellow);
 
 @media (max-width: 768px){
 
-  .modal{
-    align-items: flex-start;   /* ✅ baja el modal desde arriba */
-    padding-top: 80px;         /* ✅ evita solape con header */
+   .modal.is-open{
+    align-items: flex-start;
+    padding-top: 80px;
   }
   
   .modal-box{
