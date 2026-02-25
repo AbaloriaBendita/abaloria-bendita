@@ -3598,4 +3598,14 @@ textarea::placeholder{
   cursor: zoom-in;
 }
 
+.piece-image {
+  cursor: pointer;
+}
+
+@media (hover: none) {
+  .hover-img {
+    display: none;
+  }
+}
+
 
