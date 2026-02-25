@@ -3494,7 +3494,9 @@ textarea::placeholder{
 }
 
 .image-lightbox.is-open{
-  display: block;
+ display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lightbox-backdrop{
