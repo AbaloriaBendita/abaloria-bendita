@@ -60,20 +60,20 @@ document.addEventListener("DOMContentLoaded", () => {
      ACTUALIZAR SLIDE
   ========================= */
 
-  function update() {
+ function update() {
+
+  requestAnimationFrame(() => {
+
     const w = track.getBoundingClientRect().width;
+    if (!w) return;
+
     track.style.transform = `translateX(-${currentIndex * w}px)`;
+
     counter.textContent = images.length > 1
       ? `${currentIndex + 1} / ${images.length}`
       : "";
-  }
-
-  function go(delta) {
-    const next = currentIndex + delta;
-    if (next < 0 || next > images.length - 1) return;
-    currentIndex = next;
-    update();
-  }
+  });
+}
 
   /* =========================
      EVENTO ÚNICO (pointer)
