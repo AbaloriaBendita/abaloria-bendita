@@ -3488,9 +3488,8 @@ textarea::placeholder{
 
 .image-lightbox{
   position: fixed;
-  top: 70px;      /* altura real del header */
   inset: 0;
-  z-index: 10000;
+  z-index: 90000;
   display: none;
 }
 
@@ -3510,6 +3509,7 @@ textarea::placeholder{
   position: relative;
   z-index: 1;
   height: 100%;
+  padding-top: 70px;   /* altura header */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3519,13 +3519,13 @@ textarea::placeholder{
   display: flex;
   transition: transform .35s ease;
   max-width: 92vw;
-  max-height: 85vh;
+max-height: calc(100vh - 120px);
 }
 
 .lightbox-track img{
   flex: 0 0 100%;
   max-width: 92vw;
-  max-height: 85vh;
+max-height: calc(100vh - 120px);
   object-fit: contain;
 }
 
