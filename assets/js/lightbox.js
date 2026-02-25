@@ -26,21 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
     images = imgSources;
     track.innerHTML = "";
 
-   images.forEach(src => {
-  if (!src) return;
+    images.forEach(src => {
+      if (!src) return;
 
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = "";
+      const img = document.createElement("img");
+      img.src = src;
+      img.alt = "";
+      track.appendChild(img);
+    });
 
-  img.onerror = () => {
-    console.warn("Imagen no válida:", src);
-  };
-
-  track.appendChild(img);
-});
     currentIndex = 0;
-    update();
+
+    // Espera a que el DOM pinte antes de calcular ancho
+    requestAnimationFrame(() => update());
 
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
@@ -66,9 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
      ACTUALIZAR SLIDE
   ========================= */
 
- function update() {
-
-  requestAnimationFrame(() => {
+  function update() {
 
     const w = track.getBoundingClientRect().width;
     if (!w) return;
@@ -78,12 +74,21 @@ document.addEventListener("DOMContentLoaded", () => {
     counter.textContent = images.length > 1
       ? `${currentIndex + 1} / ${images.length}`
       : "";
-  });
-}
+  }
+
+  /* =========================
+     CAMBIAR SLIDE
+  ========================= */
+
+  function go(delta) {
+    const next = currentIndex + delta;
+    if (next < 0 || next > images.length - 1) return;
+    currentIndex = next;
+    update();
+  }
 
   /* =========================
      EVENTO ÚNICO (pointer)
-     Funciona en desktop + móvil
   ========================= */
 
   document.addEventListener("pointerdown", (e) => {
@@ -101,10 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const dx = Math.abs(e.clientX - startX);
     const dy = Math.abs(e.clientY - startY);
 
-    // Si hubo desplazamiento (scroll/swipe) → no abrir
     if (dx > 10 || dy > 10) return;
 
-    // Obtener SOLO imágenes reales
     const main  = imgWrap.querySelector("img:not(.hover-img)");
     const hover = imgWrap.querySelector(".hover-img");
 
@@ -116,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!imgs.length) return;
 
     openLightbox(imgs);
-
   });
 
   /* =========================
