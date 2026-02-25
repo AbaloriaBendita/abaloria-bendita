@@ -3611,3 +3611,12 @@ main{
   visibility: visible;
   opacity: 1;
 }
+
+html, body {
+  transform: none !important;
+}
+
+.image-lightbox {
+  position: fixed !important;
+  inset: 0 !important;
+}
