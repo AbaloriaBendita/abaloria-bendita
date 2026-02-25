@@ -3,23 +3,29 @@ document.addEventListener("DOMContentLoaded", () => {
   const lightbox = document.getElementById("imageLightbox");
   if (!lightbox) return;
 
-  lightbox.classList.remove("is-open");
-
-  const track = lightbox.querySelector(".lightbox-track");
-  const closeBtn = lightbox.querySelector(".lightbox-close");
-  const prevBtn = lightbox.querySelector(".lightbox-nav.prev");
-  const nextBtn = lightbox.querySelector(".lightbox-nav.next");
-  const counter = lightbox.querySelector(".lightbox-counter");
-  const backdrop = lightbox.querySelector(".lightbox-backdrop");
+  const track     = lightbox.querySelector(".lightbox-track");
+  const closeBtn  = lightbox.querySelector(".lightbox-close");
+  const prevBtn   = lightbox.querySelector(".lightbox-nav.prev");
+  const nextBtn   = lightbox.querySelector(".lightbox-nav.next");
+  const counter   = lightbox.querySelector(".lightbox-counter");
+  const backdrop  = lightbox.querySelector(".lightbox-backdrop");
 
   let currentIndex = 0;
   let images = [];
+  let startX = 0;
+  let startY = 0;
+
+  /* =========================
+     ABRIR LIGHTBOX
+  ========================= */
 
   function openLightbox(imgSources) {
-    images = imgSources.filter(Boolean);
-    if (!images.length) return;
 
+    if (!imgSources || !imgSources.length) return;
+
+    images = imgSources;
     track.innerHTML = "";
+
     images.forEach(src => {
       const img = document.createElement("img");
       img.src = src;
@@ -40,16 +46,26 @@ document.addEventListener("DOMContentLoaded", () => {
     counter.style.display = many ? "" : "none";
   }
 
+  /* =========================
+     CERRAR
+  ========================= */
+
   function closeLightbox() {
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
 
+  /* =========================
+     ACTUALIZAR SLIDE
+  ========================= */
+
   function update() {
     const w = track.getBoundingClientRect().width;
     track.style.transform = `translateX(-${currentIndex * w}px)`;
-    counter.textContent = images.length > 1 ? `${currentIndex + 1} / ${images.length}` : "";
+    counter.textContent = images.length > 1
+      ? `${currentIndex + 1} / ${images.length}`
+      : "";
   }
 
   function go(delta) {
@@ -59,64 +75,59 @@ document.addEventListener("DOMContentLoaded", () => {
     update();
   }
 
-  // ✅ EVENT DELEGATION: funciona aunque las cards se pinten después
-// =======================
-// DESKTOP (click normal)
-// =======================
-document.addEventListener("click", (e) => {
+  /* =========================
+     EVENTO ÚNICO (pointer)
+     Funciona en desktop + móvil
+  ========================= */
 
-  // Solo si NO es dispositivo táctil
-  if (window.matchMedia("(hover: none)").matches) return;
+  document.addEventListener("pointerdown", (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
+  }, { passive: true });
 
-  const imgWrap = e.target.closest(".piece-image");
-  if (!imgWrap) return;
+  document.addEventListener("pointerup", (e) => {
 
-  if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
+    const imgWrap = e.target.closest(".piece-image");
+    if (!imgWrap) return;
 
-  const imgs = Array.from(imgWrap.querySelectorAll("img"))
-    .map(i => i.currentSrc || i.src);
+    if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
 
-  openLightbox(imgs);
-});
+    const dx = Math.abs(e.clientX - startX);
+    const dy = Math.abs(e.clientY - startY);
 
+    // Si hubo desplazamiento (scroll/swipe) → no abrir
+    if (dx > 10 || dy > 10) return;
 
-// =======================
-// MOBILE / TABLET (touch real)
-// =======================
+    // Obtener SOLO imágenes reales
+    const main  = imgWrap.querySelector("img:not(.hover-img)");
+    const hover = imgWrap.querySelector(".hover-img");
 
-let touchStartX = 0;
-let touchStartY = 0;
+    const imgs = [];
 
-document.addEventListener("touchstart", (e) => {
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
+    if (main && main.src)  imgs.push(main.src);
+    if (hover && hover.src) imgs.push(hover.src);
 
-document.addEventListener("touchend", (e) => {
+    if (!imgs.length) return;
 
-  // Solo dispositivos táctiles
-  if (!window.matchMedia("(hover: none)").matches) return;
+    openLightbox(imgs);
 
-  const imgWrap = e.target.closest(".piece-image");
-  if (!imgWrap) return;
+  });
 
-  if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
+  /* =========================
+     CONTROLES
+  ========================= */
 
-  const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
-  const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+  prevBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    go(-1);
+  });
 
-  // Si hubo movimiento → era swipe
-  if (dx > 10 || dy > 10) return;
-
-  const imgs = Array.from(imgWrap.querySelectorAll("img"))
-    .map(i => i.currentSrc || i.src);
-
-  openLightbox(imgs);
-
-});
-  
-  prevBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(-1); });
-  nextBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(+1); });
+  nextBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    go(+1);
+  });
 
   closeBtn.addEventListener("click", closeLightbox);
   backdrop.addEventListener("click", closeLightbox);
@@ -131,4 +142,5 @@ document.addEventListener("touchend", (e) => {
   window.addEventListener("resize", () => {
     if (lightbox.classList.contains("is-open")) update();
   });
+
 });
