@@ -357,16 +357,20 @@ try {
           <div class="piece-image has-swipe">
             <span class="status-badge ${estadoClass}">${statusText}</span>
             <span class="price-badge">${data.precio}€</span>
-<img src="${mainImg}" alt="${data.titulo}" loading="lazy" decoding="async">
-<img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
+<img src="${mainImg}" alt="${data.titulo}"
+     width="945" height="1181"
+     loading="lazy" decoding="async">
+     <img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true">
           </div>
         `
         : `
           <div class="piece-image">
             <span class="status-badge ${estadoClass}">${statusText}</span>
             <span class="price-badge">${data.precio}€</span>
-<img src="${mainImg}" alt="${data.titulo}" loading="lazy" decoding="async">
-</div>
+<img src="${hoverImg}" alt="" class="hover-img" aria-hidden="true"
+     width="945" height="1181"
+     loading="lazy" decoding="async">
+     </div>
         `;
 
       /* =========================
