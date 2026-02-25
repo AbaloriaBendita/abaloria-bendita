@@ -2,6 +2,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const lightbox = document.getElementById("imageLightbox");
   if (!lightbox) return;
+  // Seguridad: asegurar que arranca cerrado
+  lightbox.classList.remove("is-open");
+  lightbox.style.display = "none";
 
   const content  = lightbox.querySelector(".lightbox-content");
   const track    = lightbox.querySelector(".lightbox-track");
