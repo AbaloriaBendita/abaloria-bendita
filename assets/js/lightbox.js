@@ -26,13 +26,19 @@ document.addEventListener("DOMContentLoaded", () => {
     images = imgSources;
     track.innerHTML = "";
 
-    images.forEach(src => {
-      const img = document.createElement("img");
-      img.src = src;
-      img.alt = "";
-      track.appendChild(img);
-    });
+   images.forEach(src => {
+  if (!src) return;
 
+  const img = document.createElement("img");
+  img.src = src;
+  img.alt = "";
+
+  img.onerror = () => {
+    console.warn("Imagen no válida:", src);
+  };
+
+  track.appendChild(img);
+});
     currentIndex = 0;
     update();
 
