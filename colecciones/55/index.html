@@ -298,7 +298,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
   piezas.reverse();
 
-for (const id of piezas) {
+let index = 0;
+
+for (const id of piezas) {  
+  const isFirst = index === 0;
 
     try {
 
@@ -358,12 +361,14 @@ try {
       <span class="status-badge ${estadoClass}">${statusText}</span>
       <span class="price-badge">${data.precio}€</span>
 
-      <img src="${mainImg}"
-           alt="${data.titulo}"
-           width="945"
-           height="1181"
-           loading="lazy"
-           decoding="async">
+     <img src="${mainImg}"
+     alt="${data.titulo}"
+     width="945"
+     height="1181"
+     ${isFirst 
+       ? 'fetchpriority="high"'
+       : 'loading="lazy" decoding="async"'
+     }>
 
       <img src="${hoverImg}"
            alt=""
@@ -460,6 +465,7 @@ try {
       `;
 
       GRID.appendChild(card);
+      index++;
 
     } catch (err) {
       console.error("❌ Error en pieza:", id, err);
