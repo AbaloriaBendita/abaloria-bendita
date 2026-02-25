@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ EVENT DELEGATION: funciona aunque las cards se pinten después
-  document.addEventListener("click", (e) => {
-    const imgWrap = e.target.closest(".piece-image");
+document.addEventListener("pointerup", (e) => {
+  const imgWrap = e.target.closest(".piece-image");
     if (!imgWrap) return;
 
     // Ignora clicks en CTAs (por si alguien toca el botón cerca)
