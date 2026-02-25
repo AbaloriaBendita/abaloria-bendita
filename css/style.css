@@ -3594,4 +3594,8 @@ textarea::placeholder{
 
 }
 
+.catalog-grid .piece-image img{
+  cursor: zoom-in;
+}
+
 
