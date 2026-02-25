@@ -1,103 +1,90 @@
-document.addEventListener('DOMContentLoaded', function(){
-
-  const lightbox = document.getElementById('imageLightbox');
+document.addEventListener("DOMContentLoaded", () => {
+  const lightbox = document.getElementById("imageLightbox");
   if (!lightbox) return;
 
-  const track = lightbox.querySelector('.lightbox-track');
-  const closeBtn = lightbox.querySelector('.lightbox-close');
-  const prevBtn = lightbox.querySelector('.prev');
-  const nextBtn = lightbox.querySelector('.next');
-  const counter = lightbox.querySelector('.lightbox-counter');
+  const track = lightbox.querySelector(".lightbox-track");
+  const closeBtn = lightbox.querySelector(".lightbox-close");
+  const prevBtn = lightbox.querySelector(".lightbox-nav.prev");
+  const nextBtn = lightbox.querySelector(".lightbox-nav.next");
+  const counter = lightbox.querySelector(".lightbox-counter");
+  const backdrop = lightbox.querySelector(".lightbox-backdrop");
 
   let currentIndex = 0;
   let images = [];
 
-  // 🔥 EVENT DELEGATION GLOBAL
-  document.addEventListener('click', function(e){
-
-    const frame = e.target.closest('.collection-frame');
-    if (!frame) return;
-
-    // Ignorar clicks en flechas o CTA
-    if (e.target.closest('.nav') || 
-        e.target.closest('.collection-cta-overlay')) {
-      return;
-    }
-
-    images = Array.from(frame.querySelectorAll('.img-item img'))
-      .map(img => img.src);
-
+  function openLightbox(imgSources) {
+    images = imgSources.filter(Boolean);
     if (!images.length) return;
 
-    track.innerHTML = '';
-
+    track.innerHTML = "";
     images.forEach(src => {
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       img.src = src;
+      img.alt = "";
       track.appendChild(img);
     });
 
     currentIndex = 0;
-    updateSlide();
-    updateCounter();
+    update();
 
-    lightbox.classList.add('is-open');
-    document.body.style.overflow = 'hidden';
+    lightbox.classList.add("is-open");
+    lightbox.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
 
-  });
-
-  function updateSlide(){
-    const width = track.clientWidth;
-    track.style.transform = `translateX(-${currentIndex * width}px)`;
+    const many = images.length > 1;
+    prevBtn.style.display = many ? "" : "none";
+    nextBtn.style.display = many ? "" : "none";
+    counter.style.display = many ? "" : "none";
   }
 
-  function updateCounter(){
-    if(images.length > 1){
-      counter.textContent = `${currentIndex + 1} / ${images.length}`;
-    } else {
-      counter.textContent = '';
-    }
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
 
-  prevBtn.addEventListener('click', function(){
-    if(currentIndex > 0){
-      currentIndex--;
-      updateSlide();
-      updateCounter();
-    }
-  });
-
-  nextBtn.addEventListener('click', function(){
-    if(currentIndex < images.length - 1){
-      currentIndex++;
-      updateSlide();
-      updateCounter();
-    }
-  });
-
-  function closeLightbox(){
-    lightbox.classList.remove('is-open');
-    document.body.style.overflow = '';
+  function update() {
+    const w = track.getBoundingClientRect().width;
+    track.style.transform = `translateX(-${currentIndex * w}px)`;
+    counter.textContent = images.length > 1 ? `${currentIndex + 1} / ${images.length}` : "";
   }
 
-  closeBtn.addEventListener('click', closeLightbox);
-  lightbox.querySelector('.lightbox-backdrop')
-    .addEventListener('click', closeLightbox);
+  function go(delta) {
+    const next = currentIndex + delta;
+    if (next < 0 || next > images.length - 1) return;
+    currentIndex = next;
+    update();
+  }
 
-  document.addEventListener('keydown', function(e){
-    if(!lightbox.classList.contains('is-open')) return;
+  // ✅ EVENT DELEGATION: funciona aunque las cards se pinten después
+  document.addEventListener("click", (e) => {
+    const imgWrap = e.target.closest(".piece-image");
+    if (!imgWrap) return;
 
-    if(e.key === 'Escape') closeLightbox();
-    if(e.key === 'ArrowLeft' && currentIndex > 0){
-      currentIndex--;
-      updateSlide();
-      updateCounter();
-    }
-    if(e.key === 'ArrowRight' && currentIndex < images.length - 1){
-      currentIndex++;
-      updateSlide();
-      updateCounter();
-    }
+    // Ignora clicks en CTAs (por si alguien toca el botón cerca)
+    if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
+
+    // Recoge imágenes dentro de la pieza (main + hover si existe)
+    const imgs = Array.from(imgWrap.querySelectorAll("img"))
+      .map(i => i.currentSrc || i.src);
+
+    openLightbox(imgs);
   });
 
+  prevBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(-1); });
+  nextBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(+1); });
+
+  closeBtn.addEventListener("click", closeLightbox);
+  backdrop.addEventListener("click", closeLightbox);
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") go(-1);
+    if (e.key === "ArrowRight") go(+1);
+  });
+
+  window.addEventListener("resize", () => {
+    if (lightbox.classList.contains("is-open")) update();
+  });
 });
