@@ -57,20 +57,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ EVENT DELEGATION: funciona aunque las cards se pinten después
-document.addEventListener("pointerup", (e) => {
+document.addEventListener("click", (e) => {
   const imgWrap = e.target.closest(".piece-image");
-    if (!imgWrap) return;
+  if (!imgWrap) return;
 
-    // Ignora clicks en CTAs (por si alguien toca el botón cerca)
-    if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
+  // Ignora clicks en CTAs
+  if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
 
-    // Recoge imágenes dentro de la pieza (main + hover si existe)
-    const imgs = Array.from(imgWrap.querySelectorAll("img"))
-      .map(i => i.currentSrc || i.src);
+  const imgs = Array.from(imgWrap.querySelectorAll("img"))
+    .map(i => i.currentSrc || i.src);
 
-    openLightbox(imgs);
-  });
-
+  openLightbox(imgs);
+});
+  
   prevBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(-1); });
   nextBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(+1); });
 
