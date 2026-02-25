@@ -301,8 +301,10 @@ document.addEventListener("DOMContentLoaded", async () => {
      3. LOOP SECUENCIAL
   ========================= */
 
-for (let i = MAX_PIEZAS; i >= 1; i--) {
+const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
 
+for (const id of piezas) {
+  
     const num = String(i).padStart(2, "0"); // 01, 02...
     const id = `${slug}-${num}`;
 
