@@ -344,7 +344,6 @@ input:focus, select:focus, textarea:focus{
   width: 100%;
   background: #ffffff;
   z-index: 9999;      /* 🔑 mucho más alto */
-  isolation: isolate; /* 🔥 evita conflictos futuros */
 }
 
 /* Contenedor interno */
