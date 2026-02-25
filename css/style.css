@@ -3600,31 +3600,3 @@ textarea::placeholder{
 main{
   padding-top: 72px;
 }
-
-/* ===== FIX STACKING: header vs overlays ===== */
-
-/* Header fijo, ok */
-.site-header{
-  z-index: 9000;
-}
-
-/* Modal por encima del header */
-.modal{
-  z-index: 15000;
-}
-
-/* Lightbox por encima de TODO */
-.image-lightbox{
-  z-index: 20000;
-  isolation: isolate;              /* crea su propio stacking estable */
-}
-
-.image-lightbox.is-open{
-  display: block;
-}
-
-/* Asegura que el contenido siempre queda sobre el backdrop */
-.lightbox-backdrop{ z-index: 0; }
-.lightbox-content{ position: relative; z-index: 1; }
-
-
