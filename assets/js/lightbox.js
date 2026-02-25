@@ -57,17 +57,59 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ✅ EVENT DELEGATION: funciona aunque las cards se pinten después
+// =======================
+// DESKTOP (click normal)
+// =======================
 document.addEventListener("click", (e) => {
+
+  // Solo si NO es dispositivo táctil
+  if (window.matchMedia("(hover: none)").matches) return;
+
   const imgWrap = e.target.closest(".piece-image");
   if (!imgWrap) return;
 
-  // Ignora clicks en CTAs
   if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
 
   const imgs = Array.from(imgWrap.querySelectorAll("img"))
     .map(i => i.currentSrc || i.src);
 
   openLightbox(imgs);
+});
+
+
+// =======================
+// MOBILE / TABLET (touch real)
+// =======================
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", (e) => {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+document.addEventListener("touchend", (e) => {
+
+  // Solo dispositivos táctiles
+  if (!window.matchMedia("(hover: none)").matches) return;
+
+  const imgWrap = e.target.closest(".piece-image");
+  if (!imgWrap) return;
+
+  if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
+
+  const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+  const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+
+  // Si hubo movimiento → era swipe
+  if (dx > 10 || dy > 10) return;
+
+  const imgs = Array.from(imgWrap.querySelectorAll("img"))
+    .map(i => i.currentSrc || i.src);
+
+  openLightbox(imgs);
+
 });
   
   prevBtn.addEventListener("click", (e) => { e.preventDefault(); e.stopPropagation(); go(-1); });
