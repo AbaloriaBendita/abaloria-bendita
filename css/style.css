@@ -1059,16 +1059,16 @@ color: var(--yellow);
   inset: 0;
   z-index: 1000;
   display: none;
-  align-items: center;
-  justify-content: center;
 }
 
 .modal.is-open{
   display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-backdrop{
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.5);
 }
