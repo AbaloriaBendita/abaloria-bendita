@@ -3490,11 +3490,11 @@ textarea::placeholder{
   position: fixed;
   inset: 0;
   z-index: 90000;   /* > header */
-  display: none;
+  display: none !important;
 }
 
 .image-lightbox.is-open{
- display: flex;
+  display: block !important;
   align-items: center;
   justify-content: center;
 }
@@ -3612,8 +3612,4 @@ textarea::placeholder{
 
 main{
   padding-top: 72px;
-}
-
-.image-lightbox{
-  background: rgba(255,0,0,0.2) !important;
 }
