@@ -3613,3 +3613,7 @@ textarea::placeholder{
 main{
   padding-top: 72px;
 }
+
+.image-lightbox{
+  background: rgba(255,0,0,0.2) !important;
+}
