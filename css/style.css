@@ -3613,3 +3613,16 @@ textarea::placeholder{
 main{
   padding-top: 72px;
 }
+
+/* LIGHTBOX CLOSED STATE HARD RESET */
+.image-lightbox{
+  display: none !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.image-lightbox.is-open{
+  display: flex !important;
+  opacity: 1;
+  pointer-events: auto;
+}
