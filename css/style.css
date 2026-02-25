@@ -3491,10 +3491,6 @@ textarea::placeholder{
   inset: 0;
   z-index: 90000;
   display: none;
-
-  /* para centrar contenido sin depender de height/padding */
-  align-items: center;
-  justify-content: center;
 }
 
 .image-lightbox.is-open{
@@ -3503,47 +3499,37 @@ textarea::placeholder{
   justify-content: center;
 }
 
-/* Fondo (siempre fixed para no depender del layout) */
+/* fondo */
 .lightbox-backdrop{
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.88);
-  /* ❌ fuera backdrop-filter: crea stacking context problemático */
 }
 
-/* Contenido encima del backdrop */
+/* contenedor */
 .lightbox-content{
   position: relative;
   z-index: 2;
-  max-width: 92vw;
-  max-height: 85vh;
+  width: 92vw;
+  max-width: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* Todo lo clickable vuelve a ser clickable */
-.lightbox-content > *{
-  pointer-events: auto;
-}
-
-/* Track */
+/* track */
 .lightbox-track{
   display: flex;
-  transition: transform .35s ease;
-
-  max-width: 92vw;
-  max-height: calc(100vh - 140px);
+  width: 100%;
   overflow: hidden;
 }
 
 .lightbox-track img{
   flex: 0 0 100%;
-  max-width: 92vw;
-  max-height: calc(100vh - 140px);
+  width: 100%;
+  max-height: 85vh;
   object-fit: contain;
 }
-
 /* Cerrar */
 .lightbox-close{
   position: absolute;
