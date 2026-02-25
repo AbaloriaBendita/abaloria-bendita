@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+
   const lightbox = document.getElementById("imageLightbox");
   if (!lightbox) return;
+
+  lightbox.classList.remove("is-open");
 
   const track = lightbox.querySelector(".lightbox-track");
   const closeBtn = lightbox.querySelector(".lightbox-close");
