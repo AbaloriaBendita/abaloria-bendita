@@ -23,12 +23,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!imgSources || !imgSources.length) return;
 
-    images = imgSources;
+    images = imgSources.filter(Boolean);
     track.innerHTML = "";
 
     images.forEach(src => {
-      if (!src) return;
-
       const img = document.createElement("img");
       img.src = src;
       img.alt = "";
@@ -36,18 +34,13 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     currentIndex = 0;
-
-    // Espera a que el DOM pinte antes de calcular ancho
-    requestAnimationFrame(() => update());
+    update();
 
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
 
-    const many = images.length > 1;
-    prevBtn.style.display = many ? "" : "none";
-    nextBtn.style.display = many ? "" : "none";
-    counter.style.display = many ? "" : "none";
+    updateControls();
   }
 
   /* =========================
@@ -65,15 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
 
   function update() {
-
-    const w = track.getBoundingClientRect().width;
-    if (!w) return;
-
-    track.style.transform = `translateX(-${currentIndex * w}px)`;
+    track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
     counter.textContent = images.length > 1
       ? `${currentIndex + 1} / ${images.length}`
       : "";
+  }
+
+  function updateControls() {
+    const many = images.length > 1;
+
+    prevBtn.style.display = many ? "" : "none";
+    nextBtn.style.display = many ? "" : "none";
+    counter.style.display = many ? "" : "none";
   }
 
   /* =========================
@@ -81,40 +78,40 @@ document.addEventListener("DOMContentLoaded", () => {
   ========================= */
 
   function go(delta) {
-    const next = currentIndex + delta;
-    if (next < 0 || next > images.length - 1) return;
-    currentIndex = next;
+
+    if (!images.length) return;
+
+    currentIndex += delta;
+
+    if (currentIndex < 0) {
+      currentIndex = 0; // evita salir por la izquierda
+    }
+
+    if (currentIndex > images.length - 1) {
+      currentIndex = images.length - 1; // evita salir por la derecha
+    }
+
     update();
   }
 
   /* =========================
-     EVENTO ÚNICO (pointer)
+     EVENTO CLICK EN IMAGEN
   ========================= */
 
-  document.addEventListener("pointerdown", (e) => {
-    startX = e.clientX;
-    startY = e.clientY;
-  }, { passive: true });
-
-  document.addEventListener("pointerup", (e) => {
+  document.addEventListener("click", (e) => {
 
     const imgWrap = e.target.closest(".piece-image");
     if (!imgWrap) return;
 
     if (e.target.closest(".piece-cta") || e.target.closest(".piece-cta-secondary")) return;
 
-    const dx = Math.abs(e.clientX - startX);
-    const dy = Math.abs(e.clientY - startY);
-
-    if (dx > 10 || dy > 10) return;
-
     const main  = imgWrap.querySelector("img:not(.hover-img)");
     const hover = imgWrap.querySelector(".hover-img");
 
     const imgs = [];
 
-    if (main && main.src)  imgs.push(main.src);
-    if (hover && hover.src) imgs.push(hover.src);
+    if (main?.src) imgs.push(main.src);
+    if (hover?.src) imgs.push(hover.src);
 
     if (!imgs.length) return;
 
@@ -127,14 +124,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   prevBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    e.stopPropagation();
     go(-1);
   });
 
   nextBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    go(+1);
+    go(1);
   });
 
   closeBtn.addEventListener("click", closeLightbox);
@@ -142,13 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("keydown", (e) => {
     if (!lightbox.classList.contains("is-open")) return;
+
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") go(-1);
-    if (e.key === "ArrowRight") go(+1);
-  });
-
-  window.addEventListener("resize", () => {
-    if (lightbox.classList.contains("is-open")) update();
+    if (e.key === "ArrowRight") go(1);
   });
 
 });
