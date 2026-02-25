@@ -1059,10 +1059,12 @@ color: var(--yellow);
   inset: 0;
   z-index: 1000;
   display: none;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal.is-open{
-  display: block;
+  display: flex;
 }
 
 .modal-backdrop{
@@ -1075,6 +1077,8 @@ color: var(--yellow);
 .modal-box{
   position: relative;
   max-width: 420px;
+  width: calc(100% - 32px); /* ✅ asegura margen lateral en móvil */
+  margin: 0;                /* ✅ clave: ya no usamos 5vh auto */
   margin: 5vh auto;
   background: #fff;
   border-radius: 20px;
@@ -1132,9 +1136,13 @@ color: var(--yellow);
 
 @media (max-width: 768px){
 
+  .modal{
+    align-items: flex-start;   /* ✅ baja el modal desde arriba */
+    padding-top: 80px;         /* ✅ evita solape con header */
+  }
+  
   .modal-box{
-    max-height: 90vh;
-    margin: 4vh auto;
+    max-height: calc(100vh - 100px); /* ✅ deja aire arriba/abajo */
     padding: 14px;
   }
 
