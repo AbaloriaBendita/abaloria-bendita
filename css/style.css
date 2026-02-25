@@ -3467,27 +3467,6 @@ textarea::placeholder{
 
 }
 
-/* FIX NAV MOBILE SIN HAMBURGUESA */
-
-@media (max-width: 768px){
-
-  .main-nav{
-    position: static !important;
-    opacity: 1 !important;
-    pointer-events: auto !important;
-
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    transform: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-  }
-   .header-inner{
-    justify-content: space-between;
-  }
-
   .main-nav{
     font-size: 14px;
   }
