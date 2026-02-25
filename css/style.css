@@ -343,7 +343,7 @@ input:focus, select:focus, textarea:focus{
   top: 0;
   width: 100%;
   background: #ffffff;
-  z-index: 90000;      /* 🔑 mucho más alto */
+  z-index: 1000;      /* 🔑 mucho más alto */
 }
 
 /* Contenedor interno */
@@ -1055,7 +1055,7 @@ color: var(--yellow);
 .modal{
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 5000;
   display: none;
 }
 
@@ -3489,7 +3489,7 @@ textarea::placeholder{
 .image-lightbox{
   position: fixed;
   inset: 0;
-  z-index: 20000;
+  z-index: 10000;
   display: none;
 }
 
