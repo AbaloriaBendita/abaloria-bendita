@@ -3653,7 +3653,7 @@ main{
 .lightbox-track img{
   flex: 0 0 100%;
   display: block;
-  margin: auto;            /* 🔥 CLAVE */
+  margin: auto;
   max-height: 85vh;
   max-width: 90vw;
   object-fit: contain;
