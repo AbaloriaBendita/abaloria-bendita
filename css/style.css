@@ -3367,21 +3367,21 @@ textarea::placeholder{
 
 @media (max-width: 768px){
 
-  .hero-cta-mobile{
-    display: inline-block;
-    margin-top: 28px;
+  .hero-cta-fashion{
+    display: inline-flex;
+    align-items: center;
 
-    padding: 14px 22px;
+    margin-top: 24px;
+    padding: 10px 16px;
+
     border-radius: 999px;
+    background: rgba(0,0,0,0.06);
 
-    background: var(--blue);
-    color: #fff;
+    border-bottom: none; /* quitamos subrayado editorial */
+  }
 
-    font-weight: 800;
-    font-size: 15px;
-    text-decoration: none;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+  .hero-cta-fashion:active{
+    transform: scale(0.97);
   }
 
 }
