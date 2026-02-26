@@ -3638,3 +3638,9 @@ body{
   position: relative;
   z-index: 2 !important;
 }
+.lightbox-close{
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1000000;
+}
