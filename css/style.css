@@ -3375,7 +3375,7 @@ textarea::placeholder{
     margin-top: 22px;
     padding: 10px 18px;
 
-    border-radius: 999px;
+    border-radius: 28px;
 
     background: var(--blue);
     color: #fff;
