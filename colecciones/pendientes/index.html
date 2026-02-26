@@ -245,6 +245,24 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+   <!-- LIGHTBOX GLOBAL -->
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">  <div class="lightbox-backdrop"></div>
+
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Cerrar">×</button>
+
+    <button class="lightbox-nav prev" aria-label="Anterior">‹</button>
+
+    <div class="lightbox-track"></div>
+
+    <button class="lightbox-nav next" aria-label="Siguiente">›</button>
+
+    <div class="lightbox-counter"></div>
+  </div>
+</div>
+
+<script src="/assets/js/lightbox.js" defer></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
 
