@@ -3616,3 +3616,25 @@ main{
   width: 100%;
   object-fit: contain;
 }
+
+/* ===== LIGHTBOX DOMINIO ABSOLUTO ===== */
+
+html,
+body{
+  isolation: auto;
+}
+
+.image-lightbox{
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+}
+
+.image-lightbox *{
+  z-index: auto !important;
+}
+
+.lightbox-content{
+  position: relative;
+  z-index: 2 !important;
+}
