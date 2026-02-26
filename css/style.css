@@ -604,7 +604,7 @@ color: var(--yellow);
     z-index: 2000;
   }
 
-  .nav-toggle{
+ .nav-toggle{
     background: none;
     border: 0;
     font-size: 22px;
