@@ -39,15 +39,6 @@ document.addEventListener("DOMContentLoaded", () => {
   updateControls();
 }
 
-track.style.transform = `translateX(-${currentIndex * 100}%)`;
-    
-    counter.textContent = images.length > 1
-      ? `${currentIndex + 1} / ${images.length}`
-      : "";
-
-    updateControls();
-  }
-
   function openLightbox(imgSources) {
     images = (imgSources || []).filter(Boolean);
     if (!images.length) return;
