@@ -441,39 +441,6 @@ input:focus, select:focus, textarea:focus{
   }
 }
 
-/* NAV MOBILE */
-@media (max-width: 768px){
-
-  .header-actions{
-    display: flex;
-  }
-
-  .main-nav.is-open{
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-
-  .nav-toggle{
-    background: none;
-    border: 0;
-    font-size: 22px;
-    font-weight: 800;
-    cursor: pointer;
-    position: relative;
-    z-index: 20;
-  }
-  .nav-cta{
-    font-weight: 800;
-    font-size: 14px;
-    opacity: 0.85;
-  }
-
-  .nav-cta .cta-dot{
-    display: none;
-  }
-}
-
 /* =====================
    SCROLL OFFSET
 ===================== */
@@ -586,9 +553,10 @@ color: var(--yellow);
   /* NAV MOBILE */
   @media (max-width: 768px){
 
-    .main-nav{
+  .main-nav{
     display: flex;
-    flex-direction: row;   /* horizontal */
+    flex-direction: row;
+    align-items: center;
     gap: 18px;
     margin-left: auto;
     padding-right: 0;
@@ -601,35 +569,27 @@ color: var(--yellow);
     pointer-events: auto;
   }
 
-  /* Ocultar idiomas en el header principal */
+  /* Idiomas ocultos por defecto */
   .main-nav .lang-switch{
     display: none;
   }
-  .main-nav.is-open{
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
-}
 
-  /* VISIBILITY */
-  .desktop-only{
-    display: none;
-  }
-
-  .mobile-only{
+  /* Cuando hamburguesa está activa */
+  .main-nav.is-open .lang-switch{
     display: flex;
-  }
+    flex-direction: column;
 
-  .header-actions{
-    display: flex;
-  }
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 16px;
 
-  .header-cta{
-    font-size: 13px;
-    font-weight: 800;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+    padding: 12px 16px;
+    gap: 8px;
+
+    z-index: 2000;
   }
 
   .nav-toggle{
