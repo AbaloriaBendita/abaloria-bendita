@@ -614,6 +614,15 @@ color: var(--yellow);
     z-index: 20;
   }
 
+    .header-actions{
+  display: flex;
+  align-items: center;
+}
+
+.nav-toggle{
+  display: block;      /* 🔥 esto es lo que falta */
+}
+
 }
 
 /* =========================
