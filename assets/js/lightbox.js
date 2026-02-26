@@ -28,13 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
     nextBtn.disabled = (currentIndex === images.length - 1);
   }
 
-  function update() {
-    // ancho real del “visor” (no del track)
-    const w = content.getBoundingClientRect().width;
-    if (!w) return;
+ function update() {
 
-    track.style.transform = `translateX(-${currentIndex * w}px)`;
+  track.style.transform = `translateX(-${currentIndex * 100}%)`;
 
+  counter.textContent = images.length > 1
+    ? `${currentIndex + 1} / ${images.length}`
+    : "";
+
+  updateControls();
+}
+
+track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
     counter.textContent = images.length > 1
       ? `${currentIndex + 1} / ${images.length}`
       : "";
