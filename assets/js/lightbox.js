@@ -77,6 +77,34 @@ document.addEventListener("DOMContentLoaded", () => {
     currentIndex = next;
     update();
   }
+  // ===== SWIPE EN LIGHTBOX (touch) =====
+let lbStartX = 0;
+let lbStartY = 0;
+
+content.addEventListener("touchstart", (e) => {
+  if (!lightbox.classList.contains("is-open")) return;
+  lbStartX = e.touches[0].clientX;
+  lbStartY = e.touches[0].clientY;
+}, { passive: true });
+
+content.addEventListener("touchend", (e) => {
+  if (!lightbox.classList.contains("is-open")) return;
+
+  const endX = e.changedTouches[0].clientX;
+  const endY = e.changedTouches[0].clientY;
+
+  const dx = endX - lbStartX;
+  const dy = endY - lbStartY;
+
+  // si parece scroll vertical, ignorar
+  if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+
+  // swipe izquierda -> siguiente
+  if (dx < 0) go(1);
+
+  // swipe derecha -> anterior
+  if (dx > 0) go(-1);
+}, { passive: true });
 
   // CLICK en imagen del catálogo -> abrir
   document.addEventListener("click", (e) => {
