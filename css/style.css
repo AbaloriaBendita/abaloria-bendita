@@ -3578,6 +3578,8 @@ body{
   top: 24px;
   right: 24px;
   z-index: 1000000;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .lightbox-nav{
