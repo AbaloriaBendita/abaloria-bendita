@@ -3143,7 +3143,7 @@ textarea::placeholder{
    MOBILE SWIPE LIMPIO
 ========================= */
 
-@media (max-width: 768px){
+@media (hover: none) and (pointer: coarse){
 
   .catalog-grid .piece-image.has-swipe{
     display: flex;
