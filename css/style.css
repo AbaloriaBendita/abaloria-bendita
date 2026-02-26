@@ -550,6 +550,18 @@ color: var(--yellow);
   }
 }
 
+.desktop-only{
+  display: none;
+}
+
+.mobile-only{
+  display: flex;
+}
+
+.header-actions{
+  display: flex;
+}
+
   /* NAV MOBILE */
   @media (max-width: 768px){
 
