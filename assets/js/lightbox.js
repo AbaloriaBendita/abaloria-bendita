@@ -17,15 +17,16 @@ document.addEventListener("DOMContentLoaded", () => {
   let images = [];
 
   function updateControls() {
-    const many = images.length > 1;
-    prevBtn.style.display = many ? "" : "none";
-    nextBtn.style.display = many ? "" : "none";
-    counter.style.display = many ? "" : "none";
 
-    // opcional: desactivar botones en extremos
-    prevBtn.disabled = (currentIndex === 0);
-    nextBtn.disabled = (currentIndex === images.length - 1);
-  }
+  const total = images.length;
+
+  // Mostrar flechas solo cuando corresponda
+  prevBtn.style.display = (currentIndex > 0) ? "block" : "none";
+  nextBtn.style.display = (currentIndex < total - 1) ? "block" : "none";
+
+  // Mostrar contador solo si hay más de una imagen
+  counter.style.display = total > 1 ? "block" : "none";
+}
 
  function update() {
 
