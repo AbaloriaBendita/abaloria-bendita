@@ -3646,14 +3646,15 @@ main{
 }
 
 .lightbox-track{
-  display: flex;               /* 🔥 CLAVE */
+  display: flex;
   transition: transform .4s ease;
-  height: 100%;
 }
 
 .lightbox-track img{
-  flex: 0 0 100%;              /* 🔥 cada imagen ocupa 100% */
-  max-width: 100%;
+  flex: 0 0 100%;
+  display: block;
+  margin: auto;            /* 🔥 CLAVE */
   max-height: 85vh;
+  max-width: 90vw;
   object-fit: contain;
 }
