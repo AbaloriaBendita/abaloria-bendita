@@ -622,6 +622,15 @@ color: var(--yellow);
 .nav-toggle{
   display: block;      /* 🔥 esto es lo que falta */
 }
+    .main-nav.is-open .lang-switch{
+  min-width: 80px;
+  text-align: center;
+}
+
+.lang-switch .lang{
+  font-weight: 700;
+  padding: 4px 0;
+}
 
 }
 
