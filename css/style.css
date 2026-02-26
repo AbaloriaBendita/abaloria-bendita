@@ -377,6 +377,9 @@ input:focus, select:focus, textarea:focus{
   .logo-img {
     height: 14px;
   }
+  .header-inner{
+    padding: 10px 16px;   /* 🔥 menos altura */
+  }
 }
 
 /* =====================
