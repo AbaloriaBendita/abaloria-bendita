@@ -3370,18 +3370,34 @@ textarea::placeholder{
   .hero-cta-fashion{
     display: inline-flex;
     align-items: center;
+    justify-content: center;
 
-    margin-top: 24px;
-    padding: 10px 16px;
+    margin-top: 26px;
+    padding: 12px 20px;
 
     border-radius: 999px;
-    background: rgba(0,0,0,0.06);
 
-    border-bottom: none; /* quitamos subrayado editorial */
+    background: var(--blue);
+    color: #fff;
+
+    font-weight: 800;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+
+    border-bottom: none;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .hero-cta-fashion:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(0,0,0,.16);
   }
 
   .hero-cta-fashion:active{
-    transform: scale(0.97);
+    transform: scale(0.96);
+    box-shadow: 0 6px 14px rgba(0,0,0,.12);
   }
 
 }
