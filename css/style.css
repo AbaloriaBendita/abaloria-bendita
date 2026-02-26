@@ -3564,8 +3564,16 @@ textarea::placeholder{
   }
 }
 
+/* Desktop */
 main{
-  padding-top: 72px;
+  padding-top: 50px;
+}
+
+/* Mobile */
+@media (max-width: 768px){
+  main{
+    padding-top: 30px;
+  }
 }
 
 /* =========================
