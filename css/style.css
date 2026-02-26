@@ -448,30 +448,6 @@ input:focus, select:focus, textarea:focus{
     display: flex;
   }
 
-  .main-nav{
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-
-    position: absolute;
-    top: 100%;
-    right: 16px;
-
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.12);
-    padding: 14px 18px;
-
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity .25s ease, transform .25s ease;
-    top: calc(100% + 10px);
-    right: 16px;
-    min-width: 200px;
-    z-index: 9998;
-  }
-
   .main-nav.is-open{
     opacity: 1;
     transform: translateY(0);
@@ -609,26 +585,26 @@ color: var(--yellow);
 
   /* NAV MOBILE */
   @media (max-width: 768px){
-.main-nav{
+
+    .main-nav{
     display: flex;
-    flex-direction: column;
-    gap: 14px;
+    flex-direction: row;   /* horizontal */
+    gap: 18px;
+    margin-left: auto;
+    padding-right: 0;
 
-    position: absolute;
-    top: 100%;
-    right: 16px;
-
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: var(--shadow-soft);
-    padding: 14px 18px;
-
-    opacity: 0;
-    transform: translateY(-10px);
-    pointer-events: none;
-    transition: opacity .25s ease, transform .25s ease;
+    position: static;
+    background: none;
+    box-shadow: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
   }
 
+  /* Ocultar idiomas en el header principal */
+  .main-nav .lang-switch{
+    display: none;
+  }
   .main-nav.is-open{
     opacity: 1;
     transform: translateY(0);
