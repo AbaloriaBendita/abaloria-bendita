@@ -3644,3 +3644,23 @@ body{
   right: 24px;
   z-index: 1000000;
 }
+
+.lightbox-nav{
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 42px;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1000000;
+}
+
+.lightbox-nav.prev{
+  left: 24px;
+}
+
+.lightbox-nav.next{
+  right: 24px;
+}
