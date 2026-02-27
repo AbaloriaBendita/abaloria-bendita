@@ -526,6 +526,46 @@ try {
 
 });
 </script>
+
+  <script>
+document.addEventListener("click", function(e){
+
+  const btn = e.target.closest(".js-prepago");
+  if(!btn) return;
+
+  e.preventDefault();
+
+  document.getElementById("prepago-id").value = btn.dataset.id + "-A";
+  document.getElementById("prepago-titulo").value = btn.dataset.titulo;
+  document.getElementById("prepago-precio").value = btn.dataset.precio;
+  document.getElementById("prepago-link").value = btn.dataset.link;
+
+  document.getElementById("modal-prepago").setAttribute("aria-hidden", "false");
+});
+</script>
+
+  <script>
+document.getElementById("prepago-form")
+.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const form = e.target;
+  const data = new FormData(form);
+
+  const res = await fetch("/api/venta", {
+    method: "POST",
+    body: data
+  });
+
+  if(res.ok){
+    window.location.href = data.get("sumup_link");
+  } else {
+    alert("Error procesando el pedido.");
+  }
+
+});
+</script>
  
 </body>
 </html>
