@@ -350,15 +350,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   /* =========================
-     1. DETECT COLLECTION
-  ========================= */
+   1. DETECT COLLECTION (robust)
+========================= */
 
-  const slug = window.location.pathname
-    .split("/")
-    .filter(Boolean)
-    .pop();
+const parts = window.location.pathname.split("/").filter(Boolean);
 
-  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
+let slug = parts[parts.length - 1];
+
+// Si la URL termina en index.html, usamos la carpeta anterior
+if (slug.endsWith(".html")) {
+  slug = parts[parts.length - 2];
+}
+
+const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
 
   console.log("📁 Collection:", slug);
   console.log("📦 Base:", BASE);
