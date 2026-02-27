@@ -3601,3 +3601,14 @@ body{
 .lightbox-nav.next{
   right: 24px;
 }
+
+#direccion-autocomplete{
+  padding: 10px 14px;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.pac-container{
+  border-radius: 12px !important;
+  font-family: inherit !important;
+}
