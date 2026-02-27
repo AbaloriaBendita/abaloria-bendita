@@ -176,9 +176,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="tel" name="telefono">
       </div>
 
-      <div class="form-group">
+       <div class="form-group">
         <label class="form-label">Full shipping address</label>
-        <textarea name="direccion" rows="2"></textarea>
+        <input
+          type="text"
+          name="direccion"
+          id="direccion-autocomplete"
+          placeholder="Start typing your address…"
+          required
+        >
       </div>
 
       <div class="form-group">
@@ -256,6 +262,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         >
       </div>
 
+      <button type="submit" class="cta-main">
+        Confirm shipping & pay
+      </button>
+
       <div class="rgpd-group">
         <div class="rgpd-row">
           <input type="checkbox" name="rgpd" required>
@@ -265,10 +275,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </label>
         </div>
       </div>
-
-      <button type="submit" class="cta-main">
-        Confirm shipping & pay
-      </button>
 
     </form>
   </div>
