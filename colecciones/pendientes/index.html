@@ -539,6 +539,95 @@ try {
 });
 </script>
 
+   <script>
+  function openModal(modal){
+    if(!modal) return;
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+  }
+
+  function closeModal(modal){
+    if(!modal) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".js-prepago");
+    if (btn) {
+      e.preventDefault();
+
+      const id = (btn.dataset.id || "").trim();
+      const link = (btn.dataset.link || "").trim();
+
+      if(!link){
+        alert("Este producto aún no tiene link de pago.");
+        return;
+      }
+
+      document.getElementById("prepago-id").value = id + "-A";
+      document.getElementById("prepago-link").value = link;
+
+     const img = btn.dataset.img || "";
+const preview = document.getElementById("prepago-img-preview");
+
+if (preview && img) {
+  preview.src = img;
+}
+
+      openModal(document.getElementById("modal-prepago"));
+      return;
+    }
+
+    if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
+      closeModal(e.target.closest(".modal"));
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const modal = document.querySelector(".modal.is-open");
+    if (modal) closeModal(modal);
+  });
+</script>
+
+ <script>
+  const prepagoForm = document.getElementById("prepago-form");
+
+  if (prepagoForm) {
+    prepagoForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const fd = new FormData(form);
+      const link = fd.get("sumup_link");
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+      }
+
+      try {
+        const res = await fetch("/api/venta", { method: "POST", body: fd });
+
+        if (!res.ok) throw new Error("API /api/venta respondió con error");
+        window.location.href = link;
+
+      } catch (err) {
+        console.error("❌ Error prepago:", err);
+        alert("No hemos podido registrar el envío. Inténtalo de nuevo.");
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "";
+        }
+      }
+    });
+  } else {
+    console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
+  }
+</script>
  
 </body>
 </html>
