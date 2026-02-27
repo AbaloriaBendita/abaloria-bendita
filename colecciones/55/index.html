@@ -531,23 +531,6 @@ try {
 </script>
 
   <script>
-document.addEventListener("click", function(e){
-
-  const btn = e.target.closest(".js-prepago");
-  if(!btn) return;
-
-  e.preventDefault();
-
-  document.getElementById("prepago-id").value = btn.dataset.id + "-A";
-  document.getElementById("prepago-titulo").value = btn.dataset.titulo;
-  document.getElementById("prepago-precio").value = btn.dataset.precio;
-  document.getElementById("prepago-link").value = btn.dataset.link;
-
-  document.getElementById("modal-prepago").setAttribute("aria-hidden", "false");
-});
-</script>
-
-  <script>
   function openModal(modal){
     if(!modal) return;
     modal.classList.add("is-open");
@@ -576,10 +559,12 @@ document.addEventListener("click", function(e){
       document.getElementById("prepago-id").value = id + "-A";
       document.getElementById("prepago-link").value = link;
 
-      const preview = document.getElementById("prepago-img-preview");
-    if (preview && img) {
-      preview.src = img;
-    }
+     const img = btn.dataset.img || "";
+const preview = document.getElementById("prepago-img-preview");
+
+if (preview && img) {
+  preview.src = img;
+}
 
       openModal(document.getElementById("modal-prepago"));
       return;
