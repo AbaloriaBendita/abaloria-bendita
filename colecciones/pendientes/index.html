@@ -205,6 +205,53 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
+  <!-- MODAL PREPAGO -->
+  <div class="modal" id="modal-prepago" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Cerrar">×</button>
+
+    <p class="modal-copy">
+      <strong>Confirmar envío</strong><br>
+      Introduce tus datos para continuar al pago.
+    </p>
+
+    <form method="POST" action="/api/venta" class="modal-form">
+
+      <input type="hidden" name="pieza_id" id="prepago-id">
+      <input type="hidden" name="sumup_link" id="prepago-link">
+
+      <div class="form-group">
+        <label class="form-label">Nombre y apellidos</label>
+        <input type="text" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Teléfono</label>
+        <input type="tel" name="telefono" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Dirección completa</label>
+        <textarea name="direccion" rows="2" required></textarea>
+      </div>
+
+      <button type="submit" class="cta-main">
+        Confirmar envío y pagar
+      </button>
+
+    </form>
+  </div>
+</div>
+
+
 <!-- ================= JS ================= -->
 <script>
 /* NAV MOBILE */
