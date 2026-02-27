@@ -217,8 +217,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       Introduce tus datos para continuar al pago.
     </p>
 
-    <form method="POST" action="/api/venta" class="modal-form">
-
+<form id="prepago-form" method="POST" action="/api/venta" class="modal-form">
+  
       <input type="hidden" name="pieza_id" id="prepago-id">
       <input type="hidden" name="sumup_link" id="prepago-link">
 
@@ -459,12 +459,11 @@ try {
     : "";
 
   cta = `
-    <a href="#"
+  <a href="#"
    class="piece-cta js-prepago"
    data-id="${data.id}"
-   data-titulo="${data.titulo}"
-   data-precio="${data.precio}"
-   data-link="${data.sumup_link}">
+   data-link="${data.sumup_link}"
+   data-img="${mainImg}">
   Comprar ahora
 </a>
     ${variacionesCTA}
@@ -545,27 +544,87 @@ document.addEventListener("click", function(e){
 </script>
 
   <script>
-document.getElementById("prepago-form")
-.addEventListener("submit", async function(e){
-
-  e.preventDefault();
-
-  const form = e.target;
-  const data = new FormData(form);
-
-  const res = await fetch("/api/venta", {
-    method: "POST",
-    body: data
-  });
-
-  if(res.ok){
-    window.location.href = data.get("sumup_link");
-  } else {
-    alert("Error procesando el pedido.");
+  function openModal(modal){
+    if(!modal) return;
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
   }
 
-});
+  function closeModal(modal){
+    if(!modal) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+  }
+
+  document.addEventListener("click", (e) => {
+    const btn = e.target.closest(".js-prepago");
+    if (btn) {
+      e.preventDefault();
+
+      const id = (btn.dataset.id || "").trim();
+      const link = (btn.dataset.link || "").trim();
+
+      if(!link){
+        alert("Este producto aún no tiene link de pago.");
+        return;
+      }
+
+      document.getElementById("prepago-id").value = id + "-A";
+      document.getElementById("prepago-link").value = link;
+
+      openModal(document.getElementById("modal-prepago"));
+      return;
+    }
+
+    if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
+      closeModal(e.target.closest(".modal"));
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    const modal = document.querySelector(".modal.is-open");
+    if (modal) closeModal(modal);
+  });
 </script>
- 
+
+ <script>
+  const prepagoForm = document.getElementById("prepago-form");
+
+  if (prepagoForm) {
+    prepagoForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const form = e.target;
+      const fd = new FormData(form);
+      const link = fd.get("sumup_link");
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+      }
+
+      try {
+        const res = await fetch("/api/venta", { method: "POST", body: fd });
+
+        if (!res.ok) throw new Error("API /api/venta respondió con error");
+        window.location.href = link;
+
+      } catch (err) {
+        console.error("❌ Error prepago:", err);
+        alert("No hemos podido registrar el envío. Inténtalo de nuevo.");
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "";
+        }
+      }
+    });
+  } else {
+    console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
+  }
+</script>
+  
 </body>
 </html>
