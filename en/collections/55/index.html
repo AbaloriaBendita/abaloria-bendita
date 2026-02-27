@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PPG9ZSJD');</script>
+<!-- End Google Tag Manager -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Gracefully Simple · Abaloria Bendita</title>
+  <meta name="description" content="One-of-a-kind handmade necklaces. Gracefully Simple collection from €55. Irrepeatable pieces, made in Spain.">
+
+  <link rel="canonical" href="https://abaloriabendita.es/en/collections/55/">
+  <meta name="robots" content="index, follow">
+
+  <!-- HREFLANG -->
+  <link rel="alternate" hreflang="es" href="https://abaloriabendita.es/colecciones/55/">
+  <link rel="alternate" hreflang="en" href="https://abaloriabendita.es/en/collections/55/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Gracefully Simple · Abaloria Bendita">
+  <meta property="og:description" content="One-of-a-kind handmade necklaces from €55.">
+  <meta property="og:url" content="https://abaloriabendita.es/en/collections/55/">
+  <meta property="og:image" content="https://abaloriabendita.es/colecciones/55/cover.jpg">
+
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Gracefully Simple",
+    "url": "https://abaloriabendita.es/en/collections/55/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Abaloria Bendita",
+      "url": "https://abaloriabendita.es/"
+    }
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPG9ZSJD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<a class="skip" href="#contenido">Skip to content</a>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+  <div class="header-inner">
+
+    <a href="/en/" class="logo-link" aria-label="Abaloria Bendita">
+      <img
+        src="/assets/icons/logo-abaloria-horizontal.svg"
+        alt="Abaloria Bendita"
+        class="logo-img"
+        loading="eager"
+      >
+    </a>
+
+    <nav class="main-nav">
+      <a href="/en/#colecciones">Collections</a>
+
+      <!-- Languages -->
+      <div class="lang-switch">
+        <a href="/colecciones/55/" class="lang" lang="es" hreflang="es">ES</a>
+        <span class="lang-sep">/</span>
+        <a href="/en/collections/55/" class="lang active" lang="en" hreflang="en">EN</a>
+      </div>
+    </nav>
+
+    <div class="header-actions mobile-only">
+      <button class="nav-toggle" aria-label="Open menu">☰</button>
+    </div>
+
+  </div>
+</header>
+
+<!-- ================= MAIN ================= -->
+<main id="contenido">
+
+<section class="available-page">
+
+  <div class="available-intro">
+    <h1>Gracefully Simple<span class="c-yellow">.</span></h1>
+    <p>
+      One-of-a-kind handmade necklaces. The Gracefully Simple collection brings together artisan pieces with personality and lots of love.
+    </p>
+  </div>
+
+  <!-- GRID -->
+  <div class="available-grid catalog-grid" id="collection-grid">
+    <!-- Cards rendered by JS -->
+  </div>
+
+</section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+
+    <div class="footer-brand">
+      <img
+        src="/assets/icons/logo-abaloria-horizontal.svg"
+        alt="Abaloria Bendita"
+        class="footer-logo"
+      >
+    </div>
+
+    <div class="footer-links">
+      <a href="https://instagram.com/TU_USUARIO" target="_blank" rel="noopener">
+        Follow us on Instagram
+      </a>
+      <a href="mailto:hola@abaloriabendita.es">
+        hola@abaloriabendita.es
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ================= MODAL ENCARGO ================= -->
+<div class="modal" id="modal-encargo" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Close">×</button>
+
+    <div class="modal-image">
+      <img id="modal-img-preview" src="" alt="">
+    </div>
+
+    <p class="modal-copy">
+      <strong>Commission an Abaloria inspired by this piece.</strong><br>
+      Leave your details and we’ll design it especially for you.
+    </p>
+
+    <form method="POST" action="/api/encargo" data-redirect="/en/thanks.html" class="modal-form">
+
+      <input type="hidden" name="imagen_referencia" id="modal-img-input">
+      <input type="hidden" name="tipo" value="Reference / similar piece">
+
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input type="text" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input type="tel" name="telefono">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Full shipping address</label>
+        <textarea name="direccion" rows="2"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Notes</label>
+        <textarea
+          name="comentarios"
+          rows="3"
+          placeholder="Special request, style, colours…"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="cta-main">
+        Commission a similar Abaloria
+      </button>
+
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" name="rgpd" required>
+          <label>
+            I have read and accept the
+            <a href="/en/privacy.html" target="_blank" rel="noopener">privacy policy</a>
+          </label>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<!-- MODAL PREPAYMENT -->
+<div class="modal" id="modal-prepago" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Close">×</button>
+
+    <div class="modal-image">
+      <img id="prepago-img-preview" src="" alt="">
+    </div>
+
+    <p class="modal-copy">
+      <strong>Confirm shipping</strong><br>
+      Enter your details to continue to payment.
+    </p>
+
+    <form id="prepago-form" method="POST" action="/api/venta" class="modal-form">
+
+      <input type="hidden" name="pieza_id" id="prepago-id">
+      <input type="hidden" name="sumup_link" id="prepago-link">
+
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input type="text" name="nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone</label>
+        <input type="tel" name="telefono" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Full shipping address</label>
+        <input
+          type="text"
+          name="direccion"
+          id="direccion-autocomplete"
+          placeholder="Start typing your address…"
+          required
+        >
+      </div>
+
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" name="rgpd" required>
+          <label>
+            I have read and accept the
+            <a href="/en/privacy.html" target="_blank" rel="noopener">privacy policy</a>
+          </label>
+        </div>
+      </div>
+
+      <button type="submit" class="cta-main">
+        Confirm shipping & pay
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<!-- LIGHTBOX GLOBAL -->
+<div class="image-lightbox" id="imageLightbox" aria-hidden="true">
+  <div class="lightbox-backdrop"></div>
+
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">×</button>
+
+    <button class="lightbox-nav prev" aria-label="Previous">‹</button>
+
+    <div class="lightbox-track"></div>
+
+    <button class="lightbox-nav next" aria-label="Next">›</button>
+
+    <div class="lightbox-counter"></div>
+  </div>
+</div>
+
+<script src="/assets/js/lightbox.js" defer></script>
+
+<!-- ================= JS ================= -->
+<script>
+/* NAV MOBILE */
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.querySelector(".nav-toggle");
+  const nav = document.querySelector(".main-nav");
+  if (!toggle || !nav) return;
+
+  toggle.addEventListener("click", () => {
+    nav.classList.toggle("is-open");
+  });
+});
+</script>
+
+<script>
+/* MODAL (Commission similar) */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const modal = document.getElementById("modal-encargo");
+  const modalImg = document.getElementById("modal-img-preview");
+  const modalInput = document.getElementById("modal-img-input");
+
+  document.addEventListener("click", e => {
+    const btn = e.target.closest(".js-open-modal");
+    if (!btn) return;
+
+    e.preventDefault();
+    modalImg.src = btn.dataset.img;
+    modalInput.value = btn.dataset.img;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+  });
+
+  modal.addEventListener("click", e => {
+    if (
+      e.target.classList.contains("modal-backdrop") ||
+      e.target.classList.contains("modal-close")
+    ) {
+      modal.classList.remove("is-open");
+    }
+  });
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  console.log("✅ Catalogue loaded");
+
+  const GRID = document.getElementById("collection-grid");
+  if (!GRID) {
+    console.error("❌ #collection-grid not found");
+    return;
+  }
+
+  /* =========================
+     1. DETECT COLLECTION
+  ========================= */
+
+  const slug = window.location.pathname
+    .split("/")
+    .filter(Boolean)
+    .pop();
+
+  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
+
+  console.log("📁 Collection:", slug);
+  console.log("📦 Base:", BASE);
+
+  const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
+  piezas.reverse();
+
+  let index = 0;
+
+  for (const id of piezas) {
+    const isFirst = index === 0;
+
+    try {
+
+      const dataUrl = `${BASE}${id}/data.json`;
+      const res = await fetch(dataUrl);
+
+      if (!res.ok) continue;
+
+      const data = await res.json();
+
+      /* =========================
+         NORMALISED STATUS
+      ========================= */
+
+      const estado = (data.estado || "").toLowerCase();
+
+      let estadoClass = "sold";
+      let statusText = "Sold";
+
+      if (estado === "disponible") {
+        estadoClass = "available";
+        statusText = "Available";
+      }
+
+      if (estado === "variaciones") {
+        estadoClass = "variation";
+        statusText = "Available with variations";
+      }
+
+      const card = document.createElement("article");
+      card.className = `piece-card ${estadoClass}`;
+
+      /* =========================
+         IMAGES
+      ========================= */
+
+      const mainImg = `${BASE}${id}/main.jpg`;
+      const hoverImg = `${BASE}${id}/hover.jpg`;
+
+      let hasHover = false;
+
+      try {
+        const imgTest = new Image();
+        imgTest.src = hoverImg;
+        await new Promise((resolve, reject) => {
+          imgTest.onload = resolve;
+          imgTest.onerror = reject;
+        });
+        hasHover = true;
+      } catch {
+        hasHover = false;
+      }
+
+      const imageHTML = hasHover
+        ? `
+          <div class="piece-image has-swipe">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
+
+            <img src="${mainImg}"
+              alt="${data.titulo}"
+              width="945"
+              height="1181"
+              ${isFirst ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}
+            >
+
+            <img src="${hoverImg}"
+              alt=""
+              class="hover-img"
+              aria-hidden="true"
+              width="945"
+              height="1181"
+              loading="lazy"
+              decoding="async">
+          </div>
+        `
+        : `
+          <div class="piece-image">
+            <span class="status-badge ${estadoClass}">${statusText}</span>
+            <span class="price-badge">${data.precio}€</span>
+
+            <img src="${mainImg}"
+              alt="${data.titulo}"
+              width="945"
+              height="1181"
+              loading="lazy"
+              decoding="async">
+          </div>
+        `;
+
+      /* =========================
+         CTA BY STATUS
+      ========================= */
+
+      let cta = "";
+
+      if (estado === "disponible") {
+
+        const variationsCTA = data.permite_variaciones
+          ? `
+            <a href="#"
+              class="piece-cta-secondary js-open-modal"
+              data-img="${mainImg}">
+              Want it with variations?
+            </a>
+          `
+          : "";
+
+        cta = `
+          <a href="#"
+            class="piece-cta js-prepago"
+            data-id="${data.id}"
+            data-link="${data.sumup_link}"
+            data-img="${mainImg}">
+            Buy now
+          </a>
+          ${variationsCTA}
+        `;
+      }
+
+      if (estado === "variaciones") {
+        cta = `
+          <a href="#"
+            class="piece-cta alt js-open-modal"
+            data-img="${mainImg}">
+            I want this necklace with variations
+          </a>
+        `;
+      }
+
+      if (estado === "vendida") {
+        cta = `
+          <a href="#"
+            class="piece-cta alt js-open-modal"
+            data-img="${mainImg}">
+            Commission a similar one
+          </a>
+        `;
+      }
+
+      /* =========================
+         FINAL CARD
+      ========================= */
+
+      card.innerHTML = `
+        ${imageHTML}
+
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+
+          ${
+            data.nota_disponibilidad
+              ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
+              : ""
+          }
+
+          ${cta}
+
+          <ul class="piece-legal">
+            <li>Free shipping on orders over €150.</li>
+            <li>VAT included.</li>
+          </ul>
+        </div>
+      `;
+
+      GRID.appendChild(card);
+      index++;
+
+    } catch (err) {
+      console.error("❌ Error on piece:", id, err);
+    }
+  }
+
+});
+</script>
+
+<script>
+function openModal(modal){
+  if(!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal(modal){
+  if(!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".js-prepago");
+  if (btn) {
+    e.preventDefault();
+
+    const id = (btn.dataset.id || "").trim();
+    const link = (btn.dataset.link || "").trim();
+
+    if(!link){
+      alert("This product does not have a payment link yet.");
+      return;
+    }
+
+    document.getElementById("prepago-id").value = id + "-A";
+    document.getElementById("prepago-link").value = link;
+
+    const img = btn.dataset.img || "";
+    const preview = document.getElementById("prepago-img-preview");
+
+    if (preview && img) {
+      preview.src = img;
+    }
+
+    openModal(document.getElementById("modal-prepago"));
+    return;
+  }
+
+  if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
+    closeModal(e.target.closest(".modal"));
+  }
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const modal = document.querySelector(".modal.is-open");
+  if (modal) closeModal(modal);
+});
+</script>
+
+<script>
+const prepagoForm = document.getElementById("prepago-form");
+
+if (prepagoForm) {
+  prepagoForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const fd = new FormData(form);
+    const link = fd.get("sumup_link");
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = "0.7";
+    }
+
+    try {
+      const res = await fetch("/api/venta", { method: "POST", body: fd });
+
+      if (!res.ok) throw new Error("API /api/venta returned an error");
+      window.location.href = link;
+
+    } catch (err) {
+      console.error("❌ Prepayment error:", err);
+      alert("We couldn't register the shipment. Please try again.");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "";
+      }
+    }
+  });
+} else {
+  console.warn("⚠️ #prepago-form not found. Check the id in the modal-prepago <form>.");
+}
+</script>
+
+</body>
+</html>
