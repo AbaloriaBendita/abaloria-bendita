@@ -373,7 +373,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
 
-      const dataUrl = `${BASE}${id}/data.json`;
+const dataUrl = `${window.location.origin}/en/collections/assets/${slug}/${id}/data.json`;
       const res = await fetch(dataUrl);
 
       if (!res.ok) continue;
