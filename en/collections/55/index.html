@@ -377,7 +377,7 @@ const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
 
     try {
 
-const dataUrl = `${window.location.origin}/en/collections/assets/${slug}/${id}/data.json`;
+const dataUrl = `/en/assets/${slug}/${id}/data.json`;
       const res = await fetch(dataUrl);
 
       if (!res.ok) continue;
