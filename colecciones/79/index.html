@@ -211,14 +211,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <div class="modal-box">
     <button class="modal-close" aria-label="Cerrar">×</button>
+    
+    <div class="modal-image">
+  <img id="prepago-img-preview" src="" alt="">
+</div>
 
     <p class="modal-copy">
       <strong>Confirmar envío</strong><br>
-      Introduce tus datos para continuar al pago.
+      Introduce tus datos para continuar con el pago.
     </p>
 
-    <form method="POST" action="/api/venta" class="modal-form">
-
+<form id="prepago-form" method="POST" action="/api/venta" class="modal-form">
+  
       <input type="hidden" name="pieza_id" id="prepago-id">
       <input type="hidden" name="sumup_link" id="prepago-link">
 
@@ -238,9 +242,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <div class="form-group">
-        <label class="form-label">Dirección completa</label>
+        <label class="form-label">Dirección completa para el envío</label>
         <textarea name="direccion" rows="2" required></textarea>
       </div>
+  <div class="rgpd-group">
+  <div class="rgpd-row">
+    <input type="checkbox" name="rgpd" required>
+    <label>
+      He leído y acepto la
+      <a href="/privacidad.html" target="_blank">
+        política de privacidad
+      </a>
+    </label>
+  </div>
+</div>
 
       <button type="submit" class="cta-main">
         Confirmar envío y pagar
