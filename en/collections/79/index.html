@@ -7,6 +7,8 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-PPG9ZSJD');</script>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPG9ZSJD"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -315,10 +317,19 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-    <script>
-  document.addEventListener("DOMContentLoaded", async () => {
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+  console.log("✅ Catalogue loaded");
+
+  const GRID = document.getElementById("collection-grid");
+  if (!GRID) {
+    console.error("❌ #collection-grid not found");
+    return;
+  }
 
   const parts = window.location.pathname.split("/").filter(Boolean);
+
   let slug = parts[parts.length - 1];
 
   if (slug.endsWith(".html")) {
@@ -327,91 +338,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
 
-  const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
-  piezas.reverse();
+  console.log("📁 Collection:", slug);
+  console.log("📦 Base:", BASE);
 
-  const GRID = document.getElementById("collection-grid");
+  try {
+    const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
+    piezas.reverse();
 
-  for (const id of piezas) {
+    for (const id of piezas) {
 
-    const dataUrl = `/en/assets/${slug}/${id}/data.json`;
-    const res = await fetch(dataUrl);
-    if (!res.ok) continue;
+      const dataUrl = `/en/assets/${slug}/${id}/data.json`;
+      const res = await fetch(dataUrl);
 
-    const data = await res.json();
+      if (!res.ok) {
+        console.warn("⚠️ data.json not found:", dataUrl);
+        continue;
+      }
 
-    const estado = (data.estado || "").toLowerCase();
+      const data = await res.json();
 
-    let estadoClass = "sold";
-    let statusText = "Sold";
+      const estado = (data.estado || "").toLowerCase();
 
-    if (estado === "disponible") {
-      estadoClass = "available";
-      statusText = "Available";
-    }
+      let estadoClass = "sold";
+      let statusText = "Sold";
 
-    if (estado === "variaciones") {
-      estadoClass = "variation";
-      statusText = "Available with variations";
-    }
+      if (estado === "disponible") {
+        estadoClass = "available";
+        statusText = "Available";
+      }
 
-    const mainImg = `${BASE}${id}/main.jpg`;
+      if (estado === "variaciones") {
+        estadoClass = "variation";
+        statusText = "Available with variations";
+      }
 
-    let cta = "";
+      const mainImg = `${BASE}${id}/main.jpg`;
+      const hoverImg = `${BASE}${id}/hover.jpg`;
 
-    if (estado === "disponible") {
+      const card = document.createElement("article");
+      card.className = `piece-card ${estadoClass}`;
 
-      const variationsCTA = data.permite_variaciones
-        ? `
-          <a href="#" class="piece-cta-secondary js-open-modal" data-img="${mainImg}">
-            Want it with variations?
+      card.innerHTML = `
+        <div class="piece-image">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
+          <img src="${mainImg}" alt="${data.titulo}">
+        </div>
+
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+          ${data.nota_disponibilidad ? `<p class="piece-note">${data.nota_disponibilidad}</p>` : ""}
+          <a href="#" class="piece-cta js-prepago"
+             data-id="${data.id}"
+             data-link="${data.sumup_link}"
+             data-img="${mainImg}">
+             Buy now
           </a>
-        `
-        : "";
-
-      cta = `
-        <a href="#" class="piece-cta js-prepago"
-           data-id="${data.id}"
-           data-link="${data.sumup_link}"
-           data-img="${mainImg}">
-          Buy now
-        </a>
-        ${variationsCTA}
+          <ul class="piece-legal">
+            <li>Free shipping on orders over €150.</li>
+            <li>VAT included.</li>
+          </ul>
+        </div>
       `;
+
+      GRID.appendChild(card);
     }
 
-    if (estado === "vendida") {
-      cta = `
-        <a href="#" class="piece-cta alt js-open-modal" data-img="${mainImg}">
-          Commission a similar one
-        </a>
-      `;
-    }
-
-    const card = document.createElement("article");
-    card.className = `piece-card ${estadoClass}`;
-
-    card.innerHTML = `
-      <div class="piece-image">
-        <span class="status-badge ${estadoClass}">${statusText}</span>
-        <span class="price-badge">${data.precio}€</span>
-        <img src="${mainImg}" alt="${data.titulo}">
-      </div>
-      <div class="piece-body">
-        <h2>${data.titulo}</h2>
-        ${data.nota_disponibilidad ? `<p class="piece-note">${data.nota_disponibilidad}</p>` : ""}
-        ${cta}
-        <ul class="piece-legal">
-          <li>Free shipping on orders over €150.</li>
-          <li>VAT included.</li>
-        </ul>
-      </div>
-    `;
-
-    GRID.appendChild(card);
+  } catch (err) {
+    console.error("❌ Fatal error loading collection:", err);
   }
+
 });
-    </script>
+</script>
 
 
   </body>
