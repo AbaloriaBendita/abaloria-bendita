@@ -1,10 +1,9 @@
 {
   "id": "79-16",
-  "titulo": "Madera, resina italiana y cristal",
+  "titulo": "Wood, Italian resin and glass",
   "precio": 79,
   "estado": "disponible",
   "sumup_link": "https://pay.sumup.com/b2c/QU6CMVLQ",
-    "permite_variaciones": true,
-  "nota_disponibilidad": "Posibilidad de otros colores de madera. Amarillo claro, rosa, naranja y azul. Pregúntanos!"
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Available in other wood colors. Light yellow, pink, orange and blue. Ask us!"
 }
-
