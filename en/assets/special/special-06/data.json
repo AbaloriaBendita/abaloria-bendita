@@ -1,9 +1,9 @@
 {
   "id": "especiales-06",
-  "titulo": "Hueso, madera lacada y cristal",
+  "titulo": "Bone, lacquered wood and glass",
   "precio": 120,
-   "estado": "disponible",
+  "estado": "disponible",
   "sumup_link": "https://pay.sumup.com/b2c/QCTOGXGZ",
   "permite_variaciones": true,
-  "nota_disponibilidad": "Disponible. Posibilidad de cambio de color en la cuerda. Blanco y negro, rosa, marrón y verde."
+  "nota_disponibilidad": "Available. Option to change the cord color: black and white, pink, brown and green."
 }
