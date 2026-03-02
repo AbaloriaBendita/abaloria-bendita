@@ -1,10 +1,9 @@
 {
   "id": "79-05",
-  "titulo": "Perrito",
+  "titulo": "Little Dog",
   "precio": 79,
   "estado": "disponible",
   "sumup_link": "https://pay.sumup.com/b2c/QSIH2B6Y",
-    "permite_variaciones": true,
-"nota_disponibilidad": "Posibilidad de cambiar animal y colores. Madera, cerámica, resina y cristal."
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Option to change the animal and colors. Wood, ceramic, resin and glass."
 }
-
