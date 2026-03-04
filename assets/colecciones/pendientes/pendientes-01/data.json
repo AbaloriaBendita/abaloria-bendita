@@ -2,7 +2,6 @@
   "id": "pendientes-01",
   "titulo": "Pendientes largos",
   "precio": 49,
-  "estado": "disponible",
-  "sumup_link": "https://pay.sumup.com/b2c/XXXX"
+  "estado": "vendida"
 }
 
