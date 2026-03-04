@@ -1,6 +1,9 @@
 {
   "id": "pendientes-01",
-  "titulo": "Long earrings",
-  "precio": 49,
-  "estado": "vendida"
+  "titulo": "Animal earrings",
+  "precio": 34,
+  "estado": "disponible",
+  "sumup_link": "https://pay.sumup.com/b2c/QFTY1Q8J",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Available. The animals are made of semi-precious stones. Option to order a matching choker."
 }
