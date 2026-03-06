@@ -494,7 +494,7 @@ const dataUrl = `/en/assets/${slug}/${id}/data.json`;
             data-id="${data.id}"
             data-link="${data.sumup_link}"
             data-img="${mainImg}">
-            Buy now
+            Request this piece
           </a>
           ${variationsCTA}
         `;
@@ -644,6 +644,49 @@ if (prepagoForm) {
 } else {
   console.warn("⚠️ #prepago-form not found. Check the id in the modal-prepago <form>.");
 }
+</script>
+
+  <script>
+
+/* MODO SIN CARRITO */
+const FORZAR_FORMULARIO = true;
+
+if (FORZAR_FORMULARIO) {
+
+  document.addEventListener("click", function(e){
+
+    const btn = e.target.closest(".js-prepago");
+    if(!btn) return;
+
+    /* detener TODO */
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    const img = btn.dataset.img || "";
+
+    const modal = document.getElementById("modal-encargo");
+    const modalImg = document.getElementById("modal-img-preview");
+    const modalInput = document.getElementById("modal-img-input");
+
+    if(modal){
+
+      if(modalImg && img){
+        modalImg.src = img;
+      }
+
+      if(modalInput && img){
+        modalInput.value = img;
+      }
+
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden","false");
+    }
+
+  }, true);  /* 👈 FASE CAPTURA */
+
+}
+
 </script>
 
 </body>
