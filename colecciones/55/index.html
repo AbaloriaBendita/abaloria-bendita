@@ -653,14 +653,15 @@ if (FORZAR_FORMULARIO) {
   document.addEventListener("click", function(e){
 
     const btn = e.target.closest(".js-prepago");
-
     if(!btn) return;
 
+    /* detener TODO */
     e.preventDefault();
-
-    /* abrir modal de encargo en vez del de pago */
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 
     const img = btn.dataset.img || "";
+
     const modal = document.getElementById("modal-encargo");
     const modalImg = document.getElementById("modal-img-preview");
     const modalInput = document.getElementById("modal-img-input");
@@ -677,10 +678,9 @@ if (FORZAR_FORMULARIO) {
 
       modal.classList.add("is-open");
       modal.setAttribute("aria-hidden","false");
-
     }
 
-  });
+  }, true);  /* 👈 FASE CAPTURA */
 
 }
 
