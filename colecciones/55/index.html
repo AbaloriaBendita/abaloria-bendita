@@ -642,6 +642,33 @@ if (preview && img) {
     console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
   }
 </script>
+
+  <script>
+
+/* MODO SIN CARRITO (activar / desactivar) */
+const FORZAR_FORMULARIO = true;
+
+if(FORZAR_FORMULARIO){
+
+  document.addEventListener("click", function(e){
+
+    const btn = e.target.closest(".buy-button, .piece-buy, .btn-comprar, a[href*='sumup']");
+    
+    if(!btn) return;
+
+    e.preventDefault();
+
+    /* abrir modal de encargo */
+    const modal = document.querySelector("#modal-form");
+    if(modal){
+      modal.classList.add("open");
+    }
+
+  });
+
+}
+
+</script>
   
 </body>
 </html>
