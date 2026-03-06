@@ -483,7 +483,7 @@ try {
 
   cta = `
     <a href="${data.sumup_link}" class="piece-cta">
-      Comprar ahora
+      Encargar pieza
     </a>
     ${variacionesCTA}
   `;
@@ -633,6 +633,49 @@ if (preview && img) {
   } else {
     console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
   }
+</script>
+
+ <script>
+
+/* MODO SIN CARRITO */
+const FORZAR_FORMULARIO = true;
+
+if (FORZAR_FORMULARIO) {
+
+  document.addEventListener("click", function(e){
+
+    const btn = e.target.closest(".js-prepago");
+    if(!btn) return;
+
+    /* detener TODO */
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+
+    const img = btn.dataset.img || "";
+
+    const modal = document.getElementById("modal-encargo");
+    const modalImg = document.getElementById("modal-img-preview");
+    const modalInput = document.getElementById("modal-img-input");
+
+    if(modal){
+
+      if(modalImg && img){
+        modalImg.src = img;
+      }
+
+      if(modalInput && img){
+        modalInput.value = img;
+      }
+
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden","false");
+    }
+
+  }, true);  /* 👈 FASE CAPTURA */
+
+}
+
 </script>
  
 </body>
