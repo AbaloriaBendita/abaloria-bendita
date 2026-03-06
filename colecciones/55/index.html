@@ -643,25 +643,41 @@ if (preview && img) {
   }
 </script>
 
-  <script>
+<script>
 
-/* MODO SIN CARRITO (activar / desactivar) */
+/* MODO SIN CARRITO */
 const FORZAR_FORMULARIO = true;
 
-if(FORZAR_FORMULARIO){
+if (FORZAR_FORMULARIO) {
 
   document.addEventListener("click", function(e){
 
-    const btn = e.target.closest(".buy-button, .piece-buy, .btn-comprar, a[href*='sumup']");
-    
+    const btn = e.target.closest(".js-prepago");
+
     if(!btn) return;
 
     e.preventDefault();
 
-    /* abrir modal de encargo */
-    const modal = document.querySelector("#modal-form");
+    /* abrir modal de encargo en vez del de pago */
+
+    const img = btn.dataset.img || "";
+    const modal = document.getElementById("modal-encargo");
+    const modalImg = document.getElementById("modal-img-preview");
+    const modalInput = document.getElementById("modal-img-input");
+
     if(modal){
-      modal.classList.add("open");
+
+      if(modalImg && img){
+        modalImg.src = img;
+      }
+
+      if(modalInput && img){
+        modalInput.value = img;
+      }
+
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden","false");
+
     }
 
   });
