@@ -41,3 +41,21 @@ function updateCartCount(){
 
   if(el) el.textContent = getCart().length;
 }
+
+document.addEventListener("click",(e)=>{
+
+ const btn = e.target.closest(".js-add-cart");
+ if(!btn) return;
+
+ const item = {
+   id: btn.dataset.id,
+   titulo: btn.dataset.title,
+   precio: Number(btn.dataset.price),
+   img: btn.dataset.img
+ };
+
+ addToCart(item);
+
+ alert("Añadido al carrito");
+
+});
