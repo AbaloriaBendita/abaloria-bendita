@@ -3612,3 +3612,28 @@ body{
   border-radius: 12px !important;
   font-family: inherit !important;
 }
+
+.piece-cta-cart{
+
+ display:block;
+ margin-top:10px;
+
+ width:100%;
+ padding:12px;
+
+ border-radius:12px;
+
+ background:#fff;
+ border:1px solid #000;
+
+ font-weight:600;
+ cursor:pointer;
+
+ transition:all .2s;
+
+}
+
+.piece-cta-cart:hover{
+ background:#000;
+ color:#fff;
+}
