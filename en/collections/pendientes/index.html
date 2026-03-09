@@ -700,5 +700,47 @@ if (FORZAR_FORMULARIO) {
 
 </script>
 
+    /* FORM EN THANKS */
+
+  <script>
+
+document.querySelectorAll("form[action='/api/encargo']").forEach(form => {
+
+  form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const fd = new FormData(form);
+
+    try {
+
+      const res = await fetch("/api/encargo", {
+        method: "POST",
+        body: fd
+      });
+
+      if(!res.ok){
+        alert("Error sending the form");
+        return;
+      }
+
+      /* 👇 ESTA LÍNEA ES LA CLAVE */
+      const redirect = form.dataset.redirect || "/gracias.html";
+
+      window.location.href = redirect;
+
+    } catch(err){
+
+      console.error("Form error:", err);
+      alert("Something went wrong. Please try again.");
+
+    }
+
+  });
+
+});
+
+</script>
+
 </body>
 </html>
