@@ -497,16 +497,26 @@ try {
     `
     : "";
 
-  cta = `
-  <a href="#"
-   class="piece-cta js-prepago"
-   data-id="${data.id}"
-   data-link="${data.sumup_link}"
-   data-img="${mainImg}">
-  Comprar ahora
+ cta = `
+<a href="#"
+ class="piece-cta js-prepago"
+ data-id="${data.id}"
+ data-link="${data.sumup_link}"
+ data-img="${mainImg}">
+Comprar ahora
 </a>
-    ${variacionesCTA}
-  `;
+
+<button
+ class="piece-cta-cart js-add-cart"
+ data-id="${data.id}"
+ data-title="${data.titulo}"
+ data-price="${data.precio}"
+ data-img="${mainImg}">
+Añadir al carrito
+</button>
+
+${variacionesCTA}
+`;
 }
 
       if (estado === "variaciones") {
@@ -655,6 +665,7 @@ if (preview && img) {
   }
 </script>
 
+  <script src="/assets/js/cart.js"></script>
   
 </body>
 </html>
