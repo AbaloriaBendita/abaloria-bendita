@@ -59,3 +59,5 @@ document.addEventListener("click",(e)=>{
  alert("Añadido al carrito");
 
 });
+
+document.addEventListener("DOMContentLoaded",updateCartCount);
