@@ -167,4 +167,41 @@ document.addEventListener("click",(e)=>{
     }
   }
 
+   /* =========================
+   CART QUANTITY
+========================= */
+
+document.addEventListener("click",(e)=>{
+
+ const plus = e.target.closest(".cart-plus");
+ const minus = e.target.closest(".cart-minus");
+ const remove = e.target.closest(".cart-remove");
+
+ if(!plus && !minus && !remove) return;
+
+ const id = (plus || minus || remove).dataset.id;
+
+ let cart = getCart();
+
+ const item = cart.find(p => p.id === id);
+
+ if(!item) return;
+
+ if(plus){
+   item.qty += 1;
+ }
+
+ if(minus){
+   item.qty -= 1;
+ }
+
+ if(remove || item.qty <= 0){
+   cart = cart.filter(p => p.id !== id);
+ }
+
+ saveCart(cart);
+
+ renderCart();
+});
+
 });
