@@ -192,8 +192,8 @@ document.addEventListener("click",(e)=>{
     const panel = document.getElementById("cartPanel");
 
     if(panel){
-      panel.classList.add("is-open");
-    }
+panel.classList.add("is-open");
+panel.setAttribute("aria-hidden","false");    }
   }
 
   const closeBtn =
