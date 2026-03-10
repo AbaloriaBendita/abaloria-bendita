@@ -696,7 +696,15 @@ if (prepagoForm) {
 
    if (!res.ok) throw new Error("API error");
 
-   const data = await res.json();
+const data = await res.json();
+
+console.log("API response:", data);
+
+if(!data.payment_url){
+  alert("Error creando el pago");
+  console.error(data);
+  return;
+}
 
    window.location.href = data.payment_url;
 
