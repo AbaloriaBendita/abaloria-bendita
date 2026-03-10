@@ -205,6 +205,7 @@ panel.setAttribute("aria-hidden","false");    }
 
     if(panel){
 panel.classList.remove("is-open");
+       document.activeElement.blur();
 panel.setAttribute("aria-hidden","true");    }
   }
 
