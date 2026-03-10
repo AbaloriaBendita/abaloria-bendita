@@ -91,8 +91,12 @@ export async function onRequestPost(context) {
 
     });
 
-    const data = await res.json();
+const text = await res.text();
 
+console.log("SUMUP RESPONSE RAW:", text);
+
+const data = JSON.parse(text);
+    
     /* =========================
        COMPROBAR RESPUESTA
     ========================= */
