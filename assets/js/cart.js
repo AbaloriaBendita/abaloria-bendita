@@ -104,6 +104,16 @@ function renderCart(){
 
  const container = document.querySelector(".cart-items");
  const totalEl = document.querySelector(".cart-total");
+   
+   function shippingCost(){
+
+ const total = cartTotal();
+
+ if(total >= 150) return 0;
+
+ return 6;
+
+}
 
  if(!container) return;
 
@@ -152,7 +162,17 @@ function renderCart(){
 
  });
 
- totalEl.textContent = total + " €";
+ const shipping = shippingCost();
+
+const finalTotal = total + shipping;
+
+const shippingEl = document.querySelector(".cart-shipping");
+
+if(shippingEl){
+ shippingEl.textContent = shipping === 0 ? "Gratis" : shipping + " €";
+}
+
+totalEl.textContent = finalTotal + " €";
 }
 
 /* =========================
