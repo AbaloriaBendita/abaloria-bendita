@@ -3612,3 +3612,16 @@ body{
   border-radius: 12px !important;
   font-family: inherit !important;
 }
+
+.cart-icon{
+  margin-left:12px;
+  text-decoration:none;
+  font-size:18px;
+  display:inline-flex;
+  align-items:center;
+}
+
+.cart-count{
+  font-weight:600;
+  margin-left:4px;
+}
