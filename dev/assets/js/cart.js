@@ -61,3 +61,44 @@ document.addEventListener("click",(e)=>{
 });
 
 document.addEventListener("DOMContentLoaded",updateCartCount);
+
+const CART_KEY = "abaloria_cart";
+
+function getCart(){
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+}
+
+function saveCart(cart){
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  updateCartCount();
+}
+
+function addToCart(item){
+
+  const cart = getCart();
+
+  const existing = cart.find(p => p.id === item.id);
+
+  if(existing){
+    existing.qty += 1;
+  }else{
+    item.qty = 1;
+    cart.push(item);
+  }
+
+  saveCart(cart);
+}
+
+function updateCartCount(){
+
+  const cart = getCart();
+
+  const total = cart.reduce((sum,p)=>sum+p.qty,0);
+
+  const el = document.querySelector(".cart-count");
+
+  if(el) el.textContent = total;
+
+}
+
+document.addEventListener("DOMContentLoaded",updateCartCount);
