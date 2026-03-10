@@ -99,3 +99,38 @@ document.addEventListener("click",(e)=>{
 ========================= */
 
 document.addEventListener("DOMContentLoaded",updateCartCount);
+
+function renderCart(){
+
+ const container = document.querySelector(".cart-items");
+ const totalEl = document.querySelector(".cart-total");
+
+ if(!container) return;
+
+ const cart = getCart();
+
+ container.innerHTML = "";
+
+ let total = 0;
+
+ cart.forEach(p=>{
+
+   total += p.precio * p.qty;
+
+   const el = document.createElement("div");
+   el.className = "cart-item";
+
+   el.innerHTML = `
+     <img src="${p.img}" alt="">
+     <div>
+       <strong>${p.titulo}</strong>
+       <div>${p.qty} × ${p.precio} €</div>
+     </div>
+   `;
+
+   container.appendChild(el);
+
+ });
+
+ totalEl.textContent = total + " €";
+}
