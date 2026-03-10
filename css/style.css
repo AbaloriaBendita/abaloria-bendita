@@ -3734,3 +3734,12 @@ body{
  opacity:.6;
  margin-top:12px;
 }
+
+.cart-drawer{
+ transform:translateX(100%);
+ transition:transform .35s cubic-bezier(.22,.61,.36,1);
+}
+
+.cart-panel.is-open .cart-drawer{
+ transform:translateX(0);
+}
