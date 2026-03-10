@@ -13,8 +13,11 @@ export async function onRequestPost(context) {
 
     const cartRaw = formData.get("cart");
 
-    if(!cartRaw){
-      return new Response(JSON.stringify({error:"Carrito vacío"}),{status:400});
+    if (!cartRaw) {
+      return new Response(
+        JSON.stringify({ error: "Carrito vacío" }),
+        { status: 400 }
+      );
     }
 
     const cart = JSON.parse(cartRaw);
@@ -39,7 +42,7 @@ export async function onRequestPost(context) {
 
     let shipping = 0;
 
-    if(total < 150){
+    if (total < 150) {
       shipping = 8.5;
     }
 
@@ -65,11 +68,11 @@ export async function onRequestPost(context) {
 
     const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
 
-      method:"POST",
+      method: "POST",
 
-      headers:{
-        "Authorization":`Bearer ${env.SUMUP_API_KEY}`,
-        "Content-Type":"application/json"
+      headers: {
+        "Authorization": `Bearer ${env.SUMUP_API_KEY}`,
+        "Content-Type": "application/json"
       },
 
       body: JSON.stringify({
@@ -82,7 +85,7 @@ export async function onRequestPost(context) {
 
         description,
 
-        merchant_code: env.SUMUP_MERCHANT,
+        merchant_code: env.SUMUP_MERCHANT
 
       })
 
@@ -90,35 +93,44 @@ export async function onRequestPost(context) {
 
     const data = await res.json();
 
-    if(!data.checkout_url){
+    /* =========================
+       COMPROBAR RESPUESTA
+    ========================= */
 
-      console.error(data);
+    if (!data.hosted_checkout_url) {
 
-      return new Response(JSON.stringify({error:"SumUp error"}),{status:500});
+      console.error("SumUp error:", data);
+
+      return new Response(
+        JSON.stringify({ error: "SumUp error", details: data }),
+        { status: 500 }
+      );
 
     }
 
     /* =========================
-       RESPUESTA
+       RESPUESTA AL FRONTEND
     ========================= */
 
-    return new Response(JSON.stringify({
-
-      payment_url: data.checkout_url
-
-    }),{
-
-      headers:{
-        "Content-Type":"application/json"
+    return new Response(
+      JSON.stringify({
+        payment_url: data.hosted_checkout_url
+      }),
+      {
+        headers: {
+          "Content-Type": "application/json"
+        }
       }
+    );
 
-    });
-
-  } catch(err){
+  } catch (err) {
 
     console.error(err);
 
-    return new Response(JSON.stringify({error:"Server error"}),{status:500});
+    return new Response(
+      JSON.stringify({ error: "Server error" }),
+      { status: 500 }
+    );
 
   }
 
