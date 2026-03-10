@@ -3743,3 +3743,30 @@ body{
 .cart-panel.is-open .cart-drawer{
  transform:translateX(0);
 }
+
+.cart-qty{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ margin-top:4px;
+}
+
+.cart-plus,
+.cart-minus{
+ width:22px;
+ height:22px;
+ border-radius:50%;
+ border:1px solid #ddd;
+ background:white;
+ cursor:pointer;
+ font-size:14px;
+}
+
+.cart-remove{
+ border:none;
+ background:none;
+ font-size:12px;
+ opacity:.6;
+ cursor:pointer;
+ margin-left:8px;
+}
