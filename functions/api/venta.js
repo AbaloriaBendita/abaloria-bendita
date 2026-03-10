@@ -97,16 +97,22 @@ export async function onRequestPost(context) {
        COMPROBAR RESPUESTA
     ========================= */
 
-    if (!data.hosted_checkout_url) {
+    const paymentUrl = data.hosted_checkout_url || data.checkout_url;
+
+if (!paymentUrl) {
 
       console.error("SumUp error:", data);
 
-      return new Response(
-        JSON.stringify({ error: "SumUp error", details: data }),
-        { status: 500 }
-      );
-
+     return new Response(
+  JSON.stringify({
+    payment_url: paymentUrl
+  }),
+  {
+    headers: {
+      "Content-Type": "application/json"
     }
+  }
+);
 
     /* =========================
        RESPUESTA AL FRONTEND
