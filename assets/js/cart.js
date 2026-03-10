@@ -229,3 +229,12 @@ document.addEventListener("click",(e)=>{
  renderCart();
 
 });
+
+function shippingCost(){
+
+ const total = cartTotal();
+
+ if(total >= 150) return 0;
+
+ return 6;
+}
