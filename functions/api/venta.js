@@ -29,11 +29,8 @@ export async function onRequestPost(context) {
     let total = 0;
 
     cart.forEach(p => {
-
       const qty = p.qty || 1;
-
       total += p.precio * qty;
-
     });
 
     /* =========================
@@ -53,11 +50,8 @@ export async function onRequestPost(context) {
     ========================= */
 
     const items = cart.map(p => {
-
       const qty = p.qty || 1;
-
       return `${p.titulo} x${qty}`;
-
     }).join(", ");
 
     const description = `Pedido Abaloria Bendita: ${items}`;
@@ -79,7 +73,7 @@ export async function onRequestPost(context) {
 
         checkout_reference: crypto.randomUUID(),
 
-        amount: finalTotal.toFixed(2),
+        amount: Number(finalTotal.toFixed(2)),
 
         currency: "EUR",
 
@@ -91,32 +85,31 @@ export async function onRequestPost(context) {
 
     });
 
-const text = await res.text();
+    const text = await res.text();
 
-console.log("SUMUP RESPONSE RAW:", text);
+    console.log("SUMUP RESPONSE RAW:", text);
 
-const data = JSON.parse(text);
-    
+    const data = JSON.parse(text);
+
     /* =========================
        COMPROBAR RESPUESTA
     ========================= */
 
     const paymentUrl = data.hosted_checkout_url || data.checkout_url;
 
-if (!paymentUrl) {
+    if (!paymentUrl) {
 
       console.error("SumUp error:", data);
 
-     return new Response(
-  JSON.stringify({
-    payment_url: paymentUrl
-  }),
-  {
-    headers: {
-      "Content-Type": "application/json"
+      return new Response(
+        JSON.stringify({
+          error: "SumUp error",
+          details: data
+        }),
+        { status: 500 }
+      );
+
     }
-  }
-);
 
     /* =========================
        RESPUESTA AL FRONTEND
@@ -124,7 +117,7 @@ if (!paymentUrl) {
 
     return new Response(
       JSON.stringify({
-        payment_url: data.hosted_checkout_url
+        payment_url: paymentUrl
       }),
       {
         headers: {
@@ -135,7 +128,7 @@ if (!paymentUrl) {
 
   } catch (err) {
 
-    console.error(err);
+    console.error("Server error:", err);
 
     return new Response(
       JSON.stringify({ error: "Server error" }),
