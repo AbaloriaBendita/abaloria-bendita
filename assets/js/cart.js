@@ -105,13 +105,13 @@ function renderCart(){
  const container = document.querySelector(".cart-items");
  const totalEl = document.querySelector(".cart-total");
    
-   function shippingCost(){
+ function shippingCost(){
 
  const total = cartTotal();
 
  if(total >= 150) return 0;
 
- return 6;
+ return 8.5;
 
 }
 
@@ -169,7 +169,8 @@ const finalTotal = total + shipping;
 const shippingEl = document.querySelector(".cart-shipping");
 
 if(shippingEl){
- shippingEl.textContent = shipping === 0 ? "Gratis" : shipping + " €";
+ shippingEl.textContent =
+ shipping === 0 ? "Gratis" : shipping.toFixed(2) + " €";
 }
 
 totalEl.textContent = finalTotal + " €";
