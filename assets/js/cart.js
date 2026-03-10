@@ -257,5 +257,5 @@ function shippingCost(){
 
  if(total >= 150) return 0;
 
- return 6;
+ return 8,5;
 }
