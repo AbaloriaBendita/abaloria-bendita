@@ -259,3 +259,18 @@ function shippingCost(){
 
  return 8,5;
 }
+
+document.querySelector(".cart-checkout")?.addEventListener("click", () => {
+
+ const cart = getCart();
+
+ if(cart.length === 0){
+   alert("Tu carrito está vacío");
+   return;
+ }
+
+ document.getElementById("cart-data").value = JSON.stringify(cart);
+
+ openModal(document.getElementById("modal-prepago"));
+
+});
