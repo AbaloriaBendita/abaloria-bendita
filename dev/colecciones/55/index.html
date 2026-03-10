@@ -643,49 +643,83 @@ if (preview && img) {
 
 
    /* =========================
-         MODAL FORM PREPAGO
+         SCRIPT FORM PREPAGO
       ========================= */
- <script>
-  const prepagoForm = document.getElementById("prepago-form");
+<script>
+const prepagoForm = document.getElementById("prepago-form");
 
-  if (prepagoForm) {
-    prepagoForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
+if (prepagoForm) {
 
-      const form = e.target;
-      const fd = new FormData(form);
-      const link = fd.get("sumup_link");
+ prepagoForm.addEventListener("submit", async (e) => {
 
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.7";
-      }
+  e.preventDefault();
 
-      try {
-        const res = await fetch("/api/venta", { method: "POST", body: fd });
+  const form = e.target;
+  const fd = new FormData(form);
 
-        if (!res.ok) throw new Error("API /api/venta respondió con error");
-        window.location.href = link;
+  const cart = fd.get("cart");
+  const link = fd.get("sumup_link");
 
-      } catch (err) {
-        console.error("❌ Error prepago:", err);
-        alert("No hemos podido registrar el envío. Inténtalo de nuevo.");
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = "";
-        }
-      }
-    });
-  } else {
-    console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
+  if (submitBtn) {
+   submitBtn.disabled = true;
+   submitBtn.style.opacity = "0.7";
   }
+
+  try {
+
+   /* =========================
+      COMPRA DIRECTA
+   ========================= */
+
+   if(!cart && link){
+
+     const res = await fetch("/api/venta", {
+       method:"POST",
+       body:fd
+     });
+
+     if (!res.ok) throw new Error("API error");
+
+     window.location.href = link;
+
+     return;
+   }
+
+   /* =========================
+      CARRITO
+   ========================= */
+
+   const res = await fetch("/api/venta", {
+     method:"POST",
+     body:fd
+   });
+
+   if (!res.ok) throw new Error("API error");
+
+   const data = await res.json();
+
+   window.location.href = data.payment_url;
+
+  } catch (err) {
+
+   console.error("❌ Error checkout:", err);
+
+   alert("No hemos podido registrar el envío.");
+
+   submitBtn.disabled = false;
+   submitBtn.style.opacity = "";
+
+  }
+
+ });
+
+}
 </script>
 
-<script src="/assets/js/cart.js"></script>
-
   <!-- ================= CART PANEL ================= -->
+  <script src="/assets/js/cart.js"></script>
 
 <div class="cart-panel" id="cartPanel" aria-hidden="true">
 
