@@ -204,8 +204,8 @@ panel.setAttribute("aria-hidden","false");    }
     const panel = document.getElementById("cartPanel");
 
     if(panel){
-      panel.classList.remove("is-open");
-    }
+panel.classList.remove("is-open");
+panel.setAttribute("aria-hidden","true");    }
   }
 
 });
