@@ -288,7 +288,6 @@ document.addEventListener("click",(e)=>{
 document.addEventListener("click",(e)=>{
 
  const btn = e.target.closest(".cart-checkout");
-
  if(!btn) return;
 
  const cart = getCart();
@@ -299,13 +298,21 @@ document.addEventListener("click",(e)=>{
  }
 
  const input = document.getElementById("cart-data");
-
  if(input){
    input.value = JSON.stringify(cart);
  }
 
- const modal = document.getElementById("modal-prepago");
+ /* cerrar carrito */
 
+ const panel = document.getElementById("cartPanel");
+ if(panel){
+   panel.classList.remove("is-open");
+   panel.setAttribute("aria-hidden","true");
+ }
+
+ /* abrir modal prepago */
+
+ const modal = document.getElementById("modal-prepago");
  if(modal){
    modal.classList.add("is-open");
    modal.setAttribute("aria-hidden","false");
