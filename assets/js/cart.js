@@ -209,9 +209,17 @@ document.addEventListener("click",(e)=>{
 
  if(!item) return;
 
- if(plus) item.qty += 1;
+/* FIX qty undefined */
 
- if(minus) item.qty -= 1;
+ if(!item.qty) item.qty = 1;
+
+ if(plus){
+   item.qty += 1;
+ }
+
+ if(minus){
+   item.qty -= 1;
+ }
 
  if(remove || item.qty <= 0){
    cart = cart.filter(p => p.id !== id);
