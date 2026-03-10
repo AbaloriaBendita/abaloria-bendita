@@ -187,7 +187,9 @@ document.addEventListener("click",(e)=>{
     }
   }
 
-   /* =========================
+});
+
+/* =========================
    CART QUANTITY
 ========================= */
 
@@ -207,21 +209,15 @@ document.addEventListener("click",(e)=>{
 
  if(!item) return;
 
- if(plus){
-   item.qty += 1;
- }
+ if(plus) item.qty += 1;
 
- if(minus){
-   item.qty -= 1;
- }
+ if(minus) item.qty -= 1;
 
  if(remove || item.qty <= 0){
    cart = cart.filter(p => p.id !== id);
  }
 
  saveCart(cart);
-
  renderCart();
-});
 
 });
