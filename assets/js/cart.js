@@ -134,3 +134,37 @@ function renderCart(){
 
  totalEl.textContent = total + " €";
 }
+
+/* =========================
+   OPEN / CLOSE CART PANEL
+========================= */
+
+document.addEventListener("click",(e)=>{
+
+  const openBtn = e.target.closest(".js-open-cart");
+
+  if(openBtn){
+    e.preventDefault();
+
+    renderCart();
+
+    const panel = document.getElementById("cartPanel");
+
+    if(panel){
+      panel.classList.add("is-open");
+    }
+  }
+
+  const closeBtn =
+    e.target.closest(".cart-close") ||
+    e.target.closest(".cart-backdrop");
+
+  if(closeBtn){
+    const panel = document.getElementById("cartPanel");
+
+    if(panel){
+      panel.classList.remove("is-open");
+    }
+  }
+
+});
