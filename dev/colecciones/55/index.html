@@ -329,28 +329,34 @@ id="direccion-autocomplete-prepago"
   
 <aside id="cartPanel" class="cart-panel" aria-hidden="true">
 
-  <header class="cart-header">
-    <strong>Tu carrito</strong>
-    <button class="cart-close" aria-label="Cerrar">×</button>
-  </header>
+  <div class="cart-backdrop"></div>
 
-  <div class="cart-items"></div>
+  <div class="cart-drawer">
 
-  <div class="cart-summary">
+    <header class="cart-header">
+      <strong>Tu carrito</strong>
+      <button class="cart-close" aria-label="Cerrar">×</button>
+    </header>
 
-    <div class="cart-row">
-      <span>Envío</span>
-      <span class="cart-shipping"></span>
+    <div class="cart-items"></div>
+
+    <div class="cart-footer">
+
+      <div class="cart-row">
+        <span>Envío</span>
+        <span class="cart-shipping"></span>
+      </div>
+
+      <div class="cart-total-row">
+        <strong>Total</strong>
+        <strong class="cart-total"></strong>
+      </div>
+
+      <button class="cart-checkout cta-main">
+        Finalizar compra
+      </button>
+
     </div>
-
-    <div class="cart-row cart-total-row">
-      <strong>Total</strong>
-      <strong class="cart-total"></strong>
-    </div>
-
-    <button class="cart-checkout cta-main">
-      Finalizar compra
-    </button>
 
   </div>
 
