@@ -721,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if ((!cart || cart === "") && link) {
 
-        const res = await fetch("/api/venta", {
+        const res = await fetch("/venta", {
           method: "POST",
           body: fd
         });
@@ -738,7 +738,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (cart && cart !== "[]") {
 
-        const res = await fetch("/api/venta", {
+        const res = await fetch("/venta", {
           method: "POST",
           body: fd
         });
