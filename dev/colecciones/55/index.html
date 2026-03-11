@@ -683,13 +683,18 @@ if (preview && img) {
 
 
 <script>
-const prepagoForm = document.getElementById("prepago-form");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (prepagoForm) {
+  const prepagoForm = document.getElementById("prepago-form");
+  if (!prepagoForm) {
+    console.warn("No se encontró #prepago-form");
+    return;
+  }
 
   prepagoForm.addEventListener("submit", async (e) => {
 
     console.log("Submit checkout lanzado");
+
     e.preventDefault();
 
     const form = e.target;
@@ -727,33 +732,50 @@ if (prepagoForm) {
         return;
       }
 
-/* =========================
-   COMPRA DESDE CARRITO
-========================= */
+      /* =========================
+         COMPRA DESDE CARRITO
+      ========================= */
 
-if (cart && cart !== "[]") {
+      if (cart && cart !== "[]") {
 
-  const res = await fetch("/api/venta", {
-    method: "POST",
-    body: fd
+        const res = await fetch("/api/venta", {
+          method: "POST",
+          body: fd
+        });
+
+        const data = await res.json();
+
+        console.log("API response FULL:", data);
+
+        if (!res.ok) {
+          throw new Error(data.error || "API error");
+        }
+
+        const paymentUrl = data.payment_url;
+
+        if (!paymentUrl) {
+          throw new Error("No payment_url");
+        }
+
+        window.location.href = paymentUrl;
+      }
+
+    } catch (err) {
+
+      console.error("Checkout error:", err);
+
+      alert("No hemos podido iniciar el pago.");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "";
+      }
+
+    }
+
   });
 
-  const data = await res.json();
-
-  console.log("API response FULL:", data);
-
-  if (!res.ok) {
-    throw new Error(data.error || "API error");
-  }
-
-  const paymentUrl = data.payment_url;
-
-  if (!paymentUrl) {
-    throw new Error("No payment_url");
-  }
-
-  window.location.href = paymentUrl;
-}
+});
 </script>
   
 </body>
