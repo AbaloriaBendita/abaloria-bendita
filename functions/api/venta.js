@@ -5,7 +5,6 @@ export async function onRequestPost(context) {
   try {
 
     const formData = await request.formData();
-
     const cartRaw = formData.get("cart");
 
     if (!cartRaw) {
@@ -26,17 +25,15 @@ export async function onRequestPost(context) {
     });
 
     const shipping = total < 150 ? 8.5 : 0;
-    const finalTotal = total + shipping;
+    const finalTotal = Number((total + shipping).toFixed(2));
 
     /* =========================
-       DESCRIPCIÓN PEDIDO
+       DESCRIPCIÓN
     ========================= */
 
-    const items = cart
+    const description = cart
       .map(p => `${p.titulo} x${p.qty || 1}`)
       .join(", ");
-
-    const description = `Pedido Abaloria Bendita: ${items}`;
 
     /* =========================
        CREAR CHECKOUT SUMUP
@@ -52,49 +49,41 @@ export async function onRequestPost(context) {
       },
 
       body: JSON.stringify({
+
         checkout_reference: crypto.randomUUID(),
-        amount: Number(finalTotal.toFixed(2)),
+
+        amount: finalTotal,
+
         currency: "EUR",
-        description
+
+        description,
+
+        merchant_code: env.SUMUP_MERCHANT,
+
+        redirect_url: "https://abaloriabendita.es/gracias.html"
+
       })
 
     });
 
-    const text = await res.text();
+    const data = await res.json();
 
-    console.log("SUMUP RAW:", text);
+    console.log("SUMUP RESPONSE:", data);
 
-    let data;
-
-    try {
-      data = JSON.parse(text);
-    } catch {
-      data = {};
-    }
-
-    console.log("SUMUP PARSED:", data);
-
-    /* =========================
-       OBTENER URL PAGO
-    ========================= */
-
-    const paymentUrl =
-      data.checkout_url ||
-      data.hosted_checkout_url ||
-      data.url;
-
-    if (!paymentUrl) {
+    if (!data.id) {
 
       return new Response(JSON.stringify({
-        error: "No checkout URL",
+        error: "Checkout creation failed",
         sumup_response: data
       }), { status: 500 });
 
     }
 
     /* =========================
-       RESPUESTA FRONTEND
+       URL DE PAGO
     ========================= */
+
+    const paymentUrl = `https://checkout.sumup.com/${data.id}`;
 
     return new Response(JSON.stringify({
       payment_url: paymentUrl
@@ -102,7 +91,9 @@ export async function onRequestPost(context) {
       headers: { "Content-Type": "application/json" }
     });
 
-  } catch (err) {
+  }
+
+  catch (err) {
 
     console.error("SERVER ERROR:", err);
 
