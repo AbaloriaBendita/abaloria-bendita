@@ -97,12 +97,6 @@ try {
   data = {};
 }
     
-    let data;
-try {
-  data = JSON.parse(text);
-} catch {
-  data = {};
-}
 
     /* =========================
        COMPROBAR RESPUESTA
