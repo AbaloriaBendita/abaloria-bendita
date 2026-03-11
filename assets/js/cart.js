@@ -319,3 +319,8 @@ document.addEventListener("click",(e)=>{
  }
 
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+  renderCart();
+});
