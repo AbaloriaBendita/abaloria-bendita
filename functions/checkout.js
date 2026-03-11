@@ -1,6 +1,3 @@
-console.log("CHECKOUT API ACTIVA");
-console.log("CHECKOUT FUNCTION RUNNING");
-
 export async function onRequestPost(context) {
 
   const { request, env } = context;
@@ -71,22 +68,26 @@ export async function onRequestPost(context) {
 
     const data = await res.json();
 
-console.log("SUMUP RESPONSE:", data);
+    console.log("SUMUP RESPONSE:", data);
 
-if (!data.id) {
-  return new Response(JSON.stringify({
-    error: "Checkout creation failed",
-    sumup_response: data
-  }), { status: 500 });
-}
+    if (!data.id) {
+      return new Response(JSON.stringify({
+        error: "Checkout creation failed",
+        sumup_response: data
+      }), { status: 500 });
+    }
 
-const paymentUrl = `https://checkout.sumup.com/b2c/${data.id}`;
-    
-return new Response(JSON.stringify({
-  payment_url: paymentUrl
-}), {
-  headers: { "Content-Type": "application/json" }
-});
+    /* =========================
+       URL DE PAGO
+    ========================= */
+
+    const paymentUrl = `https://checkout.sumup.com/b2c/${data.id}`;
+
+    return new Response(JSON.stringify({
+      payment_url: paymentUrl
+    }), {
+      headers: { "Content-Type": "application/json" }
+    });
 
   }
 
