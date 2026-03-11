@@ -1,3 +1,5 @@
+console.log("CHECKOUT API ACTIVA");
+
 export async function onRequestPost(context) {
 
   const { request, env } = context;
