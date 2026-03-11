@@ -738,22 +738,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (cart && cart !== "[]") {
 
-        const res = await fetch("/api/checkout", {
-          method: "POST",
-          body: fd
-        });
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    body: fd
+  });
 
-        const data = await res.json();
+  const data = await res.json();
 
-        console.log("API response FULL:", data);
+  console.log("SUMUP DATA:", data);
 
-        if (!res.ok) {
-          throw new Error(data.error || "API error");
-        }
+  if (!res.ok) {
+    throw new Error(data.error || "API error");
+  }
 
-        const paymentUrl = `https://pay.sumup.com/b2c/${data.referencia}`;
+  if (!data.id) {
+    throw new Error("No checkout id returned");
+  }
 
-window.location.href = paymentUrl;
+  const paymentUrl = `https://checkout.sumup.com/b2c/${data.id}`;
+
+  window.location.href = paymentUrl;
+}
       }
 
     } catch (err) {
