@@ -319,6 +319,7 @@ id="direccion-autocomplete-prepago"
 </div>
 
 <script src="/assets/js/lightbox.js" defer></script>
+  <script src="/assets/js/cart.js" defer></script>
 
 <!-- ================= JS ================= -->
 
@@ -705,7 +706,7 @@ document.addEventListener("DOMContentLoaded", () => {
          COMPRA DIRECTA
       ========================= */
 
-      if (!cart && link) {
+      if ((!cart || cart === "") && link) {
 
         const res = await fetch("/api/venta", {
           method: "POST",
