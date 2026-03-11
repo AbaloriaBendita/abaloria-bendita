@@ -6,18 +6,10 @@ export async function onRequestPost(context) {
 
     const formData = await request.formData();
 
-    const nombre = formData.get("nombre") || "";
-    const email = formData.get("email") || "";
-    const telefono = formData.get("telefono") || "";
-    const direccion = formData.get("direccion") || "";
-
     const cartRaw = formData.get("cart");
 
     if (!cartRaw) {
-      return new Response(
-        JSON.stringify({ error: "Carrito vacío" }),
-        { status: 400 }
-      );
+      return new Response(JSON.stringify({ error: "Carrito vacío" }), { status: 400 });
     }
 
     const cart = JSON.parse(cartRaw);
@@ -33,31 +25,21 @@ export async function onRequestPost(context) {
       total += p.precio * qty;
     });
 
-    /* =========================
-       ENVÍO
-    ========================= */
-
-    let shipping = 0;
-
-    if (total < 150) {
-      shipping = 8.5;
-    }
-
+    const shipping = total < 150 ? 8.5 : 0;
     const finalTotal = total + shipping;
 
     /* =========================
        DESCRIPCIÓN PEDIDO
     ========================= */
 
-    const items = cart.map(p => {
-      const qty = p.qty || 1;
-      return `${p.titulo} x${qty}`;
-    }).join(", ");
+    const items = cart
+      .map(p => `${p.titulo} x${p.qty || 1}`)
+      .join(", ");
 
     const description = `Pedido Abaloria Bendita: ${items}`;
 
     /* =========================
-       SUMUP API
+       CREAR CHECKOUT SUMUP
     ========================= */
 
     const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
@@ -65,85 +47,68 @@ export async function onRequestPost(context) {
       method: "POST",
 
       headers: {
-        "Authorization": `Bearer ${env.SUMUP_API_KEY}`,
+        Authorization: `Bearer ${env.SUMUP_API_KEY}`,
         "Content-Type": "application/json"
       },
 
       body: JSON.stringify({
-
         checkout_reference: crypto.randomUUID(),
-
         amount: Number(finalTotal.toFixed(2)),
-
         currency: "EUR",
-
-        description,
-
-        merchant_code: env.SUMUP_MERCHANT
-
+        description
       })
 
     });
 
-   const text = await res.text();
+    const text = await res.text();
 
-console.log("SUMUP RESPONSE RAW:", text);
+    console.log("SUMUP RAW:", text);
 
-let data;
+    let data;
 
-try {
-  data = JSON.parse(text);
-} catch {
-  data = {};
-}
-    
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = {};
+    }
+
+    console.log("SUMUP PARSED:", data);
 
     /* =========================
-       COMPROBAR RESPUESTA
+       OBTENER URL PAGO
     ========================= */
 
-const paymentUrl =
-  data.hosted_checkout_url ||
-  data.checkout_url ||
-  data.url;
-    
+    const paymentUrl =
+      data.checkout_url ||
+      data.hosted_checkout_url ||
+      data.url;
+
     if (!paymentUrl) {
 
-      console.error("SumUp error:", data);
-
-      return new Response(
-        JSON.stringify({
-          error: "SumUp error",
-          details: data
-        }),
-        { status: 500 }
-      );
+      return new Response(JSON.stringify({
+        error: "No checkout URL",
+        sumup_response: data
+      }), { status: 500 });
 
     }
 
     /* =========================
-       RESPUESTA AL FRONTEND
+       RESPUESTA FRONTEND
     ========================= */
 
-    return new Response(
-      JSON.stringify({
-        payment_url: paymentUrl
-      }),
-      {
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
+    return new Response(JSON.stringify({
+      payment_url: paymentUrl
+    }), {
+      headers: { "Content-Type": "application/json" }
+    });
 
   } catch (err) {
 
-    console.error("Server error:", err);
+    console.error("SERVER ERROR:", err);
 
-    return new Response(
-      JSON.stringify({ error: "Server error" }),
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({
+      error: "Server error"
+    }), { status: 500 });
 
   }
 
