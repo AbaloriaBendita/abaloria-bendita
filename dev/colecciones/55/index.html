@@ -643,133 +643,90 @@ if (preview && img) {
 
 
   
-const prepagoForm = document.getElementById("prepago-form");
+document.addEventListener("DOMContentLoaded", () => {
 
-if (prepagoForm) {
+  const prepagoForm = document.getElementById("prepago-form");
 
- prepagoForm.addEventListener("submit", async (e) => {
+  if (!prepagoForm) return;
 
-  e.preventDefault();
+  prepagoForm.addEventListener("submit", async (e) => {
 
-  const form = e.target;
-  const fd = new FormData(form);
+    e.preventDefault();
 
-  const cart = fd.get("cart");
-  const link = fd.get("sumup_link");
+    const form = e.target;
+    const fd = new FormData(form);
 
-  const submitBtn = form.querySelector('button[type="submit"]');
+    const cart = fd.get("cart");
+    const link = fd.get("sumup_link");
 
-  if (submitBtn) {
-   submitBtn.disabled = true;
-   submitBtn.style.opacity = "0.7";
-  }
+    const submitBtn = form.querySelector('button[type="submit"]');
 
-  try {
-
-   /* =========================
-      COMPRA DIRECTA (1 pieza)
-   ========================= */
-
-   if(!cart && link){
-
-    const res = await fetch("/api/venta", {
-      method:"POST",
-      body:fd
-    });
-
-    if (!res.ok) throw new Error("API error");
-
-    window.location.href = link;
-
-    return;
-   }
-
-   /* =========================
-      COMPRA DESDE CARRITO
-   ========================= */
-
-   if(cart){
-
-    const res = await fetch("/api/venta", {
-      method:"POST",
-      body:fd
-    });
-
-    if (!res.ok) throw new Error("API error");
-
-    const data = await res.json();
-
-    console.log("API response:", data);
-
-    if(!data.payment_url){
-      throw new Error("No payment_url");
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = "0.7";
     }
 
-    window.location.href = data.payment_url;
+    try {
 
-    return;
+      /* =========================
+         COMPRA DIRECTA
+      ========================= */
 
-   }
+      if (!cart && link) {
 
-  } catch (err) {
+        const res = await fetch("/api/venta", {
+          method: "POST",
+          body: fd
+        });
 
-   console.error("❌ Error checkout:", err);
+        if (!res.ok) throw new Error("API error");
 
-   alert("No hemos podido registrar el envío.");
+        window.location.href = link;
 
-   if(submitBtn){
-    submitBtn.disabled = false;
-    submitBtn.style.opacity = "";
-   }
+        return;
+      }
 
-  }
+      /* =========================
+         COMPRA DESDE CARRITO
+      ========================= */
 
- });
+      if (cart) {
 
-}
-  
-  <!-- ================= CART PANEL ================= -->
-  <script src="/assets/js/cart.js"></script>
+        const res = await fetch("/api/venta", {
+          method: "POST",
+          body: fd
+        });
 
-<div class="cart-panel" id="cartPanel" aria-hidden="true">
+        if (!res.ok) throw new Error("API error");
 
-  <div class="cart-backdrop"></div>
+        const data = await res.json();
 
-  <aside class="cart-drawer">
+        console.log("API response:", data);
 
-    <header class="cart-header">
-      <h3>Tu Abaloria</h3>
-      <button class="cart-close" aria-label="Cerrar">×</button>
-    </header>
+        if (!data.payment_url) {
+          throw new Error("No payment_url");
+        }
 
-    <div class="cart-items"></div>
+        window.location.href = data.payment_url;
 
-    <footer class="cart-footer">
+      }
 
-      <div class="cart-shipping-row">
-  <span>Envío</span>
-  <span class="cart-shipping">0 €</span>
-</div>
-      
-      <div class="cart-total-row">
-        <span>Total</span>
-        <strong class="cart-total">0 €</strong>
-      </div>
+    } catch (err) {
 
-      <button class="cta-main cart-checkout">
-        Continuar compra
-      </button>
+      console.error("❌ Error checkout:", err);
 
-      <p class="cart-note">
-  Envío gratis a partir de 150 €. <br>
-  IVA incluido.
-</p>
+      alert("No hemos podido registrar el envío.");
 
-    </footer>
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "";
+      }
 
-  </aside>
+    }
 
-</div>
+  });
+
+});
   
 </body>
 </html>
