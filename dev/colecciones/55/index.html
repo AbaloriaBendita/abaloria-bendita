@@ -741,13 +741,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const data = await res.json();
 
-        console.log("API response:", data);
+console.log("API response:", data);
 
-       const paymentUrl = data.payment_url || data.checkout_url || data.url;
+const paymentUrl =
+  data.payment_url ||
+  data.checkout_url ||
+  data.url ||
+  data.checkout?.checkout_url;
 
 if (!paymentUrl) {
   console.error("API response:", data);
   throw new Error("No payment_url");
+}
+
+window.location.href = paymentUrl;
 }
 
 window.location.href = paymentUrl;
