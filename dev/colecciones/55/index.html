@@ -642,7 +642,7 @@ if (preview && img) {
 
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
   const prepagoForm = document.getElementById("prepago-form");
 
@@ -707,14 +707,13 @@ if (preview && img) {
         }
 
         window.location.href = data.payment_url;
-
       }
 
     } catch (err) {
 
-      console.error("❌ Error checkout:", err);
+      console.error("Checkout error:", err);
 
-      alert("No hemos podido registrar el envío.");
+      alert("No hemos podido iniciar el pago.");
 
       if (submitBtn) {
         submitBtn.disabled = false;
@@ -726,7 +725,7 @@ if (preview && img) {
   });
 
 });
-  </script>
+</script>
   
 </body>
 </html>
