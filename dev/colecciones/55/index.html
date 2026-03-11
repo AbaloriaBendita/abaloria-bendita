@@ -686,12 +686,11 @@ if (preview && img) {
 document.addEventListener("DOMContentLoaded", () => {
 
   const prepagoForm = document.getElementById("prepago-form");
-
   if (!prepagoForm) return;
 
   prepagoForm.addEventListener("submit", async (e) => {
-    console.log("Submit checkout lanzado");
 
+    console.log("Submit checkout lanzado");
     e.preventDefault();
 
     const form = e.target;
@@ -699,8 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cart = fd.get("cart");
     const link = fd.get("sumup_link");
+
     console.log("Cart:", cart);
-console.log("Link:", link);
+    console.log("Link:", link);
 
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -725,40 +725,56 @@ console.log("Link:", link);
         if (!res.ok) throw new Error("API error");
 
         window.location.href = link;
-
         return;
       }
 
-     /* =========================
-   COMPRA DESDE CARRITO
-========================= */
+      /* =========================
+         COMPRA DESDE CARRITO
+      ========================= */
 
-if (cart && cart !== "[]") {
+      if (cart && cart !== "[]") {
 
-  const res = await fetch("/api/venta", {
-    method: "POST",
-    body: fd
+        const res = await fetch("/api/venta", {
+          method: "POST",
+          body: fd
+        });
+
+        if (!res.ok) throw new Error("API error");
+
+        const data = await res.json();
+
+        console.log("API response:", data);
+
+        const paymentUrl =
+          data.payment_url ||
+          data.checkout_url ||
+          data.url ||
+          data.checkout?.checkout_url;
+
+        if (!paymentUrl) {
+          console.error("API response:", data);
+          throw new Error("No payment_url");
+        }
+
+        window.location.href = paymentUrl;
+      }
+
+    } catch (err) {
+
+      console.error("Checkout error:", err);
+
+      alert("No hemos podido iniciar el pago.");
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = "";
+      }
+
+    }
+
   });
 
-  if (!res.ok) throw new Error("API error");
-
-  const data = await res.json();
-
-  console.log("API response:", data);
-
-  const paymentUrl =
-    data.payment_url ||
-    data.checkout_url ||
-    data.url ||
-    data.checkout?.checkout_url;
-
-  if (!paymentUrl) {
-    console.error("API response:", data);
-    throw new Error("No payment_url");
-  }
-
-  window.location.href = paymentUrl;
-}
+});
 </script>
   
 </body>
