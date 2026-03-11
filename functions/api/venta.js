@@ -83,8 +83,8 @@ export async function onRequestPost(context) {
        URL DE PAGO
     ========================= */
 
-    const paymentUrl = `https://checkout.sumup.com/${data.id}`;
-
+const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
+    
     return new Response(JSON.stringify({
       payment_url: paymentUrl
     }), {
