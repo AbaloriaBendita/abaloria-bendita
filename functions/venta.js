@@ -68,28 +68,22 @@ export async function onRequestPost(context) {
 
     const data = await res.json();
 
-    console.log("SUMUP RESPONSE:", data);
+console.log("SUMUP RESPONSE:", data);
 
-    if (!data.id) {
-
-      return new Response(JSON.stringify({
-        error: "Checkout creation failed",
-        sumup_response: data
-      }), { status: 500 });
-
-    }
-
-    /* =========================
-       URL DE PAGO
-    ========================= */
+if (!data.id) {
+  return new Response(JSON.stringify({
+    error: "Checkout creation failed",
+    sumup_response: data
+  }), { status: 500 });
+}
 
 const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
-    
-    return new Response(JSON.stringify({
-      payment_url: paymentUrl
-    }), {
-      headers: { "Content-Type": "application/json" }
-    });
+
+return new Response(JSON.stringify({
+  payment_url: paymentUrl
+}), {
+  headers: { "Content-Type": "application/json" }
+});
 
   }
 
