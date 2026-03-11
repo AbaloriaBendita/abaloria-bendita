@@ -228,8 +228,8 @@ document.addEventListener("click",(e)=>{
   }
 
   const closeBtn =
-    e.target.closest(".cart-close") ||
-    e.target.closest(".cart-backdrop");
+  e.target.closest(".cart-close") ||
+  e.target.closest(".cart-overlay");
 
   if(closeBtn){
 
