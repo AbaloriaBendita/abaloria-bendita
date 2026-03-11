@@ -683,10 +683,9 @@ if (preview && img) {
 
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+const prepagoForm = document.getElementById("prepago-form");
 
-  const prepagoForm = document.getElementById("prepago-form");
-  if (!prepagoForm) return;
+if (prepagoForm) {
 
   prepagoForm.addEventListener("submit", async (e) => {
 
@@ -774,7 +773,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   });
 
-});
+} else {
+  console.warn("No se encontró #prepago-form");
+}
 </script>
   
 </body>
