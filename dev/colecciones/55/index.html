@@ -643,7 +643,6 @@ if (preview && img) {
 
 
   
-<script>
 const prepagoForm = document.getElementById("prepago-form");
 
 if (prepagoForm) {
@@ -667,72 +666,50 @@ if (prepagoForm) {
 
   try {
 
-   const cart = fd.get("cart");
-const link = fd.get("sumup_link");
-
-/* =========================
-   COMPRA DIRECTA
-========================= */
-
-if(!cart && link){
-
- const res = await fetch("/api/venta", {
-   method:"POST",
-   body:fd
- });
-
- if (!res.ok) throw new Error("API error");
-
- window.location.href = link;
-
- return;
-}
-
-/* =========================
-   COMPRA DESDE CARRITO
-========================= */
-
-if(cart){
-
- const res = await fetch("/api/venta", {
-   method:"POST",
-   body:fd
- });
-
- if (!res.ok) throw new Error("API error");
-
- const data = await res.json();
-
- console.log("API response:", data);
-
- if(data.payment_url){
-   window.location.href = data.payment_url;
- }
-
-}
-
    /* =========================
-      CARRITO
+      COMPRA DIRECTA (1 pieza)
    ========================= */
 
-   const res = await fetch("/api/venta", {
-     method:"POST",
-     body:fd
-   });
+   if(!cart && link){
 
-   if (!res.ok) throw new Error("API error");
+    const res = await fetch("/api/venta", {
+      method:"POST",
+      body:fd
+    });
 
-const data = await res.json();
+    if (!res.ok) throw new Error("API error");
 
-console.log("API response:", data);
+    window.location.href = link;
 
-if(!data.payment_url){
-  alert("Error creando el pago");
-  console.error(data);
-  return;
-}
+    return;
+   }
 
-   window.location.href = data.payment_url;
+   /* =========================
+      COMPRA DESDE CARRITO
+   ========================= */
+
+   if(cart){
+
+    const res = await fetch("/api/venta", {
+      method:"POST",
+      body:fd
+    });
+
+    if (!res.ok) throw new Error("API error");
+
+    const data = await res.json();
+
+    console.log("API response:", data);
+
+    if(!data.payment_url){
+      throw new Error("No payment_url");
+    }
+
+    window.location.href = data.payment_url;
+
+    return;
+
+   }
 
   } catch (err) {
 
@@ -740,16 +717,17 @@ if(!data.payment_url){
 
    alert("No hemos podido registrar el envío.");
 
-   submitBtn.disabled = false;
-   submitBtn.style.opacity = "";
+   if(submitBtn){
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "";
+   }
 
   }
 
  });
 
 }
-</script>
-
+  
   <!-- ================= CART PANEL ================= -->
   <script src="/assets/js/cart.js"></script>
 
