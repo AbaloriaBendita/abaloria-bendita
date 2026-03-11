@@ -1,4 +1,5 @@
 console.log("CHECKOUT API ACTIVA");
+console.log("CHECKOUT FUNCTION RUNNING");
 
 export async function onRequestPost(context) {
 
