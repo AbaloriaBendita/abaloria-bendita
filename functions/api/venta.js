@@ -85,11 +85,17 @@ export async function onRequestPost(context) {
 
     });
 
-    const text = await res.text();
+   const text = await res.text();
 
-    console.log("SUMUP RESPONSE RAW:", text);
+console.log("SUMUP RESPONSE RAW:", text);
 
-    const data = JSON.parse(text);
+let data;
+
+try {
+  data = JSON.parse(text);
+} catch {
+  data = {};
+}
     
     let data;
 try {
