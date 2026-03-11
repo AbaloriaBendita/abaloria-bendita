@@ -727,54 +727,32 @@ if (prepagoForm) {
         return;
       }
 
-      /* =========================
-         COMPRA DESDE CARRITO
-      ========================= */
+/* =========================
+   COMPRA DESDE CARRITO
+========================= */
 
-      if (cart && cart !== "[]") {
+if (cart && cart !== "[]") {
 
-        const res = await fetch("/api/venta", {
-          method: "POST",
-          body: fd
-        });
-
-        if (!res.ok) throw new Error("API error");
-
-console.log("API response FULL:", data);
-        
-        console.log("API response:", data);
-
-        const paymentUrl =
-          data.payment_url ||
-          data.checkout_url ||
-          data.url ||
-          data.checkout?.checkout_url;
-
-        if (!paymentUrl) {
-          console.error("API response:", data);
-          throw new Error("No payment_url");
-        }
-
-        window.location.href = paymentUrl;
-      }
-
-    } catch (err) {
-
-      console.error("Checkout error:", err);
-
-      alert("No hemos podido iniciar el pago.");
-
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = "";
-      }
-
-    }
-
+  const res = await fetch("/api/venta", {
+    method: "POST",
+    body: fd
   });
 
-} else {
-  console.warn("No se encontró #prepago-form");
+  const data = await res.json();
+
+  console.log("API response FULL:", data);
+
+  if (!res.ok) {
+    throw new Error(data.error || "API error");
+  }
+
+  const paymentUrl = data.payment_url;
+
+  if (!paymentUrl) {
+    throw new Error("No payment_url");
+  }
+
+  window.location.href = paymentUrl;
 }
 </script>
   
