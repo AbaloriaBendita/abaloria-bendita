@@ -667,23 +667,49 @@ if (prepagoForm) {
 
   try {
 
-   /* =========================
-      COMPRA DIRECTA
-   ========================= */
+   const cart = fd.get("cart");
+const link = fd.get("sumup_link");
 
-   if(!cart && link){
+/* =========================
+   COMPRA DIRECTA
+========================= */
 
-     const res = await fetch("/api/venta", {
-       method:"POST",
-       body:fd
-     });
+if(!cart && link){
 
-     if (!res.ok) throw new Error("API error");
+ const res = await fetch("/api/venta", {
+   method:"POST",
+   body:fd
+ });
 
-     window.location.href = link;
+ if (!res.ok) throw new Error("API error");
 
-     return;
-   }
+ window.location.href = link;
+
+ return;
+}
+
+/* =========================
+   COMPRA DESDE CARRITO
+========================= */
+
+if(cart){
+
+ const res = await fetch("/api/venta", {
+   method:"POST",
+   body:fd
+ });
+
+ if (!res.ok) throw new Error("API error");
+
+ const data = await res.json();
+
+ console.log("API response:", data);
+
+ if(data.payment_url){
+   window.location.href = data.payment_url;
+ }
+
+}
 
    /* =========================
       CARRITO
