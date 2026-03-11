@@ -90,13 +90,23 @@ export async function onRequestPost(context) {
     console.log("SUMUP RESPONSE RAW:", text);
 
     const data = JSON.parse(text);
+    
+    let data;
+try {
+  data = JSON.parse(text);
+} catch {
+  data = {};
+}
 
     /* =========================
        COMPROBAR RESPUESTA
     ========================= */
 
-    const paymentUrl = data.hosted_checkout_url || data.checkout_url;
-
+const paymentUrl =
+  data.hosted_checkout_url ||
+  data.checkout_url ||
+  data.url;
+    
     if (!paymentUrl) {
 
       console.error("SumUp error:", data);
