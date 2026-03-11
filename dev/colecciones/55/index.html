@@ -751,13 +751,9 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.error || "API error");
         }
 
-        const paymentUrl = data.payment_url;
+        const paymentUrl = `https://pay.sumup.com/b2c/${data.referencia}`;
 
-        if (!paymentUrl) {
-          throw new Error("No payment_url");
-        }
-
-        window.location.href = paymentUrl;
+window.location.href = paymentUrl;
       }
 
     } catch (err) {
