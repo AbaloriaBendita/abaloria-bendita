@@ -77,8 +77,8 @@ if (!data.id) {
   }), { status: 500 });
 }
 
-const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
-
+const paymentUrl = `https://checkout.sumup.com/${data.id}`;
+    
 return new Response(JSON.stringify({
   payment_url: paymentUrl
 }), {
