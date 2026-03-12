@@ -88,6 +88,8 @@ export async function onRequestPost(context) {
 
         description: description,
 
+        pay_to_email: "hola@abaloriabendita.es",
+
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
       })
@@ -128,12 +130,19 @@ export async function onRequestPost(context) {
 
     }
 
-    /* =========================
-       URL PAGO
-    ========================= */
+/* =========================
+   URL PAGO
+========================= */
 
-const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
-    
+let paymentUrl;
+
+if (data.checkout_url) {
+  paymentUrl = data.checkout_url;
+} else {
+  paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
+}
+
+console.log("PAYMENT URL:", paymentUrl);    
     return new Response(JSON.stringify({
       payment_url: paymentUrl,
       order_id: orderId
