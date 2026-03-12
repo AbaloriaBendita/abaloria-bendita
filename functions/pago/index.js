@@ -67,6 +67,9 @@ export async function onRequestPost(context) {
        CREAR CHECKOUT SUMUP
     ========================= */
 
+    console.log("FINAL TOTAL:", finalTotal);
+console.log("CART RECEIVED:", cart);
+
     const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
 
       method: "POST",
@@ -88,9 +91,7 @@ export async function onRequestPost(context) {
 
         description: description,
 
-        pay_to_email: "hola@abaloriabendita.es",
-
-        customer_email: formData.get("email"),
+  customer_email: formData.get("email"),
 
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
