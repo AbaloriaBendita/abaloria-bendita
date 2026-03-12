@@ -62,7 +62,7 @@ if (cartRaw) {
 
         description,
 
-        pay_to_email: "hola@abaloriabendita.es",
+  merchant_code: env.M78J89QZ,
 
         redirect_url: "https://abaloriabendita.es/gracias.html"
 
@@ -74,12 +74,12 @@ if (cartRaw) {
 
     console.log("SUMUP RESPONSE:", data);
 
-    if (!data.id) {
-      return new Response(JSON.stringify({
-        error: "Checkout creation failed",
-        sumup_response: data
-      }), { status: 500 });
-    }
+    return new Response(JSON.stringify({
+  debug_sumup_response: data
+}), {
+  headers: { "Content-Type": "application/json" }
+});
+    
 
     /* =========================
        URL DE PAGO
