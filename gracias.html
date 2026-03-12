@@ -107,12 +107,39 @@
     }
   </script>
 
-  <script>
-document.addEventListener("DOMContentLoaded", () => {
-  localStorage.removeItem("cart");
-});
-    if (tipo === "venta") {
+ <script>
+const params = new URLSearchParams(window.location.search);
+const tipo = params.get("tipo");
+const mensaje = document.getElementById("mensaje-dinamico");
+
+if (tipo === "venta") {
+
+  mensaje.innerHTML = `
+    Hemos recibido tu pedido correctamente.
+    <br><br>
+    En breve prepararemos tu Abaloria Bendita para el envío.
+    Recibirás confirmación por email.
+  `;
+
+  // limpiar carrito
   localStorage.removeItem("abaloria_cart");
+
+  // evento para GTM
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "venta_confirmada" });
+
+} else {
+
+  mensaje.innerHTML = `
+    Hemos recibido tu encargo de <strong>Abaloria Bendita</strong>.
+    <br><br>
+    Te escribiremos muy pronto para confirmar detalles,
+    precio y tiempos.
+  `;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: "encargo_confirmado" });
+
 }
 </script>
 
