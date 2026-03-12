@@ -58,6 +58,11 @@ export async function onRequestPost(context) {
     console.log("SUMUP MERCHANT:", env.SUMUP_MERCHANT);
     console.log("SUMUP API KEY:", env.SUMUP_API_KEY ? "OK" : "MISSING");
 
+    console.log("ENV CHECK:", {
+  merchant: env.SUMUP_MERCHANT,
+  apiKeyPresent: !!env.SUMUP_API_KEY
+});
+
     /* =========================
        CREAR CHECKOUT SUMUP
     ========================= */
