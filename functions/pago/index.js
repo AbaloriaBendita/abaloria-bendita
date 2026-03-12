@@ -13,6 +13,7 @@ export async function onRequestPost(context) {
     ========================= */
 
     const formData = await request.formData();
+
     const cartRaw = formData.get("cart");
 
     let cart = [];
@@ -22,7 +23,13 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       CALCULAR TOTAL CARRITO
+       CREAR ORDER ID
+    ========================= */
+
+    const orderId = crypto.randomUUID();
+
+    /* =========================
+       CALCULAR TOTAL
     ========================= */
 
     let total = 0;
@@ -37,7 +44,7 @@ export async function onRequestPost(context) {
     const finalTotal = Number((total + shipping).toFixed(2));
 
     /* =========================
-       DESCRIPCIÓN PAGO
+       DESCRIPCIÓN
     ========================= */
 
     const description = cart
@@ -45,12 +52,12 @@ export async function onRequestPost(context) {
       .join(", ");
 
     /* =========================
-       DEBUG VARIABLES
+       DEBUG
     ========================= */
 
+    console.log("ORDER ID:", orderId);
+    console.log("TOTAL:", finalTotal);
     console.log("SUMUP MERCHANT:", env.SUMUP_MERCHANT_CODE);
-    console.log("SUMUP API KEY:", env.SUMUP_API_KEY ? "OK" : "MISSING");
-    console.log("ORDER TOTAL:", finalTotal);
 
     /* =========================
        CREAR CHECKOUT SUMUP
@@ -67,9 +74,9 @@ export async function onRequestPost(context) {
 
       body: JSON.stringify({
 
-        checkout_reference: crypto.randomUUID(),
+        checkout_reference: orderId,
 
-        amount: Number(finalTotal),
+        amount: finalTotal,
 
         currency: "EUR",
 
@@ -77,14 +84,14 @@ export async function onRequestPost(context) {
 
         description: description,
 
-        return_url: "https://abaloriabendita.es/gracias.html?tipo=venta"
+        return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
       })
 
     });
 
     /* =========================
-       CONTROL ERROR SUMUP
+       CONTROL ERROR API
     ========================= */
 
     if (!res.ok) {
@@ -118,7 +125,7 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       GENERAR URL PAGO
+       URL DE PAGO
     ========================= */
 
     const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
@@ -128,9 +135,15 @@ export async function onRequestPost(context) {
     ========================= */
 
     return new Response(JSON.stringify({
-      payment_url: paymentUrl
+
+      payment_url: paymentUrl,
+
+      order_id: orderId
+
     }), {
+
       headers: { "Content-Type": "application/json" }
+
     });
 
   }
@@ -144,5 +157,7 @@ export async function onRequestPost(context) {
     }), { status: 500 });
 
   }
+
+}
 
 }
