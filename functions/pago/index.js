@@ -62,8 +62,6 @@ export async function onRequestPost(context) {
 
         description,
 
-        merchant_code: env.SUMUP_MERCHANT,
-
         redirect_url: "https://abaloriabendita.es/gracias.html"
 
       })
