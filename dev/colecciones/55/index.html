@@ -727,25 +727,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if ((!cart || cart === "") && link) {
 
-  const res = await fetch(`${window.location.origin}/pago`, {
-    method: "POST",
-    body: fd
-  });
-
-  const data = await res.json();
-
-  console.log("SUMUP DATA:", data);
-
-  if (!res.ok) {
-    throw new Error(data.error || "API error");
-  }
-
-  if (!data.payment_url) {
-    throw new Error("No payment_url returned");
-  }
-
-  window.location.href = data.payment_url;
+  window.location.href = link;
   return;
+
 }
       
       /* =========================
