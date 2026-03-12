@@ -81,8 +81,6 @@ merchant_code: "M78J89QZ",
         
         description: description,
 
-        pay_to_email: "hola@abaloriabendita.es",
-
         customer_email: formData.get("email"),
 
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
@@ -130,16 +128,21 @@ merchant_code: "M78J89QZ",
        URL PAGO
     ========================= */
 
-   const paymentUrl = `https://checkout.sumup.com/checkout/${data.id}`;
+   /* =========================
+   URL PAGO
+========================= */
 
-    console.log("PAYMENT URL:", paymentUrl);
+const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
 
-    return new Response(JSON.stringify({
-      payment_url: paymentUrl,
-      order_id: orderId
-    }), {
-      headers: { "Content-Type": "application/json" }
-    });
+console.log("PAYMENT URL:", paymentUrl);
+
+return new Response(JSON.stringify({
+  payment_url: paymentUrl,
+  order_id: orderId
+}), {
+  headers: { "Content-Type": "application/json" }
+});
+    
 
   } catch (err) {
 
