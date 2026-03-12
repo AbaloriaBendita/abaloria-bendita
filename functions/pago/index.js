@@ -77,8 +77,8 @@ export async function onRequestPost(context) {
 
         currency: "EUR",
 
-  pay_to_email: "hola@abaloriabendita.es",
-
+merchant_code: "M78J89QZ",
+        
         description: description,
 
         customer_email: formData.get("email"),
