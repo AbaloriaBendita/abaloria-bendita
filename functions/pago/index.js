@@ -77,7 +77,7 @@ export async function onRequestPost(context) {
 
         currency: "EUR",
 
-        merchant_code: env.SUMUP_MERCHANT,
+  pay_to_email: "hola@abaloriabendita.es",
 
         description: description,
 
