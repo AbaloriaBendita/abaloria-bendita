@@ -746,8 +746,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      console.log("CHECKOUT RESPONSE:", data);
-
+console.log("CHECKOUT RESPONSE FULL:", JSON.stringify(data, null, 2));
+      
       if (!res.ok) {
         throw new Error(data.error || "API error");
       }
