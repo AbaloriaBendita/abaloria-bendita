@@ -8,10 +8,6 @@ export async function onRequestPost(context) {
 
   try {
 
-    /* =========================
-       RECIBIR FORM DATA
-    ========================= */
-
     const formData = await request.formData();
     const cartRaw = formData.get("cart");
 
@@ -21,15 +17,7 @@ export async function onRequestPost(context) {
       cart = JSON.parse(cartRaw);
     }
 
-    /* =========================
-       ORDER ID
-    ========================= */
-
     const orderId = crypto.randomUUID();
-
-    /* =========================
-       CALCULAR TOTAL
-    ========================= */
 
     let total = 0;
 
@@ -41,26 +29,14 @@ export async function onRequestPost(context) {
     const shipping = total < 150 ? 8.5 : 0;
     const finalTotal = Number((total + shipping).toFixed(2));
 
-    /* =========================
-       DESCRIPCIÓN
-    ========================= */
-
     const description = cart
       .map(p => `${p.titulo} x${p.qty || 1}`)
       .join(", ");
 
-    /* =========================
-       DEBUG
-    ========================= */
-
     console.log("ORDER ID:", orderId);
     console.log("TOTAL:", finalTotal);
 
-    /* =========================
-       CREAR CHECKOUT SUMUP
-    ========================= */
-
-    const res = await fetch("https://api.sumup.com/v0.1/payment-links", {
+    const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
 
       method: "POST",
 
@@ -71,30 +47,21 @@ export async function onRequestPost(context) {
 
       body: JSON.stringify({
 
-  amount: finalTotal,
+        checkout_reference: orderId,
+        amount: finalTotal,
+        currency: "EUR",
+        merchant_code: "M78J89QZ",
+        description: description,
 
-  currency: "EUR",
+        redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
-  description: description,
-
-  merchant_code: "M78J89QZ",
-
-  checkout_reference: orderId,
-
-  redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
-
-})
+      })
 
     });
-
-    /* =========================
-       CONTROL ERROR API
-    ========================= */
 
     if (!res.ok) {
 
       const err = await res.text();
-
       console.error("SUMUP API ERROR:", err);
 
       return new Response(JSON.stringify({
@@ -103,10 +70,6 @@ export async function onRequestPost(context) {
       }), { status: 500 });
 
     }
-
-    /* =========================
-       RESPUESTA SUMUP
-    ========================= */
 
     const text = await res.text();
     console.log("SUMUP RAW RESPONSE:", text);
@@ -122,25 +85,16 @@ export async function onRequestPost(context) {
 
     }
 
-    /* =========================
-       URL PAGO
-    ========================= */
+    const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
 
-   /* =========================
-   URL PAGO
-========================= */
+    console.log("PAYMENT URL:", paymentUrl);
 
-const paymentUrl = data.checkout_url;
-    
-console.log("PAYMENT URL:", paymentUrl);
-
-return new Response(JSON.stringify({
-  payment_url: paymentUrl,
-  order_id: orderId
-}), {
-  headers: { "Content-Type": "application/json" }
-});
-    
+    return new Response(JSON.stringify({
+      payment_url: paymentUrl,
+      order_id: orderId
+    }), {
+      headers: { "Content-Type": "application/json" }
+    });
 
   } catch (err) {
 
