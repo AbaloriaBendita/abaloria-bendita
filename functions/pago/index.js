@@ -11,9 +11,11 @@ export async function onRequestPost(context) {
     const formData = await request.formData();
     const cartRaw = formData.get("cart");
 
-    if (!cartRaw) {
-      return new Response(JSON.stringify({ error: "Carrito vacío" }), { status: 400 });
-    }
+let cart = [];
+
+if (cartRaw) {
+  cart = JSON.parse(cartRaw);
+}
 
     const cart = JSON.parse(cartRaw);
 
