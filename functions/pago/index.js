@@ -13,7 +13,6 @@ export async function onRequestPost(context) {
     ========================= */
 
     const formData = await request.formData();
-
     const cartRaw = formData.get("cart");
 
     let cart = [];
@@ -23,7 +22,7 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       CREAR ORDER ID
+       ORDER ID
     ========================= */
 
     const orderId = crypto.randomUUID();
@@ -40,7 +39,6 @@ export async function onRequestPost(context) {
     });
 
     const shipping = total < 150 ? 8.5 : 0;
-
     const finalTotal = Number((total + shipping).toFixed(2));
 
     /* =========================
@@ -57,7 +55,8 @@ export async function onRequestPost(context) {
 
     console.log("ORDER ID:", orderId);
     console.log("TOTAL:", finalTotal);
-    console.log("SUMUP MERCHANT:", env.SUMUP_MERCHANT_CODE);
+    console.log("SUMUP MERCHANT:", env.SUMUP_MERCHANT);
+    console.log("SUMUP API KEY:", env.SUMUP_API_KEY ? "OK" : "MISSING");
 
     /* =========================
        CREAR CHECKOUT SUMUP
@@ -125,25 +124,16 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       URL DE PAGO
+       URL PAGO
     ========================= */
 
     const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
 
-    /* =========================
-       RESPUESTA AL FRONTEND
-    ========================= */
-
     return new Response(JSON.stringify({
-
       payment_url: paymentUrl,
-
       order_id: orderId
-
     }), {
-
       headers: { "Content-Type": "application/json" }
-
     });
 
   }
@@ -157,7 +147,5 @@ export async function onRequestPost(context) {
     }), { status: 500 });
 
   }
-
-}
 
 }
