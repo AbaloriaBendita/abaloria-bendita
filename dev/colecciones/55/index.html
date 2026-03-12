@@ -254,7 +254,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <form id="prepago-form" class="modal-form" method="post" action="javascript:void(0);">
   
       <input type="hidden" name="pieza_id" id="prepago-id">
-      <input type="hidden" name="sumup_link" id="prepago-link">
   <input type="hidden" name="cart" id="cart-data">
 
       <div class="form-group">
@@ -555,7 +554,6 @@ try {
 <a href="#"
  class="piece-cta js-prepago"
  data-id="${data.id}"
- data-link="${data.sumup_link}"
  data-img="${mainImg}">
 Comprar ahora
 </a>
@@ -729,7 +727,7 @@ document.addEventListener("DOMContentLoaded", () => {
          COMPRA DIRECTA
       ========================= */
 
-     if ((!cart || cart === "") && link) {
+    if ((!cart || cart === "") && link) {
 
   const res = await fetch(`${window.location.origin}/pago`, {
     method: "POST",
