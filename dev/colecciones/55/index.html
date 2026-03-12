@@ -684,6 +684,7 @@ if (preview && img) {
 document.addEventListener("DOMContentLoaded", () => {
 
   const prepagoForm = document.getElementById("prepago-form");
+
   if (!prepagoForm) {
     console.warn("No se encontró #prepago-form");
     return;
@@ -691,9 +692,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   prepagoForm.addEventListener("submit", async (e) => {
 
-    console.log("Submit checkout lanzado");
-
     e.preventDefault();
+
+    console.log("CHECKOUT START");
 
     const form = e.target;
     const fd = new FormData(form);
@@ -709,8 +710,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const cart = fd.get("cart");
+
     console.log("Cart:", cart);
-    console.log("Link:", link);
+
+    /* =========================
+       VALIDAR CARRITO
+    ========================= */
+
+    if (!cart || cart === "[]") {
+      alert("El carrito está vacío.");
+      return;
+    }
+
+    /* =========================
+       BLOQUEAR BOTÓN
+    ========================= */
 
     const submitBtn = form.querySelector('button[type="submit"]');
 
@@ -722,34 +736,7 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
 
       /* =========================
-         COMPRA DIRECTA
-      ========================= */
-
-    if ((!cart || cart === "") && link) {
-
-  window.location.href = link;
-  return;
-
-}
-      
-      /* =========================
-         VALIDAR CARRITO
-      ========================= */
-
-      if (!cart || cart === "[]") {
-
-        alert("El carrito está vacío.");
-
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = "";
-        }
-
-        return;
-      }
-
-      /* =========================
-         COMPRA DESDE CARRITO
+         CREAR CHECKOUT
       ========================= */
 
       const res = await fetch(`${window.location.origin}/pago`, {
@@ -759,7 +746,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await res.json();
 
-      console.log("SUMUP DATA:", data);
+      console.log("CHECKOUT RESPONSE:", data);
 
       if (!res.ok) {
         throw new Error(data.error || "API error");
@@ -769,13 +756,17 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("No payment_url returned");
       }
 
+      /* =========================
+         REDIRECT A SUMUP
+      ========================= */
+
       window.location.href = data.payment_url;
 
     } catch (err) {
 
-      console.error("Checkout error:", err);
+      console.error("CHECKOUT ERROR:", err);
 
-      alert("No hemos podido iniciar el pago.");
+      alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
 
       if (submitBtn) {
         submitBtn.disabled = false;
