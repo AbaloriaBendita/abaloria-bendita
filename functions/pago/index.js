@@ -85,7 +85,7 @@ if (cartRaw) {
        URL DE PAGO
     ========================= */
 
-const paymentUrl = `https://checkout.sumup.com/${data.id}`;
+const paymentUrl = data.checkout_url || data.redirect_url;
     
     return new Response(JSON.stringify({
       payment_url: paymentUrl
