@@ -17,8 +17,6 @@ if (cartRaw) {
   cart = JSON.parse(cartRaw);
 }
 
-    const cart = JSON.parse(cartRaw);
-
     /* =========================
        CALCULAR TOTAL
     ========================= */
