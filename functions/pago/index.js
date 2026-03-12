@@ -73,6 +73,8 @@ export async function onRequestPost(context) {
 
         checkout_reference: orderId,
 
+        checkout_type: "WEB",
+
         amount: finalTotal,
 
         currency: "EUR",
@@ -132,8 +134,8 @@ redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderI
    URL PAGO
 ========================= */
 
-const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
-
+const paymentUrl = `https://checkout.sumup.com/checkout/${data.id}`;
+    
 console.log("PAYMENT URL:", paymentUrl);
 
 return new Response(JSON.stringify({
