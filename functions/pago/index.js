@@ -130,7 +130,7 @@ export async function onRequestPost(context) {
    URL PAGO
 ========================= */
 
-const paymentUrl = `https://checkout.sumup.com/checkout/${data.id}`;
+const paymentUrl = data.checkout_url;
     
 console.log("PAYMENT URL:", paymentUrl);
 
