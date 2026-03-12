@@ -700,6 +700,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = e.target;
     const fd = new FormData(form);
 
+    /* =========================
+       AÑADIR CARRITO DESDE LOCALSTORAGE
+    ========================= */
+
+    const cartLS = localStorage.getItem("cart");
+
+    if (cartLS) {
+      fd.set("cart", cartLS);
+    }
+
     const cart = fd.get("cart");
     const link = fd.get("sumup_link");
 
@@ -733,31 +743,43 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       /* =========================
+         VALIDAR CARRITO
+      ========================= */
+
+      if (!cart || cart === "[]") {
+
+        alert("El carrito está vacío.");
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "";
+        }
+
+        return;
+      }
+
+      /* =========================
          COMPRA DESDE CARRITO
       ========================= */
 
-      if (cart && cart !== "[]") {
+      const res = await fetch(`${window.location.origin}/pago`, {
+        method: "POST",
+        body: fd
+      });
 
-  const res = await fetch(`${window.location.origin}/pago`, {
-    method: "POST",
-    body: fd
-  });
+      const data = await res.json();
 
-  const data = await res.json();
+      console.log("SUMUP DATA:", data);
 
-  console.log("SUMUP DATA:", data);
-
-  if (!res.ok) {
-    throw new Error(data.error || "API error");
-  }
-
-  if (!data.payment_url) {
-  throw new Error("No payment_url returned");
-}
-
-window.location.href = data.payment_url;
-}
+      if (!res.ok) {
+        throw new Error(data.error || "API error");
       }
+
+      if (!data.payment_url) {
+        throw new Error("No payment_url returned");
+      }
+
+      window.location.href = data.payment_url;
 
     } catch (err) {
 
