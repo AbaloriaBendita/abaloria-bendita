@@ -1,3 +1,7 @@
+export function onRequestGet() {
+  return new Response("PAGO OK");
+}
+
 export async function onRequestPost(context) {
 
   const { request, env } = context;
