@@ -62,7 +62,7 @@ export async function onRequestPost(context) {
 
         description,
 
-        pay_to_email: "hola@abaloriabendita.es"
+        pay_to_email: "hola@abaloriabendita.es",
 
         redirect_url: "https://abaloriabendita.es/gracias.html"
 
