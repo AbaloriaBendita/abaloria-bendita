@@ -721,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if ((!cart || cart === "") && link) {
 
-        const res = await fetch("/pago", {
+        const res = await fetch(`${window.location.origin}/pago`, {
           method: "POST",
           body: fd
         });
@@ -738,7 +738,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (cart && cart !== "[]") {
 
-  const res = await fetch("/pago", {
+  const res = await fetch(`${window.location.origin}/pago`, {
     method: "POST",
     body: fd
   });
@@ -751,13 +751,11 @@ document.addEventListener("DOMContentLoaded", () => {
     throw new Error(data.error || "API error");
   }
 
-  if (!data.id) {
-    throw new Error("No checkout id returned");
-  }
+  if (!data.payment_url) {
+  throw new Error("No payment_url returned");
+}
 
-  const paymentUrl = `https://checkout.sumup.com/b2c/${data.id}`;
-
-  window.location.href = paymentUrl;
+window.location.href = data.payment_url;
 }
       }
 
