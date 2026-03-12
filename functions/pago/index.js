@@ -128,9 +128,9 @@ merchant_code: "M78J89QZ",
        URL PAGO
     ========================= */
 
-    const paymentUrl =
-      data.checkout_url ||
-      `https://checkout.sumup.com/checkout/${data.id}`;
+   const paymentUrl =
+  data.checkout_url ||
+  `https://pay.sumup.com/b2c/${data.id}`;
 
     console.log("PAYMENT URL:", paymentUrl);
 
