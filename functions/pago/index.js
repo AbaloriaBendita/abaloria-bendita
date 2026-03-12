@@ -119,8 +119,10 @@ export async function onRequestPost(context) {
        RESPUESTA SUMUP
     ========================= */
 
-    const data = await res.json();
+const text = await res.text();
+console.log("SUMUP RAW RESPONSE:", text);
 
+const data = JSON.parse(text);
     console.log("SUMUP RESPONSE:", data);
 
     if (!data.id) {
