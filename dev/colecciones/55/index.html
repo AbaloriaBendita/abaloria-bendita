@@ -646,15 +646,8 @@ ${variacionesCTA}
       e.preventDefault();
 
       const id = (btn.dataset.id || "").trim();
-      const link = (btn.dataset.link || "").trim();
-
-      if(!link){
-        alert("Este producto aún no tiene link de pago.");
-        return;
-      }
 
       document.getElementById("prepago-id").value = id + "-A";
-      document.getElementById("prepago-link").value = link;
 
      const img = btn.dataset.img || "";
 const preview = document.getElementById("prepago-img-preview");
