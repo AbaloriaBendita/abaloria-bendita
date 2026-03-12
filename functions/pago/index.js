@@ -49,7 +49,7 @@ export async function onRequestPost(context) {
         checkout_reference: crypto.randomUUID(),
         amount: finalTotal,
         currency: "EUR",
-        merchant_code: "MH4H92C7",
+merchant_code: env.SUMUP_MERCHANT_CODE,
         description: description,
         redirect_url: "https://abaloriabendita.es/gracias.html?tipo=venta"
       })
