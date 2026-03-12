@@ -81,6 +81,8 @@ merchant_code: "M78J89QZ",
         
         description: description,
 
+        pay_to_email: "hola@abaloriabendita.es",
+
         customer_email: formData.get("email"),
 
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
