@@ -60,7 +60,7 @@ export async function onRequestPost(context) {
        CREAR CHECKOUT SUMUP
     ========================= */
 
-    const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
+    const res = await fetch("https://api.sumup.com/v0.1/payment-links", {
 
       method: "POST",
 
@@ -71,23 +71,19 @@ export async function onRequestPost(context) {
 
       body: JSON.stringify({
 
-        checkout_reference: orderId,
+  amount: finalTotal,
 
-        checkout_type: "WEB",
+  currency: "EUR",
 
-        amount: finalTotal,
+  description: description,
 
-        currency: "EUR",
+  merchant_code: "M78J89QZ",
 
-merchant_code: "M78J89QZ",
-        
-        description: description,
+  checkout_reference: orderId,
 
-        customer_email: formData.get("email"),
+  redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
-redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
-        
-      })
+})
 
     });
 
