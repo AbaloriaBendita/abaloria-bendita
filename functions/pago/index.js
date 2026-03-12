@@ -35,7 +35,7 @@ export async function onRequestPost(context) {
 
     cart.forEach(p => {
       const qty = p.qty || 1;
-      total += p.precio * qty;
+      total += Number(p.precio) * qty;
     });
 
     const shipping = total < 150 ? 8.5 : 0;
@@ -55,20 +55,10 @@ export async function onRequestPost(context) {
 
     console.log("ORDER ID:", orderId);
     console.log("TOTAL:", finalTotal);
-    console.log("SUMUP MERCHANT:", env.SUMUP_MERCHANT);
-    console.log("SUMUP API KEY:", env.SUMUP_API_KEY ? "OK" : "MISSING");
-
-    console.log("ENV CHECK:", {
-  merchant: env.SUMUP_MERCHANT,
-  apiKeyPresent: !!env.SUMUP_API_KEY
-});
 
     /* =========================
        CREAR CHECKOUT SUMUP
     ========================= */
-
-    console.log("FINAL TOTAL:", finalTotal);
-console.log("CART RECEIVED:", cart);
 
     const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
 
@@ -91,7 +81,7 @@ console.log("CART RECEIVED:", cart);
 
         description: description,
 
-  customer_email: formData.get("email"),
+        customer_email: formData.get("email"),
 
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
@@ -120,11 +110,10 @@ console.log("CART RECEIVED:", cart);
        RESPUESTA SUMUP
     ========================= */
 
-const text = await res.text();
-console.log("SUMUP RAW RESPONSE:", text);
+    const text = await res.text();
+    console.log("SUMUP RAW RESPONSE:", text);
 
-const data = JSON.parse(text);
-    console.log("SUMUP RESPONSE:", data);
+    const data = JSON.parse(text);
 
     if (!data.id) {
 
@@ -135,19 +124,16 @@ const data = JSON.parse(text);
 
     }
 
-/* =========================
-   URL PAGO
-========================= */
+    /* =========================
+       URL PAGO
+    ========================= */
 
-let paymentUrl;
+    const paymentUrl =
+      data.checkout_url ||
+      `https://checkout.sumup.com/checkout/${data.id}`;
 
-if (data.checkout_url) {
-  paymentUrl = data.checkout_url;
-} else {
-  paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
-}
+    console.log("PAYMENT URL:", paymentUrl);
 
-console.log("PAYMENT URL:", paymentUrl);    
     return new Response(JSON.stringify({
       payment_url: paymentUrl,
       order_id: orderId
@@ -155,9 +141,7 @@ console.log("PAYMENT URL:", paymentUrl);
       headers: { "Content-Type": "application/json" }
     });
 
-  }
-
-  catch (err) {
+  } catch (err) {
 
     console.error("SERVER ERROR:", err);
 
