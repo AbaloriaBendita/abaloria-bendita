@@ -80,7 +80,7 @@ export async function onRequestPost(context) {
 
         currency: "EUR",
 
-        merchant_code: env.SUMUP_MERCHANT_CODE,
+        merchant_code: env.SUMUP_MERCHANT,
 
         description: description,
 
