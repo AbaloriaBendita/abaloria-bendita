@@ -111,7 +111,11 @@
 document.addEventListener("DOMContentLoaded", () => {
   localStorage.removeItem("cart");
 });
+    if (tipo === "venta") {
+  localStorage.removeItem("abaloria_cart");
+}
 </script>
+
 
 </body>
 </html>
