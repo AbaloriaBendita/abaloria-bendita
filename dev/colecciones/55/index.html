@@ -729,19 +729,29 @@ document.addEventListener("DOMContentLoaded", () => {
          COMPRA DIRECTA
       ========================= */
 
-      if ((!cart || cart === "") && link) {
+     if ((!cart || cart === "") && link) {
 
-        const res = await fetch(`${window.location.origin}/pago`, {
-          method: "POST",
-          body: fd
-        });
+  const res = await fetch(`${window.location.origin}/pago`, {
+    method: "POST",
+    body: fd
+  });
 
-        if (!res.ok) throw new Error("API error");
+  const data = await res.json();
 
-        window.location.href = link;
-        return;
-      }
+  console.log("SUMUP DATA:", data);
 
+  if (!res.ok) {
+    throw new Error(data.error || "API error");
+  }
+
+  if (!data.payment_url) {
+    throw new Error("No payment_url returned");
+  }
+
+  window.location.href = data.payment_url;
+  return;
+}
+      
       /* =========================
          VALIDAR CARRITO
       ========================= */
