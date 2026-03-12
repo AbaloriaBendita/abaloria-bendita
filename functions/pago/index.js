@@ -90,6 +90,8 @@ export async function onRequestPost(context) {
 
         pay_to_email: "hola@abaloriabendita.es",
 
+        customer_email: formData.get("email"),
+
         return_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
 
       })
