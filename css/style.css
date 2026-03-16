@@ -3880,7 +3880,7 @@ flex:1;
 }
 
 .piece-cta-outline{
- padding:7px 15px;
+ padding:0 16px;
 
  background:#fff;
  border:2px solid #6ea0c8;
@@ -3909,5 +3909,14 @@ flex:1;
   color:var(--blue);
   cursor:pointer;
 }
+}
+
+.piece-cta,
+.piece-cta-outline{
+  box-sizing:border-box;
+  height:36px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
 }
 
