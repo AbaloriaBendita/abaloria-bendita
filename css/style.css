@@ -3888,7 +3888,7 @@ flex:1;
  border-radius:999px;
 
  color:#6ea0c8;
- font-weight:600;
+ font-weight:500;
 
  cursor:pointer;
  transition:.2s;
@@ -3921,8 +3921,8 @@ flex:1;
 }
 
 .cart-mini{
- width:16px;
- height:16px;
+ width:14px;
+ height:14px;
  margin-right:6px;
 }
 
@@ -3930,6 +3930,6 @@ flex:1;
  display:inline-flex;
  align-items:center;
  gap:6px;
- font-size:13px;
+ font-size:12px;
 }
 
