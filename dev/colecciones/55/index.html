@@ -573,12 +573,11 @@ try {
     : "";
 
  cta = `
-<a href="#"
- class="piece-cta js-prepago"
- data-id="${data.id}"
- data-img="${mainImg}">
+<div class="piece-ctas">
+
+<button class="piece-cta-buy">
 Comprar ahora
-</a>
+</button>
 
 <button
  class="piece-cta-cart js-add-cart"
@@ -586,8 +585,10 @@ Comprar ahora
  data-title="${data.titulo}"
  data-price="${data.precio}"
  data-img="${mainImg}">
-Añadir al carrito
++
 </button>
+
+</div>
 
 ${variacionesCTA}
 `;
