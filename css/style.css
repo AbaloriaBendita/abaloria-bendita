@@ -3829,10 +3829,6 @@ flex:1;
 
 @media (max-width:768px){
 
-.nav-link{
- display:none;
-}
-
 .lang-switch{
  display:none;
 }
@@ -3849,8 +3845,6 @@ flex:1;
 
 .nav-left{
   display:none;
-  display:flex;
-  align-items:center;
 }
 
 .lang-switch{
@@ -3869,4 +3863,12 @@ flex:1;
     display:block;
   }
 
+}
+
+.mobile-menu{
+  display:none;
+}
+
+.mobile-menu.is-open{
+  display:block;
 }
