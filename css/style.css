@@ -3630,6 +3630,8 @@ body{
   background:#f5f5f5;
 
   transition:all .25s ease;
+   margin-left:10px;
+   background:#f3f3f3;
 }
 
 .cart-icon:hover{
@@ -3823,4 +3825,22 @@ gap:12px;
 
 .form-row .form-group{
 flex:1;
+}
+
+.header-actions{
+ display:flex;
+ align-items:center;
+ gap:22px;
+}
+
+@media (max-width:768px){
+
+.nav-link{
+ display:none;
+}
+
+.lang-switch{
+ display:none;
+}
+
 }
