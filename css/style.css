@@ -3920,3 +3920,16 @@ flex:1;
   align-items:center;
 }
 
+.cart-mini{
+ width:16px;
+ height:16px;
+ margin-right:6px;
+}
+
+.piece-cta-outline{
+ display:inline-flex;
+ align-items:center;
+ gap:6px;
+ font-size:13px;
+}
+
