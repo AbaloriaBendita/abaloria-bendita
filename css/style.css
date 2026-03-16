@@ -3873,3 +3873,29 @@ flex:1;
   display:block;
 }
 
+.piece-ctas{
+ display:flex;
+ gap:10px;
+ margin-top:10px;
+}
+
+.piece-cta-outline{
+ padding:10px 16px;
+
+ background:#fff;
+ border:2px solid #6ea0c8;
+
+ border-radius:999px;
+
+ color:#6ea0c8;
+ font-weight:600;
+
+ cursor:pointer;
+ transition:.2s;
+}
+
+.piece-cta-outline:hover{
+ background:#6ea0c8;
+ color:#fff;
+}
+
