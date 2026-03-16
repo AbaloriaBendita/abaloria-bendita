@@ -3849,6 +3849,8 @@ flex:1;
 
 .nav-left{
   display:none;
+  display:flex;
+  align-items:center;
 }
 
 .lang-switch{
