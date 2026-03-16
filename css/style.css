@@ -3770,3 +3770,12 @@ body{
  cursor:pointer;
  margin-left:8px;
 }
+
+.form-row{
+display:flex;
+gap:12px;
+}
+
+.form-row .form-group{
+flex:1;
+}
