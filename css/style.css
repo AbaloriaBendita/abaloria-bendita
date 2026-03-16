@@ -3844,3 +3844,9 @@ flex:1;
 }
 
 }
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
