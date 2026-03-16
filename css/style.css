@@ -3872,3 +3872,32 @@ flex:1;
 .mobile-menu.is-open{
   display:block;
 }
+
+/* ================= ADD TO CART ================= */
+
+.piece-cta-cart{
+  width:100%;
+  margin-top:10px;
+  padding:12px 16px;
+
+  border-radius:8px;
+
+  background:#fff;
+  border:1px solid #bbb;
+
+  font-family:'Plus Jakarta Sans', sans-serif;
+  font-size:14px;
+  font-weight:600;
+
+  color:#333;
+
+  cursor:pointer;
+
+  transition:all .2s ease;
+}
+
+.piece-cta-cart:hover{
+  background:#000;
+  color:#fff;
+  border-color:#000;
+}
