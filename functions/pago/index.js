@@ -17,6 +17,12 @@ export async function onRequestPost(context) {
       cart = JSON.parse(cartRaw);
     }
 
+    if (!cart.length) {
+      return new Response(JSON.stringify({
+        error: "Cart vacío"
+      }), { status: 400 });
+    }
+
     const orderId = crypto.randomUUID();
 
     let total = 0;
@@ -36,56 +42,56 @@ export async function onRequestPost(context) {
     console.log("ORDER ID:", orderId);
     console.log("TOTAL:", finalTotal);
 
-    const res = await fetch("https://api.sumup.com/v0.1/checkouts", {
+    /* =========================
+       SQUARE PAYMENT LINK
+    ========================= */
 
+    const res = await fetch("https://connect.squareupsandbox.com/v2/online-checkout/payment-links", {
       method: "POST",
-
       headers: {
-        Authorization: `Bearer ${env.SUMUP_API_KEY}`,
-        "Content-Type": "application/json"
+        "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+        "Square-Version": "2024-06-04"
       },
-
       body: JSON.stringify({
+        idempotency_key: crypto.randomUUID(),
 
-        checkout_reference: orderId,
-        amount: finalTotal,
-        currency: "EUR",
-        merchant_code: "M78J89QZ",
-        description: description,
+        quick_pay: {
+          name: description || "Abaloria Bendita",
+          price_money: {
+            amount: Math.round(finalTotal * 100),
+            currency: "EUR"
+          },
+          location_id: "L3YB8BGWFR7VJ"
+        },
 
-        redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
-
+        checkout_options: {
+          redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
+        }
       })
-
     });
 
     if (!res.ok) {
 
       const err = await res.text();
-      console.error("SUMUP API ERROR:", err);
+      console.error("SQUARE API ERROR:", err);
 
       return new Response(JSON.stringify({
-        error: "SumUp API error",
+        error: "Square API error",
         details: err
       }), { status: 500 });
 
     }
 
-    const text = await res.text();
-    console.log("SUMUP RAW RESPONSE:", text);
+    const data = await res.json();
 
-    const data = JSON.parse(text);
+    console.log("SQUARE RESPONSE:", data);
 
-    if (!data.id) {
-
-      return new Response(JSON.stringify({
-        error: "SumUp did not return checkout id",
-        sumup_response: data
-      }), { status: 500 });
-
+    if (!data.payment_link || !data.payment_link.url) {
+      throw new Error("No payment link returned");
     }
 
-    const paymentUrl = `https://pay.sumup.com/b2c/${data.id}`;
+    const paymentUrl = data.payment_link.url;
 
     console.log("PAYMENT URL:", paymentUrl);
 
@@ -101,7 +107,8 @@ export async function onRequestPost(context) {
     console.error("SERVER ERROR:", err);
 
     return new Response(JSON.stringify({
-      error: "Server error"
+      error: "Server error",
+      message: err.message
     }), { status: 500 });
 
   }
