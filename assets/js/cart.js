@@ -14,25 +14,7 @@ function saveCart(cart){
 }
 
 /* =========================
-   TOTAL (legacy, opcional)
-========================= */
-
-function cartTotal(){
-  const cart = getCart();
-  return cart.reduce((t,p)=> t + p.precio * (p.qty || 1),0);
-}
-
-/* =========================
-   SHIPPING (legacy)
-========================= */
-
-function shippingCost(){
-  const total = cartTotal();
-  return total >= 150 ? 0 : 8.5;
-}
-
-/* =========================
-   NUEVO CÁLCULO CENTRAL
+   CÁLCULO CENTRAL
 ========================= */
 
 function calcularTotales(cart){
@@ -100,11 +82,8 @@ function addToCart(item){
 ========================= */
 
 function removeFromCart(id){
-
   const cart = getCart().filter(p => p.id !== id);
-
   saveCart(cart);
-
 }
 
 /* =========================
@@ -124,7 +103,6 @@ function renderCart(){
 
   container.innerHTML = "";
 
-  /* 🔥 cálculo único */
   const totales = calcularTotales(cart);
 
   cart.forEach(p=>{
@@ -136,29 +114,21 @@ function renderCart(){
 
     el.innerHTML = `
       <img src="${p.img}" alt="">
-
       <div class="cart-item-info">
-
         <strong>${p.titulo}</strong>
 
         <div class="cart-qty">
-
           <button class="cart-minus" data-id="${p.id}">−</button>
-
           <span>${p.qty}</span>
-
           <button class="cart-plus" data-id="${p.id}">+</button>
-
           <button class="cart-remove" data-id="${p.id}">
             eliminar
           </button>
-
         </div>
 
         <div class="cart-price">
           ${p.qty} × ${p.precio} €
         </div>
-
       </div>
     `;
 
@@ -166,9 +136,7 @@ function renderCart(){
 
   });
 
-  /* =========================
-     PINTAR TOTALES
-  ========================= */
+  /* Totales */
 
   if(ivaEl){
     ivaEl.textContent = totales.iva.toFixed(2) + " €";
@@ -225,6 +193,45 @@ document.addEventListener("click",(e)=>{
 });
 
 /* =========================
+   COMPRA DIRECTA (🔥 NUEVO)
+========================= */
+
+document.addEventListener("click",(e)=>{
+
+  const btn = e.target.closest(".js-prepago");
+  if(!btn) return;
+
+  e.preventDefault();
+
+  const producto = {
+    id: btn.dataset.id,
+    titulo: btn.dataset.title,
+    precio: Number(btn.dataset.price),
+    img: btn.dataset.img,
+    qty: 1
+  };
+
+  /* 🔥 guardamos modo single */
+  localStorage.setItem("checkout_mode", "single");
+  localStorage.setItem("checkout_single", JSON.stringify([producto]));
+
+  /* abrir modal */
+
+  const modal = document.getElementById("modal-prepago");
+
+  if(modal){
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden","false");
+  }
+
+  /* render resumen */
+  if (typeof renderPrepagoSummary === "function") {
+    renderPrepagoSummary();
+  }
+
+});
+
+/* =========================
    OPEN / CLOSE CART PANEL
 ========================= */
 
@@ -257,7 +264,6 @@ document.addEventListener("click",(e)=>{
 
     if(panel){
       panel.classList.remove("is-open");
-      document.activeElement.blur();
       panel.setAttribute("aria-hidden","true");
     }
 
@@ -295,13 +301,12 @@ document.addEventListener("click",(e)=>{
   }
 
   saveCart(cart);
-
   renderCart();
 
 });
 
 /* =========================
-   CHECKOUT
+   CHECKOUT CARRITO
 ========================= */
 
 document.addEventListener("click",(e)=>{
@@ -316,6 +321,9 @@ document.addEventListener("click",(e)=>{
     return;
   }
 
+  /* 🔥 modo carrito */
+  localStorage.setItem("checkout_mode", "cart");
+
   const input = document.getElementById("cart-data");
   if(input){
     input.value = JSON.stringify(cart);
@@ -329,16 +337,19 @@ document.addEventListener("click",(e)=>{
     panel.setAttribute("aria-hidden","true");
   }
 
-  /* abrir modal prepago */
+  /* abrir modal */
 
   const modal = document.getElementById("modal-prepago");
+
   if(modal){
     modal.classList.add("is-open");
     modal.setAttribute("aria-hidden","false");
   }
 
-   if (typeof renderPrepagoSummary === "function") {
-  renderPrepagoSummary();
-}
+  /* render resumen */
+
+  if (typeof renderPrepagoSummary === "function") {
+    renderPrepagoSummary();
+  }
 
 });
