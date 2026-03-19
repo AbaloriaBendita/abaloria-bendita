@@ -193,45 +193,6 @@ document.addEventListener("click",(e)=>{
 });
 
 /* =========================
-   COMPRA DIRECTA (🔥 NUEVO)
-========================= */
-
-document.addEventListener("click",(e)=>{
-
-  const btn = e.target.closest(".js-prepago");
-  if(!btn) return;
-
-  e.preventDefault();
-
-  const producto = {
-    id: btn.dataset.id,
-    titulo: btn.dataset.title,
-    precio: Number(btn.dataset.price),
-    img: btn.dataset.img,
-    qty: 1
-  };
-
-  /* 🔥 guardamos modo single */
-  localStorage.setItem("checkout_mode", "single");
-  localStorage.setItem("checkout_single", JSON.stringify([producto]));
-
-  /* abrir modal */
-
-  const modal = document.getElementById("modal-prepago");
-
-  if(modal){
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden","false");
-  }
-
-  /* render resumen */
-  if (typeof renderPrepagoSummary === "function") {
-    renderPrepagoSummary();
-  }
-
-});
-
-/* =========================
    OPEN / CLOSE CART PANEL
 ========================= */
 
