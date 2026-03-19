@@ -762,7 +762,31 @@ if (preview && img) {
   });
 </script>
 
+<script>
+function calcularTotales(cart){
 
+  let subtotal = 0;
+
+  cart.forEach(p => {
+    const qty = p.qty || 1;
+    subtotal += Number(p.precio) * qty;
+  });
+
+  const iva = subtotal * 0.21 / 1.21;
+  const base = subtotal - iva;
+  const shipping = subtotal >= 150 ? 0 : 8.5;
+  const total = subtotal + shipping;
+
+  return {
+    base,
+    iva,
+    subtotal,
+    shipping,
+    total
+  };
+}
+</script>
+  
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -787,6 +811,15 @@ document.addEventListener("DOMContentLoaded", () => {
     ========================= */
 
 const cartLS = localStorage.getItem("abaloria_cart");
+
+    const cartParsed = JSON.parse(cartLS || "[]");
+const totales = calcularTotales(cartParsed);
+
+document.querySelector(".prepago-subtotal").textContent = totales.subtotal.toFixed(2) + " €";
+document.querySelector(".prepago-iva").textContent = totales.iva.toFixed(2) + " €";
+document.querySelector(".prepago-shipping").textContent =
+  totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
+document.querySelector(".prepago-total").textContent = totales.total.toFixed(2) + " €";
     
     if (cartLS) {
       fd.set("cart", cartLS);
