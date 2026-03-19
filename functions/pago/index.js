@@ -79,7 +79,7 @@ export async function onRequestPost(context) {
             amount: Math.round(finalTotal * 100),
             currency: "EUR"
           },
-          location_id: "L3YB8BGWFR7VJ" // luego lo cambiaremos
+          location_id: "LF3CF7RXP1BDT"
         },
 
         checkout_options: {
