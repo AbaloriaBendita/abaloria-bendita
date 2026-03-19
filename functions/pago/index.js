@@ -64,30 +64,33 @@ export async function onRequestPost(context) {
     console.log("TOTAL:", finalTotal);
 
     const res = await fetch("https://connect.squareup.com/v2/online-checkout/payment-links", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
-        "Square-Version": "2024-06-04"
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+    "Content-Type": "application/json",
+    "Square-Version": "2024-06-04"
+  },
+  body: JSON.stringify({
+    idempotency_key: crypto.randomUUID(),
+
+    quick_pay: {
+      name: description || "Abaloria Bendita",
+      price_money: {
+        amount: Math.round(finalTotal * 100),
+        currency: "EUR"
       },
-      body: JSON.stringify({
-        idempotency_key: crypto.randomUUID(),
+      location_id: "LF3CF7RXP1BDT"
+    },
 
-        quick_pay: {
-          name: description || "Abaloria Bendita",
-          price_money: {
-            amount: Math.round(finalTotal * 100),
-            currency: "EUR"
-          },
-          location_id: "LF3CF7RXP1BDT"
-        },
-
-        checkout_options: {
-          redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`
-        }
-      })
-    });
-
+    checkout_options: {
+      redirect_url: `https://abaloriabendita.es/gracias.html?tipo=venta&order=${orderId}`,
+      ask_for_shipping_address: false,
+      ask_for_email: true,
+      allow_tipping: false
+    }
+  })
+});
+    
     if (!res.ok) {
 
       const err = await res.text();
