@@ -806,6 +806,31 @@ function calcularTotales(cart){
   };
 }
 </script>
+
+  <script>
+  function renderPrepagoSummary(){
+
+  const cartLS = localStorage.getItem("abaloria_cart");
+  const cartParsed = JSON.parse(cartLS || "[]");
+
+  if (!cartParsed.length) return;
+
+  const totales = calcularTotales(cartParsed);
+
+  const subtotalEl = document.querySelector(".prepago-subtotal");
+  const ivaEl = document.querySelector(".prepago-iva");
+  const shippingEl = document.querySelector(".prepago-shipping");
+  const totalEl = document.querySelector(".prepago-total");
+
+  if(subtotalEl) subtotalEl.textContent = totales.subtotal.toFixed(2) + " €";
+  if(ivaEl) ivaEl.textContent = totales.iva.toFixed(2) + " €";
+  if(shippingEl) shippingEl.textContent =
+    totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
+  if(totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
+
+}
+    </script>
+
   
 <script>
 document.addEventListener("DOMContentLoaded", () => {
