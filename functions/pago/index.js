@@ -13,6 +13,37 @@ export async function onRequestPost(context) {
       cart = JSON.parse(cartRaw);
     }
 
+    const nombre = formData.get("nombre");
+const email = formData.get("email");
+
+/* =========================
+   EMAIL LEAD (RESEND)
+========================= */
+
+try {
+  await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: "Abaloria <no-reply@abaloriabendita.es>",
+      to: ["hola@abaloriabendita.es"],
+      subject: "Nuevo pedido Abaloria",
+      html: `
+        <h2>Nuevo pedido</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Pedido:</strong></p>
+        <pre>${JSON.stringify(cart, null, 2)}</pre>
+      `
+    })
+  });
+} catch (err) {
+  console.error("ERROR EMAIL:", err);
+}
+
     if (!cart.length) {
       return new Response(JSON.stringify({
         error: "Cart vacío"
