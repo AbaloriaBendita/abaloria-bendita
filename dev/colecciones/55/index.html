@@ -723,105 +723,98 @@ ${variacionesCTA}
 });
 </script>
 
-  <script>
-  function openModal(modal){
-    if(!modal) return;
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-  }
-
-  function closeModal(modal){
-    if(!modal) return;
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
-  }
-
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".js-prepago");
-    if (btn) {
-      e.preventDefault();
-
-      const id = (btn.dataset.id || "").trim();
-
-      document.getElementById("prepago-id").value = id + "-A";
-
-      /* =========================
-   CALCULAR TOTALES PREPAGO
-========================= */
-
-const cartLS = localStorage.getItem("abaloria_cart");
-const cartParsed = JSON.parse(cartLS || "[]");
-
-const totales = calcularTotales(cartParsed);
-
-const subtotalEl = document.querySelector(".prepago-subtotal");
-const ivaEl = document.querySelector(".prepago-iva");
-const shippingEl = document.querySelector(".prepago-shipping");
-const totalEl = document.querySelector(".prepago-total");
-
-if(subtotalEl) subtotalEl.textContent = totales.subtotal.toFixed(2) + " €";
-if(ivaEl) ivaEl.textContent = totales.iva.toFixed(2) + " €";
-if(shippingEl) shippingEl.textContent =
-  totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
-if(totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
-
-     const img = btn.dataset.img || "";
-const preview = document.getElementById("prepago-img-preview");
-
-if (preview && img) {
-  preview.src = img;
+ <script>
+function openModal(modal){
+  if(!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
 }
 
-      openModal(document.getElementById("modal-prepago"));
-      return;
-    }
-
-    if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
-      closeModal(e.target.closest(".modal"));
-    }
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    const modal = document.querySelector(".modal.is-open");
-    if (modal) closeModal(modal);
-  });
-</script>
-
-<script>
-function calcularTotales(cart){
-
-  let subtotal = 0;
-
-  cart.forEach(p => {
-    const qty = p.qty || 1;
-    subtotal += Number(p.precio) * qty;
-  });
-
-  const iva = subtotal * 0.21 / 1.21;
-  const base = subtotal - iva;
-  const shipping = subtotal >= 150 ? 0 : 8.5;
-  const total = subtotal + shipping;
-
-  return {
-    base,
-    iva,
-    subtotal,
-    shipping,
-    total
-  };
+function closeModal(modal){
+  if(!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
 }
+
+document.addEventListener("click", (e) => {
+
+  const btn = e.target.closest(".js-prepago");
+
+  if (btn) {
+    e.preventDefault();
+
+    /* =========================
+       MODO SINGLE (CLAVE)
+    ========================= */
+
+    const producto = {
+      id: btn.dataset.id,
+      titulo: btn.dataset.title,
+      precio: Number(btn.dataset.price),
+      img: btn.dataset.img,
+      qty: 1
+    };
+
+    localStorage.setItem("checkout_mode", "single");
+    localStorage.setItem("checkout_single", JSON.stringify([producto]));
+
+    /* =========================
+       SET ID
+    ========================= */
+
+    const id = (btn.dataset.id || "").trim();
+    document.getElementById("prepago-id").value = id + "-A";
+
+    /* =========================
+       IMG PREVIEW
+    ========================= */
+
+    const preview = document.getElementById("prepago-img-preview");
+    if (preview && producto.img) {
+      preview.src = producto.img;
+    }
+
+    /* =========================
+       RENDER RESUMEN
+    ========================= */
+
+    if (typeof renderPrepagoSummary === "function") {
+      renderPrepagoSummary();
+    }
+
+    openModal(document.getElementById("modal-prepago"));
+    return;
+  }
+
+  if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
+    closeModal(e.target.closest(".modal"));
+  }
+
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const modal = document.querySelector(".modal.is-open");
+  if (modal) closeModal(modal);
+});
 </script>
 
   <script>
-  function renderPrepagoSummary(){
+function renderPrepagoSummary(){
 
-  const cartLS = localStorage.getItem("abaloria_cart");
-  const cartParsed = JSON.parse(cartLS || "[]");
+  const mode = localStorage.getItem("checkout_mode");
 
-  if (!cartParsed.length) return;
+  let cart = [];
 
-  const totales = calcularTotales(cartParsed);
+  if (mode === "single") {
+    cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
+  } else {
+    cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
+  }
+
+  if (!cart.length) return;
+
+  const totales = calcularTotales(cart);
 
   const subtotalEl = document.querySelector(".prepago-subtotal");
   const ivaEl = document.querySelector(".prepago-iva");
@@ -833,20 +826,15 @@ function calcularTotales(cart){
   if(shippingEl) shippingEl.textContent =
     totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
   if(totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
-
 }
-    </script>
+</script>
 
-  
-<script>
+  <script>
 document.addEventListener("DOMContentLoaded", () => {
 
   const prepagoForm = document.getElementById("prepago-form");
 
-  if (!prepagoForm) {
-    console.warn("No se encontró #prepago-form");
-    return;
-  }
+  if (!prepagoForm) return;
 
   prepagoForm.addEventListener("submit", async (e) => {
 
@@ -858,27 +846,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const fd = new FormData(form);
 
     /* =========================
-       AÑADIR CARRITO DESDE LOCALSTORAGE
+       OBTENER MODO CORRECTO
     ========================= */
 
-const cartLS = localStorage.getItem("abaloria_cart");
-    
-    if (cartLS) {
-      fd.set("cart", cartLS);
+    const mode = localStorage.getItem("checkout_mode");
+
+    let cart = [];
+
+    if (mode === "single") {
+      cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
+    } else {
+      cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
     }
 
-    const cart = fd.get("cart");
+    console.log("Modo:", mode);
+    console.log("Cart enviado:", cart);
 
-    console.log("Cart:", cart);
-
-    /* =========================
-       VALIDAR CARRITO
-    ========================= */
-
-    if (!cart || cart === "[]") {
-      alert("El carrito está vacío.");
+    if (!cart.length) {
+      alert("No hay productos para procesar.");
       return;
     }
+
+    fd.set("cart", JSON.stringify(cart));
 
     /* =========================
        BLOQUEAR BOTÓN
@@ -893,10 +882,6 @@ const cartLS = localStorage.getItem("abaloria_cart");
 
     try {
 
-      /* =========================
-         CREAR CHECKOUT
-      ========================= */
-
       const res = await fetch(`${window.location.origin}/pago`, {
         method: "POST",
         body: fd
@@ -904,8 +889,8 @@ const cartLS = localStorage.getItem("abaloria_cart");
 
       const data = await res.json();
 
-console.log("CHECKOUT RESPONSE FULL:", JSON.stringify(data, null, 2));
-      
+      console.log("CHECKOUT RESPONSE:", data);
+
       if (!res.ok) {
         throw new Error(data.error || "API error");
       }
@@ -913,10 +898,6 @@ console.log("CHECKOUT RESPONSE FULL:", JSON.stringify(data, null, 2));
       if (!data.payment_url) {
         throw new Error("No payment_url returned");
       }
-
-      /* =========================
-         REDIRECT A SUMUP
-      ========================= */
 
       window.location.href = data.payment_url;
 
