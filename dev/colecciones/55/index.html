@@ -833,6 +833,31 @@ console.log("CHECKOUT RESPONSE FULL:", JSON.stringify(data, null, 2));
 
 });
 </script>
+
+  <script>
+  function calcularTotales(cart) {
+  let subtotal = 0;
+
+  cart.forEach(p => {
+    const qty = p.qty || 1;
+    subtotal += Number(p.precio) * qty;
+  });
+
+  const iva = subtotal * 0.21 / 1.21;
+  const base = subtotal - iva;
+  const shipping = subtotal < 150 ? 8.5 : 0;
+  const total = subtotal + shipping;
+
+  return {
+    base,
+    iva,
+    subtotal,
+    shipping,
+    total
+  };
+}
+    </script>
+
   
 </body>
 </html>
