@@ -17,17 +17,21 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       DATOS CLAVE
+       DATOS
     ========================= */
 
-    const email = payment.buyer_email_address || "no-email";
+    const nombre = payment.billing_address?.first_name || "";
+    const apellidos = payment.billing_address?.last_name || "";
+    const nombreCompleto = `${nombre} ${apellidos}`.trim();
+
+    const email = payment.buyer_email_address || "";
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
-    const nombre = payment.billing_address?.first_name || "";
-    const apellido = payment.billing_address?.last_name || "";
 
-    console.log("✅ PAGO OK:", email, amount);
+    const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
+
+    console.log("✅ PAGO:", email, amount);
 
     /* =========================
        1. EMAIL INTERNO
@@ -40,12 +44,13 @@ export async function onRequestPost(context) {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        from: "Pedidos <pedidos@abaloriabendita.es>",
+        from: "Abaloria Bendita <hola@abaloriabendita.es>",
         to: ["hola@abaloriabendita.es"],
-        subject: "💰 Nuevo pedido pagado",
+        subject: `💰 Venta confirmada · ${referencia}`,
         html: `
-          <h2>Nuevo pedido</h2>
-          <p><strong>Cliente:</strong> ${nombre} ${apellido}</p>
+          <h2>Nuevo pedido pagado</h2>
+          <p><strong>Referencia:</strong> ${referencia}</p>
+          <p><strong>Cliente:</strong> ${nombreCompleto}</p>
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Total:</strong> ${amount}€</p>
           <p><a href="${receipt}">Ver recibo</a></p>
@@ -54,18 +59,28 @@ export async function onRequestPost(context) {
     });
 
     /* =========================
-       2. GOOGLE SHEETS
+       2. GOOGLE SHEETS (TU SCRIPT)
     ========================= */
 
-    await fetch(env.GSHEET_WEBHOOK_URL, {
+    await fetch("https://script.google.com/macros/s/AKfycbwGWwD-imsC7lTQ4V28oAIV9v4vOY4-9ASFoygglMsSIxxZs6ioM8imPn0syTSs_d_ITQ/exec", {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({
-        nombre,
-        apellido,
-        email,
-        amount,
-        orderId,
-        receipt
+
+        tipo: "venta_online",
+        referencia: referencia,
+        fecha: new Date().toISOString(),
+
+        nombre: nombreCompleto,
+        email: email,
+        telefono: "",
+        direccion: "",
+
+        pieza_id: orderId,
+        origen: "square",
+
       })
     });
 
@@ -78,9 +93,10 @@ export async function onRequestPost(context) {
       body: JSON.stringify({
         email,
         nombre,
-        amount,
+        tipo: "venta",
+        referencia,
         receipt,
-        tipo: "venta"
+        amount
       })
     });
 
@@ -93,4 +109,5 @@ export async function onRequestPost(context) {
     return new Response("Error", { status: 500 });
 
   }
+
 }
