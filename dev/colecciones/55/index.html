@@ -635,8 +635,14 @@ try {
  cta = `
 <div class="piece-ctas">
 
-<button class="piece-cta js-prepago">
-Comprar ahora
+<button
+  class="piece-cta js-prepago"
+  data-id="${data.id}"
+  data-title="${data.titulo}"
+  data-price="${data.precio}"
+  data-img="${mainImg}"
+>
+  Comprar ahora
 </button>
 
 <button
