@@ -337,4 +337,8 @@ document.addEventListener("click",(e)=>{
     modal.setAttribute("aria-hidden","false");
   }
 
+   if (typeof renderPrepagoSummary === "function") {
+  renderPrepagoSummary();
+}
+
 });
