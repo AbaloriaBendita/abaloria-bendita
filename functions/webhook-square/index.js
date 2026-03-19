@@ -6,3 +6,7 @@ export async function onRequestPost(context) {
 
   return new Response("OK");
 }
+
+if (payment?.status !== "COMPLETED") {
+  return new Response("Ignored", { status: 200 });
+}
