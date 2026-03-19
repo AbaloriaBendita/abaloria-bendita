@@ -8,6 +8,27 @@ export async function onRequestPost(context) {
 
   try {
 
+    console.log("TOKEN:", env.SQUARE_ACCESS_TOKEN);
+
+    /* =========================
+       TEST LOCATIONS (DEBUG)
+    ========================= */
+
+    const test = await fetch("https://connect.squareup.com/v2/locations", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+        "Square-Version": "2024-06-04"
+      }
+    });
+
+    const testText = await test.text();
+    console.log("LOCATIONS TEST:", testText);
+
+    /* =========================
+       CONTINÚA TU LÓGICA
+    ========================= */
+
     const formData = await request.formData();
     const cartRaw = formData.get("cart");
 
@@ -42,10 +63,6 @@ export async function onRequestPost(context) {
     console.log("ORDER ID:", orderId);
     console.log("TOTAL:", finalTotal);
 
-    /* =========================
-       SQUARE PAYMENT LINK
-    ========================= */
-
     const res = await fetch("https://connect.squareup.com/v2/online-checkout/payment-links", {
       method: "POST",
       headers: {
@@ -62,7 +79,7 @@ export async function onRequestPost(context) {
             amount: Math.round(finalTotal * 100),
             currency: "EUR"
           },
-          location_id: "L3YB8BGWFR7VJ"
+          location_id: "L3YB8BGWFR7VJ" // luego lo cambiaremos
         },
 
         checkout_options: {
