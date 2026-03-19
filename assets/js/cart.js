@@ -14,29 +14,48 @@ function saveCart(cart){
 }
 
 /* =========================
-   TOTAL
+   TOTAL (legacy, opcional)
 ========================= */
 
 function cartTotal(){
-
   const cart = getCart();
-
   return cart.reduce((t,p)=> t + p.precio * (p.qty || 1),0);
-
 }
 
 /* =========================
-   SHIPPING
+   SHIPPING (legacy)
 ========================= */
 
 function shippingCost(){
-
   const total = cartTotal();
+  return total >= 150 ? 0 : 8.5;
+}
 
-  if(total >= 150) return 0;
+/* =========================
+   NUEVO CÁLCULO CENTRAL
+========================= */
 
-  return 8.5;
+function calcularTotales(cart){
 
+  let subtotal = 0;
+
+  cart.forEach(p => {
+    const qty = p.qty || 1;
+    subtotal += Number(p.precio) * qty;
+  });
+
+  const iva = subtotal * 0.21 / 1.21;
+  const base = subtotal - iva;
+  const shipping = subtotal >= 150 ? 0 : 8.5;
+  const total = subtotal + shipping;
+
+  return {
+    base,
+    iva,
+    subtotal,
+    shipping,
+    total
+  };
 }
 
 /* =========================
@@ -66,15 +85,10 @@ function addToCart(item){
   const existing = cart.find(p => p.id === item.id);
 
   if(existing){
-
     existing.qty += 1;
-
   }else{
-
     item.qty = 1;
-
     cart.push(item);
-
   }
 
   saveCart(cart);
@@ -101,6 +115,8 @@ function renderCart(){
 
   const container = document.querySelector(".cart-items");
   const totalEl = document.querySelector(".cart-total");
+  const shippingEl = document.querySelector(".cart-shipping");
+  const ivaEl = document.querySelector(".cart-iva");
 
   if(!container) return;
 
@@ -108,13 +124,12 @@ function renderCart(){
 
   container.innerHTML = "";
 
-  let total = 0;
+  /* 🔥 cálculo único */
+  const totales = calcularTotales(cart);
 
   cart.forEach(p=>{
 
     if(!p.qty) p.qty = 1;
-
-    total += p.precio * p.qty;
 
     const el = document.createElement("div");
     el.className = "cart-item";
@@ -151,19 +166,21 @@ function renderCart(){
 
   });
 
-  const shipping = shippingCost();
+  /* =========================
+     PINTAR TOTALES
+  ========================= */
 
-  const finalTotal = total + shipping;
-
-  const shippingEl = document.querySelector(".cart-shipping");
+  if(ivaEl){
+    ivaEl.textContent = totales.iva.toFixed(2) + " €";
+  }
 
   if(shippingEl){
     shippingEl.textContent =
-      shipping === 0 ? "Gratis" : shipping.toFixed(2) + " €";
+      totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
   }
 
   if(totalEl){
-    totalEl.textContent = finalTotal.toFixed(2) + " €";
+    totalEl.textContent = totales.total.toFixed(2) + " €";
   }
 
 }
@@ -172,7 +189,10 @@ function renderCart(){
    INIT
 ========================= */
 
-document.addEventListener("DOMContentLoaded",updateCartCount);
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount();
+  renderCart();
+});
 
 /* =========================
    ADD TO CART CLICK
@@ -228,8 +248,8 @@ document.addEventListener("click",(e)=>{
   }
 
   const closeBtn =
-  e.target.closest(".cart-close") ||
-  e.target.closest(".cart-overlay");
+    e.target.closest(".cart-close") ||
+    e.target.closest(".cart-overlay");
 
   if(closeBtn){
 
@@ -268,7 +288,6 @@ document.addEventListener("click",(e)=>{
   if(!item.qty) item.qty = 1;
 
   if(plus) item.qty += 1;
-
   if(minus) item.qty -= 1;
 
   if(remove || item.qty <= 0){
@@ -287,40 +306,35 @@ document.addEventListener("click",(e)=>{
 
 document.addEventListener("click",(e)=>{
 
- const btn = e.target.closest(".cart-checkout");
- if(!btn) return;
+  const btn = e.target.closest(".cart-checkout");
+  if(!btn) return;
 
- const cart = getCart();
+  const cart = getCart();
 
- if(cart.length === 0){
-   alert("Tu carrito está vacío");
-   return;
- }
+  if(cart.length === 0){
+    alert("Tu carrito está vacío");
+    return;
+  }
 
- const input = document.getElementById("cart-data");
- if(input){
-   input.value = JSON.stringify(cart);
- }
+  const input = document.getElementById("cart-data");
+  if(input){
+    input.value = JSON.stringify(cart);
+  }
 
- /* cerrar carrito */
+  /* cerrar carrito */
 
- const panel = document.getElementById("cartPanel");
- if(panel){
-   panel.classList.remove("is-open");
-   panel.setAttribute("aria-hidden","true");
- }
+  const panel = document.getElementById("cartPanel");
+  if(panel){
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden","true");
+  }
 
- /* abrir modal prepago */
+  /* abrir modal prepago */
 
- const modal = document.getElementById("modal-prepago");
- if(modal){
-   modal.classList.add("is-open");
-   modal.setAttribute("aria-hidden","false");
- }
+  const modal = document.getElementById("modal-prepago");
+  if(modal){
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden","false");
+  }
 
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  updateCartCount();
-  renderCart();
 });
