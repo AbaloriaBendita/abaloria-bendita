@@ -84,25 +84,37 @@ export async function onRequestPost(context) {
           redirect_url: `https://abaloriabendita.es/gracias.html?order=${orderId}`,
           ask_for_email: true,
           ask_for_shipping_address: true
-          shipping_fee: {
-    charge: {
-      amount: 0,
-      currency: "EUR"
-    }
-  }
         }
       })
     });
 
+    /* =========================
+       CONTROL DE ERRORES
+    ========================= */
+
     if (!res.ok) {
       const err = await res.text();
+      console.error("❌ ERROR SQUARE:", err);
+
       return new Response(JSON.stringify({
         error: "Square error",
         details: err
       }), { status: 500 });
     }
 
+    /* =========================
+       RESPUESTA
+    ========================= */
+
     const data = await res.json();
+
+    if (!data?.payment_link?.url) {
+      console.error("❌ No payment_link.url:", data);
+
+      return new Response(JSON.stringify({
+        error: "No payment URL"
+      }), { status: 500 });
+    }
 
     return new Response(JSON.stringify({
       payment_url: data.payment_link.url,
@@ -112,6 +124,8 @@ export async function onRequestPost(context) {
     });
 
   } catch (err) {
+
+    console.error("❌ ERROR GENERAL /pago:", err);
 
     return new Response(JSON.stringify({
       error: "Server error",
