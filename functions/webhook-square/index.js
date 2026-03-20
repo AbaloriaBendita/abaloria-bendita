@@ -165,7 +165,7 @@ const direccion = direccionRaw || "No facilitada";
                 <p><strong>Total:</strong> ${amount}€</p>
                 <p><a href="${receipt}">Ver recibo</a></p>
                 <p style="margin-top:20px">
-                  Te avisaremos cuando tu pedido esté preparado.
+                  Estamos preparando tu abaloria con mucha ilusión. Si tienes dudas puedes escribirnos a hola@abaloriabendita.es.
                 </p>
               </div>
             `
