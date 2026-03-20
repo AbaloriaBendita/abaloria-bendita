@@ -77,6 +77,10 @@ export async function onRequestPost(context) {
 
         const customerData = await customerRes.json();
 
+        const squareOrderUrl = orderId
+  ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
+  : "";
+
         console.log("👤 CUSTOMER DATA:", customerData);
 
         const customer = customerData.customer;
@@ -135,6 +139,7 @@ export async function onRequestPost(context) {
             <p><strong>Dirección:</strong> ${direccion}</p>
             <p><strong>Total:</strong> ${amount}€</p>
             <p><a href="${receipt}">Ver recibo</a></p>
+            <p><a href="${squareOrderUrl}">Ver pedido en Square</a></p>
           `
         })
       });
