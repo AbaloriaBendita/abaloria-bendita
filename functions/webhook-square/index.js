@@ -12,8 +12,29 @@ export async function onRequestPost(context) {
       return new Response("No payment", { status: 200 });
     }
 
+    /* solo procesar pagos completados */
     if (payment.status !== "COMPLETED") {
       return new Response("Ignored", { status: 200 });
+    }
+
+    /* =========================
+       🚫 ANTI DUPLICADOS
+    ========================= */
+
+    const paymentId = payment.id;
+
+    const key = `payment_${paymentId}`;
+
+    const existing = await env.PAYMENTS_KV?.get(key);
+
+    if (existing) {
+      console.log("⚠️ DUPLICADO:", paymentId);
+      return new Response("Duplicate", { status: 200 });
+    }
+
+    /* guardar para evitar repetir */
+    if (env.PAYMENTS_KV) {
+      await env.PAYMENTS_KV.put(key, "done", { expirationTtl: 86400 });
     }
 
     /* =========================
@@ -34,10 +55,10 @@ export async function onRequestPost(context) {
     console.log("✅ PAGO OK:", email, amount);
 
     /* =========================
-       1. EMAIL INTERNO (TIENDA)
+       1. EMAIL TIENDA
     ========================= */
 
-    await fetch("https://api.resend.com/emails", {
+    const emailRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${env.RESEND_API_KEY}`,
@@ -58,6 +79,11 @@ export async function onRequestPost(context) {
       })
     });
 
+    const emailText = await emailRes.text();
+
+    console.log("📩 EMAIL TIENDA STATUS:", emailRes.status);
+    console.log("📩 EMAIL TIENDA RESP:", emailText);
+
     /* =========================
        2. GOOGLE SHEETS
     ========================= */
@@ -71,12 +97,8 @@ export async function onRequestPost(context) {
         tipo: "venta_online",
         referencia: referencia,
         fecha: new Date().toISOString(),
-
         nombre: nombreCompleto,
         email: email,
-        telefono: "",
-        direccion: "",
-
         pieza_id: orderId,
         origen: "square"
       })
@@ -86,7 +108,7 @@ export async function onRequestPost(context) {
        3. EMAIL CLIENTE
     ========================= */
 
-    await fetch("https://api.resend.com/emails", {
+    const clientRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         "Authorization": `Bearer ${env.RESEND_API_KEY}`,
@@ -98,57 +120,30 @@ export async function onRequestPost(context) {
         subject: "Tu pedido está confirmado ✨",
         html: `
           <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto">
-
             <h2>Gracias por tu compra</h2>
-
             <p>Hola ${nombre || "✨"},</p>
-
             <p>Hemos recibido tu pedido correctamente.</p>
-
             <p><strong>Referencia:</strong> ${referencia}</p>
             <p><strong>Total:</strong> ${amount}€</p>
-
-            <p>Puedes ver tu recibo aquí:</p>
             <p><a href="${receipt}">Ver recibo</a></p>
-
             <p style="margin-top:20px">
               Te avisaremos cuando tu pedido esté preparado.
             </p>
-
-            <p>— Abaloria Bendita</p>
-
           </div>
         `
       })
     });
 
+    console.log("📩 EMAIL CLIENTE STATUS:", clientRes.status);
+
     return new Response("OK", { status: 200 });
 
   } catch (err) {
 
-    console.error("ERROR WEBHOOK:", err);
+    console.error("❌ ERROR WEBHOOK:", err);
 
     return new Response("Error", { status: 500 });
 
   }
 
 }
-
-const emailRes = await fetch("https://api.resend.com/emails", {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${env.RESEND_API_KEY}`,
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    from: "Abaloria Bendita <hola@abaloriabendita.es>",
-    to: ["hola@abaloriabendita.es"],
-    subject: `💰 Nuevo pedido · ${referencia}`,
-    html: `<p>Pedido de ${email}</p>`
-  })
-});
-
-const emailText = await emailRes.text();
-
-console.log("EMAIL TIENDA STATUS:", emailRes.status);
-console.log("EMAIL TIENDA RESP:", emailText);
