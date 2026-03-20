@@ -791,79 +791,81 @@ document.addEventListener("keydown", (e) => {
 });
 </script>
 
-  <script>
-          /* PREPAGO PAGO */
-document.addEventListener("DOMContentLoaded", () => {
+ 
+<script>
+/* PREPAGO PAGO - ROBUSTO */
 
-  const checkbox = document.getElementById("rgpd-check");
-  const btn = document.getElementById("go-to-payment");
+document.addEventListener("change", (e) => {
 
-  if (!checkbox || !btn) {
-    console.warn("⚠️ No existe botón o checkbox");
+  if (e.target.id === "rgpd-check") {
+
+    const btn = document.getElementById("go-to-payment");
+
+    if (!btn) return;
+
+    btn.disabled = !e.target.checked;
+
+    console.log("RGPD:", e.target.checked);
+  }
+
+});
+
+document.addEventListener("click", async (e) => {
+
+  const btn = e.target.closest("#go-to-payment");
+  if (!btn) return;
+
+  console.log("🚀 CLICK BOTÓN PREPAGO");
+
+  const mode = localStorage.getItem("checkout_mode");
+
+  let cart = [];
+
+  if (mode === "single") {
+    cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
+  } else {
+    cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
+  }
+
+  console.log("🛒 CART:", cart);
+
+  if (!cart.length) {
+    alert("No hay productos");
     return;
   }
 
-  /* activar botón */
-  checkbox.addEventListener("change", () => {
-    btn.disabled = !checkbox.checked;
-  });
+  btn.innerText = "Redirigiendo...";
+  btn.disabled = true;
 
-  /* checkout desde modal */
-  btn.addEventListener("click", async () => {
+  try {
 
-    console.log("🚀 CLICK BOTÓN PREPAGO");
+    const fd = new FormData();
+    fd.set("cart", JSON.stringify(cart));
 
-    const mode = localStorage.getItem("checkout_mode");
+    const res = await fetch("/pago", {
+      method: "POST",
+      body: fd
+    });
 
-    let cart = [];
+    const data = await res.json();
 
-    if (mode === "single") {
-      cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
-    } else {
-      cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
+    console.log("💰 RESPUESTA /pago:", data);
+
+    if (!res.ok || !data.payment_url) {
+      throw new Error(data.error || "No payment_url");
     }
 
-    console.log("🛒 CART:", cart);
+    window.location.href = data.payment_url;
 
-    if (!cart.length) {
-      alert("No hay productos");
-      return;
-    }
+  } catch (err) {
 
-    btn.innerText = "Redirigiendo...";
-    btn.disabled = true;
+    console.error("❌ ERROR CHECKOUT:", err);
 
-    try {
+    alert("No hemos podido iniciar el pago.");
 
-      const fd = new FormData();
-      fd.set("cart", JSON.stringify(cart));
-
-      const res = await fetch("/pago", {
-        method: "POST",
-        body: fd
-      });
-
-      const data = await res.json();
-
-      console.log("💰 RESPUESTA /pago:", data);
-
-      if (!res.ok || !data.payment_url) {
-        throw new Error(data.error || "No payment_url");
-      }
-
-      window.location.href = data.payment_url;
-
-    } catch (err) {
-
-      console.error("❌ ERROR CHECKOUT:", err);
-
-      alert("No hemos podido iniciar el pago.");
-
-      btn.disabled = false;
-      btn.innerText = "Continuar compra";
-    }
-
-  });
+    btn.disabled = false;
+    btn.innerText = "Continuar compra";
+  }
 
 });
 </script>
