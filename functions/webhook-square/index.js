@@ -40,21 +40,26 @@ export async function onRequestPost(context) {
     const nombreCompleto = `${nombre} ${apellidos}`.trim();
 
     const email = payment.buyer_email_address || "";
-    const telefono = billing.phone || payment.phone_number || "";
+const telefono = billing.phone || payment.phone_number || "No facilitado";
+    
+    const direccionRaw = [
+  billing.address_line_1,
+  billing.address_line_2,
+  billing.locality,
+  billing.administrative_district_level_1,
+  billing.postal_code,
+  billing.country
+].filter(Boolean).join(", ");
 
-    const direccion = [
-      billing.address_line_1,
-      billing.address_line_2,
-      billing.locality,
-      billing.administrative_district_level_1,
-      billing.postal_code,
-      billing.country
-    ].filter(Boolean).join(", ");
+const direccion = direccionRaw || "No facilitada";
 
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
     const isCompra = !!orderId;
+    const subject = isCompra
+  ? "Tu pedido está confirmado ✨"
+  : "Hemos recibido tu encargo 💛";
 
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
