@@ -298,19 +298,40 @@ document.addEventListener("click",(e)=>{
     panel.setAttribute("aria-hidden","true");
   }
 
-  /* abrir modal */
+ /* ir directo a pago */
 
-  const modal = document.getElementById("modal-prepago");
+(async () => {
 
-  if(modal){
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden","false");
+  const cart = getCart();
+
+  if (!cart.length) {
+    alert("Tu carrito está vacío");
+    return;
   }
 
-  /* render resumen */
+  try {
 
-  if (typeof renderPrepagoSummary === "function") {
-    renderPrepagoSummary();
+    const fd = new FormData();
+    fd.set("cart", JSON.stringify(cart));
+
+    const res = await fetch("/pago", {
+      method: "POST",
+      body: fd
+    });
+
+    const data = await res.json();
+
+    if (!res.ok || !data.payment_url) {
+      throw new Error("Error en pago");
+    }
+
+    window.location.href = data.payment_url;
+
+  } catch (err) {
+    console.error(err);
+    alert("Error al iniciar el pago");
   }
+
+})();
 
 });
