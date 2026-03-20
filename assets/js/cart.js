@@ -285,11 +285,6 @@ document.addEventListener("click",(e)=>{
   /* 🔥 modo carrito */
   localStorage.setItem("checkout_mode", "cart");
 
-  const input = document.getElementById("cart-data");
-  if(input){
-    input.value = JSON.stringify(cart);
-  }
-
   /* cerrar carrito */
 
   const panel = document.getElementById("cartPanel");
