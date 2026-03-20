@@ -30,40 +30,79 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       DATOS
+       DATOS BASE
     ========================= */
 
     const billing = payment.billing_address || {};
 
-    const nombre = billing.first_name || "Cliente";
-    const apellidos = billing.last_name || "";
-    const nombreCompleto = `${nombre} ${apellidos}`.trim();
+    let nombre = billing.first_name || "Cliente";
+    let apellidos = billing.last_name || "";
+    let nombreCompleto = `${nombre} ${apellidos}`.trim();
 
-    const email = payment.buyer_email_address || "";
-const telefono = billing.phone || payment.phone_number || "No facilitado";
-    
-    const direccionRaw = [
-  billing.address_line_1,
-  billing.address_line_2,
-  billing.locality,
-  billing.administrative_district_level_1,
-  billing.postal_code,
-  billing.country
-].filter(Boolean).join(", ");
+    let email = payment.buyer_email_address || "";
+    let telefono = billing.phone || payment.phone_number || "No facilitado";
 
-const direccion = direccionRaw || "No facilitada";
+    let direccion = [
+      billing.address_line_1,
+      billing.address_line_2,
+      billing.locality,
+      billing.administrative_district_level_1,
+      billing.postal_code,
+      billing.country
+    ].filter(Boolean).join(", ") || "No facilitada";
 
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
-    const isCompra = !!orderId;
-    const subject = isCompra
-  ? "Tu pedido está confirmado ✨"
-  : "Hemos recibido tu encargo 💛";
 
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
-    console.log("📦 PEDIDO:", {
+    /* =========================
+       CUSTOMER API (🔥 NUEVO)
+    ========================= */
+
+    const customerId = payment.customer_id;
+
+    console.log("👤 CUSTOMER ID:", customerId);
+
+    if (customerId) {
+      try {
+
+        const customerRes = await fetch(`https://connect.squareup.com/v2/customers/${customerId}`, {
+          headers: {
+            "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+            "Square-Version": "2024-06-04"
+          }
+        });
+
+        const customerData = await customerRes.json();
+
+        console.log("👤 CUSTOMER DATA:", customerData);
+
+        const customer = customerData.customer;
+
+        if (customer) {
+
+          nombre = customer.given_name || nombre;
+          apellidos = customer.family_name || apellidos;
+          nombreCompleto = `${nombre} ${apellidos}`.trim();
+
+          email = customer.email_address || email;
+          telefono = customer.phone_number || telefono;
+
+          if (customer.address) {
+            direccion = Object.values(customer.address)
+              .filter(Boolean)
+              .join(", ");
+          }
+        }
+
+      } catch (err) {
+        console.error("❌ ERROR CUSTOMER API:", err);
+      }
+    }
+
+    console.log("📦 PEDIDO FINAL:", {
       nombreCompleto,
       email,
       telefono,
@@ -100,8 +139,7 @@ const direccion = direccionRaw || "No facilitada";
         })
       });
 
-      const data = await res.json();
-      console.log("📩 TIENDA:", res.status, data);
+      console.log("📩 TIENDA:", res.status);
 
     } catch (err) {
       console.error("❌ ERROR EMAIL TIENDA:", err);
@@ -128,8 +166,8 @@ const direccion = direccionRaw || "No facilitada";
           direccion,
           importe: amount,
           pieza_id: orderId,
-          rgpd: "SI",
-          origen: "square"
+          origen: "square",
+          rgpd: "SI"
         })
       });
 
@@ -155,25 +193,24 @@ const direccion = direccionRaw || "No facilitada";
           body: JSON.stringify({
             from: "Abaloria Bendita <hola@abaloriabendita.es>",
             to: [email],
-            subject: subject,            
+            subject: "Tu pedido está confirmado ✨",
             html: `
               <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto">
                 <h2>Gracias por tu compra</h2>
-                <p>Hola ${nombre},</p>
+                <p>Hola ${nombreCompleto},</p>
                 <p>Hemos recibido tu pedido correctamente.</p>
                 <p><strong>Referencia:</strong> ${referencia}</p>
                 <p><strong>Total:</strong> ${amount}€</p>
                 <p><a href="${receipt}">Ver recibo</a></p>
                 <p style="margin-top:20px">
-                  Estamos preparando tu abaloria con mucha ilusión. Si tienes dudas puedes escribirnos a hola@abaloriabendita.es.
+                  Te avisaremos cuando tu pedido esté preparado.
                 </p>
               </div>
             `
           })
         });
 
-        const data = await res.json();
-        console.log("📩 CLIENTE:", res.status, data);
+        console.log("📩 CLIENTE:", res.status);
 
       } catch (err) {
         console.error("❌ ERROR EMAIL CLIENTE:", err);
