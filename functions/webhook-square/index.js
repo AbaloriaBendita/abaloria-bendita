@@ -128,6 +128,7 @@ const direccion = direccionRaw || "No facilitada";
           direccion,
           importe: amount,
           pieza_id: orderId,
+          rgpd: "SI",
           origen: "square"
         })
       });
@@ -154,7 +155,7 @@ const direccion = direccionRaw || "No facilitada";
           body: JSON.stringify({
             from: "Abaloria Bendita <hola@abaloriabendita.es>",
             to: [email],
-            subject: "Tu pedido está confirmado ✨",
+            subject: subject,            
             html: `
               <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto">
                 <h2>Gracias por tu compra</h2>
