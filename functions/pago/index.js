@@ -84,6 +84,12 @@ export async function onRequestPost(context) {
           redirect_url: `https://abaloriabendita.es/gracias.html?order=${orderId}`,
           ask_for_email: true,
           ask_for_shipping_address: true
+          shipping_fee: {
+    charge: {
+      amount: 0,
+      currency: "EUR"
+    }
+  }
         }
       })
     });
