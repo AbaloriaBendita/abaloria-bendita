@@ -3925,3 +3925,25 @@ flex:1;
  margin-right:6px;
 }
 
+/* CTAs principales */
+button,
+.piece-cta,
+.piece-cta-outline,
+.cta-main,
+.cart-checkout {
+  cursor: pointer;
+}
+
+/* disabled */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.cta-main:hover,
+.piece-cta:hover,
+.cart-checkout:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
