@@ -265,7 +265,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <p class="modal-copy">
       <strong>Confirmar pedido</strong><br>
-      Revisa el importe antes de continuar al pago.
+      Desglose de tu compra.
     </p>
 
     <!-- SIN FORM (ya no hace falta) -->
@@ -374,7 +374,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <button class="cart-checkout cta-main">
-        Finalizar compra
+        Comprar
       </button>
 
     </div>
@@ -788,6 +788,83 @@ document.addEventListener("keydown", (e) => {
   if (e.key !== "Escape") return;
   const modal = document.querySelector(".modal.is-open");
   if (modal) closeModal(modal);
+});
+</script>
+
+  <script>
+          /* PREPAGO PAGO */
+document.addEventListener("DOMContentLoaded", () => {
+
+  const checkbox = document.getElementById("rgpd-check");
+  const btn = document.getElementById("go-to-payment");
+
+  if (!checkbox || !btn) {
+    console.warn("⚠️ No existe botón o checkbox");
+    return;
+  }
+
+  /* activar botón */
+  checkbox.addEventListener("change", () => {
+    btn.disabled = !checkbox.checked;
+  });
+
+  /* checkout desde modal */
+  btn.addEventListener("click", async () => {
+
+    console.log("🚀 CLICK BOTÓN PREPAGO");
+
+    const mode = localStorage.getItem("checkout_mode");
+
+    let cart = [];
+
+    if (mode === "single") {
+      cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
+    } else {
+      cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
+    }
+
+    console.log("🛒 CART:", cart);
+
+    if (!cart.length) {
+      alert("No hay productos");
+      return;
+    }
+
+    btn.innerText = "Redirigiendo...";
+    btn.disabled = true;
+
+    try {
+
+      const fd = new FormData();
+      fd.set("cart", JSON.stringify(cart));
+
+      const res = await fetch("/pago", {
+        method: "POST",
+        body: fd
+      });
+
+      const data = await res.json();
+
+      console.log("💰 RESPUESTA /pago:", data);
+
+      if (!res.ok || !data.payment_url) {
+        throw new Error(data.error || "No payment_url");
+      }
+
+      window.location.href = data.payment_url;
+
+    } catch (err) {
+
+      console.error("❌ ERROR CHECKOUT:", err);
+
+      alert("No hemos podido iniciar el pago.");
+
+      btn.disabled = false;
+      btn.innerText = "Continuar compra";
+    }
+
+  });
+
 });
 </script>
   
