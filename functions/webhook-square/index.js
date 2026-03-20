@@ -180,4 +180,22 @@ export async function onRequestPost(context) {
       console.error("❌ ERROR SHEETS:", err);
     }
 
+        console.log("📊 Sheets OK");
+
+  } catch (err) {
+    console.error("❌ ERROR SHEETS:", err);
+  }
+
+  return new Response("OK", { status: 200 });
+
+} catch (err) {
+
+  console.error("❌ ERROR WEBHOOK:", err);
+
+  return new Response("Error", { status: 500 });
+
+}
+
+}
+
     
