@@ -54,7 +54,9 @@ export async function onRequestPost(context) {
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
-
+  const squareOrderUrl = orderId
+  ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
+  : "";
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
     /* =========================
@@ -76,10 +78,6 @@ export async function onRequestPost(context) {
         });
 
         const customerData = await customerRes.json();
-
-        const squareOrderUrl = orderId
-  ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
-  : "";
 
         console.log("👤 CUSTOMER DATA:", customerData);
 
