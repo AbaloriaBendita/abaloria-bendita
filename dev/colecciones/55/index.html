@@ -890,7 +890,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
-  <script>
+<script>
 document.addEventListener("DOMContentLoaded", () => {
 
   const checkbox = document.getElementById("rgpd-check");
@@ -898,15 +898,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (!checkbox || !btn) return;
 
+  /* activar botón */
   checkbox.addEventListener("change", () => {
     btn.disabled = !checkbox.checked;
   });
 
-  btn.addEventListener("click", () => {
+  /* checkout */
+  btn.addEventListener("click", async () => {
+
+    const mode = localStorage.getItem("checkout_mode");
+
+    let cart = [];
+
+    if (mode === "single") {
+      cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
+    } else {
+      cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
+    }
+
+    if (!cart.length) {
+      alert("No hay productos");
+      return;
+    }
+
     btn.innerText = "Redirigiendo...";
     btn.disabled = true;
 
-    window.location.href = "LINK_DE_SQUARE";
+    try {
+
+      const fd = new FormData();
+      fd.set("cart", JSON.stringify(cart));
+
+      const res = await fetch("/pago", {
+        method: "POST",
+        body: fd
+      });
+
+      const data = await res.json();
+
+      console.log("RESPUESTA PAGO:", data);
+
+      if (!res.ok || !data.payment_url) {
+        throw new Error(data.error || "No payment_url");
+      }
+
+      window.location.href = data.payment_url;
+
+    } catch (err) {
+
+      console.error("ERROR CHECKOUT:", err);
+
+      alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
+
+      btn.disabled = false;
+      btn.innerText = "Continuar compra";
+    }
+
   });
 
 });
