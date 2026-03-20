@@ -12,28 +12,27 @@ export async function onRequestPost(context) {
       return new Response("No payment", { status: 200 });
     }
 
-    /* solo procesar pagos completados */
+    /* solo pagos completados */
     if (payment.status !== "COMPLETED") {
       return new Response("Ignored", { status: 200 });
     }
 
     /* =========================
-       🚫 ANTI DUPLICADOS
+       🚫 ANTI DUPLICADOS (KV)
     ========================= */
 
     const paymentId = payment.id;
-
     const key = `payment_${paymentId}`;
 
-    const existing = await env.PAYMENTS_KV?.get(key);
-
-    if (existing) {
-      console.log("⚠️ DUPLICADO:", paymentId);
-      return new Response("Duplicate", { status: 200 });
-    }
-
-    /* guardar para evitar repetir */
     if (env.PAYMENTS_KV) {
+
+      const existing = await env.PAYMENTS_KV.get(key);
+
+      if (existing) {
+        console.log("⚠️ DUPLICADO:", paymentId);
+        return new Response("Duplicate", { status: 200 });
+      }
+
       await env.PAYMENTS_KV.put(key, "done", { expirationTtl: 86400 });
     }
 
@@ -41,18 +40,28 @@ export async function onRequestPost(context) {
        DATOS
     ========================= */
 
-    const nombre = payment.billing_address?.first_name || "";
+    const nombre = payment.billing_address?.first_name || "Cliente";
     const apellidos = payment.billing_address?.last_name || "";
     const nombreCompleto = `${nombre} ${apellidos}`.trim();
 
     const email = payment.buyer_email_address || "";
+
+    if (!email) {
+      console.log("⚠️ Pago sin email");
+    }
+
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
 
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
-    console.log("✅ PAGO OK:", email, amount);
+    console.log("📦 PEDIDO FINAL:", {
+      email,
+      nombre: nombreCompleto,
+      amount,
+      orderId
+    });
 
     /* =========================
        1. EMAIL TIENDA
@@ -79,10 +88,7 @@ export async function onRequestPost(context) {
       })
     });
 
-    const emailText = await emailRes.text();
-
     console.log("📩 EMAIL TIENDA STATUS:", emailRes.status);
-    console.log("📩 EMAIL TIENDA RESP:", emailText);
 
     /* =========================
        2. GOOGLE SHEETS
@@ -121,7 +127,7 @@ export async function onRequestPost(context) {
         html: `
           <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto">
             <h2>Gracias por tu compra</h2>
-            <p>Hola ${nombre || "✨"},</p>
+            <p>Hola ${nombre},</p>
             <p>Hemos recibido tu pedido correctamente.</p>
             <p><strong>Referencia:</strong> ${referencia}</p>
             <p><strong>Total:</strong> ${amount}€</p>
