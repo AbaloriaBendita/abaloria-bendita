@@ -54,6 +54,7 @@ export async function onRequestPost(context) {
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
+    const isCompra = !!orderId;
 
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
