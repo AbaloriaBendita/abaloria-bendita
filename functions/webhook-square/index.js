@@ -54,13 +54,15 @@ export async function onRequestPost(context) {
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
     const orderId = payment.order_id || "";
-  const squareOrderUrl = orderId
-  ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
-  : "";
+
+    const squareOrderUrl = orderId
+      ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
+      : "";
+
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
     /* =========================
-       CUSTOMER API (🔥 NUEVO)
+       CUSTOMER API
     ========================= */
 
     const customerId = payment.customer_id;
@@ -78,13 +80,11 @@ export async function onRequestPost(context) {
         });
 
         const customerData = await customerRes.json();
-
         console.log("👤 CUSTOMER DATA:", customerData);
 
         const customer = customerData.customer;
 
         if (customer) {
-
           nombre = customer.given_name || nombre;
           apellidos = customer.family_name || apellidos;
           nombreCompleto = `${nombre} ${apellidos}`.trim();
@@ -180,22 +180,14 @@ export async function onRequestPost(context) {
       console.error("❌ ERROR SHEETS:", err);
     }
 
-        console.log("📊 Sheets OK");
+    return new Response("OK", { status: 200 });
 
   } catch (err) {
-    console.error("❌ ERROR SHEETS:", err);
+
+    console.error("❌ ERROR WEBHOOK:", err);
+
+    return new Response("Error", { status: 500 });
+
   }
 
-  return new Response("OK", { status: 200 });
-
-} catch (err) {
-
-  console.error("❌ ERROR WEBHOOK:", err);
-
-  return new Response("Error", { status: 500 });
-
 }
-
-}
-
-    
