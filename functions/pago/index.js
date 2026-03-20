@@ -77,7 +77,8 @@ export async function onRequestPost(context) {
         order: {
           location_id: "LF3CF7RXP1BDT",
           line_items,
-          service_charges
+          service_charges,
+          reference_id: orderId
         },
 
         checkout_options: {
