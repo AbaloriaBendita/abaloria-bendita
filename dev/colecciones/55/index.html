@@ -310,7 +310,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
 
       <!-- BOTÓN -->
-      <button id="go-to-payment" type="button" disabled>
+      <button id="go-to-payment" class="cta-main" type="button" disabled>
         Continuar compra
       </button>
 
@@ -428,7 +428,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 
 <script>
-/* MODAL */
+/* MODAL ENCARGO */
 document.addEventListener("DOMContentLoaded", () => {
 
   const modal = document.getElementById("modal-encargo");
@@ -458,7 +458,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+  
 <script>
+    /* CATALOGO DINAMICO */
 document.addEventListener("DOMContentLoaded", async () => {
 
   console.log("✅ Catálogo cargado");
@@ -694,83 +696,9 @@ ${variacionesCTA}
 });
 </script>
 
- <script>
-function openModal(modal){
-  if(!modal) return;
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-}
-
-function closeModal(modal){
-  if(!modal) return;
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-}
-
-document.addEventListener("click", (e) => {
-
-  const btn = e.target.closest(".js-prepago");
-
-  if (btn) {
-    e.preventDefault();
-
-    /* =========================
-       MODO SINGLE (CLAVE)
-    ========================= */
-
-    const producto = {
-      id: btn.dataset.id,
-      titulo: btn.dataset.title,
-      precio: Number(btn.dataset.price),
-      img: btn.dataset.img,
-      qty: 1
-    };
-
-    localStorage.setItem("checkout_mode", "single");
-    localStorage.setItem("checkout_single", JSON.stringify([producto]));
-
-    /* =========================
-       SET ID
-    ========================= */
-
-    const id = (btn.dataset.id || "").trim();
-    document.getElementById("prepago-id").value = id + "-A";
-
-    /* =========================
-       IMG PREVIEW
-    ========================= */
-
-    const preview = document.getElementById("prepago-img-preview");
-    if (preview && producto.img) {
-      preview.src = producto.img;
-    }
-
-    /* =========================
-       RENDER RESUMEN
-    ========================= */
-
-    if (typeof renderPrepagoSummary === "function") {
-      renderPrepagoSummary();
-    }
-
-    openModal(document.getElementById("modal-prepago"));
-    return;
-  }
-
-  if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
-    closeModal(e.target.closest(".modal"));
-  }
-
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key !== "Escape") return;
-  const modal = document.querySelector(".modal.is-open");
-  if (modal) closeModal(modal);
-});
-</script>
-
+  
   <script>
+      /* MODAL PREPAGO */
 function renderPrepagoSummary(){
 
   const mode = localStorage.getItem("checkout_mode");
@@ -801,132 +729,65 @@ function renderPrepagoSummary(){
 </script>
 
   <script>
-document.addEventListener("DOMContentLoaded", () => {
+      /* PREPAGO SUMMARY */
+function openModal(modal){
+  if(!modal) return;
+  modal.classList.add("is-open");
+  modal.setAttribute("aria-hidden", "false");
+}
 
-  const prepagoForm = document.getElementById("prepago-form");
+function closeModal(modal){
+  if(!modal) return;
+  modal.classList.remove("is-open");
+  modal.setAttribute("aria-hidden", "true");
+}
 
-  if (!prepagoForm) return;
-
-  prepagoForm.addEventListener("submit", async (e) => {
-
-    e.preventDefault();
-
-    console.log("CHECKOUT START");
-
-    const form = e.target;
-    const fd = new FormData(form);
-
-    /* =========================
-       OBTENER MODO CORRECTO
-    ========================= */
-
-    const mode = localStorage.getItem("checkout_mode");
-
-    let cart = [];
-
-    if (mode === "single") {
-      cart = JSON.parse(localStorage.getItem("checkout_single") || "[]");
-    } else {
-      cart = JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
-    }
-
-    console.log("Modo:", mode);
-    console.log("Cart enviado:", cart);
-
-    if (!cart.length) {
-      alert("No hay productos para procesar.");
-      return;
-    }
-
-    fd.set("cart", JSON.stringify(cart));
-
-    /* =========================
-       BLOQUEAR BOTÓN
-    ========================= */
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.style.opacity = "0.7";
-    }
-
-    try {
-
-      const res = await fetch(`${window.location.origin}/pago`, {
-        method: "POST",
-        body: fd
-      });
-
-      const data = await res.json();
-
-      console.log("CHECKOUT RESPONSE:", data);
-
-      if (!res.ok) {
-        throw new Error(data.error || "API error");
-      }
-
-      if (!data.payment_url) {
-        throw new Error("No payment_url returned");
-      }
-
-      window.location.href = data.payment_url;
-
-    } catch (err) {
-
-      console.error("CHECKOUT ERROR:", err);
-
-      alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
-
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = "";
-      }
-
-    }
-
-  });
-
-});
-</script>
-
-<script>
 document.addEventListener("click", (e) => {
 
   const btn = e.target.closest(".js-prepago");
-  if (!btn) return;
 
-  e.preventDefault();
+  if (btn) {
+    e.preventDefault();
 
-  console.log("CLICK PREPAGO DETECTADO");
+    console.log("CLICK PREPAGO OK");
 
-  const producto = {
-    id: btn.dataset.id,
-    titulo: btn.dataset.title,
-    precio: Number(btn.dataset.price),
-    img: btn.dataset.img,
-    qty: 1
-  };
+    const producto = {
+      id: btn.dataset.id,
+      titulo: btn.dataset.title,
+      precio: Number(btn.dataset.price),
+      img: btn.dataset.img,
+      qty: 1
+    };
 
-  localStorage.setItem("checkout_mode", "single");
-  localStorage.setItem("checkout_single", JSON.stringify([producto]));
+    localStorage.setItem("checkout_mode", "single");
+    localStorage.setItem("checkout_single", JSON.stringify([producto]));
 
-  /* imagen */
-  const preview = document.getElementById("prepago-img-preview");
-  if (preview) preview.src = producto.img;
+    /* imagen */
+    const preview = document.getElementById("prepago-img-preview");
+    if (preview) {
+      preview.src = producto.img;
+      preview.alt = producto.titulo;
+    }
 
-  /* resumen */
-  if (typeof renderPrepagoSummary === "function") {
-    renderPrepagoSummary();
+    /* resumen */
+    if (typeof renderPrepagoSummary === "function") {
+      renderPrepagoSummary();
+    }
+
+    openModal(document.getElementById("modal-prepago"));
+    return;
   }
 
-  /* abrir modal */
-  const modal = document.getElementById("modal-prepago");
-  if (modal) {
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
+  if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
+    closeModal(e.target.closest(".modal"));
   }
 
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  const modal = document.querySelector(".modal.is-open");
+  if (modal) closeModal(modal);
 });
 </script>
   
