@@ -3947,3 +3947,66 @@ button:disabled {
   transition: all 0.2s ease;
 }
 
+/* =========================
+   MODAL PREPAGO TIPOGRAFÍA
+========================= */
+
+.modal-copy {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.modal-copy strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111;
+  margin-bottom: 4px;
+}
+
+/* FILAS */
+.prepago-summary .cart-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* TOTAL */
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000;
+}
+
+/* RGPD */
+.rgpd-group {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #666;
+}
+
+.rgpd-group a {
+  text-decoration: underline;
+}
+
+/* NOTA PASARELA */
+.prepago-note {
+  font-size: 13px;
+  color: #777;
+  margin: 12px 0 20px;
+  line-height: 1.4;
+}
+
+.prepago-summary {
+  margin-top: 10px;
+}
+
