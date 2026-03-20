@@ -4,226 +4,134 @@ export async function onRequestPost(context) {
 
   try {
 
-    const body = await request.json();
-    const payment = body?.data?.object?.payment;
+    const formData = await request.formData();
+    const cartRaw = formData.get("cart");
 
-    if (!payment) {
-      return new Response("No payment", { status: 200 });
+    let cart = [];
+
+    if (cartRaw) {
+      cart = JSON.parse(cartRaw);
     }
 
-    if (payment.status !== "COMPLETED") {
-      return new Response("Ignored", { status: 200 });
+    if (!cart.length) {
+      return new Response(JSON.stringify({
+        error: "Cart vacío"
+      }), { status: 400 });
     }
 
-    /* =========================
-       ANTI DUPLICADOS
-    ========================= */
-
-    const paymentId = payment.id;
-    const key = `payment_${paymentId}`;
-
-    if (env.PAYMENTS_KV) {
-      const existing = await env.PAYMENTS_KV.get(key);
-      if (existing) return new Response("Duplicate", { status: 200 });
-
-      await env.PAYMENTS_KV.put(key, "done", { expirationTtl: 86400 });
-    }
+    const orderId = crypto.randomUUID();
 
     /* =========================
-       DATOS BASE
+       LINE ITEMS
     ========================= */
 
-    const billing = payment.billing_address || {};
-
-    let nombre = billing.first_name || "Cliente";
-    let apellidos = billing.last_name || "";
-    let nombreCompleto = `${nombre} ${apellidos}`.trim();
-
-    let email = payment.buyer_email_address || "";
-    let telefono = billing.phone || payment.phone_number || "No facilitado";
-
-    let direccion = [
-      billing.address_line_1,
-      billing.address_line_2,
-      billing.locality,
-      billing.administrative_district_level_1,
-      billing.postal_code,
-      billing.country
-    ].filter(Boolean).join(", ") || "No facilitada";
-
-    const amount = payment.total_money.amount / 100;
-    const receipt = payment.receipt_url || "";
-    const orderId = payment.order_id || "";
-
-    const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
-
-    /* =========================
-       CUSTOMER API (🔥 NUEVO)
-    ========================= */
-
-    const customerId = payment.customer_id;
-
-    console.log("👤 CUSTOMER ID:", customerId);
-
-    if (customerId) {
-      try {
-
-        const customerRes = await fetch(`https://connect.squareup.com/v2/customers/${customerId}`, {
-          headers: {
-            "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-            "Square-Version": "2024-06-04"
-          }
-        });
-
-        const customerData = await customerRes.json();
-
-        console.log("👤 CUSTOMER DATA:", customerData);
-
-        const customer = customerData.customer;
-
-        if (customer) {
-
-          nombre = customer.given_name || nombre;
-          apellidos = customer.family_name || apellidos;
-          nombreCompleto = `${nombre} ${apellidos}`.trim();
-
-          email = customer.email_address || email;
-          telefono = customer.phone_number || telefono;
-
-          if (customer.address) {
-            direccion = Object.values(customer.address)
-              .filter(Boolean)
-              .join(", ");
-          }
-        }
-
-      } catch (err) {
-        console.error("❌ ERROR CUSTOMER API:", err);
+    const line_items = cart.map(p => ({
+      name: p.titulo,
+      quantity: String(p.qty || 1),
+      base_price_money: {
+        amount: Math.round(Number(p.precio) * 100),
+        currency: "EUR"
       }
-    }
+    }));
 
-    console.log("📦 PEDIDO FINAL:", {
-      nombreCompleto,
-      email,
-      telefono,
-      direccion,
-      amount
+    /* =========================
+       SUBTOTAL
+    ========================= */
+
+    let subtotal = 0;
+
+    cart.forEach(p => {
+      const qty = p.qty || 1;
+      subtotal += Number(p.precio) * qty;
     });
 
     /* =========================
-       EMAIL TIENDA
+       ENVÍO
     ========================= */
 
-    try {
+    const shippingAmount = subtotal >= 150 ? 0 : 8.5;
 
-      const res = await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json"
+    const service_charges = shippingAmount > 0 ? [{
+      name: "Envío",
+      amount_money: {
+        amount: Math.round(shippingAmount * 100),
+        currency: "EUR"
+      },
+      calculation_phase: "SUBTOTAL_PHASE"
+    }] : [];
+
+    /* =========================
+       SQUARE CHECKOUT
+    ========================= */
+
+    const res = await fetch("https://connect.squareup.com/v2/online-checkout/payment-links", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+        "Square-Version": "2024-06-04"
+      },
+      body: JSON.stringify({
+        idempotency_key: crypto.randomUUID(),
+
+        order: {
+          location_id: "LF3CF7RXP1BDT",
+          line_items,
+          service_charges,
+          reference_id: orderId   // 🔥 IMPORTANTE
         },
-        body: JSON.stringify({
-          from: "Abaloria Bendita <hola@abaloriabendita.es>",
-          to: ["hola@abaloriabendita.es"],
-          subject: `💰 Nuevo pedido · ${referencia}`,
-          html: `
-            <h2>Nuevo pedido</h2>
-            <p><strong>Referencia:</strong> ${referencia}</p>
-            <p><strong>Cliente:</strong> ${nombreCompleto}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <p><strong>Teléfono:</strong> ${telefono}</p>
-            <p><strong>Dirección:</strong> ${direccion}</p>
-            <p><strong>Total:</strong> ${amount}€</p>
-            <p><a href="${receipt}">Ver recibo</a></p>
-          `
-        })
-      });
 
-      console.log("📩 TIENDA:", res.status);
+        checkout_options: {
+          redirect_url: `https://abaloriabendita.es/gracias.html?order=${orderId}`,
+          ask_for_email: true,
+          ask_for_shipping_address: true
+        }
+      })
+    });
 
-    } catch (err) {
-      console.error("❌ ERROR EMAIL TIENDA:", err);
+    /* =========================
+       CONTROL DE ERRORES
+    ========================= */
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("❌ ERROR SQUARE:", err);
+
+      return new Response(JSON.stringify({
+        error: "Square error",
+        details: err
+      }), { status: 500 });
     }
 
     /* =========================
-       GOOGLE SHEETS
+       RESPUESTA
     ========================= */
 
-    try {
+    const data = await res.json();
 
-      await fetch("https://script.google.com/macros/s/AKfycbwGWwD-imsC7lTQ4V28oAIV9v4vOY4-9ASFoygglMsSIxxZs6ioM8imPn0syTSs_d_ITQ/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          tipo: "venta_online",
-          referencia,
-          fecha: new Date().toISOString(),
-          nombre: nombreCompleto,
-          email,
-          telefono,
-          direccion,
-          importe: amount,
-          pieza_id: orderId,
-          origen: "square",
-          rgpd: "SI"
-        })
-      });
+    if (!data?.payment_link?.url) {
+      console.error("❌ No payment_link.url:", data);
 
-      console.log("📊 Sheets OK");
-
-    } catch (err) {
-      console.error("❌ ERROR SHEETS:", err);
+      return new Response(JSON.stringify({
+        error: "No payment URL"
+      }), { status: 500 });
     }
 
-    /* =========================
-       EMAIL CLIENTE
-    ========================= */
-
-    if (email) {
-      try {
-
-        const res = await fetch("https://api.resend.com/emails", {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${env.RESEND_API_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            from: "Abaloria Bendita <hola@abaloriabendita.es>",
-            to: [email],
-            subject: "Tu pedido está confirmado ✨",
-            html: `
-              <div style="font-family:Arial,sans-serif;max-width:520px;margin:auto">
-                <h2>Gracias por tu compra</h2>
-                <p>Hola ${nombreCompleto},</p>
-                <p>Hemos recibido tu pedido correctamente.</p>
-                <p><strong>Referencia:</strong> ${referencia}</p>
-                <p><strong>Total:</strong> ${amount}€</p>
-                <p><a href="${receipt}">Ver recibo</a></p>
-                <p style="margin-top:20px">
-                  Te avisaremos cuando tu pedido esté preparado.
-                </p>
-              </div>
-            `
-          })
-        });
-
-        console.log("📩 CLIENTE:", res.status);
-
-      } catch (err) {
-        console.error("❌ ERROR EMAIL CLIENTE:", err);
-      }
-    }
-
-    return new Response("OK", { status: 200 });
+    return new Response(JSON.stringify({
+      payment_url: data.payment_link.url,
+      order_id: orderId
+    }), {
+      headers: { "Content-Type": "application/json" }
+    });
 
   } catch (err) {
 
-    console.error("❌ ERROR WEBHOOK:", err);
+    console.error("❌ ERROR GENERAL /pago:", err);
 
-    return new Response("Error", { status: 500 });
+    return new Response(JSON.stringify({
+      error: "Server error",
+      message: err.message
+    }), { status: 500 });
 
   }
 
