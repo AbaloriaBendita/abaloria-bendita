@@ -133,3 +133,22 @@ export async function onRequestPost(context) {
   }
 
 }
+
+const emailRes = await fetch("https://api.resend.com/emails", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${env.RESEND_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    from: "Abaloria Bendita <hola@abaloriabendita.es>",
+    to: ["hola@abaloriabendita.es"],
+    subject: `💰 Nuevo pedido · ${referencia}`,
+    html: `<p>Pedido de ${email}</p>`
+  })
+});
+
+const emailText = await emailRes.text();
+
+console.log("EMAIL TIENDA STATUS:", emailRes.status);
+console.log("EMAIL TIENDA RESP:", emailText);
