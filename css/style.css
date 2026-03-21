@@ -4007,10 +4007,10 @@ button:disabled {
 }
 
 .mobile-menu{
-  display: none !important;
+  display: none;
 
-  position: absolute;
-  top: 100%;
+  position: fixed;          /* 🔥 CAMBIO CLAVE */
+  top: 72px;                /* 👈 altura de tu header */
   left: 0;
   right: 0;
 
@@ -4018,11 +4018,11 @@ button:disabled {
   padding: 20px;
 
   box-shadow: 0 10px 30px rgba(0,0,0,.1);
-  z-index: 1000;
+  z-index: 999;             /* debajo del header (1000) */
 }
 
 .mobile-menu.is-open{
-  display: flex !important;
+  display:flex;
   flex-direction: column;
   gap: 16px;
 }
