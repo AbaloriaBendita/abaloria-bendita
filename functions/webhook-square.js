@@ -1,3 +1,15 @@
+export async function onRequest(context) {
+
+  if (context.request.method === "GET") {
+    return new Response("Webhook activo", { status: 200 });
+  }
+
+  if (context.request.method === "POST") {
+    return onRequestPost(context);
+  }
+
+  return new Response("Method not allowed", { status: 405 });
+}
 export async function onRequestPost(context) {
 
   const { request, env } = context;
