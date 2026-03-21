@@ -19,8 +19,8 @@ export async function onRequestPost(context) {
        ANTI DUPLICADOS
     ========================= */
 
-    const paymentId = payment.id;
-    const key = `payment_${paymentId}`;
+    const orderId = payment.order_id || payment.id;
+const key = `order_${orderId}`;
 
     if (env.PAYMENTS_KV) {
       const existing = await env.PAYMENTS_KV.get(key);
