@@ -5,41 +5,47 @@ export async function onRequestPost(context) {
   try {
 
     const body = await request.json();
+    const eventType = body?.type || "";
     const payment = body?.data?.object?.payment;
+
+    console.log("📡 EVENT:", eventType);
+
+    /* =========================
+       FILTRO EVENTOS
+    ========================= */
+
+    if (!eventType.startsWith("payment.")) {
+      return new Response("Ignored event type", { status: 200 });
+    }
 
     if (!payment) {
       return new Response("No payment", { status: 200 });
     }
 
     if (payment.status !== "COMPLETED") {
-      return new Response("Ignored", { status: 200 });
+      return new Response("Not completed", { status: 200 });
     }
 
     /* =========================
-   ANTI DUPLICADOS
-========================= */
+       ANTI DUPLICADOS (ROBUSTO)
+    ========================= */
 
-const eventType = body?.type || "";
-console.log("📡 EVENT TYPE:", eventType);
+    const orderId = payment.order_id || payment.id;
+    const key = `order_${orderId}`;
 
-if (!eventType.includes("payment")) {
-  return new Response("Ignored event type", { status: 200 });
-}
+    if (env.PAYMENTS_KV) {
 
-const orderId = payment.order_id || payment.id;
-const key = `order_${orderId}`;
+      const existing = await env.PAYMENTS_KV.get(key);
 
-if (env.PAYMENTS_KV) {
-  const existing = await env.PAYMENTS_KV.get(key);
+      if (existing) {
+        console.log("⚠️ DUPLICATE BLOCKED:", key);
+        return new Response("Duplicate", { status: 200 });
+      }
 
-  if (existing) {
-    console.log("⚠️ DUPLICATE BLOCKED:", key);
-    return new Response("Duplicate", { status: 200 });
-  }
+      // 🔥 marcar inmediatamente (evita race conditions)
+      await env.PAYMENTS_KV.put(key, "processing", { expirationTtl: 86400 });
+    }
 
-  await env.PAYMENTS_KV.put(key, "processing", { expirationTtl: 86400 });
-}
-  
     /* =========================
        DATOS BASE
     ========================= */
@@ -62,7 +68,10 @@ if (env.PAYMENTS_KV) {
       billing.country
     ].filter(Boolean).join(", ") || "No facilitada";
 
-    const amount = payment.total_money.amount / 100;
+    const amount = payment.total_money?.amount
+      ? payment.total_money.amount / 100
+      : 0;
+
     const receipt = payment.receipt_url || "";
 
     const squareOrderUrl = orderId
@@ -72,26 +81,25 @@ if (env.PAYMENTS_KV) {
     const referencia = `AB-${new Date().getFullYear()}-${Date.now()}`;
 
     /* =========================
-       CUSTOMER API
+       CUSTOMER API (ENRIQUECER)
     ========================= */
 
     const customerId = payment.customer_id;
 
-    console.log("👤 CUSTOMER ID:", customerId);
-
     if (customerId) {
       try {
 
-        const customerRes = await fetch(`https://connect.squareup.com/v2/customers/${customerId}`, {
-          headers: {
-            "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
-            "Square-Version": "2024-06-04"
+        const customerRes = await fetch(
+          `https://connect.squareup.com/v2/customers/${customerId}`,
+          {
+            headers: {
+              "Authorization": `Bearer ${env.SQUARE_ACCESS_TOKEN}`,
+              "Square-Version": "2024-06-04"
+            }
           }
-        });
+        );
 
         const customerData = await customerRes.json();
-        console.log("👤 CUSTOMER DATA:", customerData);
-
         const customer = customerData.customer;
 
         if (customer) {
@@ -110,7 +118,7 @@ if (env.PAYMENTS_KV) {
         }
 
       } catch (err) {
-        console.error("❌ ERROR CUSTOMER API:", err);
+        console.error("❌ CUSTOMER API ERROR:", err);
       }
     }
 
@@ -123,12 +131,12 @@ if (env.PAYMENTS_KV) {
     });
 
     /* =========================
-       EMAIL TIENDA
+       EMAIL INTERNO (TIENDA)
     ========================= */
 
     try {
 
-      const res = await fetch("https://api.resend.com/emails", {
+      await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${env.RESEND_API_KEY}`,
@@ -152,14 +160,14 @@ if (env.PAYMENTS_KV) {
         })
       });
 
-      console.log("📩 TIENDA:", res.status);
+      console.log("📩 EMAIL TIENDA OK");
 
     } catch (err) {
-      console.error("❌ ERROR EMAIL TIENDA:", err);
+      console.error("❌ EMAIL TIENDA ERROR:", err);
     }
 
     /* =========================
-       GOOGLE SHEETS
+       GOOGLE SHEETS (ÚNICO SOURCE)
     ========================= */
 
     try {
@@ -170,31 +178,31 @@ if (env.PAYMENTS_KV) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-  tipo: "venta",
-  referencia,
-  fecha: new Date().toISOString(),
-  nombre: nombreCompleto,
-  email,
-  telefono,
-  direccion,
-  importe: amount,
-  pieza_id: orderId,
-  origen: "square",
-  rgpd: "SI"
-})
+          tipo: "venta", // 🔥 SIEMPRE VENTA
+          referencia,
+          fecha: new Date().toISOString(),
+          nombre: nombreCompleto,
+          email,
+          telefono,
+          direccion,
+          importe: amount,
+          pieza_id: orderId,
+          origen: "square",
+          rgpd: "SI"
+        })
       });
 
-      console.log("📊 Sheets OK");
+      console.log("📊 SHEETS OK");
 
     } catch (err) {
-      console.error("❌ ERROR SHEETS:", err);
+      console.error("❌ SHEETS ERROR:", err);
     }
 
     return new Response("OK", { status: 200 });
 
   } catch (err) {
 
-    console.error("❌ ERROR WEBHOOK:", err);
+    console.error("❌ WEBHOOK ERROR:", err);
 
     return new Response("Error", { status: 500 });
 
