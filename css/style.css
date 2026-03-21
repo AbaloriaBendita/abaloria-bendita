@@ -4007,7 +4007,7 @@ button:disabled {
 }
 
 .mobile-menu{
-  display:none;
+  display: none !important;
 
   position: absolute;
   top: 100%;
@@ -4022,15 +4022,9 @@ button:disabled {
 }
 
 .mobile-menu.is-open{
-  display:flex;
+  display: flex !important;
   flex-direction: column;
   gap: 16px;
-}
-
-.mobile-menu a{
-  font-weight: 700;
-  text-decoration: none;
-  color: #000;
 }
 
 
