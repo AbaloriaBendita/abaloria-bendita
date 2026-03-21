@@ -106,22 +106,6 @@ if (tipo === "venta") {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: "venta_confirmada" });
-
-  /* confirmar pedido */
-
-  if (order) {
-
-    fetch("/confirmar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ order })
-    })
-    .catch(err => console.log("confirm error", err));
-
-  }
-
 }
 
 /* =========================
