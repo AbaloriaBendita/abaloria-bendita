@@ -547,7 +547,7 @@ margin-bottom: 10px;
   @media (max-width: 768px){
 
   .main-nav{
-    display: flex;
+    display: none;
     flex-direction: row;
     align-items: center;
     gap: 18px;
@@ -566,6 +566,10 @@ margin-bottom: 10px;
   .main-nav .lang-switch{
     display: none;
   }
+
+    .main-nav.is-open{
+  display: flex;
+}
 
   /* Cuando hamburguesa está activa */
   .main-nav.is-open .lang-switch{
@@ -3863,14 +3867,6 @@ flex:1;
     display:block;
   }
 
-}
-
-.mobile-menu{
-  display:none;
-}
-
-.mobile-menu.is-open{
-  display:block;
 }
 
 .piece-ctas{
