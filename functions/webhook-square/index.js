@@ -53,7 +53,6 @@ const key = `order_${orderId}`;
 
     const amount = payment.total_money.amount / 100;
     const receipt = payment.receipt_url || "";
-    const orderId = payment.order_id || "";
 
     const squareOrderUrl = orderId
       ? `https://app.squareup.com/dashboard/orders/overview/${orderId}`
