@@ -160,7 +160,7 @@ export async function onRequestPost(context) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          tipo: "venta_online",
+          tipo: "venta",
           referencia,
           fecha: new Date().toISOString(),
           nombre: nombreCompleto,
