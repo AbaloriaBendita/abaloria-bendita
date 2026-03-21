@@ -16,19 +16,30 @@ export async function onRequestPost(context) {
     }
 
     /* =========================
-       ANTI DUPLICADOS
-    ========================= */
+   ANTI DUPLICADOS
+========================= */
 
-    const orderId = payment.order_id || payment.id;
+const eventType = body?.type || "";
+console.log("📡 EVENT TYPE:", eventType);
+
+if (!eventType.includes("payment")) {
+  return new Response("Ignored event type", { status: 200 });
+}
+
+const orderId = payment.order_id || payment.id;
 const key = `order_${orderId}`;
 
-    if (env.PAYMENTS_KV) {
-      const existing = await env.PAYMENTS_KV.get(key);
-      if (existing) return new Response("Duplicate", { status: 200 });
+if (env.PAYMENTS_KV) {
+  const existing = await env.PAYMENTS_KV.get(key);
 
-      await env.PAYMENTS_KV.put(key, "done", { expirationTtl: 86400 });
-    }
+  if (existing) {
+    console.log("⚠️ DUPLICATE BLOCKED:", key);
+    return new Response("Duplicate", { status: 200 });
+  }
 
+  await env.PAYMENTS_KV.put(key, "processing", { expirationTtl: 86400 });
+}
+    
     /* =========================
        DATOS BASE
     ========================= */
