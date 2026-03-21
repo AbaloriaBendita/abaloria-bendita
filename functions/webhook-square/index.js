@@ -160,18 +160,18 @@ export async function onRequestPost(context) {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          tipo: "venta",
-          referencia,
-          fecha: new Date().toISOString(),
-          nombre: nombreCompleto,
-          email,
-          telefono,
-          direccion,
-          importe: amount,
-          pieza_id: orderId,
-          origen: "square",
-          rgpd: "SI"
-        })
+  tipo: "venta",
+  referencia,
+  fecha: new Date().toISOString(),
+  nombre: nombreCompleto,
+  email,
+  telefono,
+  direccion,
+  importe: amount,
+  pieza_id: orderId,
+  origen: "square",
+  rgpd: "SI"
+})
       });
 
       console.log("📊 Sheets OK");
