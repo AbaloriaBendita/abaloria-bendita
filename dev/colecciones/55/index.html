@@ -414,17 +414,21 @@ document.addEventListener("DOMContentLoaded", () => {
   
 <script>
 /* NAV MOBILE */
+
 document.addEventListener("DOMContentLoaded", () => {
+
   const toggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector(".main-nav");
-  if (!toggle || !nav) return;
+  const mobileMenu = document.querySelector(".mobile-menu");
+
+  if (!toggle || !mobileMenu) return;
 
   toggle.addEventListener("click", () => {
-    nav.classList.toggle("is-open");
+    mobileMenu.classList.toggle("is-open");
   });
+
 });
 </script>
-
+  
 <script>
 /* MODAL ENCARGO */
 document.addEventListener("DOMContentLoaded", () => {
