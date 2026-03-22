@@ -827,7 +827,7 @@ document.addEventListener("click", async (e) => {
     const fd = new FormData();
     fd.set("cart", JSON.stringify(cart));
 
-    const res = await fetch("/pago", {
+    const res = await fetch("https://pago-square.hola-38b.workers.dev", {
       method: "POST",
       body: fd
     });
@@ -836,7 +836,7 @@ document.addEventListener("click", async (e) => {
 
     const text = await res.text();
 
-    console.log("📡 RAW RESPONSE /pago:", text);
+    console.log("📡 RAW RESPONSE WORKER:", text);
 
     let data;
 
@@ -846,7 +846,7 @@ document.addEventListener("click", async (e) => {
       throw new Error("Respuesta no es JSON");
     }
 
-    console.log("💰 RESPUESTA /pago:", data);
+    console.log("💰 RESPUESTA WORKER:", data);
 
     if (!res.ok || !data.payment_url) {
       throw new Error(data.error || "No payment_url");
