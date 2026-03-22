@@ -334,3 +334,4 @@ window.location.href = data.payment_url;
   }
 
 })();
+   });  
