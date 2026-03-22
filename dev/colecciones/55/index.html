@@ -795,23 +795,6 @@ document.addEventListener("keydown", (e) => {
 
  
 <script>
-/* PREPAGO PAGO - ROBUSTO */
-
-document.addEventListener("change", (e) => {
-
-  if (e.target.id === "rgpd-check") {
-
-    const btn = document.getElementById("go-to-payment");
-
-    if (!btn) return;
-
-    btn.disabled = !e.target.checked;
-
-    console.log("RGPD:", e.target.checked);
-  }
-
-});
-
 document.addEventListener("click", async (e) => {
 
   const btn = e.target.closest("#go-to-payment");
@@ -849,7 +832,19 @@ document.addEventListener("click", async (e) => {
       body: fd
     });
 
-    const data = await res.json();
+    console.log("📡 STATUS:", res.status);
+
+    const text = await res.text();
+
+    console.log("📡 RAW RESPONSE /pago:", text);
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("Respuesta no es JSON");
+    }
 
     console.log("💰 RESPUESTA /pago:", data);
 
