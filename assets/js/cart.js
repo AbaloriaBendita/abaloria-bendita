@@ -290,35 +290,48 @@ document.addEventListener("click",(e)=>{
     panel.setAttribute("aria-hidden","true");
   }
 
-  /* checkout directo */
+ /* checkout directo */
 
-  (async () => {
+(async () => {
+
+  try {
+
+    const fd = new FormData();
+    fd.set("cart", JSON.stringify(cart));
+
+    const res = await fetch("/pago", {
+      method: "POST",
+      body: fd
+    });
+
+    console.log("📡 STATUS /pago:", res.status);
+
+    const text = await res.text();
+
+    console.log("📡 RAW RESPONSE /pago:", text);
+
+    let data;
 
     try {
-
-      const fd = new FormData();
-      fd.set("cart", JSON.stringify(cart));
-
-      const res = await fetch("/pago", {
-        method: "POST",
-        body: fd
-      });
-
-      const data = await res.json();
-
-      console.log("CHECKOUT CART:", data);
-
-      if (!res.ok || !data.payment_url) {
-        throw new Error(data.error || "Error en pago");
-      }
-
-      window.location.href = data.payment_url;
-
-    } catch (err) {
-      console.error("ERROR CHECKOUT CART:", err);
-      alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
+      data = JSON.parse(text);
+    } catch {
+      throw new Error("Respuesta no es JSON");
     }
 
-  })();
+    console.log("💰 CHECKOUT CART:", data);
 
-});
+    if (!res.ok || !data.payment_url) {
+      throw new Error(data.error || "Error en pago");
+    }
+
+    window.location.href = data.payment_url;
+
+  } catch (err) {
+
+    console.error("❌ ERROR CHECKOUT CART:", err);
+
+    alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
+
+  }
+
+})();
