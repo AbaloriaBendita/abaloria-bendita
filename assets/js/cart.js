@@ -299,32 +299,32 @@ document.addEventListener("click",(e)=>{
     const fd = new FormData();
     fd.set("cart", JSON.stringify(cart));
 
-    const res = await fetch("/pago", {
-      method: "POST",
-      body: fd
-    });
+    const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+  method: "POST",
+  body: fd
+});
 
-    console.log("📡 STATUS /pago:", res.status);
+console.log("📡 STATUS WORKER:", res.status);
 
-    const text = await res.text();
+const text = await res.text();
 
-    console.log("📡 RAW RESPONSE /pago:", text);
+console.log("📡 RAW RESPONSE WORKER:", text);
 
-    let data;
+let data;
 
-    try {
-      data = JSON.parse(text);
-    } catch {
-      throw new Error("Respuesta no es JSON");
-    }
+try {
+  data = JSON.parse(text);
+} catch {
+  throw new Error("Respuesta no es JSON");
+}
 
-    console.log("💰 CHECKOUT CART:", data);
+console.log("💰 CHECKOUT CART:", data);
 
-    if (!res.ok || !data.payment_url) {
-      throw new Error(data.error || "Error en pago");
-    }
+if (!res.ok || !data.payment_url) {
+  throw new Error(data.error || "Error en pago");
+}
 
-    window.location.href = data.payment_url;
+window.location.href = data.payment_url;
 
   } catch (err) {
 
