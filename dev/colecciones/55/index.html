@@ -793,12 +793,31 @@ document.addEventListener("keydown", (e) => {
 });
 </script>
 
- 
+ <script>
+document.addEventListener("change", (e) => {
+
+  if (e.target.id === "rgpd-check") {
+
+    const btn = document.getElementById("go-to-payment");
+
+    if (!btn) return;
+
+    btn.disabled = !e.target.checked;
+
+    console.log("RGPD:", e.target.checked);
+  }
+
+});
+</script>
+
+  
 <script>
+        /* CTA PAGO */
 document.addEventListener("click", async (e) => {
 
-  const btn = e.target.closest("#go-to-payment");
-  if (!btn) return;
+  const btn = document.getElementById("go-to-payment");
+
+  if (!btn || !btn.contains(e.target)) return;
 
   console.log("🚀 CLICK BOTÓN PREPAGO");
 
