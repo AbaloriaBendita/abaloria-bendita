@@ -74,7 +74,6 @@ function addToCart(item){
   }
 
   saveCart(cart);
-
 }
 
 /* =========================
