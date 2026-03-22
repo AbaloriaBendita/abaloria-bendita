@@ -843,8 +843,13 @@ document.addEventListener("click", async (e) => {
 
   try {
 
-    const fd = new FormData();
-    fd.set("cart", JSON.stringify(cart));
+   const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ cart })
+});
 
     const res = await fetch("https://pago-square.hola-38b.workers.dev", {
       method: "POST",
