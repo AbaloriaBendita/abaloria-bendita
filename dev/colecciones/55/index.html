@@ -813,7 +813,7 @@ document.addEventListener("change", (e) => {
 
   
 <script>
-        /* CTA PAGO */
+/* CTA PAGO */
 document.addEventListener("click", async (e) => {
 
   const btn = document.getElementById("go-to-payment");
@@ -844,23 +844,17 @@ document.addEventListener("click", async (e) => {
 
   try {
 
-   const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ cart })
-});
-
     const res = await fetch("https://pago-square.hola-38b.workers.dev", {
       method: "POST",
-      body: fd
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ cart })
     });
 
     console.log("📡 STATUS:", res.status);
 
     const text = await res.text();
-
     console.log("📡 RAW RESPONSE WORKER:", text);
 
     let data;
