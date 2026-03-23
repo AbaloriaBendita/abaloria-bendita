@@ -45,7 +45,7 @@ function renderPrepagoSummary(){
 
 document.addEventListener("click", async (e) => {
 
- /* =========================
+/* =========================
    PREPAGO (abrir modal)
 ========================= */
 
@@ -65,10 +65,11 @@ if (prepagoBtn) {
   localStorage.setItem("checkout_single", JSON.stringify([producto]));
 
   const openPrepago = () => {
-    const modal = document.getElementById("modal-prepago");
-    if (!modal) return;
 
+    const modal = document.getElementById("modal-prepago");
     const preview = document.getElementById("prepago-img-preview");
+
+    if (!modal) return;
 
     if (preview) {
       preview.src = producto.img;
@@ -78,13 +79,25 @@ if (prepagoBtn) {
     renderPrepagoSummary();
     openModal(modal);
 
-  // intento inmediato
-  if (document.getElementById("modal-prepago")) {
-    openPrepago();
-  } else {
-    // fallback si el partial aún no ha cargado
-    setTimeout(openPrepago, 100);
-  }
+    // 🔥 aquí sí: el modal ya existe seguro
+    initPrepagoCTA();
+  };
+
+  // 🔥 retry más robusto (no 1 intento)
+  let tries = 0;
+
+  const waitForModal = setInterval(() => {
+    const modal = document.getElementById("modal-prepago");
+
+    if (modal) {
+      clearInterval(waitForModal);
+      openPrepago();
+    }
+
+    tries++;
+    if (tries > 10) clearInterval(waitForModal);
+
+  }, 50);
 
   return;
 }
