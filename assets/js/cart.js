@@ -5,11 +5,7 @@ const CART_KEY = "abaloria_cart";
 ========================= */
 
 function getCart(){
-  try {
-    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
-  } catch {
-    return [];
-  }
+  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
 }
 
 function saveCart(cart){
@@ -166,143 +162,170 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* =========================
-   OPEN CART (HEADER ICON)
+   HEADER CART BUTTON (ORIGINAL)
 ========================= */
 
-document.addEventListener("click", (e) => {
+document.addEventListener("DOMContentLoaded", () => {
 
-  const btn = e.target.closest("#cart-open");
-  if (!btn) return;
-  e.preventDefault();
-      e.stopPropagation();
+  const cartButton = document.getElementById("cart-open");
+  const cartPanel = document.getElementById("cartPanel");
+  const cartClose = document.querySelector(".cart-close");
+  const cartOverlay = document.querySelector(".cart-overlay");
 
+  if (!cartButton || !cartPanel) return;
 
-  const panel = document.getElementById("cartPanel");
-  if (!panel) return;
+  cartButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    renderCart(); // 🔥 esto es importante (antes lo hacías)
+    cartPanel.classList.add("is-open");
+    cartPanel.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  });
 
-  renderCart(); // 🔥 importante
+  const closeCart = () => {
+    cartPanel.classList.remove("is-open");
+    cartPanel.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  };
 
-  panel.classList.add("is-open");
-  panel.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
+  if (cartClose) cartClose.addEventListener("click", closeCart);
+  if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
 
 });
 
 /* =========================
-   CLOSE CART
+   ADD TO CART CLICK
 ========================= */
-
-document.addEventListener("click", (e) => {
-
-  const closeBtn = e.target.closest(".cart-close");
-  const backdrop = e.target.closest(".cart-backdrop");
-
-  if (!closeBtn && !backdrop) return;
-   e.stopPropagation();
-
-  const panel = document.getElementById("cartPanel");
-  if (!panel) return;
-
-  panel.classList.remove("is-open");
-  panel.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-
-});
 
 document.addEventListener("click",(e)=>{
 
-  /* ADD TO CART */
-  const addBtn = e.target.closest(".js-add-cart");
-  if(addBtn){
-    const item = {
-      id: addBtn.dataset.id,
-      titulo: addBtn.dataset.title,
-      precio: Number(addBtn.dataset.price),
-      img: addBtn.dataset.img
-    };
+  const btn = e.target.closest(".js-add-cart");
 
-    addToCart(item);
-    renderCart();
-     updateCartCount();
+  if(!btn) return;
 
-    const panel = document.getElementById("cartPanel");
+  const item = {
+    id: btn.dataset.id,
+    titulo: btn.dataset.title,
+    precio: Number(btn.dataset.price),
+    img: btn.dataset.img
+  };
 
-if (panel) {
+  addToCart(item);
+
+  renderCart();
+
+  const panel = document.getElementById("cartPanel");
+
+ if(panel){
+  renderCart(); // 🔥 importante
   panel.classList.add("is-open");
-  panel.setAttribute("aria-hidden", "false");
+  panel.setAttribute("aria-hidden","false");
   document.body.style.overflow = "hidden";
 }
 
-    return;
-  }
+});
 
-  /* QUANTITY */
+/* =========================
+   CART QUANTITY
+========================= */
+
+document.addEventListener("click",(e)=>{
+
   const plus = e.target.closest(".cart-plus");
   const minus = e.target.closest(".cart-minus");
   const remove = e.target.closest(".cart-remove");
 
-  if(plus || minus || remove){
+  if(!plus && !minus && !remove) return;
 
-    const id = (plus || minus || remove).dataset.id;
+  const id = (plus || minus || remove).dataset.id;
 
-    let cart = getCart();
-    const item = cart.find(p => p.id === id);
-    if(!item) return;
+  let cart = getCart();
 
-    if(!item.qty) item.qty = 1;
+  const item = cart.find(p => p.id === id);
 
-    if(plus) item.qty += 1;
-    if(minus) item.qty -= 1;
+  if(!item) return;
 
-    if(remove || item.qty <= 0){
-      cart = cart.filter(p => p.id !== id);
-    }
+  if(!item.qty) item.qty = 1;
 
-    saveCart(cart);
-    renderCart();
+  if(plus) item.qty += 1;
+  if(minus) item.qty -= 1;
+
+  if(remove || item.qty <= 0){
+    cart = cart.filter(p => p.id !== id);
+  }
+
+  saveCart(cart);
+  renderCart();
+
+});
+
+/* =========================
+   CHECKOUT CARRITO
+========================= */
+
+document.addEventListener("click",(e)=>{
+
+  const btn = e.target.closest(".cart-checkout");
+  if(!btn) return;
+
+  const cart = getCart();
+
+  if(!cart.length){
+    alert("Tu carrito está vacío");
     return;
   }
 
-  /* CHECKOUT */
-  const checkoutBtn = e.target.closest(".cart-checkout");
-  if(checkoutBtn){
+  /* cerrar carrito */
 
-    const cart = getCart();
+  const panel = document.getElementById("cartPanel");
+  if(panel){
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden","true");
+  }
 
-    if(!cart.length){
-      alert("Tu carrito está vacío");
-      return;
-    }
+ /* checkout directo */
 
-    const panel = document.getElementById("cartPanel");
-    if (panel) {
-  panel.classList.remove("is-open");
-  panel.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
+(async () => {
+
+  try {
+
+    const fd = new FormData();
+    fd.set("cart", JSON.stringify(cart));
+
+    const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+  method: "POST",
+  body: fd
+});
+
+console.log("📡 STATUS WORKER:", res.status);
+
+const text = await res.text();
+
+console.log("📡 RAW RESPONSE WORKER:", text);
+
+let data;
+
+try {
+  data = JSON.parse(text);
+} catch {
+  throw new Error("Respuesta no es JSON");
 }
 
-    (async () => {
-      try {
+console.log("💰 CHECKOUT CART:", data);
 
-        const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ cart })
-        });
+if (!res.ok || !data.payment_url) {
+  throw new Error(data.error || "Error en pago");
+}
 
-        const data = await res.json();
+window.location.href = data.payment_url;
 
-        if (!res.ok || !data.payment_url) {
-          throw new Error("Error en pago");
-        }
+  } catch (err) {
 
-        window.location.href = data.payment_url;
+    console.error("❌ ERROR CHECKOUT CART:", err);
 
-      } catch (err) {
-        console.error(err);
-        alert("No hemos podido iniciar el pago.");
-      }
-    })();
+    alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
 
   }
+
+})();
    });  
