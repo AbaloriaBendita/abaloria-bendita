@@ -1,3 +1,62 @@
+window.initPrepagoCTA = function() {
+
+  const btn = document.getElementById("go-to-payment");
+  const checkbox = document.getElementById("rgpd-check");
+
+  if (!btn || !checkbox) return;
+
+  if (btn.__bound) return;
+  btn.__bound = true;
+
+  btn.disabled = !checkbox.checked;
+
+  checkbox.addEventListener("change", () => {
+    btn.disabled = !checkbox.checked;
+  });
+
+  btn.addEventListener("click", async () => {
+
+    if (btn.disabled) return;
+
+    const cart = getCheckoutCart();
+
+    if (!cart.length) {
+      alert("No hay productos");
+      return;
+    }
+
+    btn.innerText = "Redirigiendo...";
+    btn.disabled = true;
+
+    try {
+
+      const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ cart })
+      });
+
+      const text = await res.text();
+      const data = JSON.parse(text);
+
+      if (!res.ok || !data.payment_url) {
+        throw new Error();
+      }
+
+      window.location.href = data.payment_url;
+
+    } catch {
+
+      alert("No hemos podido iniciar el pago.");
+      btn.disabled = false;
+      btn.innerText = "Continuar compra";
+    }
+
+  });
+
+};
+
+
 /* =========================
    HELPERS
 ========================= */
@@ -64,40 +123,21 @@ if (prepagoBtn) {
   localStorage.setItem("checkout_mode", "single");
   localStorage.setItem("checkout_single", JSON.stringify([producto]));
 
-  const openPrepago = () => {
+  const modal = document.getElementById("modal-prepago");
+  const preview = document.getElementById("prepago-img-preview");
 
-    const modal = document.getElementById("modal-prepago");
-    const preview = document.getElementById("prepago-img-preview");
+  if (!modal) return;
 
-    if (!modal) return;
+  if (preview) {
+    preview.src = producto.img;
+    preview.alt = producto.titulo;
+  }
 
-    if (preview) {
-      preview.src = producto.img;
-      preview.alt = producto.titulo;
-    }
+  renderPrepagoSummary();
+  openModal(modal);
 
-    renderPrepagoSummary();
-    openModal(modal);
-
-    // 🔥 aquí sí: el modal ya existe seguro
-    initPrepagoCTA();
-  };
-
-  // 🔥 retry más robusto (no 1 intento)
-  let tries = 0;
-
-  const waitForModal = setInterval(() => {
-    const modal = document.getElementById("modal-prepago");
-
-    if (modal) {
-      clearInterval(waitForModal);
-      openPrepago();
-    }
-
-    tries++;
-    if (tries > 10) clearInterval(waitForModal);
-
-  }, 50);
+  // 🔥 binding limpio
+  window.initPrepagoCTA && window.initPrepagoCTA();
 
   return;
 }
@@ -117,81 +157,4 @@ if (prepagoBtn) {
 });
 
 
-/* =========================
-   RGPD CHECK
-========================= */
 
-document.addEventListener("change", (e) => {
-
-  if (e.target.id === "rgpd-check") {
-    const btn = document.getElementById("go-to-payment");
-    if (btn) btn.disabled = !e.target.checked;
-  }
-
-});
-
-/* =========================
-   INIT PREPAGO CTA (ROBUSTO)
-========================= */
-
-window.initPrepagoCTA = function() {
-   
-  const btn = document.getElementById("go-to-payment");
-  const checkbox = document.getElementById("rgpd-check");
-
-  if (!btn || !checkbox) return;
-
-  // evitar duplicados
-  if (btn.__bound) return;
-  btn.__bound = true;
-
-  /* 🔥 estado inicial */
-  btn.disabled = !checkbox.checked;
-
-  /* 🔥 RGPD controla botón */
-  checkbox.addEventListener("change", () => {
-    btn.disabled = !checkbox.checked;
-  });
-
-  /* 🔥 CLICK */
-  btn.addEventListener("click", async () => {
-
-    if (btn.disabled) return;
-
-    const cart = getCheckoutCart();
-
-    if (!cart.length) {
-      alert("No hay productos");
-      return;
-    }
-
-    btn.innerText = "Redirigiendo...";
-    btn.disabled = true;
-
-    try {
-
-      const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ cart })
-      });
-
-      const text = await res.text();
-      const data = JSON.parse(text);
-
-      if (!res.ok || !data.payment_url) {
-        throw new Error();
-      }
-
-      window.location.href = data.payment_url;
-
-    } catch {
-
-      alert("No hemos podido iniciar el pago.");
-      btn.disabled = false;
-      btn.innerText = "Continuar compra";
-    }
-
-  });
-
-}
