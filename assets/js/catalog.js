@@ -147,7 +147,7 @@ try {
 
 <button
   class="piece-cta js-prepago"
-  data-id="${data.id}"
+data-id="${data.coleccion}-${data.id}"
   data-title="${data.titulo}"
   data-price="${data.precio}"
   data-img="${mainImg}"
@@ -157,8 +157,8 @@ try {
 
 <button
  class="piece-cta-outline js-add-cart"
- data-id="${data.id}"
- data-title="${data.titulo}"
+data-id="${data.coleccion}-${data.id}"
+data-title="${data.titulo}"
  data-price="${data.precio}"
  data-img="${mainImg}">
 
