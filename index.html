@@ -507,38 +507,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div> <!-- FIN flow-bg -->
 
 
-<!-- =====================
-     FOOTER
-===================== -->
-
-<footer class="site-footer">
-  <div class="container footer-inner">
-
-    <div class="footer-brand">
-      <img
-        src="assets/icons/logo-abaloria-horizontal.svg"
-        alt="Abaloria Bendita"
-        class="footer-logo"
-      >
-    </div>
-
-    <div class="footer-links">
-      <a href="https://instagram.com/TU_USUARIO"
-         target="_blank"
-         rel="noopener"
-         class="footer-ig">
-        <img src="assets/IG_logo.png" alt="Instagram">
-        <span>Síguenos en Instagram</span>
-      </a>
-
-      <a href="mailto:hola@abaloriabendita.es" class="footer-mail">
-        hola@abaloriabendita.es
-      </a>
-    </div>
-
-  </div>
-</footer>
-
+<!-- ================= FOOTER ================= -->
+<div id="footer-placeholder"></div>
+    
  <!-- =========================
      MODAL · ENCARGO RÁPIDO
 ========================= -->
@@ -651,26 +622,6 @@ document.addEventListener("DOMContentLoaded", () => {
     index = (index + 1) % slides.length;
     track.style.transform = `translateX(-${index * 100}%)`;
   }, 3500);
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector('.nav-toggle');
-  const nav = document.querySelector('.main-nav');
-  if (!toggle || !nav) return;
-
-  const links = nav.querySelectorAll('a');
-
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('is-open');
-  });
-
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('is-open');
-    });
-  });
 });
 </script>
 
