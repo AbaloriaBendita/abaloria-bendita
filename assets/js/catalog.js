@@ -59,8 +59,77 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = document.createElement("article");
       card.className = `piece-card ${estadoClass}`;
 
-      // (tu HTML intacto)
-      // 👉 aquí no toco lógica para no romper nada
+      const imageHTML = hasHover
+        ? `
+        <div class="piece-image has-swipe">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
+
+          <img src="${mainImg}" alt="${data.titulo}"
+            ${isFirst ? 'fetchpriority="high"' : 'loading="lazy"'}>
+
+          <img src="${hoverImg}" class="hover-img" aria-hidden="true">
+        </div>`
+        : `
+        <div class="piece-image">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
+
+          <img src="${mainImg}" alt="${data.titulo}" loading="lazy">
+        </div>`;
+
+      let cta = "";
+
+      if (estado === "disponible") {
+
+        const variacionesCTA = data.permite_variaciones
+          ? `
+          <a href="#" class="piece-cta-secondary js-open-modal"
+             data-img="${mainImg}">
+            ¿Lo quieres con variaciones?
+          </a>`
+          : "";
+
+        cta = `
+        <div class="piece-ctas">
+
+          <button class="piece-cta js-prepago"
+            data-id="${data.id}"
+            data-title="${data.titulo}"
+            data-price="${data.precio}"
+            data-img="${mainImg}">
+            Comprar ahora
+          </button>
+
+          <button class="piece-cta-outline js-add-cart"
+            data-id="${data.id}"
+            data-title="${data.titulo}"
+            data-price="${data.precio}"
+            data-img="${mainImg}">
+            Añadir carrito
+          </button>
+
+        </div>
+
+        ${variacionesCTA}`;
+      }
+
+      if (estado === "variaciones" || estado === "vendida") {
+        cta = `
+        <a href="#" class="piece-cta alt js-open-modal"
+           data-img="${mainImg}">
+          Encargar parecida
+        </a>`;
+      }
+
+      card.innerHTML = `
+        ${imageHTML}
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+          ${data.nota_disponibilidad ? `<p>${data.nota_disponibilidad}</p>` : ""}
+          ${cta}
+        </div>
+      `;
 
       GRID.appendChild(card);
       index++;
@@ -68,7 +137,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (err) {
       console.error(err);
     }
-
   }
 
 });
