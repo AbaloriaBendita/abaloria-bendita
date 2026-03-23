@@ -154,6 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔥 NUEVO
   loadPartial("#cart-placeholder", "/partials/cart.html");
    loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
-loadPartial("#modal-prepago-placeholder", "/partials/modal-prepago.html");
- 
+fetch("/partials/modal-prepago.html")
+  .then(res => res.text())
+  .then(html => {
+    document.body.insertAdjacentHTML("beforeend", html);
+  }); 
 });
