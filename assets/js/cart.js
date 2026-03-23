@@ -302,9 +302,8 @@ document.addEventListener("click", (e) => {
   const panel = document.getElementById("cartPanel");
   if (!panel) return;
 
-  /* 🔓 ABRIR DESDE ICONO HEADER */
-const openBtn = e.target.closest(".js-open-cart");
-   
+  const openBtn = e.target.closest(".js-open-cart");
+
   if (openBtn) {
     e.preventDefault();
 
@@ -313,17 +312,20 @@ const openBtn = e.target.closest(".js-open-cart");
     panel.classList.add("is-open");
     panel.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    return;
   }
 
-  /* 🔒 CERRAR */
   const closeBtn =
     e.target.closest(".cart-close") ||
-    e.target.closest(".cart-backdrop");
+    e.target.closest(".cart-backdrop") ||
+    e.target.closest(".cart-overlay");
 
   if (closeBtn) {
     panel.classList.remove("is-open");
     panel.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   }
+
+});
 
 });
