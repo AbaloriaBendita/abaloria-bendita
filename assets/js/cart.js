@@ -303,8 +303,8 @@ document.addEventListener("click", (e) => {
   if (!panel) return;
 
   /* 🔓 ABRIR DESDE ICONO HEADER */
-  const openBtn = e.target.closest("#cart-open");
-
+const openBtn = e.target.closest(".js-open-cart");
+   
   if (openBtn) {
     e.preventDefault();
 
