@@ -129,4 +129,23 @@ document.addEventListener("click", async (e) => {
     btn.innerText = "Continuar compra";
   }
 
+   /* =========================
+   CERRAR MODALES
+========================= */
+
+document.addEventListener("click", (e) => {
+
+  const closeBtn = e.target.closest(".modal-close");
+  const backdrop = e.target.classList.contains("modal-backdrop");
+
+  if (!closeBtn && !backdrop) return;
+
+  const modal = e.target.closest(".modal");
+
+  if (modal) {
+    closeModal(modal);
+  }
+
+});
+
 });
