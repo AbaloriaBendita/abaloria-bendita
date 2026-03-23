@@ -1,0 +1,64 @@
+<!-- MODAL PREPAGO -->
+<div class="modal" id="modal-prepago" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Cerrar">×</button>
+    
+    <div class="modal-image">
+      <img id="prepago-img-preview" src="" alt="">
+    </div>
+
+    <p class="modal-copy">
+      <strong>Confirmar pedido</strong><br>
+      Desglose de tu compra.
+    </p>
+
+    <!-- SIN FORM (ya no hace falta) -->
+    <div class="modal-form">
+
+      <!-- 🔥 RESUMEN (esto está perfecto) -->
+      <div class="prepago-summary">
+
+        <div class="cart-row">
+          <span>Producto</span>
+          <span class="prepago-subtotal"></span>
+        </div>
+
+        <div class="cart-row">
+          <span>IVA (21%) incluido</span>
+          <span class="prepago-iva"></span>
+        </div>
+
+        <div class="cart-row">
+          <span>Envío</span>
+          <span class="prepago-shipping"></span>
+        </div>
+
+        <div class="cart-total-row">
+          <strong>Total</strong>
+          <strong class="prepago-total"></strong>
+        </div>
+
+      </div>
+
+      <!-- RGPD -->
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" id="rgpd-check">
+          <label>
+            Aceptar nuestra 
+  <a href="/privacidad.html" target="_blank">política de privacidad.
+            </a>
+          </label>
+        </div>
+      </div>
+      <!-- BOTÓN -->
+      <button id="go-to-payment" class="cta-main" type="button" disabled>
+        Continuar compra
+      </button>
+
+    </div>
+  </div>
+</div>
