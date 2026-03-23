@@ -140,9 +140,14 @@ function forceHeaderRender() {
 document.addEventListener("DOMContentLoaded", () => {
 
   loadPartial("#header-placeholder", "/partials/header.html", () => {
-    initHeader();
-    forceHeaderRender();
-  });
+  initHeader();
+  forceHeaderRender();
+
+  // 🔥 SINCRONIZAR CARRITO CON HEADER
+  if (typeof initCart === "function") {
+    initCart();
+  }
+});
 
   loadPartial("#footer-placeholder", "/partials/footer.html");
 
