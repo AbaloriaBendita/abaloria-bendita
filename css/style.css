@@ -4071,4 +4071,13 @@ button:disabled {
   display: flex;
 }
 
+.modal-backdrop {
+  pointer-events: auto;
+}
+
+.modal-box {
+  position: relative;
+  z-index: 10;
+}
+
 
