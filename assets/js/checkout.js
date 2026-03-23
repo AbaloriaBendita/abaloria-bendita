@@ -134,8 +134,8 @@ document.addEventListener("change", (e) => {
    INIT PREPAGO CTA (ROBUSTO)
 ========================= */
 
-function initPrepagoCTA() {
-
+window.initPrepagoCTA = function() {
+   
   const btn = document.getElementById("go-to-payment");
   const checkbox = document.getElementById("rgpd-check");
 
