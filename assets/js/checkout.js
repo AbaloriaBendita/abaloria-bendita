@@ -46,36 +46,50 @@ function renderPrepagoSummary(){
 document.addEventListener("click", async (e) => {
 
   /* =========================
-     PREPAGO (abrir modal)
-  ========================= */
+   PREPAGO (abrir modal)
+========================= */
 
-  const prepagoBtn = e.target.closest(".js-prepago");
+const prepagoBtn = e.target.closest(".js-prepago");
 
-  if (prepagoBtn) {
+if (prepagoBtn) {
 
-    const producto = {
-      id: prepagoBtn.dataset.id,
-      titulo: prepagoBtn.dataset.title,
-      precio: Number(prepagoBtn.dataset.price),
-      img: prepagoBtn.dataset.img,
-      qty: 1
-    };
+  const producto = {
+    id: prepagoBtn.dataset.id,
+    titulo: prepagoBtn.dataset.title,
+    precio: Number(prepagoBtn.dataset.price),
+    img: prepagoBtn.dataset.img,
+    qty: 1
+  };
 
-    localStorage.setItem("checkout_mode", "single");
-    localStorage.setItem("checkout_single", JSON.stringify([producto]));
+  localStorage.setItem("checkout_mode", "single");
+  localStorage.setItem("checkout_single", JSON.stringify([producto]));
+
+  const openPrepago = () => {
+    const modal = document.getElementById("modal-prepago");
+    if (!modal) return;
 
     const preview = document.getElementById("prepago-img-preview");
+
     if (preview) {
       preview.src = producto.img;
       preview.alt = producto.titulo;
     }
 
     renderPrepagoSummary();
-    openModal(document.getElementById("modal-prepago"));
+    openModal(modal);
+  };
 
-    return;
+  // intento inmediato
+  if (document.getElementById("modal-prepago")) {
+    openPrepago();
+  } else {
+    // fallback si el partial aún no ha cargado
+    setTimeout(openPrepago, 100);
   }
 
+  return;
+}
+   
   /* =========================
      CTA PAGO
   ========================= */
