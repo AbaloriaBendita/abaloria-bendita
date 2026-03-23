@@ -75,6 +75,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="site-header">
   <div class="header-inner">
 
+    <!-- Logo -->
     <a href="/" class="logo-link" aria-label="Abaloria Bendita">
       <img
         src="/assets/icons/logo-abaloria-horizontal.svg"
@@ -84,10 +85,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       >
     </a>
 
+    <!-- Navegación desktop -->
     <nav class="main-nav">
-      <a href="/index.html#colecciones">Colecciones</a>
+      <a href="#colecciones">Colecciones</a>
 
-      <!-- Idiomas dentro del menú -->
       <div class="lang-switch">
         <a href="/" class="lang active">ES</a>
         <span class="lang-sep">/</span>
@@ -95,12 +96,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </nav>
 
-    <div class="header-actions mobile-only">
-      <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+    <!-- Acciones -->
+    <div class="header-actions">
+
+      <!-- Carrito -->
+      <a href="#" class="cart-icon" id="cart-open">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-width="2" d="M6 6h15l-1.5 9h-13z"/>
+          <circle cx="9" cy="20" r="1"/>
+          <circle cx="18" cy="20" r="1"/>
+        </svg>
+        <span class="cart-count">0</span>
+      </a>
+
+      <!-- Hamburguesa -->
+      <button class="nav-toggle mobile-only" aria-label="Abrir menú">☰</button>
+
     </div>
 
   </div>
+
+  <!-- Menú móvil -->
+  <nav class="mobile-menu">
+    <a href="#colecciones">Colecciones</a>
+
+    <hr>
+
+    <a href="/">ES</a>
+    <a href="/en/">EN</a>
+  </nav>
+
 </header>
+  
 
 <!-- ================= MAIN ================= -->
 <main id="contenido">
