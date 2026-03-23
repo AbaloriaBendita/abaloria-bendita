@@ -292,3 +292,38 @@ window.location.href = data.payment_url;
 
 })();
    });  
+
+/* =========================
+   OPEN / CLOSE CART PANEL
+========================= */
+
+document.addEventListener("click", (e) => {
+
+  const panel = document.getElementById("cartPanel");
+  if (!panel) return;
+
+  /* 🔓 ABRIR DESDE ICONO HEADER */
+  const openBtn = e.target.closest("#cart-open");
+
+  if (openBtn) {
+    e.preventDefault();
+
+    renderCart();
+
+    panel.classList.add("is-open");
+    panel.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  /* 🔒 CERRAR */
+  const closeBtn =
+    e.target.closest(".cart-close") ||
+    e.target.closest(".cart-backdrop");
+
+  if (closeBtn) {
+    panel.classList.remove("is-open");
+    panel.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+});
