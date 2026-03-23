@@ -161,42 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 });
 
-/* =========================
-   HEADER CART BUTTON (ORIGINAL)
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const cartButton = document.getElementById("cart-open");
-  const cartPanel = document.getElementById("cartPanel");
-  const cartClose = document.querySelector(".cart-close");
-  const cartOverlay = document.querySelector(".cart-overlay");
-
-  if (!cartButton || !cartPanel) return;
-
-  cartButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    renderCart(); // 🔥 esto es importante (antes lo hacías)
-    cartPanel.classList.add("is-open");
-    cartPanel.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  });
-
-  const closeCart = () => {
-    cartPanel.classList.remove("is-open");
-    cartPanel.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  };
-
-  if (cartClose) cartClose.addEventListener("click", closeCart);
-  if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
-
-});
-
-/* =========================
-   ADD TO CART CLICK
-========================= */
-
 document.addEventListener("click",(e)=>{
 
   const btn = e.target.closest(".js-add-cart");
@@ -211,20 +175,19 @@ document.addEventListener("click",(e)=>{
   };
 
   addToCart(item);
-
   renderCart();
+
+  /* 🔥 ABRIR CARRITO (como antes) */
 
   const panel = document.getElementById("cartPanel");
 
- if(panel){
-  renderCart(); // 🔥 importante
-  panel.classList.add("is-open");
-  panel.setAttribute("aria-hidden","false");
-  document.body.style.overflow = "hidden";
-}
+  if(panel){
+    panel.classList.add("is-open");
+    panel.setAttribute("aria-hidden","false");
+    document.body.style.overflow = "hidden";
+  }
 
 });
-
 /* =========================
    CART QUANTITY
 ========================= */
