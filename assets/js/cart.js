@@ -203,10 +203,12 @@ function closeCart(){
    EVENTS
 ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+function initCart() {
   updateCartCount();
   renderCart();
-});
+}
+
+document.addEventListener("DOMContentLoaded", initCart);
 
 
 document.addEventListener("click",(e)=>{
