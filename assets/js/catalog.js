@@ -1,7 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
 
+  console.log("✅ Catálogo cargado");
+
   const GRID = document.getElementById("collection-grid");
-  if (!GRID) return;
+  if (!GRID) {
+    console.error("❌ No existe #collection-grid");
+    return;
+  }
+
+  /* =========================
+     1. DETECTAR COLECCIÓN
+  ========================= */
 
   const slug = window.location.pathname
     .split("/")
@@ -10,18 +19,33 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
 
-  const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
+  console.log("📁 Colección:", slug);
+  console.log("📦 Base:", BASE);
+
+  /* =========================
+     3. LOOP SECUENCIAL
+  ========================= */
+
+const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
   piezas.reverse();
 
-  let index = 0;
+let index = 0;
 
-  for (const id of piezas) {
-
-    const isFirst = index === 0;
+for (const id of piezas) {  
+  const isFirst = index === 0;
 
     try {
 
-      const data = await fetch(`${BASE}${id}/data.json`).then(r => r.json());
+      const dataUrl = `${BASE}${id}/data.json`;
+      const res = await fetch(dataUrl);
+
+      if (!res.ok) continue;
+
+      const data = await res.json();
+
+      /* =========================
+         ESTADO NORMALIZADO
+      ========================= */
 
       const estado = (data.estado || "").toLowerCase();
 
@@ -38,35 +62,171 @@ document.addEventListener("DOMContentLoaded", async () => {
         statusText = "Disponible con variaciones";
       }
 
+      const card = document.createElement("article");
+      card.className = `piece-card ${estadoClass}`;
+
+      /* =========================
+         IMÁGENES
+      ========================= */
+
       const mainImg = `${BASE}${id}/main.jpg`;
       const hoverImg = `${BASE}${id}/hover.jpg`;
 
       let hasHover = false;
 
-      try {
-        const imgTest = new Image();
-        imgTest.src = hoverImg;
-        await new Promise((res, rej) => {
-          imgTest.onload = res;
-          imgTest.onerror = rej;
-        });
-        hasHover = true;
-      } catch {}
-
-      const card = document.createElement("article");
-      card.className = `piece-card ${estadoClass}`;
+try {
+  const imgTest = new Image();
+  imgTest.src = hoverImg;
+  await new Promise((resolve, reject) => {
+    imgTest.onload = resolve;
+    imgTest.onerror = reject;
+  });
+  hasHover = true;
+} catch {
+  hasHover = false;
+}
 
       const imageHTML = hasHover
-        ? `<div class="piece-image has-swipe">...`
-        : `<div class="piece-image">...`;
+  ? `
+    <div class="piece-image has-swipe">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
 
-      // 👉 mantén aquí tu HTML EXACTO (no lo recorto por brevedad)
+     <img src="${mainImg}"
+     alt="${data.titulo}"
+     width="945"
+     height="1181"
+     ${isFirst 
+       ? 'fetchpriority="high"'
+       : 'loading="lazy" decoding="async"'
+     }>
+
+      <img src="${hoverImg}"
+           alt=""
+           class="hover-img"
+           aria-hidden="true"
+           width="945"
+           height="1181"
+           loading="lazy"
+           decoding="async">
+    </div>
+  `
+  : `
+    <div class="piece-image">
+      <span class="status-badge ${estadoClass}">${statusText}</span>
+      <span class="price-badge">${data.precio}€</span>
+
+      <img src="${mainImg}"
+           alt="${data.titulo}"
+           width="945"
+           height="1181"
+           loading="lazy"
+           decoding="async">
+    </div>
+  `;
+      /* =========================
+         CTA SEGÚN ESTADO
+      ========================= */
+
+      let cta = "";
+
+      if (estado === "disponible") {
+
+  const variacionesCTA = data.permite_variaciones
+    ? `
+      <a href="#"
+         class="piece-cta-secondary js-open-modal"
+         data-img="${mainImg}">
+        ¿Lo quieres con variaciones?
+      </a>
+    `
+    : "";
+
+ cta = `
+<div class="piece-ctas">
+
+<button
+  class="piece-cta js-prepago"
+  data-id="${data.id}"
+  data-title="${data.titulo}"
+  data-price="${data.precio}"
+  data-img="${mainImg}"
+>
+  Comprar ahora
+</button>
+
+<button
+ class="piece-cta-outline js-add-cart"
+ data-id="${data.id}"
+ data-title="${data.titulo}"
+ data-price="${data.precio}"
+ data-img="${mainImg}">
+
+<svg class="cart-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+<path stroke-width="2" d="M6 6h15l-1.5 9h-13z"/>
+<circle cx="9" cy="20" r="1"/>
+<circle cx="18" cy="20" r="1"/>
+</svg>
+
+Añadir carrito
+</button>
+
+</div>
+
+${variacionesCTA}
+`;
+}
+
+      if (estado === "variaciones") {
+        cta = `
+          <a href="#"
+             class="piece-cta alt js-open-modal"
+             data-img="${mainImg}">
+            Quiero este collar con variaciones
+          </a>
+        `;
+      }
+
+      if (estado === "vendida") {
+        cta = `
+          <a href="#"
+             class="piece-cta alt js-open-modal"
+             data-img="${mainImg}">
+            Encargar parecida
+          </a>
+        `;
+      }
+
+      /* =========================
+         CARD FINAL
+      ========================= */
+
+      card.innerHTML = `
+        ${imageHTML}
+
+        <div class="piece-body">
+          <h2>${data.titulo}</h2>
+
+          ${
+            data.nota_disponibilidad
+              ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
+              : ""
+          }
+
+          ${cta}
+
+          <ul class="piece-legal">
+            <li>Envío gratis a partir de 150 €.</li>
+            <li>IVA incluido.</li>
+          </ul>
+        </div>
+      `;
 
       GRID.appendChild(card);
       index++;
 
     } catch (err) {
-      console.error("Error pieza:", id);
+      console.error("❌ Error en pieza:", id, err);
     }
   }
 
