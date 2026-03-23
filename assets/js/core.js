@@ -83,3 +83,25 @@ document.addEventListener("keydown", (e) => {
   const modal = document.querySelector(".modal.is-open");
   if (modal) closeModal(modal);
 });
+
+/* =========================
+   LOAD PARTIALS
+========================= */
+
+async function loadPartial(selector, url) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+
+  try {
+    const res = await fetch(url);
+    const html = await res.text();
+    el.innerHTML = html;
+  } catch (err) {
+    console.error("Error loading partial:", url);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadPartial("#header-placeholder", "/partials/header.html");
+  loadPartial("#footer-placeholder", "/partials/footer.html");
+});
