@@ -1,29 +1,4 @@
 /* =========================
-   NAV MOBILE
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const toggle = document.querySelector(".nav-toggle");
-  const mobileMenu = document.querySelector(".mobile-menu");
-
-  if (!toggle || !mobileMenu) return;
-
-  /* abrir / cerrar */
-  toggle.addEventListener("click", () => {
-    mobileMenu.classList.toggle("is-open");
-  });
-
-  /* cerrar al clicar link */
-  mobileMenu.addEventListener("click", (e) => {
-    if (e.target.closest("a")) {
-      mobileMenu.classList.remove("is-open");
-    }
-  });
-
-});
-
-/* =========================
    MODAL HELPERS
 ========================= */
 
@@ -44,32 +19,38 @@ function closeModal(modal){
    MODAL ENCARGO
 ========================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("click", e => {
+
+  const btn = e.target.closest(".js-open-modal");
+  if (!btn) return;
+
+  e.preventDefault();
 
   const modal = document.getElementById("modal-encargo");
   const modalImg = document.getElementById("modal-img-preview");
   const modalInput = document.getElementById("modal-img-input");
 
-  document.addEventListener("click", e => {
-    const btn = e.target.closest(".js-open-modal");
-    if (!btn) return;
+  if (modalImg) modalImg.src = btn.dataset.img;
+  if (modalInput) modalInput.value = btn.dataset.img;
 
-    e.preventDefault();
+  openModal(modal);
 
-    modalImg.src = btn.dataset.img;
-    modalInput.value = btn.dataset.img;
+});
 
-    openModal(modal);
-  });
 
-  modal?.addEventListener("click", e => {
-    if (
-      e.target.classList.contains("modal-backdrop") ||
-      e.target.classList.contains("modal-close")
-    ) {
-      closeModal(modal);
-    }
-  });
+/* =========================
+   CLOSE MODALS (GLOBAL)
+========================= */
+
+document.addEventListener("click", e => {
+
+  const closeBtn = e.target.closest(".modal-close");
+  const backdrop = e.target.classList.contains("modal-backdrop");
+
+  if (!closeBtn && !backdrop) return;
+
+  const modal = e.target.closest(".modal");
+  if (modal) closeModal(modal);
 
 });
 
@@ -83,6 +64,7 @@ document.addEventListener("keydown", (e) => {
   const modal = document.querySelector(".modal.is-open");
   if (modal) closeModal(modal);
 });
+
 
 /* =========================
    LOAD PARTIALS
@@ -102,7 +84,6 @@ async function loadPartial(selector, url, callback) {
     const html = await res.text();
     el.innerHTML = html;
 
-    // 🔥 ejecutar lógica después de inyectar HTML
     if (typeof callback === "function") {
       callback(el);
     }
@@ -124,12 +105,10 @@ function initHeader() {
 
   if (!toggle || !mobileMenu) return;
 
-  /* abrir / cerrar menú */
   toggle.addEventListener("click", () => {
     mobileMenu.classList.toggle("is-open");
   });
 
-  /* cerrar al clicar link */
   mobileMenu.addEventListener("click", (e) => {
     if (e.target.closest("a")) {
       mobileMenu.classList.remove("is-open");
@@ -140,13 +119,29 @@ function initHeader() {
 
 
 /* =========================
+   FIX SAFARI HEADER RENDER
+========================= */
+
+function forceHeaderRender() {
+  const header = document.querySelector(".site-header");
+  if (!header) return;
+
+  requestAnimationFrame(() => {
+    header.style.transform = "translateZ(0)";
+    header.style.webkitTransform = "translateZ(0)";
+  });
+}
+
+
+/* =========================
    INIT GLOBAL
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   loadPartial("#header-placeholder", "/partials/header.html", () => {
-    initHeader(); // 🔥 solo cuando el header ya existe
+    initHeader();
+    forceHeaderRender(); // 🔥 FIX Safari
   });
 
   loadPartial("#footer-placeholder", "/partials/footer.html");
