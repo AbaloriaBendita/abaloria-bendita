@@ -165,6 +165,50 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 });
 
+/* =========================
+   OPEN CART (HEADER ICON)
+========================= */
+
+document.addEventListener("click", (e) => {
+
+  const btn = e.target.closest("#cart-open");
+  if (!btn) return;
+  e.preventDefault();
+      e.stopPropagation();
+
+
+  const panel = document.getElementById("cartPanel");
+  if (!panel) return;
+
+  renderCart(); // 🔥 importante
+
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+
+});
+
+/* =========================
+   CLOSE CART
+========================= */
+
+document.addEventListener("click", (e) => {
+
+  const closeBtn = e.target.closest(".cart-close");
+  const backdrop = e.target.closest(".cart-backdrop");
+
+  if (!closeBtn && !backdrop) return;
+   e.stopPropagation();
+
+  const panel = document.getElementById("cartPanel");
+  if (!panel) return;
+
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+
+});
+
 document.addEventListener("click",(e)=>{
 
   /* ADD TO CART */
@@ -179,6 +223,7 @@ document.addEventListener("click",(e)=>{
 
     addToCart(item);
     renderCart();
+     updateCartCount();
 
     const panel = document.getElementById("cartPanel");
 
@@ -230,9 +275,11 @@ if (panel) {
     }
 
     const panel = document.getElementById("cartPanel");
-    if(panel && typeof closeModal === "function"){
-      closeModal(panel);
-    }
+    if (panel) {
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
 
     (async () => {
       try {
