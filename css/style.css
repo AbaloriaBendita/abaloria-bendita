@@ -382,6 +382,41 @@ input:focus, select:focus, textarea:focus{
   }
 }
 
+/* =========================
+   HEADER MOBILE FIX
+========================= */
+
+.header-inner{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+  min-height: 72px; /* 🔥 clave para que exista */
+}
+
+/* ocultar nav desktop en mobile */
+@media (max-width: 768px){
+
+  .main-nav{
+    display: none;
+  }
+
+  .mobile-only{
+    display: block;
+  }
+
+}
+
+/* opcional (recomendado) */
+@media (min-width: 769px){
+
+  .mobile-only{
+    display: none;
+  }
+
+}
+
 /* =====================
    NAVEGACIÓN
 ===================== */
