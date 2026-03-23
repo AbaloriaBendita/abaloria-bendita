@@ -10,12 +10,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
 
   <title>Sencilla con gracia · Abaloria Bendita</title>
   <meta name="description" content="Collares únicos hechos a mano. Colección Sencilla con gracia desde 55 €. Piezas irrepetibles.">
 
   <link rel="canonical" href="https://abaloriabendita.es/colecciones/55/">
-  <meta name="robots" content="index, follow">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
@@ -74,6 +74,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="site-header">
   <div class="header-inner">
 
+    <!-- Logo -->
     <a href="/" class="logo-link" aria-label="Abaloria Bendita">
       <img
         src="/assets/icons/logo-abaloria-horizontal.svg"
@@ -83,10 +84,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       >
     </a>
 
+    <!-- Navegación desktop -->
     <nav class="main-nav">
-      <a href="/index.html#colecciones">Colecciones</a>
+      <a href="#colecciones">Colecciones</a>
 
-      <!-- Idiomas dentro del menú -->
       <div class="lang-switch">
         <a href="/" class="lang active">ES</a>
         <span class="lang-sep">/</span>
@@ -94,14 +95,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </nav>
 
-    <div class="header-actions mobile-only">
-      <button class="nav-toggle" aria-label="Abrir menú">☰</button>
+    <!-- Acciones -->
+    <div class="header-actions">
+
+      <!-- Carrito -->
+      <a href="#" class="cart-icon" id="cart-open">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path stroke-width="2" d="M6 6h15l-1.5 9h-13z"/>
+          <circle cx="9" cy="20" r="1"/>
+          <circle cx="18" cy="20" r="1"/>
+        </svg>
+        <span class="cart-count">0</span>
+      </a>
+
+      <!-- Hamburguesa -->
+      <button class="nav-toggle mobile-only" aria-label="Abrir menú">☰</button>
+
     </div>
 
   </div>
+
+  <!-- Menú móvil -->
+  <nav class="mobile-menu">
+    <a href="#colecciones">Colecciones</a>
+
+    <hr>
+
+    <a href="/">ES</a>
+    <a href="/en/">EN</a>
+  </nav>
+
 </header>
 
-<!-- ================= MAIN ================= -->
+  <!-- ================= MAIN ================= -->
 <main id="contenido">
 
 <section class="available-page">
@@ -168,7 +194,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <input type="hidden" name="imagen_referencia" id="modal-img-input">
       <input type="hidden" name="tipo" value="Referencia / pieza similar">
 
-       <div class="form-group">
+  <div class="form-group">
     <label class="form-label">Nombre</label>
     <input type="text" name="nombre" required>
   </div>
@@ -226,8 +252,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
-     <!-- MODAL PREPAGO -->
-  <div class="modal" id="modal-prepago" aria-hidden="true">
+    <!-- MODAL PREPAGO -->
+<div class="modal" id="modal-prepago" aria-hidden="true">
 
   <div class="modal-backdrop"></div>
 
@@ -235,66 +261,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="modal-close" aria-label="Cerrar">×</button>
     
     <div class="modal-image">
-  <img id="prepago-img-preview" src="" alt="">
-</div>
+      <img id="prepago-img-preview" src="" alt="">
+    </div>
 
     <p class="modal-copy">
-      <strong>Confirmar envío</strong><br>
-      Introduce tus datos para continuar con el pago.
+      <strong>Confirmar pedido</strong><br>
+      Desglose de tu compra.
     </p>
 
-<form id="prepago-form" method="POST" action="/api/venta" class="modal-form">
-  
-      <input type="hidden" name="pieza_id" id="prepago-id">
-      <input type="hidden" name="sumup_link" id="prepago-link">
+    <!-- SIN FORM (ya no hace falta) -->
+    <div class="modal-form">
 
-       <div class="form-group">
-    <label class="form-label">Nombre</label>
-    <input type="text" name="nombre" required>
-  </div>
+      <!-- 🔥 RESUMEN (esto está perfecto) -->
+      <div class="prepago-summary">
 
-  <div class="form-group">
-    <label class="form-label">Apellidos</label>
-    <input type="text" name="apellidos" required>
-  </div>
+        <div class="cart-row">
+          <span>Producto</span>
+          <span class="prepago-subtotal"></span>
+        </div>
 
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" required>
+        <div class="cart-row">
+          <span>IVA (21%) incluido</span>
+          <span class="prepago-iva"></span>
+        </div>
+
+        <div class="cart-row">
+          <span>Envío</span>
+          <span class="prepago-shipping"></span>
+        </div>
+
+        <div class="cart-total-row">
+          <strong>Total</strong>
+          <strong class="prepago-total"></strong>
+        </div>
+
       </div>
 
-      <div class="form-group">
-        <label class="form-label">Teléfono</label>
-        <input type="tel" name="telefono" required>
+      <!-- RGPD -->
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" id="rgpd-check">
+          <label>
+            Aceptar nuestra 
+  <a href="/privacidad.html" target="_blank">política de privacidad.
+            </a>
+          </label>
+        </div>
       </div>
-
-      <div class="form-group">
-        <label class="form-label">Dirección completa para el envío</label>
-<input 
-  type="text" 
-  name="direccion" 
-  id="direccion-autocomplete"
-  placeholder="Empieza a escribir tu dirección..."
-  required
->
-      </div>
-  <div class="rgpd-group">
-  <div class="rgpd-row">
-    <input type="checkbox" name="rgpd" required>
-    <label>
-      He leído y acepto la
-      <a href="/privacidad.html" target="_blank">
-        política de privacidad
-      </a>
-    </label>
-  </div>
-</div>
-
-      <button type="submit" class="cta-main">
-        Confirmar envío y pagar
+      <!-- BOTÓN -->
+      <button id="go-to-payment" class="cta-main" type="button" disabled>
+        Continuar compra
       </button>
 
-    </form>
+    </div>
   </div>
 </div>
 
@@ -314,398 +333,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </div>
 
+
+  <!-- ================= JS ================= -->
+
 <script src="/assets/js/lightbox.js" defer></script>
+<script src="/assets/js/cart.js" defer></script>
+<script src="/assets/js/core.js" defer></script>
+<script src="/assets/js/checkout.js" defer></script>
+<script src="/assets/js/catalog.js" defer></script> 
 
-<!-- ================= JS ================= -->
-<script>
-/* NAV MOBILE */
-document.addEventListener("DOMContentLoaded", () => {
-  const toggle = document.querySelector(".nav-toggle");
-  const nav = document.querySelector(".main-nav");
-  if (!toggle || !nav) return;
-
-  toggle.addEventListener("click", () => {
-    nav.classList.toggle("is-open");
-  });
-});
-</script>
-
-<script>
-/* MODAL */
-document.addEventListener("DOMContentLoaded", () => {
-
-  const modal = document.getElementById("modal-encargo");
-  const modalImg = document.getElementById("modal-img-preview");
-  const modalInput = document.getElementById("modal-img-input");
-
-  document.addEventListener("click", e => {
-    const btn = e.target.closest(".js-open-modal");
-    if (!btn) return;
-
-    e.preventDefault();
-    modalImg.src = btn.dataset.img;
-    modalInput.value = btn.dataset.img;
-
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-  });
-
-  modal.addEventListener("click", e => {
-    if (
-      e.target.classList.contains("modal-backdrop") ||
-      e.target.classList.contains("modal-close")
-    ) {
-      modal.classList.remove("is-open");
-    }
-  });
-});
-</script>
-
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-
-  console.log("✅ Catálogo cargado");
-
-  const GRID = document.getElementById("collection-grid");
-  if (!GRID) {
-    console.error("❌ No existe #collection-grid");
-    return;
-  }
-
-  /* =========================
-     1. DETECTAR COLECCIÓN
-  ========================= */
-
-  const slug = window.location.pathname
-    .split("/")
-    .filter(Boolean)
-    .pop();
-
-  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
-
-  console.log("📁 Colección:", slug);
-  console.log("📦 Base:", BASE);
-
-  /* =========================
-     3. LOOP SECUENCIAL
-  ========================= */
-
-const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
-  piezas.reverse();
-
-let index = 0;
-
-for (const id of piezas) {  
-  const isFirst = index === 0;
-
-    try {
-
-      const dataUrl = `${BASE}${id}/data.json`;
-      const res = await fetch(dataUrl);
-
-      if (!res.ok) continue;
-
-      const data = await res.json();
-
-      /* =========================
-         ESTADO NORMALIZADO
-      ========================= */
-
-      const estado = (data.estado || "").toLowerCase();
-
-      let estadoClass = "sold";
-      let statusText = "Vendida";
-
-      if (estado === "disponible") {
-        estadoClass = "available";
-        statusText = "Disponible";
-      }
-
-      if (estado === "variaciones") {
-        estadoClass = "variation";
-        statusText = "Disponible con variaciones";
-      }
-
-      const card = document.createElement("article");
-      card.className = `piece-card ${estadoClass}`;
-
-      /* =========================
-         IMÁGENES
-      ========================= */
-
-      const mainImg = `${BASE}${id}/main.jpg`;
-      const hoverImg = `${BASE}${id}/hover.jpg`;
-
-      let hasHover = false;
-
-try {
-  const imgTest = new Image();
-  imgTest.src = hoverImg;
-  await new Promise((resolve, reject) => {
-    imgTest.onload = resolve;
-    imgTest.onerror = reject;
-  });
-  hasHover = true;
-} catch {
-  hasHover = false;
-}
-
-      const imageHTML = hasHover
-  ? `
-    <div class="piece-image has-swipe">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
-
-     <img src="${mainImg}"
-     alt="${data.titulo}"
-     width="945"
-     height="1181"
-     ${isFirst 
-       ? 'fetchpriority="high"'
-       : 'loading="lazy" decoding="async"'
-     }>
-
-      <img src="${hoverImg}"
-           alt=""
-           class="hover-img"
-           aria-hidden="true"
-           width="945"
-           height="1181"
-           loading="lazy"
-           decoding="async">
-    </div>
-  `
-  : `
-    <div class="piece-image">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
-
-      <img src="${mainImg}"
-           alt="${data.titulo}"
-           width="945"
-           height="1181"
-           loading="lazy"
-           decoding="async">
-    </div>
-  `;
-      /* =========================
-         CTA SEGÚN ESTADO
-      ========================= */
-
-      let cta = "";
-
-      if (estado === "disponible") {
-
-  const variacionesCTA = data.permite_variaciones
-    ? `
-      <a href="#"
-         class="piece-cta-secondary js-open-modal"
-         data-img="${mainImg}">
-        ¿Lo quieres con variaciones?
-      </a>
-    `
-    : "";
-
-  cta = `
-  <a href="#"
-   class="piece-cta js-prepago"
-   data-id="${data.id}"
-   data-link="${data.sumup_link}"
-   data-img="${mainImg}">
-  Encargar pieza
-</a>
-    ${variacionesCTA}
-  `;
-}
-
-      if (estado === "variaciones") {
-        cta = `
-          <a href="#"
-             class="piece-cta alt js-open-modal"
-             data-img="${mainImg}">
-            Quiero este collar con variaciones
-          </a>
-        `;
-      }
-
-      if (estado === "vendida") {
-        cta = `
-          <a href="#"
-             class="piece-cta alt js-open-modal"
-             data-img="${mainImg}">
-            Encargar parecida
-          </a>
-        `;
-      }
-
-      /* =========================
-         CARD FINAL
-      ========================= */
-
-      card.innerHTML = `
-        ${imageHTML}
-
-        <div class="piece-body">
-          <h2>${data.titulo}</h2>
-
-          ${
-            data.nota_disponibilidad
-              ? `<p class="piece-note">${data.nota_disponibilidad}</p>`
-              : ""
-          }
-
-          ${cta}
-
-          <ul class="piece-legal">
-            <li>Envío gratis a partir de 150 €.</li>
-            <li>IVA incluido.</li>
-          </ul>
-        </div>
-      `;
-
-      GRID.appendChild(card);
-      index++;
-
-    } catch (err) {
-      console.error("❌ Error en pieza:", id, err);
-    }
-  }
-
-});
-</script>
-
-  <script>
-  function openModal(modal){
-    if(!modal) return;
-    modal.classList.add("is-open");
-    modal.setAttribute("aria-hidden", "false");
-  }
-
-  function closeModal(modal){
-    if(!modal) return;
-    modal.classList.remove("is-open");
-    modal.setAttribute("aria-hidden", "true");
-  }
-
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".js-prepago");
-    if (btn) {
-      e.preventDefault();
-
-      const id = (btn.dataset.id || "").trim();
-      const link = (btn.dataset.link || "").trim();
-
-      if(!link){
-        alert("Este producto aún no tiene link de pago.");
-        return;
-      }
-
-      document.getElementById("prepago-id").value = id + "-A";
-      document.getElementById("prepago-link").value = link;
-
-     const img = btn.dataset.img || "";
-const preview = document.getElementById("prepago-img-preview");
-
-if (preview && img) {
-  preview.src = img;
-}
-
-      openModal(document.getElementById("modal-prepago"));
-      return;
-    }
-
-    if (e.target.closest(".modal-close") || e.target.closest(".modal-backdrop")) {
-      closeModal(e.target.closest(".modal"));
-    }
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key !== "Escape") return;
-    const modal = document.querySelector(".modal.is-open");
-    if (modal) closeModal(modal);
-  });
-</script>
-
- <script>
-  const prepagoForm = document.getElementById("prepago-form");
-
-  if (prepagoForm) {
-    prepagoForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const form = e.target;
-      const fd = new FormData(form);
-      const link = fd.get("sumup_link");
-
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.7";
-      }
-
-      try {
-        const res = await fetch("/api/venta", { method: "POST", body: fd });
-
-        if (!res.ok) throw new Error("API /api/venta respondió con error");
-        window.location.href = link;
-
-      } catch (err) {
-        console.error("❌ Error prepago:", err);
-        alert("No hemos podido registrar el envío. Inténtalo de nuevo.");
-
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = "";
-        }
-      }
-    });
-  } else {
-    console.warn("⚠️ No existe #prepago-form. Revisa el id en el <form> del modal-prepago.");
-  }
-</script>
-
-<script>
-
-/* MODO SIN CARRITO */
-const FORZAR_FORMULARIO = true;
-
-if (FORZAR_FORMULARIO) {
-
-  document.addEventListener("click", function(e){
-
-    const btn = e.target.closest(".js-prepago");
-    if(!btn) return;
-
-    /* detener TODO */
-    e.preventDefault();
-    e.stopPropagation();
-    e.stopImmediatePropagation();
-
-    const img = btn.dataset.img || "";
-
-    const modal = document.getElementById("modal-encargo");
-    const modalImg = document.getElementById("modal-img-preview");
-    const modalInput = document.getElementById("modal-img-input");
-
-    if(modal){
-
-      if(modalImg && img){
-        modalImg.src = img;
-      }
-
-      if(modalInput && img){
-        modalInput.value = img;
-      }
-
-      modal.classList.add("is-open");
-      modal.setAttribute("aria-hidden","false");
-    }
-
-  }, true);  /* 👈 FASE CAPTURA */
-
-}
-
-</script>
-  
 </body>
 </html>
