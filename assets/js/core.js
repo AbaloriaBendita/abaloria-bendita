@@ -141,9 +141,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadPartial("#header-placeholder", "/partials/header.html", () => {
     initHeader();
-    forceHeaderRender(); // 🔥 FIX Safari
+    forceHeaderRender();
   });
 
   loadPartial("#footer-placeholder", "/partials/footer.html");
+
+  // 🔥 NUEVO
+  loadPartial("#cart-placeholder", "/partials/cart.html");
 
 });
