@@ -97,6 +97,8 @@ if (prepagoBtn) {
 const payBtn = e.target.id === "go-to-payment"
   ? e.target
   : e.target.closest("#go-to-payment");
+
+   console.log("CLICK TARGET:", e.target);
   if (payBtn) {
 
     const cart = getCheckoutCart();
