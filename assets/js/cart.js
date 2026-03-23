@@ -5,7 +5,11 @@ const CART_KEY = "abaloria_cart";
 ========================= */
 
 function getCart(){
-  return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  try {
+    return JSON.parse(localStorage.getItem(CART_KEY)) || [];
+  } catch {
+    return [];
+  }
 }
 
 function saveCart(cart){
@@ -161,177 +165,95 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCart();
 });
 
-/* =========================
-   ADD TO CART CLICK
-========================= */
-
 document.addEventListener("click",(e)=>{
 
-  const btn = e.target.closest(".js-add-cart");
+  /* ADD TO CART */
+  const addBtn = e.target.closest(".js-add-cart");
+  if(addBtn){
+    const item = {
+      id: addBtn.dataset.id,
+      titulo: addBtn.dataset.title,
+      precio: Number(addBtn.dataset.price),
+      img: addBtn.dataset.img
+    };
 
-  if(!btn) return;
-
-  const item = {
-    id: btn.dataset.id,
-    titulo: btn.dataset.title,
-    precio: Number(btn.dataset.price),
-    img: btn.dataset.img
-  };
-
-  addToCart(item);
-
-  renderCart();
-
-  const panel = document.getElementById("cartPanel");
-
-  if(panel){
-    panel.classList.add("is-open");
-    panel.setAttribute("aria-hidden","false");
-  }
-
-});
-
-/* =========================
-   OPEN / CLOSE CART PANEL
-========================= */
-
-document.addEventListener("click",(e)=>{
-
-  const openBtn = e.target.closest(".js-open-cart");
-
-  if(openBtn){
-
-    e.preventDefault();
-
+    addToCart(item);
     renderCart();
 
     const panel = document.getElementById("cartPanel");
-
-    if(panel){
-      panel.classList.add("is-open");
-      panel.setAttribute("aria-hidden","false");
+    if(panel && typeof openModal === "function"){
+      openModal(panel);
+      document.body.style.overflow = "hidden";
     }
 
+    return;
   }
 
-  const closeBtn =
-    e.target.closest(".cart-close") ||
-    e.target.closest(".cart-overlay");
-
-  if(closeBtn){
-
-    const panel = document.getElementById("cartPanel");
-
-    if(panel){
-      panel.classList.remove("is-open");
-      panel.setAttribute("aria-hidden","true");
-    }
-
-  }
-
-});
-
-/* =========================
-   CART QUANTITY
-========================= */
-
-document.addEventListener("click",(e)=>{
-
+  /* QUANTITY */
   const plus = e.target.closest(".cart-plus");
   const minus = e.target.closest(".cart-minus");
   const remove = e.target.closest(".cart-remove");
 
-  if(!plus && !minus && !remove) return;
+  if(plus || minus || remove){
 
-  const id = (plus || minus || remove).dataset.id;
+    const id = (plus || minus || remove).dataset.id;
 
-  let cart = getCart();
+    let cart = getCart();
+    const item = cart.find(p => p.id === id);
+    if(!item) return;
 
-  const item = cart.find(p => p.id === id);
+    if(!item.qty) item.qty = 1;
 
-  if(!item) return;
+    if(plus) item.qty += 1;
+    if(minus) item.qty -= 1;
 
-  if(!item.qty) item.qty = 1;
+    if(remove || item.qty <= 0){
+      cart = cart.filter(p => p.id !== id);
+    }
 
-  if(plus) item.qty += 1;
-  if(minus) item.qty -= 1;
-
-  if(remove || item.qty <= 0){
-    cart = cart.filter(p => p.id !== id);
-  }
-
-  saveCart(cart);
-  renderCart();
-
-});
-
-/* =========================
-   CHECKOUT CARRITO
-========================= */
-
-document.addEventListener("click",(e)=>{
-
-  const btn = e.target.closest(".cart-checkout");
-  if(!btn) return;
-
-  const cart = getCart();
-
-  if(!cart.length){
-    alert("Tu carrito está vacío");
+    saveCart(cart);
+    renderCart();
     return;
   }
 
-  /* cerrar carrito */
+  /* CHECKOUT */
+  const checkoutBtn = e.target.closest(".cart-checkout");
+  if(checkoutBtn){
 
-  const panel = document.getElementById("cartPanel");
-  if(panel){
-    panel.classList.remove("is-open");
-    panel.setAttribute("aria-hidden","true");
-  }
+    const cart = getCart();
 
- /* checkout directo */
+    if(!cart.length){
+      alert("Tu carrito está vacío");
+      return;
+    }
 
-(async () => {
+    const panel = document.getElementById("cartPanel");
+    if(panel && typeof closeModal === "function"){
+      closeModal(panel);
+    }
 
-  try {
+    (async () => {
+      try {
 
-    const fd = new FormData();
-    fd.set("cart", JSON.stringify(cart));
+        const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cart })
+        });
 
-    const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-  method: "POST",
-  body: fd
-});
+        const data = await res.json();
 
-console.log("📡 STATUS WORKER:", res.status);
+        if (!res.ok || !data.payment_url) {
+          throw new Error("Error en pago");
+        }
 
-const text = await res.text();
+        window.location.href = data.payment_url;
 
-console.log("📡 RAW RESPONSE WORKER:", text);
-
-let data;
-
-try {
-  data = JSON.parse(text);
-} catch {
-  throw new Error("Respuesta no es JSON");
-}
-
-console.log("💰 CHECKOUT CART:", data);
-
-if (!res.ok || !data.payment_url) {
-  throw new Error(data.error || "Error en pago");
-}
-
-window.location.href = data.payment_url;
-
-  } catch (err) {
-
-    console.error("❌ ERROR CHECKOUT CART:", err);
-
-    alert("No hemos podido iniciar el pago. Inténtalo de nuevo.");
+      } catch (err) {
+        console.error(err);
+        alert("No hemos podido iniciar el pago.");
+      }
+    })();
 
   }
-
-})();
    });  
