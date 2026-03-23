@@ -45,7 +45,7 @@ function renderPrepagoSummary(){
 
 document.addEventListener("click", async (e) => {
 
-  /* =========================
+ /* =========================
    PREPAGO (abrir modal)
 ========================= */
 
@@ -77,6 +77,9 @@ if (prepagoBtn) {
 
     renderPrepagoSummary();
     openModal(modal);
+
+    // 🔥 CLAVE: activar CTA después de que exista el modal
+    initPrepagoCTA();
   };
 
   // intento inmediato
@@ -90,54 +93,6 @@ if (prepagoBtn) {
   return;
 }
    
-  /* =========================
-     CTA PAGO
-  ========================= */
-
-const payBtn = e.target.id === "go-to-payment"
-  ? e.target
-  : e.target.closest("#go-to-payment");
-
-   console.log("CLICK TARGET:", e.target);
-  if (payBtn) {
-
-    const cart = getCheckoutCart();
-
-    if (!cart.length) {
-      alert("No hay productos");
-      return;
-    }
-
-    payBtn.innerText = "Redirigiendo...";
-    payBtn.disabled = true;
-
-    try {
-
-      const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ cart })
-      });
-
-      const text = await res.text();
-      const data = JSON.parse(text);
-
-      if (!res.ok || !data.payment_url) {
-        throw new Error();
-      }
-
-      window.location.href = data.payment_url;
-
-    } catch {
-
-      alert("No hemos podido iniciar el pago.");
-      payBtn.disabled = false;
-      payBtn.innerText = "Continuar compra";
-    }
-
-    return;
-  }
-
   /* =========================
      CERRAR MODALES
   ========================= */
@@ -165,3 +120,56 @@ document.addEventListener("change", (e) => {
   }
 
 });
+
+/* =========================
+   INIT PREPAGO CTA (ROBUSTO)
+========================= */
+
+function initPrepagoCTA() {
+
+  const btn = document.getElementById("go-to-payment");
+  if (!btn) return;
+
+  // evitar duplicados
+  if (btn.__bound) return;
+  btn.__bound = true;
+
+  btn.addEventListener("click", async () => {
+
+    const cart = getCheckoutCart();
+
+    if (!cart.length) {
+      alert("No hay productos");
+      return;
+    }
+
+    btn.innerText = "Redirigiendo...";
+    btn.disabled = true;
+
+    try {
+
+      const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ cart })
+      });
+
+      const text = await res.text();
+      const data = JSON.parse(text);
+
+      if (!res.ok || !data.payment_url) {
+        throw new Error();
+      }
+
+      window.location.href = data.payment_url;
+
+    } catch {
+
+      alert("No hemos podido iniciar el pago.");
+      btn.disabled = false;
+      btn.innerText = "Continuar compra";
+    }
+
+  });
+
+}
