@@ -148,5 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 🔥 NUEVO
   loadPartial("#cart-placeholder", "/partials/cart.html");
+   loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
+loadPartial("#modal-prepago-placeholder", "/partials/modal-prepago.html");
 
 });
