@@ -327,5 +327,3 @@ document.addEventListener("click", (e) => {
   }
 
 });
-
-});
