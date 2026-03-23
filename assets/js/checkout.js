@@ -94,8 +94,9 @@ if (prepagoBtn) {
      CTA PAGO
   ========================= */
 
-  const payBtn = e.target.closest("#go-to-payment");
-
+const payBtn = e.target.id === "go-to-payment"
+  ? e.target
+  : e.target.closest("#go-to-payment");
   if (payBtn) {
 
     const cart = getCheckoutCart();
