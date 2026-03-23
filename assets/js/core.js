@@ -15,39 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-
-/* =========================
-   CART PANEL
-========================= */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-  const cartButton = document.getElementById("cart-open");
-  const cartPanel = document.getElementById("cartPanel");
-  const cartClose = document.querySelector(".cart-close");
-  const cartBackdrop = document.querySelector(".cart-backdrop");
-
-  if (!cartButton || !cartPanel) return;
-
-  cartButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    cartPanel.classList.add("is-open");
-    cartPanel.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
-  });
-
-  const closeCart = () => {
-    cartPanel.classList.remove("is-open");
-    cartPanel.setAttribute("aria-hidden", "true");
-    document.body.style.overflow = "";
-  };
-
-  if (cartClose) cartClose.addEventListener("click", closeCart);
-  if (cartBackdrop) cartBackdrop.addEventListener("click", closeCart);
-
-});
-
-
 /* =========================
    MODAL HELPERS
 ========================= */
