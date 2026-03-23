@@ -22,16 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (cartButton && cartPanel) {
 
-    cartButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      openModal(cartPanel);
-      document.body.style.overflow = "hidden";
-    });
+   cartButton.addEventListener("click", (e) => {
+  e.preventDefault();
 
-    const closeCart = () => {
-      closeModal(cartPanel);
-      document.body.style.overflow = "";
-    };
+  if (!cartPanel) return;
+
+  cartPanel.classList.add("is-open");
+  cartPanel.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+});
+
+   const closeCart = () => {
+  if (!cartPanel) return;
+
+  cartPanel.classList.remove("is-open");
+  cartPanel.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+};
 
     cartClose?.addEventListener("click", closeCart);
     cartBackdrop?.addEventListener("click", closeCart);
