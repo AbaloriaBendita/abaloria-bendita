@@ -78,10 +78,6 @@ if (prepagoBtn) {
     renderPrepagoSummary();
     openModal(modal);
 
-    // 🔥 CLAVE: activar CTA después de que exista el modal
-    initPrepagoCTA();
-  };
-
   // intento inmediato
   if (document.getElementById("modal-prepago")) {
     openPrepago();
