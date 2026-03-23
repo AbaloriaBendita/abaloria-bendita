@@ -26,13 +26,13 @@ document.addEventListener("DOMContentLoaded", async () => {
      3. LOOP SECUENCIAL
   ========================= */
 
-const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
+  const piezas = await fetch(`${BASE}index.json`).then(r => r.json());
   piezas.reverse();
 
-let index = 0;
+  let index = 0;
 
-for (const id of piezas) {  
-  const isFirst = index === 0;
+  for (const id of piezas) {  
+    const isFirst = index === 0;
 
     try {
 
@@ -74,56 +74,57 @@ for (const id of piezas) {
 
       let hasHover = false;
 
-try {
-  const imgTest = new Image();
-  imgTest.src = hoverImg;
-  await new Promise((resolve, reject) => {
-    imgTest.onload = resolve;
-    imgTest.onerror = reject;
-  });
-  hasHover = true;
-} catch {
-  hasHover = false;
-}
+      try {
+        const imgTest = new Image();
+        imgTest.src = hoverImg;
+        await new Promise((resolve, reject) => {
+          imgTest.onload = resolve;
+          imgTest.onerror = reject;
+        });
+        hasHover = true;
+      } catch {
+        hasHover = false;
+      }
 
       const imageHTML = hasHover
-  ? `
-    <div class="piece-image has-swipe">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
+        ? `
+        <div class="piece-image has-swipe">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
 
-     <img src="${mainImg}"
-     alt="${data.titulo}"
-     width="945"
-     height="1181"
-     ${isFirst 
-       ? 'fetchpriority="high"'
-       : 'loading="lazy" decoding="async"'
-     }>
+          <img src="${mainImg}"
+          alt="${data.titulo}"
+          width="945"
+          height="1181"
+          ${isFirst 
+            ? 'fetchpriority="high"'
+            : 'loading="lazy" decoding="async"'
+          }>
 
-      <img src="${hoverImg}"
-           alt=""
-           class="hover-img"
-           aria-hidden="true"
-           width="945"
-           height="1181"
-           loading="lazy"
-           decoding="async">
-    </div>
-  `
-  : `
-    <div class="piece-image">
-      <span class="status-badge ${estadoClass}">${statusText}</span>
-      <span class="price-badge">${data.precio}€</span>
+          <img src="${hoverImg}"
+              alt=""
+              class="hover-img"
+              aria-hidden="true"
+              width="945"
+              height="1181"
+              loading="lazy"
+              decoding="async">
+        </div>
+        `
+        : `
+        <div class="piece-image">
+          <span class="status-badge ${estadoClass}">${statusText}</span>
+          <span class="price-badge">${data.precio}€</span>
 
-      <img src="${mainImg}"
-           alt="${data.titulo}"
-           width="945"
-           height="1181"
-           loading="lazy"
-           decoding="async">
-    </div>
-  `;
+          <img src="${mainImg}"
+              alt="${data.titulo}"
+              width="945"
+              height="1181"
+              loading="lazy"
+              decoding="async">
+        </div>
+        `;
+
       /* =========================
          CTA SEGÚN ESTADO
       ========================= */
@@ -132,56 +133,56 @@ try {
 
       if (estado === "disponible") {
 
-  const variacionesCTA = data.permite_variaciones
-    ? `
-      <a href="#"
-         class="piece-cta-secondary js-open-modal"
-         data-img="${mainImg}">
-        ¿Lo quieres con variaciones?
-      </a>
-    `
-    : "";
+        const variacionesCTA = data.permite_variaciones
+          ? `
+            <a href="#"
+              class="piece-cta-secondary js-open-modal"
+              data-img="${mainImg}">
+              ¿Lo quieres con variaciones?
+            </a>
+          `
+          : "";
 
- cta = `
-<div class="piece-ctas">
+        cta = `
+        <div class="piece-ctas">
 
-<button
-  class="piece-cta js-prepago"
-data-id="${data.coleccion}-${data.id}"
-  data-title="${data.titulo}"
-  data-price="${data.precio}"
-  data-img="${mainImg}"
->
-  Comprar ahora
-</button>
+        <button
+          class="piece-cta js-prepago"
+          data-id="${slug}-${data.id}"  <!-- 🔥 FIX -->
+          data-title="${data.titulo}"
+          data-price="${data.precio}"
+          data-img="${mainImg}"
+        >
+          Comprar ahora
+        </button>
 
-<button
- class="piece-cta-outline js-add-cart"
-data-id="${data.coleccion}-${data.id}"
-data-title="${data.titulo}"
- data-price="${data.precio}"
- data-img="${mainImg}">
+        <button
+          class="piece-cta-outline js-add-cart"
+          data-id="${slug}-${data.id}"  <!-- 🔥 FIX -->
+          data-title="${data.titulo}"
+          data-price="${data.precio}"
+          data-img="${mainImg}">
 
-<svg class="cart-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-<path stroke-width="2" d="M6 6h15l-1.5 9h-13z"/>
-<circle cx="9" cy="20" r="1"/>
-<circle cx="18" cy="20" r="1"/>
-</svg>
+          <svg class="cart-mini" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-width="2" d="M6 6h15l-1.5 9h-13z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+          </svg>
 
-Añadir carrito
-</button>
+          Añadir carrito
+        </button>
 
-</div>
+        </div>
 
-${variacionesCTA}
-`;
-}
+        ${variacionesCTA}
+        `;
+      }
 
       if (estado === "variaciones") {
         cta = `
           <a href="#"
-             class="piece-cta alt js-open-modal"
-             data-img="${mainImg}">
+            class="piece-cta alt js-open-modal"
+            data-img="${mainImg}">
             Quiero este collar con variaciones
           </a>
         `;
@@ -190,8 +191,8 @@ ${variacionesCTA}
       if (estado === "vendida") {
         cta = `
           <a href="#"
-             class="piece-cta alt js-open-modal"
-             data-img="${mainImg}">
+            class="piece-cta alt js-open-modal"
+            data-img="${mainImg}">
             Encargar parecida
           </a>
         `;
