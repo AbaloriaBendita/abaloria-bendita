@@ -137,13 +137,26 @@ document.addEventListener("change", (e) => {
 function initPrepagoCTA() {
 
   const btn = document.getElementById("go-to-payment");
-  if (!btn) return;
+  const checkbox = document.getElementById("rgpd-check");
+
+  if (!btn || !checkbox) return;
 
   // evitar duplicados
   if (btn.__bound) return;
   btn.__bound = true;
 
+  /* 🔥 estado inicial */
+  btn.disabled = !checkbox.checked;
+
+  /* 🔥 RGPD controla botón */
+  checkbox.addEventListener("change", () => {
+    btn.disabled = !checkbox.checked;
+  });
+
+  /* 🔥 CLICK */
   btn.addEventListener("click", async () => {
+
+    if (btn.disabled) return;
 
     const cart = getCheckoutCart();
 
