@@ -181,10 +181,12 @@ document.addEventListener("click",(e)=>{
     renderCart();
 
     const panel = document.getElementById("cartPanel");
-    if(panel && typeof openModal === "function"){
-      openModal(panel);
-      document.body.style.overflow = "hidden";
-    }
+
+if (panel) {
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
 
     return;
   }
