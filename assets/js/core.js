@@ -7,11 +7,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.querySelector(".nav-toggle");
   const mobileMenu = document.querySelector(".mobile-menu");
 
-  if (toggle && mobileMenu) {
-    toggle.addEventListener("click", () => {
-      mobileMenu.classList.toggle("is-open");
-    });
-  }
+  if (!toggle || !mobileMenu) return;
+
+  /* abrir / cerrar */
+  toggle.addEventListener("click", () => {
+    mobileMenu.classList.toggle("is-open");
+  });
+
+  /* cerrar al clicar link */
+  mobileMenu.addEventListener("click", (e) => {
+    if (e.target.closest("a")) {
+      mobileMenu.classList.remove("is-open");
+    }
+  });
 
 });
 
