@@ -1,3 +1,7 @@
+/* =========================
+   LANGUAGE + TEXTS (GLOBAL)
+========================= */
+
 const isEN = window.location.pathname.startsWith("/en");
 
 window.TEXTS = {
@@ -24,6 +28,7 @@ window.TEXTS = {
     }
   }
 };
+
 
 /* =========================
    MODAL HELPERS
@@ -159,8 +164,6 @@ function forceHeaderRender() {
   });
 }
 
-
-const isEN = window.location.pathname.startsWith("/en");
 
 /* =========================
    INIT GLOBAL
