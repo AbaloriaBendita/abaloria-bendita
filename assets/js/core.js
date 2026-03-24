@@ -35,9 +35,16 @@ window.TEXTS = {
     checkoutError: isEN
       ? "We couldn’t start the payment."
       : "No hemos podido iniciar el pago."
+  },
+
+  checkout: {
+    empty: isEN ? "No products in cart" : "No hay productos",
+    redirecting: isEN ? "Redirecting..." : "Redirigiendo...",
+    error: isEN
+      ? "We couldn’t start the payment."
+      : "No hemos podido iniciar el pago."
   }
 };
-
 
 /* =========================
    MODAL HELPERS
