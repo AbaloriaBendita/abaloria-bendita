@@ -4063,22 +4063,5 @@ button:disabled {
   gap: 16px;
 }
 
-/* 🔥 OCULTAR MODALES HASTA INIT */
-.modal {
-  display: none;
-}
-
-.modal.is-open {
-  display: flex;
-}
-
-.modal-backdrop {
-  pointer-events: auto;
-}
-
-.modal-box {
-  position: relative;
-  z-index: 10;
-}
 
 
