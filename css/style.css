@@ -4084,38 +4084,29 @@ button:disabled {
 }
 
 /* subrayado artesanal */
-.cart-clear::after{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-
-  width: 100%;
-  height: 1px;
-
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--red),
-    var(--blue),
-    transparent
-  );
-
-  opacity: 0.5;
-  transform: scaleX(0.6);
-  transform-origin: center;
-  transition: transform .25s ease, opacity .25s ease;
+.cart-actions{
+  display: flex;
+  align-items: center;
+  gap: 18px; /* 🔥 más separación de la X */
 }
 
-/* hover */
+.cart-clear{
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: #666;
+  opacity: 0.8;
+
+  transition: color .2s ease, opacity .2s ease;
+}
+
 .cart-clear:hover{
-  opacity: 1;
   color: #000;
-}
-
-.cart-clear:hover::after{
-  transform: scaleX(1);
-  opacity: 0.9;
+  opacity: 1;
 }
 
 
