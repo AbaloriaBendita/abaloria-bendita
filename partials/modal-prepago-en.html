@@ -1,0 +1,59 @@
+<div class="modal" id="modal-prepago" aria-hidden="true">
+
+  <div class="modal-backdrop"></div>
+
+  <div class="modal-box">
+    <button class="modal-close" aria-label="Close">×</button>
+    
+    <div class="modal-image">
+      <img id="prepago-img-preview" src="" alt="">
+    </div>
+
+    <p class="modal-copy">
+      <strong>Confirm your order</strong><br>
+      Here’s a breakdown of your purchase.
+    </p>
+
+    <div class="modal-form">
+
+      <div class="prepago-summary">
+
+        <div class="cart-row">
+          <span>Product</span>
+          <span class="prepago-subtotal"></span>
+        </div>
+
+        <div class="cart-row">
+          <span>VAT (included)</span>
+          <span class="prepago-iva"></span>
+        </div>
+
+        <div class="cart-row">
+          <span>Shipping</span>
+          <span class="prepago-shipping"></span>
+        </div>
+
+        <div class="cart-total-row">
+          <strong>Total</strong>
+          <strong class="prepago-total"></strong>
+        </div>
+
+      </div>
+
+      <div class="rgpd-group">
+        <div class="rgpd-row">
+          <input type="checkbox" id="rgpd-check">
+          <label>
+            I accept the
+            <a href="/en/privacy.html" target="_blank">privacy policy</a>
+          </label>
+        </div>
+      </div>
+
+      <button id="go-to-payment" class="cta-main" type="button" disabled>
+        Continue to payment
+      </button>
+
+    </div>
+  </div>
+</div>
