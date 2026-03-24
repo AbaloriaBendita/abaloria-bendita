@@ -36,7 +36,9 @@ for (const id of piezas) {
 
     try {
 
-      const dataUrl = `${BASE}${id}/data.json`;
+const dataUrl = isEN
+  ? `${window.location.origin}/en/assets/${slug}/${id}/data.json`
+  : `${BASE}${id}/data.json`;
       const res = await fetch(dataUrl);
 
       if (!res.ok) continue;
