@@ -154,9 +154,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔥 NUEVO
   loadPartial("#cart-placeholder", "/partials/cart.html");
    loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
-fetch("/partials/modal-prepago.html")
-  .then(res => res.text())
-  .then(html => {
-    document.body.insertAdjacentHTML("beforeend", html);
-  }); 
+if (!document.getElementById("modal-prepago")) {
+  fetch("/partials/modal-prepago.html")
+    .then(res => res.text())
+    .then(html => {
+      document.body.insertAdjacentHTML("beforeend", html);
+    });
+}
 });
