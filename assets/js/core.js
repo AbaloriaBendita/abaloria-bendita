@@ -1,6 +1,6 @@
 const isEN = window.location.pathname.startsWith("/en");
 
-const TEXTS = {
+window.TEXTS = {
   catalog: {
     status: {
       available: isEN ? "Available" : "Disponible",
