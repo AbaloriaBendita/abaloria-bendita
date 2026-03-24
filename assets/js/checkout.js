@@ -34,7 +34,7 @@ function renderPrepagoSummary(){
 
   if (shippingEl){
     shippingEl.textContent =
-      totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
+      totales.shipping === 0 ? TEXTS.cart.shippingFree : totales.shipping.toFixed(2) + " €";
   }
 
   if (totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
@@ -114,11 +114,11 @@ document.addEventListener("click", async (e) => {
     const cart = getCheckoutCart();
 
     if (!cart.length) {
-      alert("No hay productos");
+     alert(TEXTS.checkout.empty);
       return;
     }
 
-    payBtn.innerText = "Redirigiendo...";
+    payBtn.innerText = TEXTS.checkout.redirecting;
     payBtn.disabled = true;
 
     try {
@@ -140,9 +140,11 @@ document.addEventListener("click", async (e) => {
 
     } catch {
 
-      alert("No hemos podido iniciar el pago.");
+      alert(TEXTS.checkout.error);
       payBtn.disabled = false;
-      payBtn.innerText = "Continuar compra";
+      payBtn.innerText = isEN
+  ? "Continue purchase"
+  : "Continuar compra";
     }
 
     return;
