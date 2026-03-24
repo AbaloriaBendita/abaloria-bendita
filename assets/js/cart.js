@@ -143,8 +143,8 @@ function renderCart(){
           <span>${p.qty}</span>
           <button class="cart-plus" data-id="${p.id}">+</button>
           <button class="cart-remove" data-id="${p.id}">
-            eliminar
-          </button>
+${TEXTS.cart.remove}
+</button>
         </div>
 
         <div class="cart-price">
@@ -161,7 +161,7 @@ function renderCart(){
 
   if(shippingEl){
     shippingEl.textContent =
-      totales.shipping === 0 ? "Gratis" : totales.shipping.toFixed(2) + " €";
+      totales.shipping === 0 ? TEXTS.cart.shippingFree : totales.shipping.toFixed(2) + " €";
   }
 
   if(totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
@@ -284,7 +284,7 @@ document.addEventListener("click",(e)=>{
     const cart = getCart();
 
     if(!cart.length){
-      alert("Tu carrito está vacío");
+      alert(TEXTS.cart.empty);
       return;
     }
 
@@ -314,7 +314,7 @@ document.addEventListener("click",(e)=>{
       } catch (err) {
 
         console.error("❌ ERROR CHECKOUT CART:", err);
-        alert("No hemos podido iniciar el pago.");
+        alert(TEXTS.cart.checkoutError);
 
       }
 
