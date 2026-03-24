@@ -17,8 +17,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     .filter(Boolean)
     .pop();
 
-  const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
-
+const BASE = isEN
+  ? `${window.location.origin}/en/assets/${slug}/`
+  : `${window.location.origin}/assets/colecciones/${slug}/`;
+  
   console.log("📁 Colección:", slug);
   console.log("📦 Base:", BASE);
 
