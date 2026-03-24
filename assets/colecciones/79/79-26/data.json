@@ -1,8 +1,9 @@
 {
   "id": "79-26",
-  "titulo": "Corazón",
+  "titulo": "Extra largo, cuerda y cerámica",
   "precio": 79,
   "estado": "disponible",
-  "nota_disponibilidad": "Piedras de ópalo y lana."
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Posibilidad de cambio de color."
 }
 
