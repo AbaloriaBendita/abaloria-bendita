@@ -140,25 +140,17 @@ function forceHeaderRender() {
 document.addEventListener("DOMContentLoaded", () => {
 
   loadPartial("#header-placeholder", "/partials/header.html", () => {
-  initHeader();
-  forceHeaderRender();
+    initHeader();
+    forceHeaderRender();
 
-  // 🔥 SINCRONIZAR CARRITO CON HEADER
-  if (typeof initCart === "function") {
-    initCart();
-  }
-});
+    if (typeof initCart === "function") {
+      initCart();
+    }
+  });
 
   loadPartial("#footer-placeholder", "/partials/footer.html");
 
-  // 🔥 NUEVO
   loadPartial("#cart-placeholder", "/partials/cart.html");
-   loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
-if (!document.getElementById("modal-prepago")) {
-  fetch("/partials/modal-prepago.html")
-    .then(res => res.text())
-    .then(html => {
-      document.body.insertAdjacentHTML("beforeend", html);
-    });
-}
+  loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
+  loadPartial("#modal-prepago-placeholder", "/partials/modal-prepago.html");
 });
