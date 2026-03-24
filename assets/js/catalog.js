@@ -50,16 +50,16 @@ for (const id of piezas) {
       const estado = (data.estado || "").toLowerCase();
 
       let estadoClass = "sold";
-      let statusText = "Vendida";
-
+let statusText = TEXTS.catalog.status.sold;
+      
       if (estado === "disponible") {
         estadoClass = "available";
-        statusText = "Disponible";
+statusText = TEXTS.catalog.status.available;
       }
 
       if (estado === "variaciones") {
         estadoClass = "variation";
-        statusText = "Disponible con variaciones";
+statusText = TEXTS.catalog.status.variations;
       }
 
       const card = document.createElement("article");
@@ -137,8 +137,8 @@ try {
       <a href="#"
          class="piece-cta-secondary js-open-modal"
          data-img="${mainImg}">
-        ¿Lo quieres con variaciones?
-      </a>
+${TEXTS.catalog.cta.variations}
+</a>
     `
     : "";
 
@@ -152,7 +152,7 @@ data-id="${data.coleccion}-${data.id}"
   data-price="${data.precio}"
   data-img="${mainImg}"
 >
-  Comprar ahora
+${TEXTS.catalog.cta.buy}
 </button>
 
 <button
@@ -168,7 +168,7 @@ data-title="${data.titulo}"
 <circle cx="18" cy="20" r="1"/>
 </svg>
 
-Añadir carrito
+${TEXTS.catalog.cta.addCart}
 </button>
 
 </div>
@@ -182,8 +182,8 @@ ${variacionesCTA}
           <a href="#"
              class="piece-cta alt js-open-modal"
              data-img="${mainImg}">
-            Quiero este collar con variaciones
-          </a>
+${TEXTS.catalog.cta.variationsAlt}
+</a>
         `;
       }
 
@@ -192,8 +192,8 @@ ${variacionesCTA}
           <a href="#"
              class="piece-cta alt js-open-modal"
              data-img="${mainImg}">
-            Encargar parecida
-          </a>
+${TEXTS.catalog.cta.sold}
+</a>
         `;
       }
 
@@ -216,8 +216,8 @@ ${variacionesCTA}
           ${cta}
 
           <ul class="piece-legal">
-            <li>Envío gratis a partir de 150 €.</li>
-            <li>IVA incluido.</li>
+            <li>${TEXTS.catalog.legal.shipping}</li>
+<li>${TEXTS.catalog.legal.iva}</li>
           </ul>
         </div>
       `;
