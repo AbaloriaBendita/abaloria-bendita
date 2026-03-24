@@ -97,150 +97,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ================= FOOTER ================= -->
 <div id="footer-placeholder"></div>
 
-<!-- ================= MODAL ENCARGO ================= -->
-<div class="modal" id="modal-encargo" aria-hidden="true">
-
-  <div class="modal-backdrop"></div>
-
-  <div class="modal-box">
-    <button class="modal-close" aria-label="Cerrar">×</button>
-
-    <div class="modal-image">
-      <img id="modal-img-preview" src="" alt="">
-    </div>
-
-    <p class="modal-copy">
-      <strong>Encarga tu Abaloria parecida a esta.</strong><br>
-      Danos tus datos y la diseñaremos especialmente para ti.
-    </p>
-
-    <form method="POST" action="/api/encargo" data-redirect="/gracias.html" class="modal-form">
-
-      <input type="hidden" name="imagen_referencia" id="modal-img-input">
-      <input type="hidden" name="tipo" value="Referencia / pieza similar">
-
-  <div class="form-group">
-    <label class="form-label">Nombre</label>
-    <input type="text" name="nombre" required>
-  </div>
-
-  <div class="form-group">
-    <label class="form-label">Apellidos</label>
-    <input type="text" name="apellidos" required>
-  </div>
-
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input type="email" name="email" required>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Teléfono</label>
-        <input type="tel" name="telefono">
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">Dirección completa para el envío</label>
-<input 
-  type="text" 
-  name="direccion" 
-  id="direccion-autocomplete"
-  placeholder="Empieza a escribir tu dirección..."
-  required
->
-      </div>
-      
-      <div class="form-group">
-        <label class="form-label">Comentarios</label>
-        <textarea
-          name="comentarios"
-          rows="3"
-          placeholder="Petición especial, estilo, colores…"
-        ></textarea>
-      </div>
-
-      <button type="submit" class="cta-main">
-        Encargar una Abaloria parecida
-      </button>
-
-     <div class="rgpd-group">
-  <div class="rgpd-row">
-    <input type="checkbox" name="rgpd" required>
-    <label>
-      He leído y acepto la
-      <a href="/privacidad.html" target="_blank">política de privacidad</a>
-    </label>
-  </div>
-</div>
-
-    </form>
-  </div>
-</div>
-
-    <!-- MODAL PREPAGO -->
-<div class="modal" id="modal-prepago" aria-hidden="true">
-
-  <div class="modal-backdrop"></div>
-
-  <div class="modal-box">
-    <button class="modal-close" aria-label="Cerrar">×</button>
-    
-    <div class="modal-image">
-      <img id="prepago-img-preview" src="" alt="">
-    </div>
-
-    <p class="modal-copy">
-      <strong>Confirmar pedido</strong><br>
-      Desglose de tu compra.
-    </p>
-
-    <!-- SIN FORM (ya no hace falta) -->
-    <div class="modal-form">
-
-      <!-- 🔥 RESUMEN (esto está perfecto) -->
-      <div class="prepago-summary">
-
-        <div class="cart-row">
-          <span>Producto</span>
-          <span class="prepago-subtotal"></span>
-        </div>
-
-        <div class="cart-row">
-          <span>IVA (21%) incluido</span>
-          <span class="prepago-iva"></span>
-        </div>
-
-        <div class="cart-row">
-          <span>Envío</span>
-          <span class="prepago-shipping"></span>
-        </div>
-
-        <div class="cart-total-row">
-          <strong>Total</strong>
-          <strong class="prepago-total"></strong>
-        </div>
-
-      </div>
-
-      <!-- RGPD -->
-      <div class="rgpd-group">
-        <div class="rgpd-row">
-          <input type="checkbox" id="rgpd-check">
-          <label>
-            Aceptar nuestra 
-  <a href="/privacidad.html" target="_blank">política de privacidad.
-            </a>
-          </label>
-        </div>
-      </div>
-      <!-- BOTÓN -->
-      <button id="go-to-payment" class="cta-main" type="button" disabled>
-        Continuar compra
-      </button>
-
-    </div>
-  </div>
-</div>
 
    <!-- LIGHTBOX GLOBAL -->
 <div class="image-lightbox" id="imageLightbox" aria-hidden="true">  <div class="lightbox-backdrop"></div>
@@ -260,8 +116,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
-   <!-- ================= CART ================= -->
+   <!-- ================= CART AND MODALS ================= -->
 <div id="cart-placeholder"></div>
+  <div id="modal-encargo-placeholder"></div>
+  <div id="modal-prepago-placeholder"></div>
 
 <!-- ================= JS ================= -->
 <script src="/assets/js/core.js" defer></script>
