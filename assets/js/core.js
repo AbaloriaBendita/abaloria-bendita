@@ -1,3 +1,30 @@
+const isEN = window.location.pathname.startsWith("/en");
+
+const TEXTS = {
+  catalog: {
+    status: {
+      available: isEN ? "Available" : "Disponible",
+      variations: isEN ? "Available with variations" : "Disponible con variaciones",
+      sold: isEN ? "Sold" : "Vendida"
+    },
+
+    cta: {
+      buy: isEN ? "Buy now" : "Comprar ahora",
+      addCart: isEN ? "Add to cart" : "Añadir carrito",
+      variations: isEN ? "Want it with variations?" : "¿Lo quieres con variaciones?",
+      variationsAlt: isEN ? "I want this necklace with variations" : "Quiero este collar con variaciones",
+      sold: isEN ? "Request a similar one" : "Encargar parecida"
+    },
+
+    legal: {
+      shipping: isEN
+        ? "Free shipping on orders over €150."
+        : "Envío gratis a partir de 150 €.",
+      iva: isEN ? "VAT included." : "IVA incluido."
+    }
+  }
+};
+
 /* =========================
    MODAL HELPERS
 ========================= */
