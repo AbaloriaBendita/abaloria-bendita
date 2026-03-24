@@ -26,6 +26,15 @@ window.TEXTS = {
         : "Envío gratis a partir de 150 €.",
       iva: isEN ? "VAT included." : "IVA incluido."
     }
+  },
+
+  cart: {
+    remove: isEN ? "remove" : "eliminar",
+    empty: isEN ? "Your cart is empty" : "Tu carrito está vacío",
+    shippingFree: isEN ? "Free" : "Gratis",
+    checkoutError: isEN
+      ? "We couldn’t start the payment."
+      : "No hemos podido iniciar el pago."
   }
 };
 
