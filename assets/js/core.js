@@ -133,13 +133,16 @@ function forceHeaderRender() {
 }
 
 
+const isEN = window.location.pathname.startsWith("/en");
+
 /* =========================
    INIT GLOBAL
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  loadPartial("#header-placeholder", "/partials/header.html", () => {
+  // HEADER
+  loadPartial("#header-placeholder", isEN ? "/partials/header-en.html" : "/partials/header.html", () => {
     initHeader();
     forceHeaderRender();
 
@@ -148,9 +151,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  loadPartial("#footer-placeholder", "/partials/footer.html");
+  // FOOTER
+  loadPartial("#footer-placeholder", isEN ? "/partials/footer-en.html" : "/partials/footer.html");
 
-  loadPartial("#cart-placeholder", "/partials/cart.html");
-  loadPartial("#modal-encargo-placeholder", "/partials/modal-encargo.html");
-  loadPartial("#modal-prepago-placeholder", "/partials/modal-prepago.html");
+  // CART
+  loadPartial("#cart-placeholder", isEN ? "/partials/cart-en.html" : "/partials/cart.html");
+
+  // MODAL ENCARGO
+  loadPartial("#modal-encargo-placeholder", isEN ? "/partials/modal-encargo-en.html" : "/partials/modal-encargo.html");
+
+  // MODAL PREPAGO
+  loadPartial("#modal-prepago-placeholder", isEN ? "/partials/modal-prepago-en.html" : "/partials/modal-prepago.html");
+
 });
