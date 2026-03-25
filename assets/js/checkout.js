@@ -118,6 +118,23 @@ document.addEventListener("click", async (e) => {
       return;
     }
 
+     // 🔥 TRACKING BEGIN CHECKOUT
+window.dataLayer = window.dataLayer || [];
+
+const total = cart.reduce((acc, item) => acc + item.precio * (item.qty || 1), 0);
+
+const lang = typeof isEN !== "undefined" && isEN ? "en" : "es";
+const mode = localStorage.getItem("checkout_mode") || "cart";
+
+window.dataLayer.push({
+  event: 'begin_checkout',
+  value: total,
+  currency: 'EUR',
+  items: cart.length,
+  checkout_type: mode,
+  lang: lang
+});
+
     payBtn.innerText = TEXTS.checkout.redirecting;
     payBtn.disabled = true;
 
