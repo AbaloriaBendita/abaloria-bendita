@@ -64,6 +64,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 </head>
 
 <body>
+  <body data-collection="sencilla_con_gracia">
   <!-- Google Tag Manager (noscript) -->
   <noscript>
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPG9ZSJD"
@@ -73,46 +74,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <a class="skip" href="#contenido">Saltar al contenido</a>
 
   <!-- TRACKING COLLECTION (AQUÍ) -->
-  <script>
-  window.dataLayer = window.dataLayer || [];
+<script>
+window.dataLayer = window.dataLayer || [];
 
-  const lang = window.location.pathname.startsWith("/en") ? "en" : "es";
+const lang = window.location.pathname.startsWith("/en") ? "en" : "es";
 
-  // 👉 CONFIG POR PÁGINA (solo cambias esto)
-  const collection = 'sencilla_con_gracia';
-  const price = '55';
-
-  // 1. VIEW COLLECTION
-  window.dataLayer.push({
-    event: 'view_collection',
-    collection: collection,
-    price_range: price,
-    lang: lang
-  });
-
-  // 2. CLICK EN PRODUCTO
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', () => {
-      window.dataLayer.push({
-        event: 'select_item',
-        collection: collection,
-        lang: lang
-      });
-    });
-  });
-
-  // 3. CTA (si hay botón en colección)
-  document.querySelectorAll('.cta-pill, .cta-main').forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.dataLayer.push({
-        event: 'cta_click',
-        location: 'collection',
-        collection: collection,
-        lang: lang
-      });
-    });
-  });
-
+window.dataLayer.push({
+  event: 'view_collection',
+  collection: 'sencilla_con_gracia',
+  price_range: '55',
+  lang: lang
+});
 </script>
 
   <!-- ================= HEADER ================= -->
@@ -171,7 +143,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="/assets/js/lightbox.js" defer></script>
 <script src="/assets/js/cart.js" defer></script>
 <script src="/assets/js/checkout.js" defer></script>
-<script src="/assets/js/catalog.js" defer></script>  
+<script src="/assets/js/catalog.js" defer></script> 
+    <script src="/js/tracking.js"></script>
 
 </body>
 </html>
