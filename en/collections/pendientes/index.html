@@ -67,55 +67,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 </head>
 
-<body>
+<body data-collection="pendientes">
  <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPG9ZSJD"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <a class="skip" href="#contenido">Skip to content</a>
   <!-- TRACKING COLLECTION (AQUÍ) -->
-  <script>
-  window.dataLayer = window.dataLayer || [];
+ <script>
+window.dataLayer = window.dataLayer || [];
 
-  const lang = window.location.pathname.startsWith("/en") ? "en" : "es";
+const lang = window.location.pathname.startsWith("/en") ? "en" : "es";
 
-  // 👉 CONFIG POR PÁGINA (solo cambias esto)
-  const collection = 'earrings';
-  const price = '35';
-
-  // 1. VIEW COLLECTION
-  window.dataLayer.push({
-    event: 'view_collection',
-    collection: collection,
-    price_range: price,
-    lang: lang
-  });
-
-  // 2. CLICK EN PRODUCTO
-  document.querySelectorAll('.product-card').forEach(card => {
-    card.addEventListener('click', () => {
-      window.dataLayer.push({
-        event: 'select_item',
-        collection: collection,
-        lang: lang
-      });
-    });
-  });
-
-  // 3. CTA (si hay botón en colección)
-  document.querySelectorAll('.cta-pill, .cta-main').forEach(btn => {
-    btn.addEventListener('click', () => {
-      window.dataLayer.push({
-        event: 'cta_click',
-        location: 'collection',
-        collection: collection,
-        lang: lang
-      });
-    });
-  });
-
+window.dataLayer.push({
+  event: 'view_collection',
+  collection: 'pendientes',
+  price_range: '35',
+  lang: lang
+});
 </script>
-
 
 <!-- ================= HEADER ================= -->
 <div id="header-placeholder"></div>
@@ -174,7 +144,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script src="/assets/js/lightbox.js" defer></script>
 <script src="/assets/js/cart.js" defer></script>
 <script src="/assets/js/checkout.js" defer></script>
-<script src="/assets/js/catalog.js" defer></script>  
+<script src="/assets/js/catalog.js" defer></script>
+  <script src="/assets/js/tracking.js" defer></script>
 
 </body>
 </html>
