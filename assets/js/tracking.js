@@ -30,14 +30,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // LEAD (solo forms principales)
-  document.querySelectorAll('.form').forEach(form => {
-    form.addEventListener('submit', () => {
-      window.dataLayer.push({
-        event: 'lead_form_submit',
-        lang: lang
-      });
+ // LEAD (form + modal producto)
+document.querySelectorAll('.form').forEach(form => {
+
+  form.addEventListener('submit', () => {
+
+    const collection = document.body.dataset.collection || 'none';
+
+    // Detectar tipo de lead
+    const isModal = form.closest('.modal') !== null;
+
+    const leadType = isModal ? 'product' : 'general';
+
+    window.dataLayer = window.dataLayer || [];
+
+    window.dataLayer.push({
+      event: 'lead_form_submit',
+      lead_type: leadType,        // 'general' | 'product'
+      collection: collection,     // útil para producto
+      lang: lang
     });
+
   });
+
+});
 
 });
