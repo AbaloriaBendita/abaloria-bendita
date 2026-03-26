@@ -140,10 +140,19 @@ window.dataLayer.push({
 
     try {
 
+       console.log("🧾 CHECKOUT SINGLE:", cart);
       const res = await fetch("https://pago-square.hola-38b.workers.dev", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ cart })
+        body: JSON.stringify({
+  cart: cart.map(item => ({
+    id: item.id,
+    titulo: item.titulo,
+    precio: item.precio,
+    qty: item.qty || 1,
+    img: item.img
+  }))
+})
       });
 
       const text = await res.text();
