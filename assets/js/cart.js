@@ -294,13 +294,21 @@ document.addEventListener("click",(e)=>{
 
       try {
 
-        const fd = new FormData();
-        fd.set("cart", JSON.stringify(cart));
+        console.log("🧾 CHECKOUT CART:", cart);
 
-        const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-          method: "POST",
-          body: fd
-        });
+const res = await fetch("https://pago-square.hola-38b.workers.dev", {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify({
+    cart: cart.map(item => ({
+      id: item.id,
+      titulo: item.titulo,
+      precio: item.precio,
+      qty: item.qty || 1,
+      img: item.img
+    }))
+  })
+});
 
         const text = await res.text();
         const data = JSON.parse(text);
