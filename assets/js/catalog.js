@@ -149,8 +149,8 @@ ${TEXTS.catalog.cta.variations}
 
 <button
   class="piece-cta js-prepago"
-data-id="${data.coleccion}-${data.id}"
-  data-title="${data.titulo}"
+data-id="${data.id}"
+data-title="${data.titulo}"
   data-price="${data.precio}"
   data-img="${mainImg}"
 >
@@ -159,7 +159,7 @@ ${TEXTS.catalog.cta.buy}
 
 <button
  class="piece-cta-outline js-add-cart"
-data-id="${data.coleccion}-${data.id}"
+data-id="${data.id}"
 data-title="${data.titulo}"
  data-price="${data.precio}"
  data-img="${mainImg}">
