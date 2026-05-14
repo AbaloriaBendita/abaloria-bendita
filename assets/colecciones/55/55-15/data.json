@@ -1,8 +1,7 @@
 {
   "id": "55-15",
-  "titulo": "Golondrina",
+  "titulo": "Piedras semipreciosas turquesa con golondrina en resina",
   "precio": 72,
-  "estado": "disponible",
-  "permite_variaciones": true,
-  "nota_disponibilidad": "Piedras semipreciosas turquesa con golondrina en resina. Por encargo."
+  "estado": "vendida",
+  "nota_disponibilidad": "Se puede pedir por encargo."
 }
