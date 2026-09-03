@@ -4,6 +4,29 @@
 
 const isEN = window.location.pathname.startsWith("/en");
 
+/* =========================
+   SHIPPING CONFIG
+========================= */
+
+window.SHIPPING_CONFIG = {
+  freeFrom: 120,
+  rates: {
+    peninsula: 8.5,
+    baleares: 11.5,
+    canarias: 14.5
+  }
+};
+
+window.getShippingAmount = function(subtotal, shippingZone = "peninsula") {
+  if (shippingZone === "quote") return null;
+
+  if (subtotal >= window.SHIPPING_CONFIG.freeFrom) {
+    return 0;
+  }
+
+  return window.SHIPPING_CONFIG.rates[shippingZone] ?? null;
+};
+
 window.TEXTS = {
   catalog: {
     status: {
@@ -22,8 +45,8 @@ window.TEXTS = {
 
     legal: {
       shipping: isEN
-        ? "Free shipping on orders over €150."
-        : "Envío gratis a partir de 150 €.",
+        ? "Free shipping on orders from €120."
+        : "Envío gratis a partir de 120 €.",
       iva: isEN ? "VAT included." : "IVA incluido."
     }
   },
@@ -32,6 +55,7 @@ window.TEXTS = {
     remove: isEN ? "remove" : "eliminar",
     empty: isEN ? "Your cart is empty" : "Tu carrito está vacío",
     shippingFree: isEN ? "Free" : "Gratis",
+    shippingFrom: isEN ? "From" : "Desde",
     checkoutError: isEN
       ? "We couldn’t start the payment."
       : "No hemos podido iniciar el pago."
@@ -40,6 +64,10 @@ window.TEXTS = {
   checkout: {
     empty: isEN ? "No products in cart" : "No hay productos",
     redirecting: isEN ? "Redirecting..." : "Redirigiendo...",
+    shippingQuote: isEN ? "Contact us" : "Consultar",
+    shippingQuoteMessage: isEN
+      ? "For Ceuta, Melilla and destinations outside Spain, please contact us before placing the order."
+      : "Para Ceuta, Melilla y envíos fuera de España, consúltanos antes de realizar el pedido.",
     error: isEN
       ? "We couldn’t start the payment."
       : "No hemos podido iniciar el pago."
