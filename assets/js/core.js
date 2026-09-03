@@ -106,6 +106,113 @@ function closeModal(modal){
 
 
 /* =========================
+   MODAL ENCARGO · MODOS
+========================= */
+
+function configureEncargoModal(mode = "reference", options = {}) {
+  const modal = document.getElementById("modal-encargo");
+  if (!modal) return null;
+
+  const modalImg = document.getElementById("modal-img-preview");
+  const modalInput = document.getElementById("modal-img-input");
+  const copy = modal.querySelector(".modal-copy");
+  const form = modal.querySelector("form");
+  const typeInput = form?.querySelector('input[name="tipo"]');
+  const comments = form?.querySelector('textarea[name="comentarios"]');
+  const submit = form?.querySelector('button[type="submit"]');
+
+  if (mode === "shipping") {
+    const cart = Array.isArray(options.cart) ? options.cart : [];
+    const firstProduct = cart.find(item => item?.img) || cart[0] || {};
+    const refs = cart
+      .map(item => {
+        const title = String(item?.titulo || "Producto");
+        const ref = item?.id ? `Ref: ${item.id}` : "";
+        const qty = Number(item?.qty) || 1;
+        return `${title}${ref ? ` (${ref})` : ""} x${qty}`;
+      })
+      .join(" | ");
+
+    if (copy) {
+      copy.innerHTML = isEN
+        ? "<strong>Check shipping for your order.</strong><br>Tell us the destination and we’ll confirm the shipping cost before you buy."
+        : "<strong>Consulta el envío de tu pedido.</strong><br>Dinos dónde debemos enviarlo y te confirmaremos el coste antes de comprar.";
+    }
+
+    if (typeInput) {
+      typeInput.value = isEN
+        ? `Shipping enquiry${refs ? ` · ${refs}` : ""}`
+        : `Consulta de envío${refs ? ` · ${refs}` : ""}`;
+    }
+
+    if (comments) {
+      comments.placeholder = isEN
+        ? "Country, city or any shipping detail we should know…"
+        : "País, ciudad o cualquier detalle del envío que debamos tener en cuenta…";
+    }
+
+    if (submit) {
+      submit.textContent = isEN ? "Ask about shipping" : "Consultar envío";
+    }
+
+    if (modalImg) {
+      modalImg.src = firstProduct.img || "";
+      modalImg.alt = firstProduct.titulo || "";
+    }
+
+    if (modalInput) {
+      modalInput.value = firstProduct.img || "";
+    }
+
+    return modal;
+  }
+
+  if (copy) {
+    copy.innerHTML = isEN
+      ? "<strong>Request a piece inspired by this one.</strong><br>Share your details and we’ll design it especially for you."
+      : "<strong>Encarga tu Abaloria parecida a esta.</strong><br>Danos tus datos y la diseñaremos especialmente para ti.";
+  }
+
+  if (typeInput) {
+    typeInput.value = isEN
+      ? "Reference / similar piece"
+      : "Referencia / pieza similar";
+  }
+
+  if (comments) {
+    comments.placeholder = isEN
+      ? "Special request, style, colours…"
+      : "Petición especial, estilo, colores…";
+  }
+
+  if (submit) {
+    submit.textContent = isEN
+      ? "Request a similar Abaloria"
+      : "Encargar una Abaloria parecida";
+  }
+
+  if (modalImg) {
+    modalImg.src = options.img || "";
+    modalImg.alt = "";
+  }
+
+  if (modalInput) {
+    modalInput.value = options.img || "";
+  }
+
+  return modal;
+}
+
+window.openShippingInquiryModal = function(cart) {
+  const prepagoModal = document.getElementById("modal-prepago");
+  if (prepagoModal) closeModal(prepagoModal);
+
+  const modal = configureEncargoModal("shipping", { cart });
+  if (modal) openModal(modal);
+};
+
+
+/* =========================
    MODAL ENCARGO
 ========================= */
 
@@ -116,14 +223,11 @@ document.addEventListener("click", e => {
 
   e.preventDefault();
 
-  const modal = document.getElementById("modal-encargo");
-  const modalImg = document.getElementById("modal-img-preview");
-  const modalInput = document.getElementById("modal-img-input");
+  const modal = configureEncargoModal("reference", {
+    img: btn.dataset.img
+  });
 
-  if (modalImg) modalImg.src = btn.dataset.img;
-  if (modalInput) modalInput.value = btn.dataset.img;
-
-  openModal(modal);
+  if (modal) openModal(modal);
 
 });
 
