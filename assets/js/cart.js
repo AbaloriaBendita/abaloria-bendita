@@ -38,22 +38,24 @@ function saveCart(cart){
    CÁLCULO
 ========================= */
 
-function calcularTotales(cart){
+function calcularTotales(cart, shippingZone = "peninsula"){
 
   let subtotal = 0;
 
   cart.forEach(p => {
-    const qty = p.qty || 1;
+    const qty = Number(p.qty) || 1;
     subtotal += Number(p.precio) * qty;
   });
 
   const iva = subtotal * 0.21 / 1.21;
   const base = subtotal - iva;
-  const shipping = subtotal >= 150 ? 0 : 8.5;
-  const total = subtotal + shipping;
+  const shipping = window.getShippingAmount(subtotal, shippingZone);
+  const total = shipping === null ? null : subtotal + shipping;
 
   return { base, iva, subtotal, shipping, total };
 }
+
+window.calcularTotales = calcularTotales;
 
 
 /* =========================
@@ -161,10 +163,17 @@ ${TEXTS.cart.remove}
 
   if(shippingEl){
     shippingEl.textContent =
-      totales.shipping === 0 ? TEXTS.cart.shippingFree : totales.shipping.toFixed(2) + " €";
+      totales.shipping === 0
+        ? TEXTS.cart.shippingFree
+        : `${TEXTS.cart.shippingFrom} ${totales.shipping.toFixed(2)} €`;
   }
 
-  if(totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
+  if(totalEl){
+    totalEl.textContent =
+      totales.shipping === 0
+        ? totales.total.toFixed(2) + " €"
+        : `${TEXTS.cart.shippingFrom} ${totales.total.toFixed(2)} €`;
+  }
 
 }
 
@@ -288,46 +297,39 @@ document.addEventListener("click",(e)=>{
       return;
     }
 
+    localStorage.setItem("checkout_mode", "cart");
+    localStorage.removeItem("checkout_single");
+
     closeCart();
 
-    (async () => {
+    const modal = document.getElementById("modal-prepago");
+    const preview = document.getElementById("prepago-img-preview");
+    const rgpdCheck = document.getElementById("rgpd-check");
+    const peninsulaRadio = document.querySelector(
+      'input[name="shipping_zone"][value="peninsula"]'
+    );
 
-      try {
+    if (!modal) {
+      alert(TEXTS.cart.checkoutError);
+      return;
+    }
 
-        console.log("🧾 CHECKOUT CART:", cart);
+    if (preview) {
+      preview.src = cart[0]?.img || "";
+      preview.alt = cart.length === 1
+        ? cart[0]?.titulo || ""
+        : "Productos del carrito";
+    }
 
-const res = await fetch("https://pago-square.hola-38b.workers.dev", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({
-    cart: cart.map(item => ({
-      id: item.id,
-      titulo: item.titulo,
-      precio: item.precio,
-      qty: item.qty || 1,
-      img: item.img
-    }))
-  })
-});
+    if (rgpdCheck) rgpdCheck.checked = false;
+    if (peninsulaRadio) peninsulaRadio.checked = true;
 
-        const text = await res.text();
-        const data = JSON.parse(text);
+    if (typeof renderPrepagoSummary === "function") {
+      renderPrepagoSummary();
+    }
 
-        if (!res.ok || !data.payment_url) {
-          throw new Error();
-        }
-
-        window.location.href = data.payment_url;
-
-      } catch (err) {
-
-        console.error("❌ ERROR CHECKOUT CART:", err);
-        alert(TEXTS.cart.checkoutError);
-
-      }
-
-    })();
-
+    openModal(modal);
+    return;
   }
 
 });
