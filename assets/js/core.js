@@ -75,6 +75,20 @@ window.TEXTS = {
 };
 
 /* =========================
+   SHIPPING COPY SYNC
+   Corrige textos legacy de la home mientras
+   el umbral global está centralizado en 120 €.
+========================= */
+
+function syncLegacyShippingCopy() {
+  document.querySelectorAll(".form-intro").forEach(el => {
+    el.innerHTML = el.innerHTML
+      .replace("a partir de 150€", "a partir de 120€")
+      .replace("over €150", "from €120");
+  });
+}
+
+/* =========================
    MODAL HELPERS
 ========================= */
 
@@ -214,6 +228,9 @@ function forceHeaderRender() {
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
+
+  // SHIPPING COPY LEGACY
+  syncLegacyShippingCopy();
 
   // HEADER
   loadPartial("#header-placeholder", isEN ? "/partials/header-en.html" : "/partials/header.html", () => {
