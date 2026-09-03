@@ -43,6 +43,94 @@ function resetPrepagoState() {
 
 
 /* =========================
+   PREPAGO GALLERY
+========================= */
+
+function renderPrepagoGallery(cart) {
+  const preview = document.getElementById("prepago-img-preview");
+  const thumbnails = document.getElementById("prepago-thumbnails");
+
+  if (!preview || !thumbnails) return;
+
+  const products = (Array.isArray(cart) ? cart : [])
+    .filter(item => item && item.img);
+
+  thumbnails.innerHTML = "";
+
+  if (!products.length) {
+    preview.src = "";
+    preview.alt = "";
+    thumbnails.style.display = "none";
+    return;
+  }
+
+  preview.src = products[0].img;
+  preview.alt = products[0].titulo || "Producto";
+
+  if (products.length <= 1) {
+    thumbnails.style.display = "none";
+    return;
+  }
+
+  thumbnails.style.display = "flex";
+
+  products.forEach((product, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute(
+      "aria-label",
+      `${isEN ? "View" : "Ver"} ${product.titulo || (isEN ? "product" : "producto")}`
+    );
+    button.setAttribute("aria-pressed", index === 0 ? "true" : "false");
+
+    button.style.cssText = `
+      flex:0 0 auto;
+      width:54px;
+      height:54px;
+      padding:2px;
+      border-radius:10px;
+      border:2px solid ${index === 0 ? "#0F3D2E" : "rgba(0,0,0,.15)"};
+      background:#fff;
+      cursor:pointer;
+      opacity:${index === 0 ? "1" : ".72"};
+    `;
+
+    const img = document.createElement("img");
+    img.src = product.img;
+    img.alt = "";
+    img.style.cssText = `
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:7px;
+      display:block;
+    `;
+
+    button.appendChild(img);
+
+    button.addEventListener("click", () => {
+      preview.src = product.img;
+      preview.alt = product.titulo || "Producto";
+
+      Array.from(thumbnails.children).forEach(child => {
+        child.setAttribute("aria-pressed", "false");
+        child.style.borderColor = "rgba(0,0,0,.15)";
+        child.style.opacity = ".72";
+      });
+
+      button.setAttribute("aria-pressed", "true");
+      button.style.borderColor = "#0F3D2E";
+      button.style.opacity = "1";
+    });
+
+    thumbnails.appendChild(button);
+  });
+}
+
+window.renderPrepagoGallery = renderPrepagoGallery;
+
+
+/* =========================
    PREPAGO SUMMARY (UI)
 ========================= */
 
@@ -127,16 +215,11 @@ document.addEventListener("click", async (e) => {
     localStorage.setItem("checkout_single", JSON.stringify([producto]));
 
     const modal = document.getElementById("modal-prepago");
-    const preview = document.getElementById("prepago-img-preview");
 
     if (!modal) return;
 
-    if (preview) {
-      preview.src = producto.img;
-      preview.alt = producto.titulo;
-    }
-
     resetPrepagoState();
+    renderPrepagoGallery([producto]);
     renderPrepagoSummary();
     openModal(modal);
 
