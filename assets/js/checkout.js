@@ -12,6 +12,13 @@ function getCheckoutCart() {
   return JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
 }
 
+function getCartSubtotal(cart) {
+  return (Array.isArray(cart) ? cart : []).reduce((total, item) => {
+    const qty = Number(item?.qty) || 1;
+    return total + (Number(item?.precio) || 0) * qty;
+  }, 0);
+}
+
 function getSelectedShippingZone() {
   return document.querySelector(
     'input[name="shipping_zone"]:checked'
@@ -39,6 +46,81 @@ function resetPrepagoState() {
 
   if (rgpdCheck) rgpdCheck.checked = false;
   if (peninsulaRadio) peninsulaRadio.checked = true;
+}
+
+
+/* =========================
+   SHIPPING OPTIONS UI
+========================= */
+
+function syncShippingZoneOptions(cart) {
+  const subtotal = getCartSubtotal(cart);
+  const freeFrom = Number(window.SHIPPING_CONFIG?.freeFrom) || 120;
+  const hasFreeShipping = subtotal >= freeFrom;
+
+  const peninsulaOption = document.querySelector('[data-shipping-option="peninsula"]');
+  const balearesOption = document.querySelector('[data-shipping-option="baleares"]');
+  const canariasOption = document.querySelector('[data-shipping-option="canarias"]');
+  const peninsulaRadio = peninsulaOption?.querySelector('input[name="shipping_zone"]');
+  const peninsulaName = peninsulaOption?.querySelector(".shipping-zone-name");
+  const peninsulaPrice = peninsulaOption?.querySelector(".shipping-zone-price");
+  const quoteRadio = document.querySelector('input[name="shipping_zone"][value="quote"]');
+  const helpEl = document.querySelector(".shipping-zone-help");
+
+  if (!peninsulaOption || !balearesOption || !canariasOption || !peninsulaRadio) {
+    return;
+  }
+
+  if (hasFreeShipping) {
+    balearesOption.style.display = "none";
+    canariasOption.style.display = "none";
+
+    if (peninsulaName) {
+      peninsulaName.textContent = isEN ? "Spain" : "España";
+    }
+
+    if (peninsulaPrice) {
+      peninsulaPrice.textContent = isEN ? "Free" : "Gratis";
+    }
+
+    if (helpEl) {
+      helpEl.textContent = isEN
+        ? "Free shipping within Spain."
+        : "Envío gratis en España.";
+    }
+
+    if (!quoteRadio?.checked) {
+      peninsulaRadio.checked = true;
+    }
+
+  } else {
+    balearesOption.style.display = "flex";
+    canariasOption.style.display = "flex";
+
+    if (peninsulaName) {
+      peninsulaName.textContent = isEN ? "Mainland Spain" : "Península";
+    }
+
+    if (peninsulaPrice) {
+      peninsulaPrice.textContent = isEN ? "€8.50" : "8,50 €";
+    }
+
+    if (helpEl) {
+      helpEl.textContent = isEN
+        ? "Free shipping on orders from €120."
+        : "Envío gratis a partir de 120 €.";
+    }
+  }
+}
+
+function renderShippingQuoteMessage(messageEl) {
+  if (!messageEl) return;
+
+  const href = isEN ? "/en/#encargo" : "/#encargo";
+
+  messageEl.innerHTML = isEN
+    ? `For Ceuta, Melilla and destinations outside Spain, please contact us before placing the order. <a href="${href}">Write to us here</a>.`
+    : `Para Ceuta, Melilla y envíos fuera de España, consúltanos antes de realizar el pedido. <a href="${href}">Escríbenos aquí</a>.`;
 }
 
 
@@ -139,6 +221,8 @@ function renderPrepagoSummary(){
   const cart = getCheckoutCart();
   if (!cart.length) return;
 
+  syncShippingZoneOptions(cart);
+
   const shippingZone = getSelectedShippingZone();
   const totales = calcularTotales(cart, shippingZone);
 
@@ -154,7 +238,7 @@ function renderPrepagoSummary(){
   if (totales.shipping === null) {
     if (shippingEl) shippingEl.textContent = TEXTS.checkout.shippingQuote;
     if (totalEl) totalEl.textContent = "—";
-    if (messageEl) messageEl.textContent = TEXTS.checkout.shippingQuoteMessage;
+    renderShippingQuoteMessage(messageEl);
   } else {
     if (shippingEl) {
       shippingEl.textContent =
@@ -164,7 +248,7 @@ function renderPrepagoSummary(){
     }
 
     if (totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
-    if (messageEl) messageEl.textContent = "";
+    if (messageEl) messageEl.innerHTML = "";
   }
 
   syncPaymentButton();
