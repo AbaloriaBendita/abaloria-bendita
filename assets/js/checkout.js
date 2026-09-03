@@ -116,11 +116,9 @@ function syncShippingZoneOptions(cart) {
 function renderShippingQuoteMessage(messageEl) {
   if (!messageEl) return;
 
-  const href = isEN ? "/en/#encargo" : "/#encargo";
-
   messageEl.innerHTML = isEN
-    ? `For Ceuta, Melilla and destinations outside Spain, please contact us before placing the order. <a href="${href}">Write to us here</a>.`
-    : `Para Ceuta, Melilla y envíos fuera de España, consúltanos antes de realizar el pedido. <a href="${href}">Escríbenos aquí</a>.`;
+    ? 'For Ceuta, Melilla and destinations outside Spain, please contact us before placing the order. <a href="#" class="js-shipping-inquiry">Open the enquiry form</a>.'
+    : 'Para Ceuta, Melilla y envíos fuera de España, consúltanos antes de realizar el pedido. <a href="#" class="js-shipping-inquiry">Abrir formulario de consulta</a>.';
 }
 
 
@@ -278,6 +276,25 @@ document.addEventListener("change", (e) => {
 ========================= */
 
 document.addEventListener("click", async (e) => {
+
+  /* =========================
+     CONSULTA DE ENVÍO
+  ========================= */
+
+  const shippingInquiryBtn = e.target.closest(".js-shipping-inquiry");
+
+  if (shippingInquiryBtn) {
+    e.preventDefault();
+
+    const cart = getCheckoutCart();
+
+    if (typeof window.openShippingInquiryModal === "function") {
+      window.openShippingInquiryModal(cart);
+    }
+
+    return;
+  }
+
 
   /* =========================
      ABRIR MODAL PREPAGO
