@@ -12,6 +12,35 @@ function getCheckoutCart() {
   return JSON.parse(localStorage.getItem("abaloria_cart") || "[]");
 }
 
+function getSelectedShippingZone() {
+  return document.querySelector(
+    'input[name="shipping_zone"]:checked'
+  )?.value || "peninsula";
+}
+
+function syncPaymentButton() {
+  const payBtn = document.getElementById("go-to-payment");
+  const rgpdCheck = document.getElementById("rgpd-check");
+  const shippingZone = getSelectedShippingZone();
+
+  if (!payBtn) return;
+
+  const acceptedRgpd = Boolean(rgpdCheck?.checked);
+  const requiresQuote = shippingZone === "quote";
+
+  payBtn.disabled = !acceptedRgpd || requiresQuote;
+}
+
+function resetPrepagoState() {
+  const rgpdCheck = document.getElementById("rgpd-check");
+  const peninsulaRadio = document.querySelector(
+    'input[name="shipping_zone"][value="peninsula"]'
+  );
+
+  if (rgpdCheck) rgpdCheck.checked = false;
+  if (peninsulaRadio) peninsulaRadio.checked = true;
+}
+
 
 /* =========================
    PREPAGO SUMMARY (UI)
@@ -22,37 +51,51 @@ function renderPrepagoSummary(){
   const cart = getCheckoutCart();
   if (!cart.length) return;
 
-  const totales = calcularTotales(cart);
+  const shippingZone = getSelectedShippingZone();
+  const totales = calcularTotales(cart, shippingZone);
 
   const subtotalEl = document.querySelector(".prepago-subtotal");
   const ivaEl = document.querySelector(".prepago-iva");
   const shippingEl = document.querySelector(".prepago-shipping");
   const totalEl = document.querySelector(".prepago-total");
+  const messageEl = document.getElementById("shipping-zone-message");
 
   if (subtotalEl) subtotalEl.textContent = totales.subtotal.toFixed(2) + " €";
   if (ivaEl) ivaEl.textContent = totales.iva.toFixed(2) + " €";
 
-  if (shippingEl){
-    shippingEl.textContent =
-      totales.shipping === 0 ? TEXTS.cart.shippingFree : totales.shipping.toFixed(2) + " €";
+  if (totales.shipping === null) {
+    if (shippingEl) shippingEl.textContent = TEXTS.checkout.shippingQuote;
+    if (totalEl) totalEl.textContent = "—";
+    if (messageEl) messageEl.textContent = TEXTS.checkout.shippingQuoteMessage;
+  } else {
+    if (shippingEl) {
+      shippingEl.textContent =
+        totales.shipping === 0
+          ? TEXTS.cart.shippingFree
+          : totales.shipping.toFixed(2) + " €";
+    }
+
+    if (totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
+    if (messageEl) messageEl.textContent = "";
   }
 
-  if (totalEl) totalEl.textContent = totales.total.toFixed(2) + " €";
+  syncPaymentButton();
 }
+
+window.renderPrepagoSummary = renderPrepagoSummary;
 
 
 /* =========================
-   RGPD CHECK (DELEGADO)
+   RGPD + SHIPPING (DELEGADO)
 ========================= */
 
 document.addEventListener("change", (e) => {
 
-  if (e.target.id === "rgpd-check") {
-    const btn = document.getElementById("go-to-payment");
-
-    if (btn) {
-      btn.disabled = !e.target.checked;
-    }
+  if (
+    e.target.id === "rgpd-check" ||
+    e.target.name === "shipping_zone"
+  ) {
+    renderPrepagoSummary();
   }
 
 });
@@ -80,7 +123,6 @@ document.addEventListener("click", async (e) => {
       qty: 1
     };
 
-    /* guardar modo checkout */
     localStorage.setItem("checkout_mode", "single");
     localStorage.setItem("checkout_single", JSON.stringify([producto]));
 
@@ -94,6 +136,7 @@ document.addEventListener("click", async (e) => {
       preview.alt = producto.titulo;
     }
 
+    resetPrepagoState();
     renderPrepagoSummary();
     openModal(modal);
 
@@ -112,65 +155,73 @@ document.addEventListener("click", async (e) => {
     if (payBtn.disabled) return;
 
     const cart = getCheckoutCart();
+    const shippingZone = getSelectedShippingZone();
 
     if (!cart.length) {
-     alert(TEXTS.checkout.empty);
+      alert(TEXTS.checkout.empty);
       return;
     }
 
-     // 🔥 TRACKING BEGIN CHECKOUT
-window.dataLayer = window.dataLayer || [];
+    if (shippingZone === "quote") {
+      alert(TEXTS.checkout.shippingQuoteMessage);
+      return;
+    }
 
-const total = cart.reduce((acc, item) => acc + item.precio * (item.qty || 1), 0);
+    window.dataLayer = window.dataLayer || [];
 
-const lang = typeof isEN !== "undefined" && isEN ? "en" : "es";
-const mode = localStorage.getItem("checkout_mode") || "cart";
+    const total = cart.reduce((acc, item) => acc + item.precio * (item.qty || 1), 0);
+    const lang = typeof isEN !== "undefined" && isEN ? "en" : "es";
+    const mode = localStorage.getItem("checkout_mode") || "cart";
 
-window.dataLayer.push({
-  event: 'begin_checkout',
-  value: total,
-  currency: 'EUR',
-  items: cart.length,
-  checkout_type: mode,
-  lang: lang
-});
+    window.dataLayer.push({
+      event: 'begin_checkout',
+      value: total,
+      currency: 'EUR',
+      items: cart.length,
+      checkout_type: mode,
+      shipping_zone: shippingZone,
+      lang: lang
+    });
 
     payBtn.innerText = TEXTS.checkout.redirecting;
     payBtn.disabled = true;
 
     try {
 
-       console.log("🧾 CHECKOUT SINGLE:", cart);
+      console.log("🧾 CHECKOUT:", cart, shippingZone);
+
       const res = await fetch("https://pago-square.hola-38b.workers.dev", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
-  cart: cart.map(item => ({
-    id: item.id,
-    titulo: item.titulo,
-    precio: item.precio,
-    qty: item.qty || 1,
-    img: item.img
-  }))
-})
+          shipping_zone: shippingZone,
+          cart: cart.map(item => ({
+            id: item.id,
+            titulo: item.titulo,
+            precio: item.precio,
+            qty: item.qty || 1,
+            img: item.img
+          }))
+        })
       });
 
       const text = await res.text();
       const data = JSON.parse(text);
 
       if (!res.ok || !data.payment_url) {
-        throw new Error();
+        throw new Error(data?.message || data?.error || "Checkout error");
       }
 
       window.location.href = data.payment_url;
 
-    } catch {
+    } catch (err) {
 
+      console.error("❌ ERROR CHECKOUT:", err);
       alert(TEXTS.checkout.error);
-      payBtn.disabled = false;
       payBtn.innerText = isEN
-  ? "Continue purchase"
-  : "Continuar compra";
+        ? "Continue purchase"
+        : "Continuar compra";
+      syncPaymentButton();
     }
 
     return;
@@ -190,6 +241,3 @@ window.dataLayer.push({
   }
 
 });
-
-
-
