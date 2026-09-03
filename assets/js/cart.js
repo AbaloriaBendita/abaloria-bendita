@@ -303,7 +303,6 @@ document.addEventListener("click",(e)=>{
     closeCart();
 
     const modal = document.getElementById("modal-prepago");
-    const preview = document.getElementById("prepago-img-preview");
     const rgpdCheck = document.getElementById("rgpd-check");
     const peninsulaRadio = document.querySelector(
       'input[name="shipping_zone"][value="peninsula"]'
@@ -314,15 +313,12 @@ document.addEventListener("click",(e)=>{
       return;
     }
 
-    if (preview) {
-      preview.src = cart[0]?.img || "";
-      preview.alt = cart.length === 1
-        ? cart[0]?.titulo || ""
-        : "Productos del carrito";
-    }
-
     if (rgpdCheck) rgpdCheck.checked = false;
     if (peninsulaRadio) peninsulaRadio.checked = true;
+
+    if (typeof renderPrepagoGallery === "function") {
+      renderPrepagoGallery(cart);
+    }
 
     if (typeof renderPrepagoSummary === "function") {
       renderPrepagoSummary();
