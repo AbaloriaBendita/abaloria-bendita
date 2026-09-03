@@ -1,3 +1,117 @@
+<style>
+  #modal-prepago .modal-box{
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+  }
+
+  #modal-prepago .modal-image img{
+    max-height: 190px;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  #prepago-thumbnails{
+    display:none;
+    gap:8px;
+    overflow-x:auto;
+    margin:8px 0 14px;
+    padding:2px 0 4px;
+  }
+
+  .shipping-zone-fieldset{
+    border:0;
+    padding:0;
+    margin:0 0 16px;
+  }
+
+  .shipping-zone-legend{
+    font-weight:800;
+    margin-bottom:4px;
+  }
+
+  .shipping-zone-help{
+    margin:0 0 10px;
+    font-size:12px;
+    opacity:.65;
+  }
+
+  .shipping-zone-list{
+    display:grid;
+    gap:7px;
+  }
+
+  .shipping-zone-option{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 12px;
+    border:1px solid rgba(0,0,0,.12);
+    border-radius:12px;
+    background:#fff;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, box-shadow .15s ease;
+  }
+
+  .shipping-zone-option:hover{
+    border-color:rgba(15,61,46,.35);
+  }
+
+  .shipping-zone-option:has(input:checked){
+    border-color:#0F3D2E;
+    background:rgba(15,61,46,.05);
+    box-shadow:0 0 0 1px rgba(15,61,46,.08);
+  }
+
+  .shipping-zone-main{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    min-width:0;
+  }
+
+  .shipping-zone-option input{
+    width:16px;
+    height:16px;
+    margin:2px 0 0;
+    flex:0 0 auto;
+    accent-color:#0F3D2E;
+  }
+
+  .shipping-zone-name{
+    font-size:14px;
+    line-height:1.25;
+  }
+
+  .shipping-zone-price{
+    font-size:13px;
+    font-weight:700;
+    white-space:nowrap;
+    flex:0 0 auto;
+  }
+
+  #shipping-zone-message{
+    margin:-4px 0 14px;
+    font-size:13px;
+    line-height:1.4;
+    color:#9b2c22;
+  }
+
+  @media (max-width:540px){
+    #modal-prepago .modal-image img{
+      max-height:160px;
+    }
+
+    .shipping-zone-option{
+      padding:9px 10px;
+    }
+
+    .shipping-zone-name{
+      font-size:13px;
+    }
+  }
+</style>
+
 <div class="modal" id="modal-prepago" aria-hidden="true">
 
   <div class="modal-backdrop"></div>
@@ -9,12 +123,7 @@
       <img id="prepago-img-preview" src="" alt="">
     </div>
 
-    <!-- Image selector for multi-product orders -->
-    <div
-      id="prepago-thumbnails"
-      aria-label="Products in the order"
-      style="display:none;gap:8px;overflow-x:auto;margin:10px 0 4px;padding:2px 0 4px;"
-    ></div>
+    <div id="prepago-thumbnails" aria-label="Products in the order"></div>
 
     <p class="modal-copy">
       <strong>Confirm your order</strong><br>
@@ -23,43 +132,46 @@
 
     <div class="modal-form">
 
-      <fieldset style="border:0;padding:0;margin:0 0 18px;">
-        <legend style="font-weight:800;margin-bottom:10px;">Shipping destination</legend>
+      <fieldset class="shipping-zone-fieldset">
+        <legend class="shipping-zone-legend">Shipping destination</legend>
+        <p class="shipping-zone-help">Free shipping on orders from €120.</p>
 
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="shipping_zone" value="peninsula" checked>
-            <span>Mainland Spain</span>
-          </span>
-          <small>€8.50</small>
-        </label>
+        <div class="shipping-zone-list">
+          <label class="shipping-zone-option">
+            <span class="shipping-zone-main">
+              <input type="radio" name="shipping_zone" value="peninsula" checked>
+              <span class="shipping-zone-name">Mainland Spain</span>
+            </span>
+            <span class="shipping-zone-price">€8.50</span>
+          </label>
 
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="shipping_zone" value="baleares">
-            <span>Balearic Islands</span>
-          </span>
-          <small>€11.50</small>
-        </label>
+          <label class="shipping-zone-option">
+            <span class="shipping-zone-main">
+              <input type="radio" name="shipping_zone" value="baleares">
+              <span class="shipping-zone-name">Balearic Islands</span>
+            </span>
+            <span class="shipping-zone-price">€11.50</span>
+          </label>
 
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="shipping_zone" value="canarias">
-            <span>Canary Islands</span>
-          </span>
-          <small>€14.50</small>
-        </label>
+          <label class="shipping-zone-option">
+            <span class="shipping-zone-main">
+              <input type="radio" name="shipping_zone" value="canarias">
+              <span class="shipping-zone-name">Canary Islands</span>
+            </span>
+            <span class="shipping-zone-price">€14.50</span>
+          </label>
 
-        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;">
-          <span style="display:flex;align-items:center;gap:8px;">
-            <input type="radio" name="shipping_zone" value="quote">
-            <span>Ceuta, Melilla or outside Spain</span>
-          </span>
-          <small>Contact us</small>
-        </label>
+          <label class="shipping-zone-option">
+            <span class="shipping-zone-main">
+              <input type="radio" name="shipping_zone" value="quote">
+              <span class="shipping-zone-name">Ceuta, Melilla or outside Spain</span>
+            </span>
+            <span class="shipping-zone-price">Contact us</span>
+          </label>
+        </div>
       </fieldset>
 
-      <p id="shipping-zone-message" aria-live="polite" style="margin:-4px 0 16px;font-size:13px;line-height:1.4;color:#9b2c22;"></p>
+      <p id="shipping-zone-message" aria-live="polite"></p>
 
       <div class="prepago-summary">
 
