@@ -15,10 +15,46 @@
       Desglose de tu compra.
     </p>
 
-    <!-- SIN FORM (ya no hace falta) -->
     <div class="modal-form">
 
-      <!-- 🔥 RESUMEN (esto está perfecto) -->
+      <fieldset style="border:0;padding:0;margin:0 0 18px;">
+        <legend style="font-weight:800;margin-bottom:10px;">Destino del envío</legend>
+
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="shipping_zone" value="peninsula" checked>
+            <span>Península</span>
+          </span>
+          <small>8,50 €</small>
+        </label>
+
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="shipping_zone" value="baleares">
+            <span>Baleares</span>
+          </span>
+          <small>11,50 €</small>
+        </label>
+
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;cursor:pointer;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="shipping_zone" value="canarias">
+            <span>Canarias</span>
+          </span>
+          <small>14,50 €</small>
+        </label>
+
+        <label style="display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;">
+          <span style="display:flex;align-items:center;gap:8px;">
+            <input type="radio" name="shipping_zone" value="quote">
+            <span>Ceuta, Melilla o fuera de España</span>
+          </span>
+          <small>Consultar</small>
+        </label>
+      </fieldset>
+
+      <p id="shipping-zone-message" aria-live="polite" style="margin:-4px 0 16px;font-size:13px;line-height:1.4;color:#9b2c22;"></p>
+
       <div class="prepago-summary">
 
         <div class="cart-row">
@@ -42,18 +78,16 @@
         </div>
       </div>
 
-      <!-- RGPD -->
       <div class="rgpd-group">
         <div class="rgpd-row">
           <input type="checkbox" id="rgpd-check">
           <label>
             Aceptar nuestra 
-  <a href="/privacidad.html" target="_blank">política de privacidad.
-            </a>
+            <a href="/privacidad.html" target="_blank">política de privacidad.</a>
           </label>
         </div>
       </div>
-      <!-- BOTÓN -->
+
       <button id="go-to-payment" class="cta-main" type="button" disabled>
         Continuar compra
       </button>
