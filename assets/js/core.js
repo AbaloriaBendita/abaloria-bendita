@@ -9,7 +9,7 @@ const isEN = window.location.pathname.startsWith("/en");
 ========================= */
 
 window.SHIPPING_CONFIG = {
-  freeFrom: 120,
+  freeFrom: 150,
   rates: {
     peninsula: 8.5,
     baleares: 11.5,
@@ -45,8 +45,8 @@ window.TEXTS = {
 
     legal: {
       shipping: isEN
-        ? "Free shipping on orders from €120."
-        : "Envío gratis a partir de 120 €.",
+        ? "Free shipping on orders from €150."
+        : "Envío gratis a partir de 150 €.",
       iva: isEN ? "VAT included." : "IVA incluido."
     }
   },
@@ -76,15 +76,13 @@ window.TEXTS = {
 
 /* =========================
    SHIPPING COPY SYNC
-   Corrige textos legacy de la home mientras
-   el umbral global está centralizado en 120 €.
 ========================= */
 
 function syncLegacyShippingCopy() {
   document.querySelectorAll(".form-intro").forEach(el => {
     el.innerHTML = el.innerHTML
-      .replace("a partir de 150€", "a partir de 120€")
-      .replace("over €150", "from €120");
+      .replace("a partir de 120€", "a partir de 150€")
+      .replace("from €120", "from €150");
   });
 }
 
@@ -333,10 +331,8 @@ function forceHeaderRender() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  // SHIPPING COPY LEGACY
   syncLegacyShippingCopy();
 
-  // HEADER
   loadPartial("#header-placeholder", isEN ? "/partials/header-en.html" : "/partials/header.html", () => {
     initHeader();
     forceHeaderRender();
@@ -346,16 +342,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // FOOTER
   loadPartial("#footer-placeholder", isEN ? "/partials/footer-en.html" : "/partials/footer.html");
-
-  // CART
   loadPartial("#cart-placeholder", isEN ? "/partials/cart-en.html" : "/partials/cart.html");
-
-  // MODAL ENCARGO
   loadPartial("#modal-encargo-placeholder", isEN ? "/partials/modal-encargo-en.html" : "/partials/modal-encargo.html");
-
-  // MODAL PREPAGO
   loadPartial("#modal-prepago-placeholder", isEN ? "/partials/modal-prepago-en.html" : "/partials/modal-prepago.html");
 
 });
