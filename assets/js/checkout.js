@@ -55,7 +55,7 @@ function resetPrepagoState() {
 
 function syncShippingZoneOptions(cart) {
   const subtotal = getCartSubtotal(cart);
-  const freeFrom = Number(window.SHIPPING_CONFIG?.freeFrom) || 120;
+  const freeFrom = Number(window.SHIPPING_CONFIG?.freeFrom) || 150;
   const hasFreeShipping = subtotal >= freeFrom;
 
   const peninsulaOption = document.querySelector('[data-shipping-option="peninsula"]');
@@ -107,8 +107,8 @@ function syncShippingZoneOptions(cart) {
 
     if (helpEl) {
       helpEl.textContent = isEN
-        ? "Free shipping on orders from €120."
-        : "Envío gratis a partir de 120 €.";
+        ? `Free shipping on orders from €${freeFrom}.`
+        : `Envío gratis a partir de ${freeFrom} €.`;
     }
   }
 }
