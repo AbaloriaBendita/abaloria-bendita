@@ -1,0 +1,8 @@
+{
+  "id": "pendientes-01",
+  "titulo": "Animal earrings",
+  "precio": 34,
+  "estado": "disponible",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Available. The animals are made of semi-precious stones. Option to order a matching choker."
+}
