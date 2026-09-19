@@ -1,0 +1,8 @@
+{
+  "id": "pendientes-01",
+  "titulo": "Pendientes de animales",
+  "precio": 34,
+  "estado": "disponible",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponible. Los animales son de piedras semipreciosas. Posibilidad de encargar gargantilla compañera."
+}

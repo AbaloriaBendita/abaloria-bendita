@@ -1,0 +1,8 @@
+{
+  "id": "broches-02",
+  "titulo": "Gildas",
+  "precio": 45,
+  "estado": "disponible",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Disponibles en diferentes modelos. Piedras naturales, ágata y resina."
+}
