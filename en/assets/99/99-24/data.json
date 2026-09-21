@@ -2,7 +2,7 @@
   "id": "99-24",
   "titulo": "Wood and resin",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
   "nota_disponibilidad": "Made to order only.",
   "permite_variaciones": true
 }
