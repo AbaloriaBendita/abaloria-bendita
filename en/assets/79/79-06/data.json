@@ -2,6 +2,7 @@
   "id": "79-06",
   "titulo": "Little Bird",
   "precio": 79,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available with other similar birds or by changing the animal. Wood, ceramic, glass and resin."
 }

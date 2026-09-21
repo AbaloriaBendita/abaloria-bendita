@@ -2,6 +2,7 @@
   "id": "99-01",
   "titulo": "Natural agate, semi-precious stones, glass and resin",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Made to order only. Stone colors may vary."
 }

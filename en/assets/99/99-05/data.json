@@ -2,6 +2,7 @@
   "id": "99-05",
   "titulo": "Bone, horn and wood",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available. Option to change the cord color."
 }

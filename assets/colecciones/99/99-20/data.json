@@ -2,6 +2,7 @@
   "id": "99-20",
   "titulo": "Hueso con microincrustaciones de resina inyectada",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Disponible en otros colores y combinaciones de piedras. Color rosa, verde oscuro, verde claro, azul claro, beige y granate."
 }

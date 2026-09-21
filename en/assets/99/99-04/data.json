@@ -2,6 +2,7 @@
   "id": "99-04",
   "titulo": "Chameleon",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Option to order it with a different chameleon. Ask us!"
 }

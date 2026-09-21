@@ -2,6 +2,7 @@
   "id": "99-20",
   "titulo": "Bone with micro-inlays of injected resin",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available in other colors and stone combinations: pink, dark green, light green, light blue, beige and burgundy."
 }

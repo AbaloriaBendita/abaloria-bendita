@@ -2,6 +2,7 @@
   "id": "99-03",
   "titulo": "Melchior, Gaspar and Balthazar",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Semi-precious stones, glass and ceramic. Available to order."
 }

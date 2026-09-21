@@ -2,6 +2,7 @@
   "id": "79-15",
   "titulo": "Wood, Italian resin and cord",
   "precio": 79,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available in other colors. Yellow, blue, pink and orange."
 }
