@@ -2,6 +2,7 @@
   "id": "99-16",
   "titulo": "Turtle Necklace",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available with stone variations. Ask us!"
 }

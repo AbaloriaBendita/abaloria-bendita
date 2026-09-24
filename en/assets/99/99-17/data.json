@@ -2,6 +2,7 @@
   "id": "99-17",
   "titulo": "Teardrop Necklace",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available with slight color variations. Please ask for details."
 }

@@ -2,6 +2,7 @@
   "id": "99-04",
   "titulo": "Camaleón",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Posibilidad de encargarlo con otro camaleón diferente. Pregúntanos!"
 }

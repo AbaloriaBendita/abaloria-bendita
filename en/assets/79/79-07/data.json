@@ -2,7 +2,7 @@
   "id": "79-07",
   "titulo": "Tibetan ceramic",
   "precio": 79,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available in other similar colors. Central piece in handmade Tibetan ceramic, lacquered seeds, resin and lacquered steel."
 }
-

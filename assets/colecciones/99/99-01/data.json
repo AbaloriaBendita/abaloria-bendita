@@ -2,6 +2,7 @@
   "id": "99-01",
   "titulo": "Agata natural, piedras semipreciosas, cristal y resina",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Solo por encargo. Puede cambiar el color de las piedras."
 }

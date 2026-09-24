@@ -2,6 +2,7 @@
   "id": "99-08",
   "titulo": "Perfect Combination Necklace",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Available with color variations. Ask us!"
 }

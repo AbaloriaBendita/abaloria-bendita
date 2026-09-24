@@ -1,0 +1,8 @@
+{
+  "id": "broches-01",
+  "titulo": "Fish and prawns",
+  "precio": 35,
+  "estado": "disponible",
+  "permite_variaciones": true,
+  "nota_disponibilidad": "Available in different designs."
+}

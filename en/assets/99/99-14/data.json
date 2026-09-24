@@ -2,6 +2,7 @@
   "id": "99-14",
   "titulo": "Pig Necklace",
   "precio": 99,
-  "estado": "variaciones",
+  "estado": "disponible",
+  "permite_variaciones": true,
   "nota_disponibilidad": "Also available with kangaroo, bear, elephant and horse."
 }
