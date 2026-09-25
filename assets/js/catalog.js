@@ -30,7 +30,6 @@ const BASE = `${window.location.origin}/assets/colecciones/${slug}/`;
 
 const PRICE_CLEANUP = {
   "55-24": { x: .67, y: .79, w: .33, h: .21 },
-  "55-25": { x: .69, y: .80, w: .31, h: .20 },
   "55-26": { x: .66, y: .79, w: .34, h: .21 },
   "55-27": { x: .74, y: .80, w: .26, h: .20 },
   "55-28": { x: .31, y: .88, w: .33, h: .12 },
