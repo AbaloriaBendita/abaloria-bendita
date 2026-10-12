@@ -326,12 +326,46 @@ function forceHeaderRender() {
 
 
 /* =========================
+   TURNSTILE · PROTECCIÓN FORMULARIOS DE ENCARGO
+   Site key pública; la verificación real corresponde al Worker.
+========================= */
+
+function renderEncargoTurnstile() {
+  if (!window.turnstile) return;
+  document.querySelectorAll(".abaloria-turnstile").forEach(el => {
+    if (el.dataset.rendered === "true") return;
+    el.dataset.rendered = "true";
+    try {
+      window.turnstile.render(el, { sitekey: el.dataset.sitekey });
+    } catch (err) {
+      el.dataset.rendered = "false";
+      console.error("Turnstile render error:", err);
+    }
+  });
+}
+
+function loadEncargoTurnstile() {
+  if (document.getElementById("abaloria-turnstile-script")) {
+    renderEncargoTurnstile();
+    return;
+  }
+  window.abaloriaTurnstileReady = renderEncargoTurnstile;
+  const script = document.createElement("script");
+  script.id = "abaloria-turnstile-script";
+  script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit&onload=abaloriaTurnstileReady";
+  script.async = true;
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+/* =========================
    INIT GLOBAL
 ========================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
   syncLegacyShippingCopy();
+  loadEncargoTurnstile();
 
   loadPartial("#header-placeholder", isEN ? "/partials/header-en.html" : "/partials/header.html", () => {
     initHeader();
@@ -344,7 +378,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   loadPartial("#footer-placeholder", isEN ? "/partials/footer-en.html" : "/partials/footer.html");
   loadPartial("#cart-placeholder", isEN ? "/partials/cart-en.html" : "/partials/cart.html");
-  loadPartial("#modal-encargo-placeholder", isEN ? "/partials/modal-encargo-en.html" : "/partials/modal-encargo.html");
+  loadPartial("#modal-encargo-placeholder", isEN ? "/partials/modal-encargo-en.html" : "/partials/modal-encargo.html", renderEncargoTurnstile);
   loadPartial("#modal-prepago-placeholder", isEN ? "/partials/modal-prepago-en.html" : "/partials/modal-prepago.html");
 
 });
