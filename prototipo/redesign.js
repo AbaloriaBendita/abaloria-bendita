@@ -4,6 +4,9 @@ function adaptPreviewNavigation(){
  const en=document.documentElement.lang==="en";
  const header=document.querySelector(".site-header");
  if(!header)return false;
+ const syncHeight=()=>document.body.style.setProperty("--preview-header-height",Math.ceil(header.getBoundingClientRect().height)+"px");
+ syncHeight();
+ if(!header.dataset.previewHeightBound){header.dataset.previewHeightBound="1";window.addEventListener("resize",syncHeight,{passive:true});if(typeof ResizeObserver!=="undefined")new ResizeObserver(syncHeight).observe(header)}
  header.querySelectorAll('a[href="/#colecciones"],a[href="/en/#collections"]').forEach(a=>a.href="#redesign-catalog");
  header.querySelectorAll('a[href="/"]').forEach(a=>a.href="/prototipo/");
  header.querySelectorAll('a[href="/en/"]').forEach(a=>a.href="/prototipo/en/");
