@@ -30,7 +30,7 @@ const EN=document.documentElement.lang==="en";
 const names=EN?["All","55 €","79 €","99 €","Special","Earrings","Brooches","Rings"]:["Todas","55 €","79 €","99 €","Especiales","Pendientes","Broches","Anillos"];
 const groups=["all","55","79","99","especiales","pendientes","broches","anillos"];
 const bases=["55","79","99","especiales","pendientes-broches-anillos"];
-const featured=["79-60","79-59","99-01","55-34"]; // Revisión editorial pendiente
+const featured=[]; // Prioridades editoriales pendientes de validar sobre fotografías reales
 const grid=document.getElementById("redesign-grid"),filter=document.getElementById("redesign-filters"),sort=document.getElementById("redesign-sort"),more=document.getElementById("redesign-more"),count=document.getElementById("redesign-count");
 if(!grid)return;
 let active="all",limit=12,items=[];
@@ -55,6 +55,7 @@ function card(d){
  img.innerHTML='<span class="status-badge '+state+'">'+(available?(EN?"Available":"Disponible"):variation?(EN?"Variations":"Variaciones"):(EN?"Sold":"Vendida"))+'</span><span class="price-badge">'+Number(d.precio||0)+'€</span>';
  const pic=document.createElement("img");pic.src=d.main;pic.alt=d.titulo||"";pic.loading="lazy";pic.decoding="async";img.append(pic);
  const hover=document.createElement("img");hover.src=d.hover;hover.alt="";hover.className="hover-img";hover.loading="lazy";hover.setAttribute("aria-hidden","true");hover.addEventListener("error",()=>{hover.remove();img.classList.remove("has-swipe")});img.classList.add("has-swipe");img.append(hover);
+ pic.addEventListener("error",()=>{if(!pic.dataset.fallback){pic.dataset.fallback="1";pic.src=d.hover;}else{card.remove();console.warn("Missing product images:",d.id)}});
  const body=document.createElement("div");body.className="piece-body";
  body.innerHTML='<h2>'+title+'</h2>'+(note?'<p class="piece-note">'+note+'</p>':'');
  if(available){const buttons=document.createElement("div");buttons.className="piece-ctas";buttons.innerHTML='<button type="button" class="piece-cta js-prepago">'+(EN?"Buy now":"Comprar ahora")+'</button><button type="button" class="piece-cta-outline js-add-cart">'+(EN?"Add to cart":"Añadir carrito")+'</button>';body.append(buttons)}
