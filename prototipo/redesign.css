@@ -1,72 +1,66 @@
-/* Rediseño aislado: solo cargado por /prototipo/ */
-.collections-home[hidden]{display:none!important}
-.redesign-hero{padding:100px 24px 26px;background:#f9f6f1}
-.redesign-hero-inner{max-width:1160px;margin:auto;display:grid;grid-template-columns:1fr 0.85fr;gap:38px;align-items:center}
-.redesign-hero-inner img{width:100%;height:340px;object-fit:cover;border-radius:18px}
-.redesign-eyebrow{font-size:11px;letter-spacing:.15em;font-weight:800;color:#735f5b}
-.redesign-hero h1{font:800 clamp(36px,5vw,66px)/1.07 "Plus Jakarta Sans",sans-serif;letter-spacing:-.04em;margin:16px 0}
-.redesign-hero p{font-size:17px;max-width:420px;line-height:1.55}
-.redesign-hero a{display:inline-flex;margin-top:10px;font-weight:800;border-bottom:2px solid #c43a2b;padding-bottom:5px}
-.redesign-catalog{max-width:1200px;margin:0 auto;padding:52px 24px 55px;scroll-margin-top:80px}
-.redesign-catalog-head h2{font:800 clamp(29px,3vw,44px)/1.14 "Plus Jakarta Sans",sans-serif;margin:10px 0}
-.redesign-catalog-head p{color:#666;margin:0 0 22px}
-.redesign-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 12px;flex-wrap:wrap}
-.redesign-filters{display:flex;gap:9px;flex-wrap:wrap}
-.redesign-filters button{border:1px solid #ddd;border-radius:999px;background:white;padding:9px 15px;font:600 13px "Inter",sans-serif;cursor:pointer}
-.redesign-filters button[aria-pressed=true]{background:#0f3d2e;color:white;border-color:#0f3d2e}
-.redesign-sort-label{display:flex;align-items:center;gap:9px;font-size:13px}
-.redesign-sort-label select{border-radius:999px;padding:9px 12px;font-size:13px}
-.redesign-count{font-size:13px;color:#777;min-height:25px;margin-bottom:12px}
-.redesign-catalog #redesign-grid{max-width:none;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.redesign-catalog .piece-card{min-width:0}
-.redesign-actions{text-align:center;margin:30px 0 10px}
-.redesign-actions button{border:0;border-radius:999px;background:#6fa8d6;color:white;padding:15px 28px;font-weight:800;cursor:pointer}
-.redesign-actions button[hidden]{display:none}
-.redesign-demo{text-align:center;color:#777;font-size:12px}
-@media(max-width:768px){.redesign-hero{padding:82px 16px 16px}.redesign-hero-inner{grid-template-columns:1fr;gap:20px}.redesign-hero-inner img{height:235px;order:-1}.redesign-hero h1{font-size:35px}.redesign-catalog{padding:35px 14px}.redesign-filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:10px}.redesign-filters button{flex:none;white-space:nowrap}.redesign-catalog #redesign-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.redesign-sort-label{margin-left:auto}.redesign-catalog .piece-body{padding:12px 8px}}
-
-/* =========================
-  ABALORIA HERO V2 — ISOLATED PREVIEW
-  Use contain to protect the portrait photo from aggressive cropping.
-========================= */
-.redesign-preview{--preview-red:#C43A2B;--preview-blue:#6FA8D6;--preview-yellow:#D4B72A}
-.redesign-preview .redesign-hero{position:relative;isolation:isolate;min-height:560px;padding:90px 26px 55px;display:flex;align-items:center;overflow:hidden;background:#f4f0eb}
-.redesign-preview .redesign-hero-image{position:absolute;z-index:-2;inset:0;background-image:url("/assets/editorial/editorial-1.jpg");background-repeat:no-repeat;background-size:auto 100%;background-position:right 8% center}
-.redesign-preview .redesign-hero:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#f4f0eb 0%,#f4f0eb 33%,rgba(244,240,235,.94) 44%,rgba(244,240,235,.25) 67%,transparent 90%);pointer-events:none}
-.redesign-preview .redesign-hero-inner{width:100%;max-width:1160px;margin:auto;display:block}
-.redesign-preview .redesign-hero-copy{width:min(56%,590px);position:relative;padding:0}
-.redesign-preview .redesign-hero h1{font:800 clamp(38px,4.65vw,65px)/1.09 "Plus Jakarta Sans",sans-serif;letter-spacing:-.045em;max-width:12.8ch;margin:16px 0 24px}
-.redesign-preview .redesign-hero h1 .c-red{color:var(--preview-red)}
-.redesign-preview .redesign-hero h1 .c-blue{color:var(--preview-blue)}
-.redesign-preview .redesign-hero h1 .c-yellow{color:var(--preview-yellow)}
-.redesign-preview .redesign-hero p{font-size:17px;line-height:1.55;max-width:380px}
-.redesign-preview .redesign-hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:25px}
-.redesign-preview .redesign-hero-link{background:var(--preview-blue);color:#fff;border:0;border-radius:999px;padding:13px 19px;margin:0;font-weight:800;font-size:14px;display:inline-flex;gap:9px}
-.redesign-preview .redesign-hero-link.subtle{background:transparent;color:#111;border-bottom:1px solid #111;border-radius:0;padding:9px 0}
-.redesign-preview .redesign-hero-link span{color:#fff}
-.redesign-preview .redesign-statement{padding:54px 24px 38px;background:#fff}
-.redesign-preview .redesign-statement h2{max-width:1060px;margin:0 auto;font:800 clamp(25px,3.1vw,44px)/1.18 "Plus Jakarta Sans",sans-serif;letter-spacing:-.035em;text-align:left}
-.redesign-preview .redesign-statement h2>span{display:inline-block;margin-top:10px}
-.redesign-preview .redesign-statement .c-red{color:var(--preview-red)}
-.redesign-preview .redesign-statement .c-blue{color:var(--preview-blue)}
-.redesign-preview .redesign-statement .c-yellow{color:var(--preview-yellow)}
-.redesign-preview .redesign-catalog{padding-top:38px}
-.redesign-preview .redesign-catalog-head h2::after{content:".";color:var(--preview-yellow)}
-.redesign-preview .redesign-filters button[aria-pressed=true]{background:var(--preview-blue);color:#fff;border-color:var(--preview-blue)}
-.redesign-preview .redesign-filters button:hover{border-color:var(--preview-red)}
-/* Existing shared header is fixed. Keep it persistent and give the preview
-   its own translucent surface without changing production styles. */
-.redesign-preview .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 2px 16px rgba(0,0,0,.07)}
-.redesign-preview #redesign-catalog,.redesign-preview #encargo{scroll-margin-top:110px}
-@media(max-width:768px){
- .redesign-preview .redesign-hero{min-height:0;display:block;padding:0;background:#f4f0eb}
- .redesign-preview .redesign-hero-image{position:relative;z-index:0;width:100%;height:330px;background-size:contain;background-position:center center;background-color:#f4f0eb}
- .redesign-preview .redesign-hero:before{display:none}
- .redesign-preview .redesign-hero-inner{padding:24px 22px 34px}
- .redesign-preview .redesign-hero-copy{width:100%}
- .redesign-preview .redesign-hero h1{font-size:clamp(34px,8.5vw,46px);max-width:15ch;margin:13px 0 18px}
+/* ABALORIA · HOME V3. All rules scoped to preview, production unchanged. */
+.redesign-preview{--ab-red:#c43a2b;--ab-blue:#6fa8d6;--ab-yellow:#d4b72a}
+.redesign-preview .collections-home[hidden]{display:none!important}
+.redesign-preview .site-header{position:fixed;z-index:1000;top:0;left:0;right:0;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,.055)}
+.redesign-preview main{padding-top:72px!important}
+.redesign-preview .redesign-hero{background:#f6f4f0;padding:36px 24px}
+.redesign-preview .redesign-hero-inner{max-width:1120px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.93fr);column-gap:54px;align-items:center}
+.redesign-preview .redesign-hero-image{display:block;grid-column:2;grid-row:1;width:100%;height:auto;max-height:460px;object-fit:contain;object-position:center;background:transparent}
+.redesign-preview .redesign-hero-copy{grid-column:1;grid-row:1;min-width:0}
+.redesign-preview .redesign-eyebrow{font-size:11px;letter-spacing:.11em;font-weight:700;color:#756e69}
+.redesign-preview .redesign-hero h1{font:800 clamp(32px,4.3vw,57px)/1.11 "Plus Jakarta Sans",sans-serif;letter-spacing:-.04em;margin:15px 0 19px;max-width:14ch;color:#0b0b0b}
+.redesign-preview .redesign-hero .c-red{color:var(--ab-red)}
+.redesign-preview .redesign-hero .c-blue{color:var(--ab-blue)}
+.redesign-preview .redesign-hero .c-yellow{color:var(--ab-yellow)}
+.redesign-preview .redesign-hero p{font-size:16px;line-height:1.55;max-width:390px;margin:0}
+.redesign-preview .redesign-hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:23px}
+.redesign-preview .redesign-hero-link{display:inline-flex;align-items:center;gap:8px;border-radius:999px;background:var(--ab-blue);color:#fff;font-size:14px;font-weight:750;padding:12px 19px;text-decoration:none}
+.redesign-preview .redesign-hero-link.subtle{color:#111;background:none;border-radius:0;border-bottom:1px solid #111;padding:9px 0}
+.redesign-preview .redesign-catalog{max-width:1150px;margin:auto;padding:34px 18px 60px;scroll-margin-top:95px}
+.redesign-preview .redesign-catalog-head h2{font:800 clamp(27px,3vw,40px)/1.2 "Plus Jakarta Sans",sans-serif;margin:7px 0 7px}
+.redesign-preview .redesign-catalog-head p{color:#666;font-size:15px;margin:0 0 18px}
+.redesign-preview .redesign-toolbar{position:sticky;top:72px;z-index:800;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 -6px 13px;padding:12px 6px;background:rgba(255,255,255,.98);box-shadow:0 5px 10px -12px #333}
+.redesign-preview .redesign-filters{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.redesign-preview .redesign-filters button{border:1px solid #ddd;border-radius:999px;padding:9px 13px;background:#fff;font:600 13px Inter,sans-serif;white-space:nowrap;cursor:pointer}
+.redesign-preview .redesign-filters button[aria-pressed=true]{background:var(--ab-blue);border-color:var(--ab-blue);color:#fff}
+.redesign-preview .redesign-sort-label{display:flex;align-items:center;gap:8px;white-space:nowrap;font-size:13px}
+.redesign-preview .redesign-sort-label select{width:auto;max-width:210px;padding:9px;border:1px solid #ddd;border-radius:10px;font:inherit;background:white}
+.redesign-preview .redesign-count{color:#888;font-size:13px;margin:0 0 13px}
+.redesign-preview #redesign-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;max-width:none;margin:0}
+.redesign-preview #redesign-grid .piece-card{min-width:0}
+.redesign-preview #redesign-grid .piece-image{min-width:0}
+.redesign-preview #redesign-grid .piece-ctas{display:flex;gap:10px;flex-wrap:wrap}
+.redesign-preview #redesign-grid .piece-cta,.redesign-preview #redesign-grid .piece-cta-outline{min-width:0;max-width:100%;white-space:normal;text-align:center}
+.redesign-preview .redesign-actions{text-align:center;margin:27px 0 10px}
+.redesign-preview #redesign-more{background:var(--ab-blue);color:#fff;font-weight:800;padding:13px 24px;border:0;border-radius:999px;cursor:pointer}
+.redesign-preview #redesign-more[hidden]{display:none}
+.redesign-preview .redesign-demo{text-align:center;color:#777;font-size:12px}
+.redesign-preview #encargo{scroll-margin-top:115px}
+@media(max-width:1023px){
+ .redesign-preview #redesign-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+}
+@media(max-width:639px){
+ .redesign-preview main{padding-top:72px!important}
+ .redesign-preview .redesign-hero{padding:0 0 25px}
+ .redesign-preview .redesign-hero-inner{display:flex;flex-direction:column;padding:0 18px;gap:0}
+ .redesign-preview .redesign-hero-image{width:100%;max-height:none;height:auto;aspect-ratio:auto;object-fit:contain;object-position:center;order:0}
+ .redesign-preview .redesign-hero-copy{width:100%;order:1;padding-top:17px}
+ .redesign-preview .redesign-eyebrow{font-size:10px;letter-spacing:.075em}
+ .redesign-preview .redesign-hero h1{font-size:clamp(30px,8vw,40px);max-width:18ch;margin:12px 0 16px}
  .redesign-preview .redesign-hero p{font-size:15px}
- .redesign-preview .redesign-statement{padding:38px 19px 20px}
- .redesign-preview .redesign-statement h2{font-size:clamp(24px,6.2vw,34px)}
- .redesign-preview .redesign-hero-ctas{gap:12px}
+ .redesign-preview .redesign-hero-ctas{margin-top:18px;gap:10px}
+ .redesign-preview .redesign-hero-link{font-size:13px;padding:11px 14px}
+ .redesign-preview .redesign-catalog{padding:26px 15px 48px}
+ .redesign-preview .redesign-catalog-head h2{font-size:28px}
+ .redesign-preview .redesign-toolbar{top:72px;display:block;padding:10px 3px 9px;margin:0 -3px 13px}
+ .redesign-preview .redesign-filters{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;width:100%;padding:2px 1px 9px;gap:7px}
+ .redesign-preview .redesign-filters button{flex:0 0 auto;font-size:12px;padding:8px 12px}
+ .redesign-preview .redesign-sort-label{font-size:12px;justify-content:flex-end;padding:0 3px}
+ .redesign-preview .redesign-sort-label select{font-size:12px;padding:7px}
+ /* Match the live collection: ONE full-width card per mobile row. */
+ .redesign-preview #redesign-grid{grid-template-columns:minmax(0,1fr);gap:25px}
+ .redesign-preview #redesign-grid .piece-card{width:100%;max-width:100%;margin:0}
+ .redesign-preview #redesign-grid .piece-body{padding:18px}
+ .redesign-preview #redesign-grid .piece-ctas{flex-wrap:wrap;gap:10px}
+ .redesign-preview #redesign-grid .piece-cta,.redesign-preview #redesign-grid .piece-cta-outline{flex:1 1 145px;padding:10px 13px}
 }
