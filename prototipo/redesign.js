@@ -1,4 +1,15 @@
 /* Catálogo de prototipo: solo lectura y sin llamadas de pago */
+/* Seguridad: bloquear acciones ANTES de cargar datos externos o inicializar otros scripts. */
+document.addEventListener("click",e=>{
+ if(e.target.closest(".js-prepago,.js-add-cart,.cart-checkout,.js-open-modal,#go-to-payment")){
+   e.preventDefault();e.stopImmediatePropagation();
+   alert(document.documentElement.lang==="en"?"Preview only — purchasing is disabled.":"Solo vista previa: compras y encargos de ficha desactivados.");
+ }
+},true);
+document.addEventListener("submit",e=>{
+ e.preventDefault();e.stopImmediatePropagation();
+ alert(document.documentElement.lang==="en"?"Forms are disabled in this preview.":"Los formularios están desactivados en este prototipo.");
+},true);
 document.addEventListener("DOMContentLoaded",async()=>{
 const EN=document.documentElement.lang==="en";
 const names=EN?["All","55 €","79 €","99 €","Special","Earrings","Brooches","Rings"]:["Todas","55 €","79 €","99 €","Especiales","Pendientes","Broches","Anillos"];
@@ -39,7 +50,7 @@ function card(d){
 function render(){
  let a=items.filter(d=>active==="all"||(groups.includes(d.kind)&&d.kind===active)||(d.slug===active));
  const mode=sort.value;
- a.sort((x,y)=>{if(mode==="low"||mode==="high")return (Number(x.precio)-Number(y.precio))*(mode==="low"?1:-1);if(mode==="recommended"){const fx=featured.indexOf(x.id),fy=featured.indexOf(y.id);if(fx>=0||fy>=0)return (fx<0?999:fx)-(fy<0?999:fy)}
+ a.sort((x,y)=>{if(mode==="low"||mode==="high")return (Number(x.precio)-Number(y.precio))*(mode==="low"?1:-1);if(mode==="recommended"){const sold=v=>v.estado==="vendida"?1:0;const statusDiff=sold(x)-sold(y);if(statusDiff)return statusDiff;const fx=featured.indexOf(x.id),fy=featured.indexOf(y.id);if(fx>=0||fy>=0)return (fx<0?999:fx)-(fy<0?999:fy)}
  const sold=v=>v.estado==="vendida"?1:0;return sold(x)-sold(y)||y.seq-x.seq});
  count.textContent=a.length+(EN?" pieces":" piezas");
  grid.replaceChildren(...a.slice(0,limit).map(card));more.hidden=a.length<=limit;
