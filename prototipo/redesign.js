@@ -1,4 +1,19 @@
 /* Catálogo de prototipo: solo lectura y sin llamadas de pago */
+/* Re-map shared navigation inside preview without touching live partials. */
+function adaptPreviewNavigation(){
+ const en=document.documentElement.lang==="en";
+ const header=document.querySelector(".site-header");
+ if(!header)return false;
+ header.querySelectorAll('a[href="/#colecciones"],a[href="/en/#collections"]').forEach(a=>a.href="#redesign-catalog");
+ header.querySelectorAll('a[href="/"]').forEach(a=>a.href="/prototipo/");
+ header.querySelectorAll('a[href="/en/"]').forEach(a=>a.href="/prototipo/en/");
+ return true;
+}
+if(!adaptPreviewNavigation()){
+ const observer=new MutationObserver(()=>{if(adaptPreviewNavigation())observer.disconnect()});
+ observer.observe(document.body,{childList:true,subtree:true});
+}
+
 /* Seguridad: bloquear acciones ANTES de cargar datos externos o inicializar otros scripts. */
 document.addEventListener("click",e=>{
  if(e.target.closest(".js-prepago,.js-add-cart,.cart-checkout,.js-open-modal,#go-to-payment")){
