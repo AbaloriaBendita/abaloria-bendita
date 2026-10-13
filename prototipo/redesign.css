@@ -64,3 +64,13 @@
  .redesign-preview #redesign-grid .piece-ctas{flex-wrap:wrap;gap:10px}
  .redesign-preview #redesign-grid .piece-cta,.redesign-preview #redesign-grid .piece-cta-outline{flex:1 1 145px;padding:10px 13px}
 }
+
+/* V4 · Keep catalog navigation visible while scrolling.
+   Original .flow-bg overflow:hidden blocked sticky positioning. */
+.redesign-preview .flow-bg{overflow:visible!important}
+.redesign-preview .redesign-catalog{overflow:visible!important}
+.redesign-preview .redesign-toolbar{position:sticky!important;top:var(--preview-header-height,72px)!important;z-index:950!important;background:#fff}
+.redesign-preview .redesign-catalog-head .c-red{color:var(--ab-red)}
+.redesign-preview .redesign-catalog-head .c-blue{color:var(--ab-blue)}
+.redesign-preview .redesign-catalog-head .c-yellow{color:var(--ab-yellow)}
+.redesign-preview .redesign-catalog-head h2::after{content:none!important}
