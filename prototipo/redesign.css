@@ -1,0 +1,26 @@
+/* Rediseño aislado: solo cargado por /prototipo/ */
+.collections-home[hidden]{display:none!important}
+.redesign-hero{padding:100px 24px 26px;background:#f9f6f1}
+.redesign-hero-inner{max-width:1160px;margin:auto;display:grid;grid-template-columns:1fr 0.85fr;gap:38px;align-items:center}
+.redesign-hero-inner img{width:100%;height:340px;object-fit:cover;border-radius:18px}
+.redesign-eyebrow{font-size:11px;letter-spacing:.15em;font-weight:800;color:#735f5b}
+.redesign-hero h1{font:800 clamp(36px,5vw,66px)/1.07 "Plus Jakarta Sans",sans-serif;letter-spacing:-.04em;margin:16px 0}
+.redesign-hero p{font-size:17px;max-width:420px;line-height:1.55}
+.redesign-hero a{display:inline-flex;margin-top:10px;font-weight:800;border-bottom:2px solid #c43a2b;padding-bottom:5px}
+.redesign-catalog{max-width:1200px;margin:0 auto;padding:52px 24px 55px;scroll-margin-top:80px}
+.redesign-catalog-head h2{font:800 clamp(29px,3vw,44px)/1.14 "Plus Jakarta Sans",sans-serif;margin:10px 0}
+.redesign-catalog-head p{color:#666;margin:0 0 22px}
+.redesign-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:22px 0 12px;flex-wrap:wrap}
+.redesign-filters{display:flex;gap:9px;flex-wrap:wrap}
+.redesign-filters button{border:1px solid #ddd;border-radius:999px;background:white;padding:9px 15px;font:600 13px "Inter",sans-serif;cursor:pointer}
+.redesign-filters button[aria-pressed=true]{background:#0f3d2e;color:white;border-color:#0f3d2e}
+.redesign-sort-label{display:flex;align-items:center;gap:9px;font-size:13px}
+.redesign-sort-label select{border-radius:999px;padding:9px 12px;font-size:13px}
+.redesign-count{font-size:13px;color:#777;min-height:25px;margin-bottom:12px}
+.redesign-catalog #redesign-grid{max-width:none;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.redesign-catalog .piece-card{min-width:0}
+.redesign-actions{text-align:center;margin:30px 0 10px}
+.redesign-actions button{border:0;border-radius:999px;background:#6fa8d6;color:white;padding:15px 28px;font-weight:800;cursor:pointer}
+.redesign-actions button[hidden]{display:none}
+.redesign-demo{text-align:center;color:#777;font-size:12px}
+@media(max-width:768px){.redesign-hero{padding:82px 16px 16px}.redesign-hero-inner{grid-template-columns:1fr;gap:20px}.redesign-hero-inner img{height:235px;order:-1}.redesign-hero h1{font-size:35px}.redesign-catalog{padding:35px 14px}.redesign-filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:10px}.redesign-filters button{flex:none;white-space:nowrap}.redesign-catalog #redesign-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.redesign-sort-label{margin-left:auto}.redesign-catalog .piece-body{padding:12px 8px}}
