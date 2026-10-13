@@ -24,3 +24,49 @@
 .redesign-actions button[hidden]{display:none}
 .redesign-demo{text-align:center;color:#777;font-size:12px}
 @media(max-width:768px){.redesign-hero{padding:82px 16px 16px}.redesign-hero-inner{grid-template-columns:1fr;gap:20px}.redesign-hero-inner img{height:235px;order:-1}.redesign-hero h1{font-size:35px}.redesign-catalog{padding:35px 14px}.redesign-filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:10px}.redesign-filters button{flex:none;white-space:nowrap}.redesign-catalog #redesign-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.redesign-sort-label{margin-left:auto}.redesign-catalog .piece-body{padding:12px 8px}}
+
+/* =========================
+  ABALORIA HERO V2 — ISOLATED PREVIEW
+  Use contain to protect the portrait photo from aggressive cropping.
+========================= */
+.redesign-preview{--preview-red:#C43A2B;--preview-blue:#6FA8D6;--preview-yellow:#D4B72A}
+.redesign-preview .redesign-hero{position:relative;isolation:isolate;min-height:560px;padding:90px 26px 55px;display:flex;align-items:center;overflow:hidden;background:#f4f0eb}
+.redesign-preview .redesign-hero-image{position:absolute;z-index:-2;inset:0;background-image:url("/assets/editorial/editorial-1.jpg");background-repeat:no-repeat;background-size:auto 100%;background-position:right 8% center}
+.redesign-preview .redesign-hero:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,#f4f0eb 0%,#f4f0eb 33%,rgba(244,240,235,.94) 44%,rgba(244,240,235,.25) 67%,transparent 90%);pointer-events:none}
+.redesign-preview .redesign-hero-inner{width:100%;max-width:1160px;margin:auto;display:block}
+.redesign-preview .redesign-hero-copy{width:min(56%,590px);position:relative;padding:0}
+.redesign-preview .redesign-hero h1{font:800 clamp(38px,4.65vw,65px)/1.09 "Plus Jakarta Sans",sans-serif;letter-spacing:-.045em;max-width:12.8ch;margin:16px 0 24px}
+.redesign-preview .redesign-hero h1 .c-red{color:var(--preview-red)}
+.redesign-preview .redesign-hero h1 .c-blue{color:var(--preview-blue)}
+.redesign-preview .redesign-hero h1 .c-yellow{color:var(--preview-yellow)}
+.redesign-preview .redesign-hero p{font-size:17px;line-height:1.55;max-width:380px}
+.redesign-preview .redesign-hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:25px}
+.redesign-preview .redesign-hero-link{background:var(--preview-blue);color:#fff;border:0;border-radius:999px;padding:13px 19px;margin:0;font-weight:800;font-size:14px;display:inline-flex;gap:9px}
+.redesign-preview .redesign-hero-link.subtle{background:transparent;color:#111;border-bottom:1px solid #111;border-radius:0;padding:9px 0}
+.redesign-preview .redesign-hero-link span{color:#fff}
+.redesign-preview .redesign-statement{padding:54px 24px 38px;background:#fff}
+.redesign-preview .redesign-statement h2{max-width:1060px;margin:0 auto;font:800 clamp(25px,3.1vw,44px)/1.18 "Plus Jakarta Sans",sans-serif;letter-spacing:-.035em;text-align:left}
+.redesign-preview .redesign-statement h2>span{display:inline-block;margin-top:10px}
+.redesign-preview .redesign-statement .c-red{color:var(--preview-red)}
+.redesign-preview .redesign-statement .c-blue{color:var(--preview-blue)}
+.redesign-preview .redesign-statement .c-yellow{color:var(--preview-yellow)}
+.redesign-preview .redesign-catalog{padding-top:38px}
+.redesign-preview .redesign-catalog-head h2::after{content:".";color:var(--preview-yellow)}
+.redesign-preview .redesign-filters button[aria-pressed=true]{background:var(--preview-blue);color:#fff;border-color:var(--preview-blue)}
+.redesign-preview .redesign-filters button:hover{border-color:var(--preview-red)}
+/* Existing shared header is fixed. Keep it persistent and give the preview
+   its own translucent surface without changing production styles. */
+.redesign-preview .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 2px 16px rgba(0,0,0,.07)}
+.redesign-preview #redesign-catalog,.redesign-preview #encargo{scroll-margin-top:110px}
+@media(max-width:768px){
+ .redesign-preview .redesign-hero{min-height:0;display:block;padding:0;background:#f4f0eb}
+ .redesign-preview .redesign-hero-image{position:relative;z-index:0;width:100%;height:330px;background-size:contain;background-position:center center;background-color:#f4f0eb}
+ .redesign-preview .redesign-hero:before{display:none}
+ .redesign-preview .redesign-hero-inner{padding:24px 22px 34px}
+ .redesign-preview .redesign-hero-copy{width:100%}
+ .redesign-preview .redesign-hero h1{font-size:clamp(34px,8.5vw,46px);max-width:15ch;margin:13px 0 18px}
+ .redesign-preview .redesign-hero p{font-size:15px}
+ .redesign-preview .redesign-statement{padding:38px 19px 20px}
+ .redesign-preview .redesign-statement h2{font-size:clamp(24px,6.2vw,34px)}
+ .redesign-preview .redesign-hero-ctas{gap:12px}
+}
