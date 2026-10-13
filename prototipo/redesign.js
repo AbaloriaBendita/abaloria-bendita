@@ -56,7 +56,5 @@ function render(){
  grid.replaceChildren(...a.slice(0,limit).map(card));more.hidden=a.length<=limit;
 }
 sort.addEventListener("change",()=>{limit=12;render()});more.addEventListener("click",()=>{limit+=12;render()});render();
-/* Bloqueo en captura para impedir mutaciones de carrito/pago en este prototipo */
-document.addEventListener("click",e=>{if(e.target.closest(".js-prepago,.js-add-cart,.cart-checkout,.js-open-modal")){e.preventDefault();e.stopImmediatePropagation();alert(EN?"Preview only — purchasing is disabled.":"Solo vista previa: compras y encargos de ficha desactivados.")}},true);
-document.addEventListener("submit",e=>{e.preventDefault();e.stopImmediatePropagation();alert(EN?"Forms are disabled in this preview.":"Los formularios están desactivados en este prototipo.")},true);
+
 });
