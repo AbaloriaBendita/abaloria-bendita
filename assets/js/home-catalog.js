@@ -159,4 +159,29 @@ function render(){
 }
 sort.addEventListener("change",()=>{limit=12;render()});more.addEventListener("click",()=>{limit+=12;render()});render();
 
+/* Deep link to a specific catalog piece, e.g. /en/?piece=55-25.
+   No price override or checkout changes. */
+const requestedId=new URLSearchParams(window.location.search).get("piece");
+if(requestedId){
+ const match=items.find(d=>d.id===requestedId);
+ if(match){
+   active=match.slug==="pendientes-broches-anillos"?match.kind:match.slug;
+   filter.querySelectorAll("button").forEach((b,i)=>b.setAttribute("aria-pressed",String(groups[i]===active)));
+   sort.value="low";limit=items.length;
+   render();
+   const displayed=Array.from(grid.querySelectorAll(".piece-card"));
+   const within=items.filter(d=>active==="all"||(groups.includes(d.kind)&&d.kind===active)||(d.slug===active)).sort((a,b)=>Number(a.precio)-Number(b.precio));
+   const index=within.findIndex(d=>d.id===requestedId);
+   const target=displayed[index];
+   if(target){
+     target.style.outline="3px solid #6FA8D6";
+     target.style.outlineOffset="3px";
+     requestAnimationFrame(()=>setTimeout(()=>{
+       target.scrollIntoView({behavior:"smooth",block:"center"});
+       if(mobileQuery.matches)openDetail(match);
+     },300));
+   }
+ }
+}
+
 });
