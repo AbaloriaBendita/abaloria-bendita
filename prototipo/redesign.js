@@ -59,17 +59,21 @@ detail.setAttribute("aria-hidden","true");
 detail.innerHTML=`<div class="redesign-detail-backdrop"></div>
 <section class="redesign-detail-panel" role="dialog" aria-modal="true" aria-labelledby="redesign-detail-title" tabindex="-1">
 <button class="redesign-detail-close" type="button" aria-label="${EN?"Close":"Cerrar"}">×</button>
-<div class="redesign-detail-gallery"><img id="redesign-detail-image" alt=""><button type="button" class="redesign-detail-prev" aria-label="${EN?"Previous image":"Imagen anterior"}">‹</button><button type="button" class="redesign-detail-next" aria-label="${EN?"Next image":"Imagen siguiente"}">›</button></div>
+<div class="redesign-detail-gallery"><img id="redesign-detail-image" alt=""><button type="button" class="redesign-detail-prev" aria-label="${EN?"Previous image":"Imagen anterior"}">‹</button><button type="button" class="redesign-detail-next" aria-label="${EN?"Next image":"Imagen siguiente"}">›</button></div><div class="redesign-detail-indicators" aria-label="${EN?"Images":"Imágenes"}"><button type="button" class="is-current" aria-label="${EN?"Image 1":"Imagen 1"}" aria-current="true"></button><button type="button" aria-label="${EN?"Image 2":"Imagen 2"}"></button></div>
 <div class="redesign-detail-content"><span id="redesign-detail-state"></span><h2 id="redesign-detail-title"></h2><strong id="redesign-detail-price"></strong><p id="redesign-detail-note"></p><div id="redesign-detail-actions" class="redesign-detail-actions"></div><p class="redesign-detail-legal">${EN?"VAT included · Free shipping from €150.":"IVA incluido · Envío gratis a partir de 150 €."}</p></div>
 </section>`;
 document.body.append(detail);
 const detailImg=detail.querySelector("#redesign-detail-image");
 const detailPrev=detail.querySelector(".redesign-detail-prev");
 const detailNext=detail.querySelector(".redesign-detail-next");
+const gallery=detail.querySelector(".redesign-detail-gallery");
+const indicators=Array.from(detail.querySelectorAll(".redesign-detail-indicators button"));
 function setDetailImage(){
  if(!selected)return;
  detailImg.src=photoIndex===0?selected.main:selected.hover;
  detailPrev.hidden=detailNext.hidden=!selected.hoverAvailable;
+ indicators.forEach((dot,i)=>{dot.hidden=i===1&&!selected.hoverAvailable;dot.classList.toggle("is-current",i===photoIndex);dot.setAttribute("aria-current",String(i===photoIndex));});
+ detailImg.alt=(selected.titulo||"")+" · "+(photoIndex+1);
 }
 function closeDetail(){
  detail.classList.remove("is-open");
@@ -109,10 +113,15 @@ detail.querySelector(".redesign-detail-close").addEventListener("click",closeDet
 detail.querySelector(".redesign-detail-backdrop").addEventListener("click",closeDetail);
 detailPrev.addEventListener("click",()=>{photoIndex=photoIndex===0?1:0;setDetailImage()});
 detailNext.addEventListener("click",()=>{photoIndex=photoIndex===0?1:0;setDetailImage()});
+indicators.forEach((dot,i)=>dot.addEventListener("click",()=>{if(selected?.hoverAvailable){photoIndex=i;setDetailImage()}}));
+let startX=0,startY=0,swiping=false;
+gallery.addEventListener("touchstart",e=>{if(!selected?.hoverAvailable||e.touches.length!==1)return;startX=e.touches[0].clientX;startY=e.touches[0].clientY;swiping=true;},{passive:true});
+gallery.addEventListener("touchend",e=>{if(!swiping||!selected?.hoverAvailable)return;swiping=false;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)*1.3){photoIndex=dx<0?1:0;setDetailImage()}},{passive:true});
+gallery.addEventListener("touchcancel",()=>{swiping=false},{passive:true});
 document.addEventListener("keydown",e=>{
  if(!detail.classList.contains("is-open"))return;
  if(e.key==="Escape"){closeDetail();return;}
- if(e.key==="ArrowRight"||e.key==="ArrowLeft"){photoIndex=photoIndex===0?1:0;setDetailImage();}
+ if((e.key==="ArrowRight"||e.key==="ArrowLeft")&&selected?.hoverAvailable){photoIndex=e.key==="ArrowRight"?1:0;setDetailImage();}
  if(e.key==="Tab"){
   const focusable=Array.from(detail.querySelectorAll("button:not([hidden])"));
   if(e.shiftKey&&document.activeElement===focusable[0]){e.preventDefault();focusable.at(-1).focus();}
