@@ -263,3 +263,15 @@
  .redesign-preview .redesign-detail-indicators button[hidden]{display:none}
  .redesign-preview .redesign-detail-prev,.redesign-preview .redesign-detail-next{opacity:.72}
 }
+
+/* V8 · Mobile product cards: only the "Ver pieza" action is visible.
+   Keep existing purchase / custom order CTAs inside the detail sheet and on desktop. */
+@media (max-width:639px) {
+  body.redesign-preview #redesign-grid .piece-card .piece-body .piece-cta.alt,
+  body.redesign-preview #redesign-grid .piece-card .piece-body .piece-cta-secondary,
+  body.redesign-preview #redesign-grid .piece-card .piece-body .piece-ctas,
+  body.redesign-preview #redesign-grid .piece-card .piece-body .piece-note,
+  body.redesign-preview #redesign-grid .piece-card .piece-body .piece-legal {
+    display:none!important;
+  }
+}
