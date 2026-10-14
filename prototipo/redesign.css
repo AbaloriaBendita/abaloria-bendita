@@ -248,3 +248,18 @@
  .redesign-preview .redesign-detail-cart{color:#4e91bf;background:#fff;border:1px solid var(--ab-blue)}
  .redesign-preview .redesign-detail-legal{font-size:11px;color:#777;margin-top:14px}
 }
+
+/* V7 · Mobile photo swipe indicators */
+@media(max-width:639px){
+ .redesign-preview .redesign-detail-gallery{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+ .redesign-preview .redesign-detail-gallery img{-webkit-user-drag:none;user-select:none}
+ .redesign-preview .redesign-detail-indicators{display:flex;align-items:center;justify-content:center;gap:9px;min-height:26px;padding:8px 0 2px}
+ .redesign-preview .redesign-detail-indicators button{
+  display:block;flex:none;width:16px;height:4px;min-height:4px;
+  padding:0;border:0;border-radius:99px;background:#d2d4d6;cursor:pointer;
+  transition:background .15s,width .15s;
+ }
+ .redesign-preview .redesign-detail-indicators button.is-current{width:27px;background:var(--ab-blue)}
+ .redesign-preview .redesign-detail-indicators button[hidden]{display:none}
+ .redesign-preview .redesign-detail-prev,.redesign-preview .redesign-detail-next{opacity:.72}
+}
