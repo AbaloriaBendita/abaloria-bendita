@@ -34,6 +34,7 @@ const names=EN?["All","55 €","79 €","99 €","Special","Earrings","Brooches"
 const groups=["all","55","79","99","especiales","pendientes","broches","anillos"];
 const bases=["55","79","99","especiales","pendientes-broches-anillos"];
 const featured=[]; // Prioridades editoriales pendientes de validar sobre fotografías reales
+const mobileQuery=window.matchMedia("(max-width: 639px)");
 const grid=document.getElementById("redesign-grid"),filter=document.getElementById("redesign-filters"),sort=document.getElementById("redesign-sort"),more=document.getElementById("redesign-more"),count=document.getElementById("redesign-count");
 if(!grid)return;
 let active="all",limit=12,items=[];
@@ -48,6 +49,78 @@ const load=async slug=>{
  }catch(e){console.warn("Collection load failed",slug,e);return []}
 };
 const result=await Promise.all(bases.map(load));items=result.flat();
+
+/* Vista ampliada móvil, solo para el prototipo. No invoca Square ni formularios. */
+let selected=null, photoIndex=0, previousFocus=null;
+const detail=document.createElement("div");
+detail.className="redesign-detail";
+detail.id="redesign-detail";
+detail.setAttribute("aria-hidden","true");
+detail.innerHTML=`<div class="redesign-detail-backdrop"></div>
+<section class="redesign-detail-panel" role="dialog" aria-modal="true" aria-labelledby="redesign-detail-title" tabindex="-1">
+<button class="redesign-detail-close" type="button" aria-label="${EN?"Close":"Cerrar"}">×</button>
+<div class="redesign-detail-gallery"><img id="redesign-detail-image" alt=""><button type="button" class="redesign-detail-prev" aria-label="${EN?"Previous image":"Imagen anterior"}">‹</button><button type="button" class="redesign-detail-next" aria-label="${EN?"Next image":"Imagen siguiente"}">›</button></div>
+<div class="redesign-detail-content"><span id="redesign-detail-state"></span><h2 id="redesign-detail-title"></h2><strong id="redesign-detail-price"></strong><p id="redesign-detail-note"></p><div id="redesign-detail-actions" class="redesign-detail-actions"></div><p class="redesign-detail-legal">${EN?"VAT included · Free shipping from €150.":"IVA incluido · Envío gratis a partir de 150 €."}</p></div>
+</section>`;
+document.body.append(detail);
+const detailImg=detail.querySelector("#redesign-detail-image");
+const detailPrev=detail.querySelector(".redesign-detail-prev");
+const detailNext=detail.querySelector(".redesign-detail-next");
+function setDetailImage(){
+ if(!selected)return;
+ detailImg.src=photoIndex===0?selected.main:selected.hover;
+ detailPrev.hidden=detailNext.hidden=!selected.hoverAvailable;
+}
+function closeDetail(){
+ detail.classList.remove("is-open");
+ detail.setAttribute("aria-hidden","true");
+ document.body.classList.remove("redesign-detail-open");
+ selected=null;
+ previousFocus?.focus?.();
+}
+function openDetail(d){
+ if(!mobileQuery.matches)return;
+ previousFocus=document.activeElement;
+ selected=d;photoIndex=0;
+ detail.querySelector("#redesign-detail-title").textContent=d.titulo||"";
+ detail.querySelector("#redesign-detail-price").textContent=Number(d.precio||0)+" €";
+ detail.querySelector("#redesign-detail-note").textContent=d.nota_disponibilidad||"";
+ const status=(d.estado||"").toLowerCase();
+ detail.querySelector("#redesign-detail-state").textContent=status==="disponible"?(EN?"Available":"Disponible"):status==="variaciones"?(EN?"Variations":"Variaciones"):(EN?"Sold":"Vendida");
+ const actions=detail.querySelector("#redesign-detail-actions");actions.replaceChildren();
+ const labels=status==="disponible"?(EN?["Buy now","Add to cart"]:["Comprar ahora","Añadir al carrito"]):[status==="variaciones"?(EN?"Request variation":"Encargar variación"):(EN?"Request similar":"Encargar parecida")];
+ labels.forEach((label,i)=>{
+   const b=document.createElement("button");b.type="button";b.textContent=label;
+   b.className=i===0?"redesign-detail-buy":"redesign-detail-cart";
+   b.addEventListener("click",()=>alert(EN?"Preview only. Purchases and requests are disabled.":"Vista previa: compras y encargos desactivados."));
+   actions.append(b);
+ });
+ d.hoverAvailable=true;
+ setDetailImage();
+ detail.classList.add("is-open");
+ detail.setAttribute("aria-hidden","false");
+ document.body.classList.add("redesign-detail-open");
+ detail.querySelector(".redesign-detail-close").focus();
+}
+detailImg.addEventListener("error",()=>{
+ if(selected&&photoIndex===1){selected.hoverAvailable=false;photoIndex=0;setDetailImage();}
+});
+detail.querySelector(".redesign-detail-close").addEventListener("click",closeDetail);
+detail.querySelector(".redesign-detail-backdrop").addEventListener("click",closeDetail);
+detailPrev.addEventListener("click",()=>{photoIndex=photoIndex===0?1:0;setDetailImage()});
+detailNext.addEventListener("click",()=>{photoIndex=photoIndex===0?1:0;setDetailImage()});
+document.addEventListener("keydown",e=>{
+ if(!detail.classList.contains("is-open"))return;
+ if(e.key==="Escape"){closeDetail();return;}
+ if(e.key==="ArrowRight"||e.key==="ArrowLeft"){photoIndex=photoIndex===0?1:0;setDetailImage();}
+ if(e.key==="Tab"){
+  const focusable=Array.from(detail.querySelectorAll("button:not([hidden])"));
+  if(e.shiftKey&&document.activeElement===focusable[0]){e.preventDefault();focusable.at(-1).focus();}
+  else if(!e.shiftKey&&document.activeElement===focusable.at(-1)){e.preventDefault();focusable[0].focus();}
+ }
+});
+mobileQuery.addEventListener?.("change",e=>{if(!e.matches)closeDetail()});
+
 function card(d){
  const status=(d.estado||"").toLowerCase();
  const available=status==="disponible",variation=status==="variaciones",state=available?"available":variation?"variation":"sold";
@@ -64,7 +137,12 @@ function card(d){
  if(available){const buttons=document.createElement("div");buttons.className="piece-ctas";buttons.innerHTML='<button type="button" class="piece-cta js-prepago">'+(EN?"Buy now":"Comprar ahora")+'</button><button type="button" class="piece-cta-outline js-add-cart">'+(EN?"Add to cart":"Añadir carrito")+'</button>';body.append(buttons)}
  else {const b=document.createElement("button");b.type="button";b.className="piece-cta alt js-open-modal";b.textContent=variation?(EN?"Request variation":"Encargar variación"):(EN?"Request similar":"Encargar parecida");body.append(b)}
  const legal=document.createElement("ul");legal.className="piece-legal";legal.innerHTML="<li>"+(EN?"Free shipping from €150.":"Envío gratis desde 150 €.")+"</li><li>"+(EN?"VAT included.":"IVA incluido.")+"</li>";body.append(legal);
- card.append(img,body);return card;
+ const view=document.createElement("button");
+ view.type="button";view.className="redesign-mobile-view";
+ view.textContent=EN?"View piece":"Ver pieza";
+ view.addEventListener("click",()=>openDetail(d));
+ img.addEventListener("click",()=>{if(mobileQuery.matches)openDetail(d)});
+ card.append(img,body,view);return card;
 }
 function render(){
  let a=items.filter(d=>active==="all"||(groups.includes(d.kind)&&d.kind===active)||(d.slug===active));
