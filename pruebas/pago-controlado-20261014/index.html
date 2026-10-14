@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="same-origin">
+  <title>Compra técnica de 1 € · Abaloria Bendita</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body{background:#f7f5f1;color:#151515}
+    .test-wrap{width:min(620px,calc(100% - 32px));margin:48px auto 90px}
+    .test-card{background:#fff;border:1px solid #e1ded7;border-radius:22px;overflow:hidden;box-shadow:0 12px 28px #0000000c}
+    .test-card img{width:100%;height:min(42vh,300px);object-fit:contain;background:#f7f5f1}
+    .test-inner{padding:24px}
+    .test-kicker{font-size:12px;letter-spacing:.1em;font-weight:800;color:#a24735}
+    h1{font-size:clamp(26px,5vw,36px);line-height:1.2;margin:12px 0}
+    .test-description{line-height:1.6;color:#444}
+    .test-prices{padding:16px;background:#f7f5f1;border-radius:12px;margin:16px 0}
+    .test-prices p{display:flex;justify-content:space-between;gap:12px;margin:6px 0}
+    .test-prices strong{font-weight:800}
+    .test-buy{border:0;border-radius:999px;background:#6fa8d6;color:white;font:800 16px Inter,Arial,sans-serif;padding:14px 22px;width:100%;cursor:pointer}
+    .test-foot{font-size:12px;color:#666;margin-top:18px}
+  </style>
+</head>
+<body>
+  <main class="test-wrap">
+    <article class="test-card">
+      <img src="/assets/editorial/editorial-1.jpg" alt="Imagen de referencia para el email de pedido de Abaloria Bendita">
+      <div class="test-inner">
+        <span class="test-kicker">ABALORIA BENDITA · PRUEBA INTERNA</span>
+        <h1>Producto de prueba · 1 €</h1>
+        <p class="test-description">Artículo técnico para verificar el pago real con Square, las notificaciones por correo y el registro de pedidos. <strong>No corresponde a una pieza física y no se enviará ningún artículo.</strong></p>
+        <div class="test-prices">
+          <p><span>Producto</span><strong>1,00 €</strong></p>
+          <p><span>Envío a Península (tarifa actual)</span><strong>8,50 €</strong></p>
+          <p><strong>Total estimado en Península</strong><strong>9,50 €</strong></p>
+        </div>
+        <p class="test-description">El checkout aplicará las tarifas habituales: Baleares 11,50 € y Canarias 14,50 €. <strong>Revisa el total antes de confirmar en Square.</strong></p>
+        <button type="button" class="test-buy js-prepago"
+          data-id="TEST-PAGO-20261014-01"
+          data-title="PRUEBA TÉCNICA - NO ENVIAR PRODUCTO"
+          data-price="1"
+          data-img="https://abaloriabendita.es/assets/editorial/editorial-1.jpg">Iniciar compra de prueba</button>
+        <p class="test-foot">Página no enlazada al catálogo y excluida de buscadores. Solo para una prueba controlada. Tras verificar el pedido, se tramitará la devolución desde Square.</p>
+      </div>
+    </article>
+  </main>
+  <div id="modal-prepago-placeholder"></div>
+  <div id="modal-encargo-placeholder"></div>
+  <script src="/assets/js/core.js" defer></script>
+  <script src="/assets/js/checkout.js" defer></script>
+</body>
+</html>
